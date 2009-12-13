@@ -10,3 +10,7 @@ ui-menu.o: ui-menu.c ui-menu.h
 
 ui-toolbar.o: ui-toolbar.c ui-toolbar.h
 	gcc -c ui-toolbar.c $(GTK)
+
+ui-drawing.o: ui-drawing.c ui-drawing.h
+	gcc -c ui-drawing.c $(GTK)
+

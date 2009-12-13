@@ -3,6 +3,7 @@
 
 #include "ui-menu.h"
 #include "ui-toolbar.h"
+#include "ui-drawing.h"
 
 GdkPixbuf *create_pixbuf (const gchar * filename)
 {
@@ -44,7 +45,9 @@ int main (int argc, char**argv){
     toolbar = generate_toolbar ();
     gtk_box_pack_start (GTK_BOX (container), toolbar, FALSE, FALSE, 0);
 
-    darea = gtk_drawing_area_new();
+    //darea = get_drawing_area();
+    darea = gtk_scrolled_window_new(NULL, NULL);
+    gtk_container_add (GTK_CONTAINER (darea), get_drawing_area(800, 450));
     gtk_container_add (GTK_CONTAINER (container), darea);
 
     gtk_widget_show_all (window);
