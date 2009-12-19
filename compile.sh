@@ -5,7 +5,7 @@ then
     mkdir build
 fi
 
-DATA="$PWD/data"
+DATA="$PWD/tbo-data"
 
 cd build
 cmake -DDATA_DIR=$DATA ../
