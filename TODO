@@ -1,0 +1,5 @@
+- Menu y barra de herramientas con UIManager y actiongroups
+- Dialogo de nuevo comic (pedir tamaño)
+- Varios controles avanzados sobre cairo, como viñeta, globo, texto,
+  etc
+
