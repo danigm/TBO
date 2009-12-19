@@ -5,8 +5,10 @@ then
     mkdir build
 fi
 
+DATA="$PWD/data"
+
 cd build
-cmake ../
+cmake -DDATA_DIR=$DATA ../
 make
 cd ..
 cp build/src/tbo .

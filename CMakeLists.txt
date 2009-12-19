@@ -6,3 +6,4 @@ ADD_SUBDIRECTORY(src)
 
 INSTALL(PROGRAMS build/src/tbo DESTINATION bin)
 
+#TODO, install data

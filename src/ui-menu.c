@@ -12,36 +12,42 @@ gboolean close_cb (GtkWidget *widget, GdkEvent *event, gpointer data){
     gtk_main_quit ();
 }
 
-void add_new_menu_item (GtkWidget *menu, const char *label, void *cb, gpointer data){
-    GtkWidget *item;
-    item = gtk_menu_item_new_with_label (label);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-    g_signal_connect_swapped (G_OBJECT (item), "activate", G_CALLBACK(cb), data);
-}
+static const GtkActionEntry tbo_menu_entries [] = {
+    /* Toplevel */
 
-void add_new_image_menu_item (GtkWidget *menu, const gchar *stock_id, void *cb, gpointer data){
-    GtkWidget *item;
-    item = gtk_image_menu_item_new_from_stock (stock_id, gtk_accel_group_new ());
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-    g_signal_connect_swapped (G_OBJECT (item), "activate", G_CALLBACK(cb), data);
-}
+    { "File", NULL, "_File" },
 
-GtkWidget *generate_menu (){
+    /* File menu */
+
+    { "NewFile", GTK_STOCK_NEW, "_New", "<control>N",
+      "Create a new file",
+      G_CALLBACK (menu_handler) },
+
+    { "OpenFile", GTK_STOCK_OPEN, "_Open", "<control>O",
+      "Open a new file",
+      G_CALLBACK (menu_handler) },
+
+    { "SaveFile", GTK_STOCK_SAVE, "_Save", "<control>S",
+      "Save current document",
+      G_CALLBACK (menu_handler) },
+
+    { "Quit", GTK_STOCK_QUIT, "_Quit", "<control>Q",
+      "Quit",
+      G_CALLBACK (close_cb) },
+};
+
+GtkWidget *generate_menu (GtkUIManager *manager, GtkWidget *window){
     GtkWidget *menu;
-    GtkWidget *file_item, *menu_file;
+    GtkActionGroup *action_group;
+
+    action_group = gtk_action_group_new ("MenuActions");
+    gtk_action_group_add_actions (action_group, tbo_menu_entries,
+                        G_N_ELEMENTS (tbo_menu_entries), window);
+
+    gtk_ui_manager_insert_action_group (manager, action_group, 0);
+
+    menu = gtk_ui_manager_get_widget (manager, "/menubar");
     
-    menu = gtk_menu_bar_new ();
-
-    menu_file = gtk_menu_new ();   
-    add_new_image_menu_item(menu_file, GTK_STOCK_NEW, G_CALLBACK(menu_handler), NULL);
-    add_new_image_menu_item(menu_file, GTK_STOCK_OPEN, G_CALLBACK(menu_handler), NULL);
-    add_new_image_menu_item(menu_file, GTK_STOCK_SAVE, G_CALLBACK(menu_handler), NULL);
-    add_new_image_menu_item(menu_file, GTK_STOCK_QUIT, G_CALLBACK(close_cb), NULL);
-
-    file_item = gtk_menu_item_new_with_label ("Archivo");
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM (file_item), menu_file);
-    gtk_menu_bar_append (GTK_MENU_BAR (menu), file_item);
-
     return menu;
 }
 

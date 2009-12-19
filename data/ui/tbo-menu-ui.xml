@@ -1,0 +1,20 @@
+<ui>
+    <menubar>
+     <menu name="FileMenu" action="File">
+       <menuitem name="New" action="NewFile" />
+       <menuitem name="Open" action="OpenFile" />
+       <menuitem name="Save" action="SaveFile" />
+       <menuitem name="Quit" action="Quit" />
+     </menu>
+    </menubar>
+    <toolbar action="toolbar">
+     <placeholder name="FileItems">
+       <separator/>
+       <toolitem name="New" action="NewFile"/>
+       <toolitem name="Open" action="OpenFile"/>
+       <toolitem name="Right" action="SaveFile"/>
+       <separator/>
+     </placeholder>
+    </toolbar>
+</ui>
+
