@@ -47,7 +47,7 @@ on_move_cb (GtkWidget      *widget,
            GdkEventExpose *event,
            gpointer       data)
 {
-    printf ("move\n");
+    //printf ("move\n");
 }
 
 gboolean

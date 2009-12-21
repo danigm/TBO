@@ -28,7 +28,6 @@ int main (int argc, char**argv){
     GtkWidget *menu;
     GtkWidget *toolbar;
     GtkWidget *darea;
-    GError *error = NULL;
 
     GtkUIManager *manager;
 
@@ -42,20 +41,12 @@ int main (int argc, char**argv){
     container = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (window), container);
 
-    manager = gtk_ui_manager_new ();
-    gtk_ui_manager_add_ui_from_file (manager, DATA_DIR "/ui/tbo-menu-ui.xml", &error);
-    if (error != NULL)
-    {
-        g_warning ("Could not merge tbo-menu-ui.xml: %s", error->message);
-        g_error_free (error);
-    }
-
     // Generando el menu de la aplicacion
-    menu = generate_menu (manager, window);
+    menu = generate_menu (window);
     gtk_box_pack_start (GTK_BOX (container), menu, FALSE, FALSE, 0);
 
     // Generando la barra de herramientas de la aplicacion
-    toolbar = generate_toolbar (manager, window);
+    toolbar = generate_toolbar (window);
     gtk_box_pack_start (GTK_BOX (container), toolbar, FALSE, FALSE, 0);
 
     //darea = get_drawing_area();

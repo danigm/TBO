@@ -16,6 +16,7 @@ ui-toolbar.c
 comic.c
 page.c
 frame.c
+comic-new-dialog.c
 )
 
 INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})

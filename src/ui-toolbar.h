@@ -4,7 +4,7 @@
 #include <gtk/gtk.h>
 
 gboolean toolbar_handler (GtkWidget *widget, GdkEvent *event, gpointer data);
-GtkWidget *generate_toolbar (GtkUIManager *manager, GtkWidget *window);
+GtkWidget *generate_toolbar (GtkWidget *window);
 
 #endif
 

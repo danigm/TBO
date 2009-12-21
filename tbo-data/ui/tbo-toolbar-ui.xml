@@ -1,0 +1,11 @@
+<ui>
+    <toolbar action="toolbar">
+     <placeholder name="FileItems">
+       <separator/>
+       <toolitem name="NewTool" action="NewFileTool"/>
+       <toolitem name="OpenTool" action="OpenFileTool"/>
+       <toolitem name="SaveTool" action="SaveFileTool"/>
+       <separator/>
+     </placeholder>
+    </toolbar>
+</ui>
