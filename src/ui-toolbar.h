@@ -1,5 +1,5 @@
-#ifndef __UI_TOOLBAR_
-#define __UI_TOOLBAR_
+#ifndef __UI_TOOLBAR__
+#define __UI_TOOLBAR__
 
 #include <gtk/gtk.h>
 

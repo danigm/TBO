@@ -1,5 +1,5 @@
-#ifndef __UI_MENU_
-#define __UI_MENU_
+#ifndef __UI_MENU__
+#define __UI_MENU__
 
 #include <gtk/gtk.h>
 

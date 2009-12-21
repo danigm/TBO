@@ -10,15 +10,17 @@ ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
 FIND_PACKAGE(GTK2)
 
 set(SRCS
-tbo.c
 ui-drawing.c
 ui-menu.c
 ui-toolbar.c
+comic.c
+page.c
+frame.c
 )
 
 INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})
 
-add_executable(tbo ${SRCS})
+add_executable(tbo tbo.c ${SRCS})
 
 target_link_libraries(tbo ${GTK2_LIBRARIES})
 

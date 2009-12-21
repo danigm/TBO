@@ -1,5 +1,5 @@
-#ifndef __UI_DRAWING_
-#define __UI_DRAWING_
+#ifndef __UI_DRAWING__
+#define __UI_DRAWING__
 
 #include <gtk/gtk.h>
 #include <cairo.h>
