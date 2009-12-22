@@ -26,7 +26,7 @@ tbo_SOURCES = \
 	ui-menu.h \
 	ui-toolbar.h
 
-tbo_CPPFLAGS = @GTK_CFLAGS@ \
+tbo_CFLAGS = @GTK_CFLAGS@ \
     		   -DDATA_DIR=\""$(pkgdatadir)"\"
 
 tbo_LDADD = @GTK_LIBS@
