@@ -2,9 +2,9 @@
 #define __UI_TOOLBAR__
 
 #include <gtk/gtk.h>
+#include "tbo-window.h"
 
-gboolean toolbar_handler (GtkWidget *widget, GdkEvent *event, gpointer data);
-GtkWidget *generate_toolbar (GtkWidget *window);
+GtkWidget *generate_toolbar (TboWindow *window);
 
 #endif
 

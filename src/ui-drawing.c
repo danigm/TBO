@@ -48,6 +48,7 @@ on_move_cb (GtkWidget      *widget,
            gpointer       data)
 {
     //printf ("move\n");
+    return FALSE;
 }
 
 gboolean
@@ -56,6 +57,7 @@ on_click_cb (GtkWidget      *widget,
            gpointer       data)
 {
     printf ("click\n");
+    return FALSE;
 }
 
 GtkWidget *

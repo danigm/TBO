@@ -4,9 +4,11 @@
 #include "ui-toolbar.h"
 #include "config.h"
 #include "comic-new-dialog.h"
+#include "tbo-window.h"
 
-gboolean toolbar_handler (GtkWidget *widget, GdkEvent *event, gpointer data){
-    printf("toolbar\n");
+gboolean toolbar_handler (GtkWidget *widget, gpointer data){
+    printf("toolbar: %s\n", ((TboWindow *)data)->comic->title);
+    return FALSE;
 }
 
 static const GtkActionEntry tbo_tools_entries [] = {
@@ -23,7 +25,7 @@ static const GtkActionEntry tbo_tools_entries [] = {
       G_CALLBACK (toolbar_handler) },
 };
 
-GtkWidget *generate_toolbar (GtkWidget *window){
+GtkWidget *generate_toolbar (TboWindow *window){
     GtkWidget *toolbar;
     GtkActionGroup *action_group;
     GtkUIManager *manager;

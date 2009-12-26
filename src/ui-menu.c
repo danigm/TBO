@@ -3,16 +3,18 @@
 
 #include "config.h"
 #include "ui-menu.h"
-
 #include "comic-new-dialog.h"
+#include "tbo-window.h"
 
 gboolean menu_handler (GtkWidget *widget, gpointer data){
-    printf ("Menu\n");
+    printf ("Menu :%s\n", ((TboWindow *) data)->comic->title);
+    return FALSE;
 }
 
-gboolean close_cb (GtkWidget *widget, GdkEvent *event, gpointer data){
+gboolean close_cb (GtkWidget *widget, gpointer data){
     printf ("Ventana cerrada\n");
-    gtk_main_quit ();
+    tbo_window_free_cb (widget, NULL, ((TboWindow *) data));
+    return FALSE;
 }
 
 static const GtkActionEntry tbo_menu_entries [] = {
@@ -39,7 +41,7 @@ static const GtkActionEntry tbo_menu_entries [] = {
       G_CALLBACK (close_cb) },
 };
 
-GtkWidget *generate_menu (GtkWidget *window){
+GtkWidget *generate_menu (TboWindow *window){
     GtkWidget *menu;
     GtkActionGroup *action_group;
     GtkUIManager *manager;

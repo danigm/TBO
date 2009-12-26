@@ -9,6 +9,7 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(includedir) $(GNOME_INCLUDEDIR) \
 bin_PROGRAMS = tbo
 
 tbo_SOURCES = \
+	tbo-window.c \
 	comic.c \
 	comic-new-dialog.c \
 	frame.c \
@@ -17,6 +18,7 @@ tbo_SOURCES = \
 	ui-drawing.c \
 	ui-menu.c \
 	ui-toolbar.c \
+	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \
 	frame.h \
