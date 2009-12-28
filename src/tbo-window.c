@@ -11,7 +11,7 @@
 static int NWINDOWS = 0;
 
 TboWindow *
-tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, 
+tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *status, 
                 GtkWidget *vbox, Comic *comic)
 {
     TboWindow *tbo;
@@ -22,6 +22,7 @@ tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll,
     tbo->dw_scroll = dw_scroll;
     list = gtk_container_get_children (GTK_CONTAINER (dw_scroll));
     tbo->drawing = GTK_WIDGET (list->data);
+    tbo->status = status;
     tbo->vbox = vbox;
     tbo->comic = comic;
 
@@ -71,6 +72,7 @@ tbo_new_tbo (int width, int height)
     GtkWidget *toolbar;
     GtkWidget *scrolled;
     GtkWidget *darea;
+    GtkWidget *status;
 
     GtkUIManager *manager;
 
@@ -87,10 +89,16 @@ tbo_new_tbo (int width, int height)
     comic = tbo_comic_new ("Untitled", width, height);
     gtk_window_set_title (GTK_WINDOW (window), comic->title);
     scrolled = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     darea = get_drawing_area (width, height);
     gtk_container_add (GTK_CONTAINER (scrolled), darea);
 
-    tbo = tbo_window_new (window, scrolled, container, comic);
+    status = gtk_statusbar_new ();
+
+    tbo = tbo_window_new (window, scrolled, status, container, comic);
+
+    // ui-drawing.c (expose, motion and click)
+    darea_connect_signals (tbo);
 
     g_signal_connect (window, "delete-event", G_CALLBACK (tbo_window_free_cb), tbo);
 
@@ -103,6 +111,8 @@ tbo_new_tbo (int width, int height)
     gtk_box_pack_start (GTK_BOX (container), menu, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (container), toolbar, FALSE, FALSE, 0);
     gtk_container_add (GTK_CONTAINER (container), scrolled);
+
+    gtk_box_pack_start (GTK_BOX (container), status, FALSE, FALSE, 0);
 
     gtk_widget_show_all (window);
 

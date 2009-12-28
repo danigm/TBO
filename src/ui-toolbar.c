@@ -13,15 +13,23 @@ gboolean toolbar_handler (GtkWidget *widget, gpointer data){
 
 static const GtkActionEntry tbo_tools_entries [] = {
     { "NewFileTool", GTK_STOCK_NEW, "_New", "<control>N",
-      "Create a new file",
+      "New Comic",
       G_CALLBACK (tbo_comic_new_dialog) },
 
     { "OpenFileTool", GTK_STOCK_OPEN, "_Open", "<control>O",
-      "Open a new file",
+      "Open comic",
       G_CALLBACK (toolbar_handler) },
 
     { "SaveFileTool", GTK_STOCK_SAVE, "_Save", "<control>S",
       "Save current document",
+      G_CALLBACK (toolbar_handler) },
+
+    { "NewPage", GTK_STOCK_ADD, "New Page", "<control>P",
+      "New page",
+      G_CALLBACK (toolbar_handler) },
+
+    { "NewFrame", GTK_STOCK_DND_MULTIPLE, "New _Frame", "<control>F",
+      "New Frame",
       G_CALLBACK (toolbar_handler) },
 };
 

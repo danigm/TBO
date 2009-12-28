@@ -7,24 +7,23 @@
 gboolean
 on_expose_cb(GtkWidget      *widget,
              GdkEventExpose *event,
-             gpointer       data)
+             TboWindow       *tbo)
 {
     cairo_t *cr;
     int width, height;
     char *text = "TBO rulz!";
     cairo_text_extents_t extents;
-    int *size = (int *) data;
 
-    width = size[0];
-    height = size[1];
+    width = tbo->comic->width;
+    height = tbo->comic->height;
 
     cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
 
     cairo_set_source_rgb(cr, 1, 1, 1);
-    cairo_rectangle(cr, 0, 0, size[0], size[1]);
+    cairo_rectangle(cr, 0, 0, width+2, height+2);
     cairo_fill(cr);
     cairo_set_source_rgb(cr, 0, 0, 0);
-    cairo_rectangle (cr, 0, 0, size[0], size[1]);
+    cairo_rectangle (cr, 1, 1, width, height);
     cairo_stroke (cr);
 
     cairo_set_source_rgb(cr, 0, 0, 0);
@@ -43,20 +42,21 @@ on_expose_cb(GtkWidget      *widget,
 }
 
 gboolean
-on_move_cb (GtkWidget      *widget,
-           GdkEventExpose *event,
-           gpointer       data)
+on_move_cb (GtkWidget     *widget,
+           GdkEventMotion *event,
+           TboWindow      *tbo)
 {
-    //printf ("move\n");
+    char buffer[100];
+    snprintf (buffer, 100, "move %dx%d", (int)event->x, (int)event->y);
+    gtk_statusbar_push (GTK_STATUSBAR (tbo->status), 0, buffer);
     return FALSE;
 }
 
 gboolean
-on_click_cb (GtkWidget      *widget,
-           GdkEventExpose *event,
-           gpointer       data)
+on_click_cb (GtkWidget    *widget,
+           GdkEventButton *event,
+           TboWindow      *tbo)
 {
-    printf ("click\n");
     return FALSE;
 }
 
@@ -65,26 +65,29 @@ get_drawing_area (int width, int height)
 {
 
     GtkWidget *drawing;
-    static int size[2];
-    
-    size[0] = width;
-    size[1] = height;
 
     drawing = gtk_layout_new(NULL, NULL);
-    gtk_layout_set_size(GTK_LAYOUT (drawing), size[0], size[1]);
+    gtk_layout_set_size(GTK_LAYOUT (drawing), width, height);
 
-    g_signal_connect(drawing, "expose-event",
-            G_CALLBACK (on_expose_cb),  (gpointer) size);
+    return drawing;
+}
+
+void
+darea_connect_signals (TboWindow *tbo)
+{
+    GtkWidget *drawing;
+    drawing = tbo->drawing;
 
     gtk_widget_add_events (drawing, GDK_BUTTON_PRESS_MASK |
                                     GDK_POINTER_MOTION_MASK);
 
+    g_signal_connect(drawing, "expose-event",
+            G_CALLBACK (on_expose_cb), tbo);
+
     g_signal_connect (drawing, "button_press_event",
-            G_CALLBACK (on_click_cb), NULL);
+            G_CALLBACK (on_click_cb), tbo);
 
     g_signal_connect (drawing, "motion_notify_event",
-            G_CALLBACK (on_move_cb), (gpointer) size);
-
-    return drawing;
+            G_CALLBACK (on_move_cb), tbo);
 }
 
