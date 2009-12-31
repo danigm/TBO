@@ -7,6 +7,9 @@
        <toolitem name="SaveTool" action="SaveFileTool"/>
        <separator/>
        <toolitem name="newpage" action="NewPage"/>
+       <toolitem name="ppage" action="PrevPage"/>
+       <toolitem name="npage" action="NextPage"/>
+       <separator/>
        <toolitem name="newframe" action="NewFrame"/>
      </placeholder>
     </toolbar>

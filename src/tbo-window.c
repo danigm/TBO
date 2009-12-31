@@ -96,6 +96,7 @@ tbo_new_tbo (int width, int height)
     status = gtk_statusbar_new ();
 
     tbo = tbo_window_new (window, scrolled, status, container, comic);
+    tbo_window_update_status (tbo, 0, 0);
 
     // ui-drawing.c (expose, motion and click)
     darea_connect_signals (tbo);
@@ -117,5 +118,16 @@ tbo_new_tbo (int width, int height)
     gtk_widget_show_all (window);
 
     return tbo;
+}
+
+void
+tbo_window_update_status (TboWindow *tbo, int x, int y)
+{
+    char buffer[100];
+    snprintf (buffer, 100, "page: %d of %d [ %5d,%5d ]",
+                    tbo_comic_page_index (tbo->comic),
+                    tbo_comic_len (tbo->comic),
+                    x, y);
+    gtk_statusbar_push (GTK_STATUSBAR (tbo->status), 0, buffer);
 }
 

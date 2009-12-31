@@ -20,5 +20,6 @@ void tbo_window_free (TboWindow *tbo);
 gboolean tbo_window_free_cb (GtkWidget *widget, GdkEventExpose *event, TboWindow *tbo);
 GdkPixbuf *create_pixbuf (const gchar * filename);
 TboWindow * tbo_new_tbo (int width, int height);
+void tbo_window_update_status (TboWindow *tbo, int x, int y);
 
 #endif

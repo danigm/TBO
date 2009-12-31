@@ -2,6 +2,7 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 
+#include "tbo-window.h"
 #include "ui-drawing.h"
 
 gboolean
@@ -46,9 +47,8 @@ on_move_cb (GtkWidget     *widget,
            GdkEventMotion *event,
            TboWindow      *tbo)
 {
-    char buffer[100];
-    snprintf (buffer, 100, "move %dx%d", (int)event->x, (int)event->y);
-    gtk_statusbar_push (GTK_STATUSBAR (tbo->status), 0, buffer);
+    tbo_window_update_status (tbo, (int)event->x, (int)event->y);
+
     return FALSE;
 }
 
