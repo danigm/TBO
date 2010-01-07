@@ -7,14 +7,28 @@
 #include "tbo-window.h"
 #include "comic.h"
 
+static int SELECTED_TOOL = NONE;
 static GtkActionGroup *ACTION_GROUP;
 
+enum Tool
+get_selected_tool ()
+{
+    return SELECTED_TOOL;
+}
+
 void
-update_toolbar_sensitive (TboWindow *tbo)
+set_selected_tool (enum Tool tool)
+{
+    SELECTED_TOOL = tool;
+}
+
+void
+update_toolbar (TboWindow *tbo)
 {
     GtkAction *prev;
     GtkAction *next;
 
+    // Page next and prev button sensitive
     prev = gtk_action_group_get_action (ACTION_GROUP, "PrevPage");
     next = gtk_action_group_get_action (ACTION_GROUP, "NextPage");
 
@@ -27,37 +41,57 @@ update_toolbar_sensitive (TboWindow *tbo)
         gtk_action_set_sensitive (next, FALSE);
     else
         gtk_action_set_sensitive (next, TRUE);
+
 }
 
-gboolean toolbar_handler (GtkWidget *widget, gpointer data){
+gboolean 
+toolbar_handler (GtkWidget *widget, gpointer data)
+{
     printf("toolbar: %s\n", ((TboWindow *)data)->comic->title);
     return FALSE;
 }
 
-gboolean add_new_page (GtkAction *action, TboWindow *tbo)
+gboolean
+add_new_page (GtkAction *action, TboWindow *tbo)
 {
     tbo_comic_new_page (tbo->comic);
     tbo_window_update_status (tbo, 0, 0);
-    update_toolbar_sensitive (tbo);
+    update_toolbar (tbo);
     return FALSE;
 }
 
-gboolean next_page (GtkAction *action, TboWindow *tbo)
+gboolean 
+next_page (GtkAction *action, TboWindow *tbo)
 {
     tbo_comic_next_page (tbo->comic);
-    update_toolbar_sensitive (tbo);
+    update_toolbar (tbo);
     tbo_window_update_status (tbo, 0, 0);
 
     return FALSE;
 }
 
-gboolean prev_page (GtkAction *action, TboWindow *tbo)
+gboolean
+prev_page (GtkAction *action, TboWindow *tbo)
 {
     tbo_comic_prev_page (tbo->comic);
-    update_toolbar_sensitive (tbo);
+    update_toolbar (tbo);
     tbo_window_update_status (tbo, 0, 0);
 
     return FALSE;
+}
+
+gboolean
+add_new_frame (GtkAction *action, TboWindow *tbo)
+{
+    GtkToggleAction *frame_tool;
+
+    frame_tool = (GtkToggleAction *)gtk_action_group_get_action (ACTION_GROUP, "NewFrame");
+    if (gtk_toggle_action_get_active (frame_tool))
+        set_selected_tool (FRAME);
+    else
+        set_selected_tool (NONE);
+    update_toolbar (tbo);
+    tbo_window_update_status (tbo, 0, 0);
 }
 
 static const GtkActionEntry tbo_tools_entries [] = {
@@ -84,10 +118,12 @@ static const GtkActionEntry tbo_tools_entries [] = {
     { "NextPage", GTK_STOCK_GO_FORWARD, "Next Page", "",
       "Next page",
       G_CALLBACK (next_page) },
+};
 
+static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
     { "NewFrame", GTK_STOCK_DND_MULTIPLE, "New _Frame", "<control>F",
       "New Frame",
-      G_CALLBACK (toolbar_handler) },
+      G_CALLBACK (add_new_frame), FALSE },
 };
 
 GtkWidget *generate_toolbar (TboWindow *window){
@@ -106,12 +142,14 @@ GtkWidget *generate_toolbar (TboWindow *window){
     ACTION_GROUP = gtk_action_group_new ("ToolsActions");
     gtk_action_group_add_actions (ACTION_GROUP, tbo_tools_entries,
                         G_N_ELEMENTS (tbo_tools_entries), window);
+    gtk_action_group_add_toggle_actions (ACTION_GROUP, tbo_tools_toogle_entries,
+                        G_N_ELEMENTS (tbo_tools_toogle_entries), window);
 
     gtk_ui_manager_insert_action_group (manager, ACTION_GROUP, 0);
 
     toolbar = gtk_ui_manager_get_widget (manager, "/toolbar");
 
-    update_toolbar_sensitive (window);
+    update_toolbar (window);
     
     return toolbar;
 }

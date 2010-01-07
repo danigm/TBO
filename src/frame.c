@@ -3,13 +3,16 @@
 #include "frame.h"
 
 Frame *
-tbo_frame_new (int width, int height)
+tbo_frame_new (int x, int y,
+        int width, int height)
 {
     Frame *new_frame;
 
     new_frame = malloc (sizeof(Frame));
     new_frame->objects = NULL;
 
+    new_frame->x = x;
+    new_frame->y = y;
     new_frame->width = width;
     new_frame->height = height;
 

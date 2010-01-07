@@ -21,6 +21,8 @@ typedef struct
 
 typedef struct
 {
+    int x;
+    int y;
     int width;
     int height;
     GList *objects;
