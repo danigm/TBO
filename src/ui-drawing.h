@@ -12,5 +12,6 @@ gboolean on_click_cb(GtkWidget *widget, GdkEventButton *event, TboWindow *tbo);
 gboolean on_release_cb(GtkWidget *widget, GdkEventButton *event, TboWindow *tbo);
 void darea_connect_signals (TboWindow *tbo);
 GtkWidget * get_drawing_area (int width, int height);
+void update_drawing (TboWindow *tbo);
 
 #endif

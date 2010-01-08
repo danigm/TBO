@@ -1,4 +1,3 @@
-#include <math.h>
 #include <stdio.h>
 #include <cairo.h>
 #include <gtk/gtk.h>
@@ -10,18 +9,9 @@
 
 #include "comic.h"
 #include "page.h"
+#include "frame.h"
 
-static int N_FRAME_X;
-static int N_FRAME_Y;
-
-int
-min (int x, int y)
-{
-    if (x < y)
-        return x;
-    else
-        return y;
-}
+#include "frame-tool.h"
 
 gboolean
 on_expose_cb(GtkWidget      *widget,
@@ -36,6 +26,8 @@ on_expose_cb(GtkWidget      *widget,
     Frame *frame;
     GList *frame_list;
     Page *page;
+
+    enum Tool tool;
 
     width = tbo->comic->width;
     height = tbo->comic->height;
@@ -55,14 +47,22 @@ on_expose_cb(GtkWidget      *widget,
     {
         // draw each frame  
         frame = (Frame *)frame_list->data;
-        cairo_set_source_rgb(cr, 1, 1, 1);
-        cairo_rectangle(cr, frame->x, frame->y,
-                frame->width, frame->height);
-        cairo_fill(cr);
-        cairo_set_source_rgb(cr, 0, 0, 0);
-        cairo_rectangle (cr, frame->x, frame->y,
-                frame->width, frame->height);
-        cairo_stroke (cr);
+        tbo_frame_draw (frame, cr);
+    }
+
+    // Update drawing helpers
+
+    tool = get_selected_tool ();
+    // different behavior for each tool
+    switch (tool)
+    {
+        case FRAME:
+            frame_tool_drawing (cr);
+            break;
+
+        case NONE:
+        default:
+            break;
     }
 
     // TBO rulz text example :P
@@ -90,6 +90,22 @@ on_move_cb (GtkWidget     *widget,
 {
     tbo_window_update_status (tbo, (int)event->x, (int)event->y);
 
+    enum Tool tool;
+
+    tool = get_selected_tool ();
+    // different behavior for each tool
+    switch (tool)
+    {
+        case FRAME:
+            frame_tool_on_move (widget, event, tbo);
+            update_drawing (tbo);
+            break;
+
+        case NONE:
+        default:
+            break;
+    }
+
     return FALSE;
 }
 
@@ -105,8 +121,8 @@ on_click_cb (GtkWidget    *widget,
     switch (tool)
     {
         case FRAME:
-            N_FRAME_X = (int)event->x;
-            N_FRAME_Y = (int)event->y;
+            frame_tool_on_click (widget, event, tbo);
+            update_drawing (tbo);
             break;
 
         case NONE:
@@ -123,20 +139,14 @@ on_release_cb (GtkWidget    *widget,
            TboWindow      *tbo)
 {
     enum Tool tool;
-    int w, h;
 
     tool = get_selected_tool ();
     // different behavior for each tool
     switch (tool)
     {
         case FRAME:
-            w = (int)fabs (event->x - N_FRAME_X);
-            h = (int)fabs (event->y - N_FRAME_Y);
-            tbo_page_new_frame (tbo_comic_get_current_page (tbo->comic),
-                    min (N_FRAME_X, event->x), min (N_FRAME_Y, event->y),
-                    w, h);
-            gtk_widget_queue_draw_area (widget, 0, 0,
-                    tbo->comic->width, tbo->comic->height);
+            frame_tool_on_release (widget, event, tbo);
+            update_drawing (tbo);
             break;
 
         case NONE:
@@ -182,3 +192,12 @@ darea_connect_signals (TboWindow *tbo)
             G_CALLBACK (on_move_cb), tbo);
 }
 
+
+void
+update_drawing (TboWindow *tbo)
+{
+            gtk_widget_queue_draw_area (tbo->drawing,
+                    0, 0,
+                    tbo->comic->width,
+                    tbo->comic->height);
+}
