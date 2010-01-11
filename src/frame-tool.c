@@ -65,13 +65,17 @@ frame_tool_on_release (GtkWidget *widget,
 
     w = (int)fabs (event->x - N_FRAME_X);
     h = (int)fabs (event->y - N_FRAME_Y);
-    tbo_page_new_frame (tbo_comic_get_current_page (tbo->comic),
-            min (N_FRAME_X, event->x), min (N_FRAME_Y, event->y),
-            w, h);
+
+    if (w != 0 && h != 0)
+    {
+        tbo_page_new_frame (tbo_comic_get_current_page (tbo->comic),
+                min (N_FRAME_X, event->x), min (N_FRAME_Y, event->y),
+                w, h);
+    }
 
     N_FRAME_X = -1;
     N_FRAME_Y = -1;
-    tbo_frame_free (TMP_FRAME);
+    if (TMP_FRAME) tbo_frame_free (TMP_FRAME);
     TMP_FRAME = NULL;
 }
 
