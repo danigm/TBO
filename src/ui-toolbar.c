@@ -121,9 +121,13 @@ static const GtkActionEntry tbo_tools_entries [] = {
 };
 
 static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
-    { "NewFrame", GTK_STOCK_DND_MULTIPLE, "New _Frame", "<control>F",
+    { "NewFrame", "tbo-newframe", "New _Frame", "<control>F",
       "New Frame",
       G_CALLBACK (add_new_frame), FALSE },
+
+    { "Selector", NULL, "Selector", "",
+      "Selector",
+      G_CALLBACK (toolbar_handler), TRUE },
 };
 
 GtkWidget *generate_toolbar (TboWindow *window){

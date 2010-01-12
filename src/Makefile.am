@@ -19,6 +19,7 @@ tbo_SOURCES = \
 	ui-menu.c \
 	ui-toolbar.c \
 	frame-tool.c \
+	custom-stock.c \
 	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \
@@ -28,7 +29,8 @@ tbo_SOURCES = \
 	ui-drawing.h \
 	ui-menu.h \
 	ui-toolbar.h \
-	frame-tool.h
+	frame-tool.h \
+	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \
     		   -DDATA_DIR=\""$(pkgdatadir)"\"

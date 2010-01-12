@@ -10,6 +10,7 @@
        <toolitem name="ppage" action="PrevPage"/>
        <toolitem name="npage" action="NextPage"/>
        <separator/>
+       <toolitem name="selector" action="Selector"/>
        <toolitem name="newframe" action="NewFrame"/>
      </placeholder>
     </toolbar>
