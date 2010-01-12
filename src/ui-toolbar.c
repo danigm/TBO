@@ -6,6 +6,11 @@
 #include "comic-new-dialog.h"
 #include "tbo-window.h"
 #include "comic.h"
+#include "custom-stock.h"
+
+// NEXTDO
+// solo se puede tener elegida una herramienta de la barra de
+// herramientas
 
 static int SELECTED_TOOL = NONE;
 static GtkActionGroup *ACTION_GROUP;
@@ -121,11 +126,11 @@ static const GtkActionEntry tbo_tools_entries [] = {
 };
 
 static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
-    { "NewFrame", "tbo-newframe", "New _Frame", "<control>F",
+    { "NewFrame", TBO_STOCK_FRAME, "New _Frame", "<control>F",
       "New Frame",
       G_CALLBACK (add_new_frame), FALSE },
 
-    { "Selector", NULL, "Selector", "",
+    { "Selector", TBO_STOCK_SELECTOR, "Selector", "",
       "Selector",
       G_CALLBACK (toolbar_handler), TRUE },
 };
