@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <gtk/gtk.h>
 #include "ui-menu.h"
 #include "ui-toolbar.h"
@@ -8,12 +9,18 @@
 #include "comic.h"
 #include "custom-stock.h"
 
-// NEXTDO
-// solo se puede tener elegida una herramienta de la barra de
-// herramientas
-
 static int SELECTED_TOOL = NONE;
 static GtkActionGroup *ACTION_GROUP;
+
+typedef struct
+{
+    enum Tool tool;
+    char *action;
+
+} tool_and_action;
+
+void unselect (enum Tool tool);
+gboolean select_tool (GtkAction *action, TboWindow *tbo);
 
 enum Tool
 get_selected_tool ()
@@ -24,6 +31,7 @@ get_selected_tool ()
 void
 set_selected_tool (enum Tool tool)
 {
+    unselect (SELECTED_TOOL);
     SELECTED_TOOL = tool;
 }
 
@@ -85,19 +93,6 @@ prev_page (GtkAction *action, TboWindow *tbo)
     return FALSE;
 }
 
-gboolean
-add_new_frame (GtkAction *action, TboWindow *tbo)
-{
-    GtkToggleAction *frame_tool;
-
-    frame_tool = (GtkToggleAction *)gtk_action_group_get_action (ACTION_GROUP, "NewFrame");
-    if (gtk_toggle_action_get_active (frame_tool))
-        set_selected_tool (FRAME);
-    else
-        set_selected_tool (NONE);
-    update_toolbar (tbo);
-    tbo_window_update_status (tbo, 0, 0);
-}
 
 static const GtkActionEntry tbo_tools_entries [] = {
     { "NewFileTool", GTK_STOCK_NEW, "_New", "<control>N",
@@ -128,12 +123,66 @@ static const GtkActionEntry tbo_tools_entries [] = {
 static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
     { "NewFrame", TBO_STOCK_FRAME, "New _Frame", "<control>F",
       "New Frame",
-      G_CALLBACK (add_new_frame), FALSE },
+      G_CALLBACK (select_tool), FALSE },
 
     { "Selector", TBO_STOCK_SELECTOR, "Selector", "",
       "Selector",
-      G_CALLBACK (toolbar_handler), TRUE },
+      G_CALLBACK (select_tool), FALSE },
 };
+
+static const tool_and_action tools_actions [] = {
+    {FRAME, "NewFrame"},
+    {SELECTOR, "Selector"},
+};
+
+void
+unselect (enum Tool tool)
+{
+    int i;
+    GtkToggleAction *action;
+
+    for (i=0; i<G_N_ELEMENTS (tools_actions); i++)
+    {
+        if (tools_actions[i].tool == tool)
+        {
+            action = (GtkToggleAction *) gtk_action_group_get_action (ACTION_GROUP, 
+                    tools_actions[i].action);
+
+            gtk_toggle_action_set_active (action, FALSE);
+            break;
+        }
+    }
+}
+
+gboolean
+select_tool (GtkAction *action, TboWindow *tbo)
+{
+    GtkToggleAction *toggle_action;
+    int i;
+    const gchar *name;
+    enum Tool tool;
+
+    toggle_action = (GtkToggleAction *) action;
+    name = gtk_action_get_name (action);
+
+
+    for (i=0; i<G_N_ELEMENTS (tools_actions); i++)
+    {
+        if (strcmp (tools_actions[i].action, name) == 0)
+        {
+            tool = tools_actions[i].tool;
+            break;
+        }
+    }
+
+    if (gtk_toggle_action_get_active (toggle_action))
+        set_selected_tool (tool);
+    else
+        set_selected_tool (NONE);
+    update_toolbar (tbo);
+    tbo_window_update_status (tbo, 0, 0);
+    return FALSE;
+}
 
 GtkWidget *generate_toolbar (TboWindow *window){
     GtkWidget *toolbar;
