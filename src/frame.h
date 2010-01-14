@@ -14,6 +14,7 @@ void tbo_frame_draw_complete (Frame *frame, cairo_t *cr,
         int line_width);
 
 void tbo_frame_draw (Frame *frame, cairo_t *cr);
+int tbo_frame_point_inside (Frame *frame, int x, int y);
 
 #endif
 

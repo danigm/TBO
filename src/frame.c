@@ -53,3 +53,15 @@ void tbo_frame_draw (Frame *frame, cairo_t *cr)
             4);
 }
 
+int
+tbo_frame_point_inside (Frame *frame, int x, int y)
+{
+    if ((x >= frame->x) &&
+            (x <= (frame->x + frame->width)) &&
+            (y >= frame->y) &&
+            (y <= (frame->y + frame->height)))
+        return 1;
+    else
+        return 0;
+}
+

@@ -19,6 +19,7 @@ tbo_SOURCES = \
 	ui-menu.c \
 	ui-toolbar.c \
 	frame-tool.c \
+	selector-tool.c \
 	custom-stock.c \
 	tbo-window.h \
 	comic.h \
@@ -30,6 +31,7 @@ tbo_SOURCES = \
 	ui-menu.h \
 	ui-toolbar.h \
 	frame-tool.h \
+	selector-tool.h \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \

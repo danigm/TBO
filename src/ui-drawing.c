@@ -12,6 +12,7 @@
 #include "frame.h"
 
 #include "frame-tool.h"
+#include "selector-tool.h"
 
 gboolean
 on_expose_cb(GtkWidget      *widget,
@@ -60,6 +61,10 @@ on_expose_cb(GtkWidget      *widget,
             frame_tool_drawing (cr);
             break;
 
+        case SELECTOR:
+            selector_tool_drawing (cr);
+            break;
+
         case NONE:
         default:
             break;
@@ -101,6 +106,11 @@ on_move_cb (GtkWidget     *widget,
             update_drawing (tbo);
             break;
 
+        case SELECTOR:
+            selector_tool_on_move (widget, event, tbo);
+            update_drawing (tbo);
+            break;
+
         case NONE:
         default:
             break;
@@ -125,6 +135,11 @@ on_click_cb (GtkWidget    *widget,
             update_drawing (tbo);
             break;
 
+        case SELECTOR:
+            selector_tool_on_click (widget, event, tbo);
+            update_drawing (tbo);
+            break;
+
         case NONE:
         default:
             break;
@@ -146,6 +161,11 @@ on_release_cb (GtkWidget    *widget,
     {
         case FRAME:
             frame_tool_on_release (widget, event, tbo);
+            update_drawing (tbo);
+            break;
+
+        case SELECTOR:
+            selector_tool_on_release (widget, event, tbo);
             update_drawing (tbo);
             break;
 
