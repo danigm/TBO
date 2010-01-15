@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
+#include <math.h>
 #include "selector-tool.h"
 #include "tbo-window.h"
 #include "page.h"
@@ -18,35 +19,64 @@ typedef struct
 static Frame *SELECTED = NULL;
 static int START_X=0, START_Y=0;
 static int START_M_X=0, START_M_Y=0;
+static int START_M_W=0, START_M_H=0;
 gboolean CLICKED = FALSE;
 gboolean OVER_RESIZER = FALSE;
+gboolean RESIZING = FALSE;
+
+gboolean
+over_resizer (Frame *frame, int x, int y)
+{
+    int rx, ry;
+    rx = frame->x + frame->width;
+    ry = frame->y + frame->height;
+
+    if (((rx-R_SIZE) < x) &&
+        ((rx+R_SIZE) > x) &&
+        ((ry-R_SIZE) < y) &&
+        ((ry+R_SIZE) > y))
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
 
 void
 selector_tool_on_move (GtkWidget *widget,
         GdkEventMotion *event,
         TboWindow *tbo)
 {
-    int x, y, rx, ry;
+    int x, y, offset_x, offset_y;
 
     x = (int)event->x;
     y = (int)event->y;
 
     if (SELECTED != NULL)
     {
-        // moving frame
         if (CLICKED)
         {
-            SELECTED->x = START_M_X - (START_X - x);
-            SELECTED->y = START_M_Y - (START_Y - y);
+            offset_x = (START_X - x);
+            offset_y = (START_Y - y);
+
+            // resizing frame
+            if (RESIZING)
+            {
+                SELECTED->width = abs (START_M_W - offset_x);
+                SELECTED->height = abs (START_M_H - offset_y);
+            }
+            // moving frame
+            else
+            {
+                SELECTED->x = START_M_X - offset_x;
+                SELECTED->y = START_M_Y - offset_y;
+            }
         }
 
-        rx = SELECTED->x + SELECTED->width;
-        ry = SELECTED->y + SELECTED->height;
         // over resizer
-        if (((rx-R_SIZE) < x) &&
-            ((rx+R_SIZE) > x) &&
-            ((ry-R_SIZE) < y) &&
-            ((ry+R_SIZE) > y))
+        if (over_resizer (SELECTED, x, y))
         {
             OVER_RESIZER = TRUE;
         }
@@ -66,6 +96,7 @@ selector_tool_on_click (GtkWidget *widget,
     GList *frame_list;
     Page *page;
     Frame *frame;
+    gboolean found = FALSE;
 
     x = (int)event->x;
     y = (int)event->y;
@@ -78,14 +109,26 @@ selector_tool_on_click (GtkWidget *widget,
         {
             // Selecting last occurrence.
             SELECTED = frame;
+            found = TRUE;
         }
     }
+    // resizing
+    if (SELECTED && over_resizer (SELECTED, x, y))
+    {
+        RESIZING = TRUE;
+    }
+    else if (!found)
+        SELECTED = NULL;
+
     START_X = x;
     START_Y = y;
+
     if (SELECTED != NULL)
     {
         START_M_X = SELECTED->x;
         START_M_Y = SELECTED->y;
+        START_M_W = SELECTED->width;
+        START_M_H = SELECTED->height;
     }
     CLICKED = TRUE;
 }
@@ -98,6 +141,7 @@ selector_tool_on_release (GtkWidget *widget,
     START_X = 0;
     START_Y = 0;
     CLICKED = FALSE;
+    RESIZING = FALSE;
 }
 
 void
