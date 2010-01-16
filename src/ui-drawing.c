@@ -15,6 +15,29 @@
 #include "selector-tool.h"
 
 gboolean
+on_key_cb (GtkWidget    *widget,
+           GdkEventKey  *event,
+           TboWindow    *tbo)
+{
+    enum Tool tool;
+
+    tool = get_selected_tool ();
+    switch (tool)
+    {
+        case SELECTOR:
+            selector_tool_on_key (widget, event, tbo);
+            update_drawing (tbo);
+            tbo_window_update_status (tbo, 0, 0);
+            break;
+        case NONE:
+        default:
+            break;
+    }
+
+    return FALSE;
+}
+
+gboolean
 on_expose_cb(GtkWidget      *widget,
              GdkEventExpose *event,
              TboWindow       *tbo)
@@ -93,7 +116,6 @@ on_move_cb (GtkWidget     *widget,
            GdkEventMotion *event,
            TboWindow      *tbo)
 {
-    tbo_window_update_status (tbo, (int)event->x, (int)event->y);
 
     enum Tool tool;
 
@@ -116,6 +138,7 @@ on_move_cb (GtkWidget     *widget,
             break;
     }
 
+    tbo_window_update_status (tbo, (int)event->x, (int)event->y);
     return FALSE;
 }
 
@@ -145,6 +168,7 @@ on_click_cb (GtkWidget    *widget,
             break;
     }
 
+    tbo_window_update_status (tbo, (int)event->x, (int)event->y);
     return FALSE;
 }
 
@@ -174,6 +198,7 @@ on_release_cb (GtkWidget    *widget,
             break;
     }
 
+    tbo_window_update_status (tbo, (int)event->x, (int)event->y);
     return FALSE;
 }
 
@@ -210,14 +235,18 @@ darea_connect_signals (TboWindow *tbo)
 
     g_signal_connect (drawing, "motion_notify_event",
             G_CALLBACK (on_move_cb), tbo);
-}
 
+    // key press event
+    g_signal_connect (tbo->window, "key_press_event",
+            G_CALLBACK (on_key_cb), tbo);
+
+}
 
 void
 update_drawing (TboWindow *tbo)
 {
-            gtk_widget_queue_draw_area (tbo->drawing,
-                    0, 0,
-                    tbo->comic->width,
-                    tbo->comic->height);
+    gtk_widget_queue_draw_area (tbo->drawing,
+            0, 0,
+            tbo->comic->width,
+            tbo->comic->height);
 }

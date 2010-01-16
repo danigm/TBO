@@ -123,11 +123,12 @@ tbo_new_tbo (int width, int height)
 void
 tbo_window_update_status (TboWindow *tbo, int x, int y)
 {
-    char buffer[100];
-    snprintf (buffer, 100, "page: %d of %d [ %5d,%5d ]",
+    char buffer[200];
+    snprintf (buffer, 200, "page: %d of %d [ %5d,%5d ] | frames: %d",
                     tbo_comic_page_index (tbo->comic),
                     tbo_comic_len (tbo->comic),
-                    x, y);
+                    x, y,
+                    tbo_page_len (tbo_comic_get_current_page (tbo->comic)));
     gtk_statusbar_push (GTK_STATUSBAR (tbo->status), 0, buffer);
     update_drawing (tbo);
 }

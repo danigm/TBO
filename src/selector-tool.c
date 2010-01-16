@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include <cairo.h>
 #include <math.h>
 #include "selector-tool.h"
@@ -193,6 +194,21 @@ selector_tool_drawing (cairo_t *cr)
 
         cairo_set_antialias (cr, CAIRO_ANTIALIAS_DEFAULT);
 
+    }
+}
+
+void
+selector_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
+{
+    Page *page;
+    int nth;
+
+    if (SELECTED != NULL && event->keyval == GDK_Delete)
+    {
+        page = tbo_comic_get_current_page (tbo->comic);
+        nth = g_list_index (page->frames, SELECTED);
+        tbo_page_del_frame (page, nth);
+        SELECTED = NULL;
     }
 }
 
