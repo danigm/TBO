@@ -108,3 +108,23 @@ tbo_page_get_current_frame (Page *page)
     return (Frame *)page->frames->data;
 }
 
+void
+tbo_page_set_current_frame (Page *page, Frame *frame)
+{
+    page->frames = g_list_find (g_list_first (page->frames), frame);
+}
+
+Frame *
+tbo_page_first_frame (Page *page)
+{
+    page->frames = g_list_first (page->frames);
+    if (page->frames != NULL)
+        return page->frames->data;
+    return NULL;
+}
+
+GList *
+tbo_page_get_frames (Page *page)
+{
+    return g_list_first (page->frames);
+}

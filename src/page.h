@@ -12,9 +12,12 @@ int tbo_page_len (Page *page);
 int tbo_page_frame_index (Page *page);
 gboolean tbo_page_frame_first (Page *page);
 gboolean tbo_page_frame_last (Page *page);
+Frame *tbo_page_first_frame (Page *page);
 Frame *tbo_page_next_frame (Page *page);
 Frame *tbo_page_prev_frame (Page *page);
 Frame *tbo_page_get_current_frame (Page *page);
+void tbo_page_set_current_frame (Page *page, Frame *frame);
+GList *tbo_page_get_frames (Page *page);
 
 #endif
 

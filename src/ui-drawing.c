@@ -67,7 +67,7 @@ on_expose_cb(GtkWidget      *widget,
 
     page = tbo_comic_get_current_page (tbo->comic);
 
-    for (frame_list = page->frames; frame_list; frame_list = frame_list->next)
+    for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
     {
         // draw each frame  
         frame = (Frame *)frame_list->data;

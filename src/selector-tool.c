@@ -103,7 +103,7 @@ selector_tool_on_click (GtkWidget *widget,
     y = (int)event->y;
 
     page = tbo_comic_get_current_page (tbo->comic);
-    for (frame_list = page->frames; frame_list; frame_list = frame_list->next)
+    for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
     {
         frame = (Frame *)frame_list->data;
         if (tbo_frame_point_inside (frame, x, y))
@@ -130,6 +130,7 @@ selector_tool_on_click (GtkWidget *widget,
         START_M_Y = SELECTED->y;
         START_M_W = SELECTED->width;
         START_M_H = SELECTED->height;
+        tbo_page_set_current_frame (page, SELECTED);
     }
     CLICKED = TRUE;
 }
@@ -203,12 +204,21 @@ selector_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
     Page *page;
     int nth;
 
+    page = tbo_comic_get_current_page (tbo->comic);
     if (SELECTED != NULL && event->keyval == GDK_Delete)
     {
-        page = tbo_comic_get_current_page (tbo->comic);
         nth = g_list_index (page->frames, SELECTED);
         tbo_page_del_frame (page, nth);
         SELECTED = NULL;
+    }
+
+    if (event->keyval == GDK_Tab)
+    {
+        SELECTED = tbo_page_next_frame (page);
+        if (SELECTED == NULL)
+        {
+            SELECTED = tbo_page_first_frame (page);
+        }
     }
 }
 
