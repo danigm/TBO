@@ -202,13 +202,11 @@ void
 selector_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
 {
     Page *page;
-    int nth;
 
     page = tbo_comic_get_current_page (tbo->comic);
     if (SELECTED != NULL && event->keyval == GDK_Delete)
     {
-        nth = g_list_index (page->frames, SELECTED);
-        tbo_page_del_frame (page, nth);
+        tbo_page_del_frame (page, SELECTED);
         SELECTED = NULL;
     }
 

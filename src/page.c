@@ -44,12 +44,18 @@ tbo_page_new_frame (Page *page, int x, int y,
 }
 
 void
-tbo_page_del_frame (Page *page, int nth)
+tbo_page_del_frame_by_index (Page *page, int nth)
 {
     Frame *frame;
 
-    frame = (Frame *) g_list_nth_data (page->frames, nth);
-    page->frames = g_list_remove (page->frames, frame);
+    frame = (Frame *) g_list_nth_data (g_list_first (page->frames), nth);
+    tbo_page_del_frame (page, frame);
+}
+
+void
+tbo_page_del_frame (Page *page, Frame *frame)
+{
+    page->frames = g_list_remove (g_list_first (page->frames), frame);
     tbo_frame_free (frame);
 }
 
