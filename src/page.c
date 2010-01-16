@@ -20,12 +20,14 @@ void tbo_page_free (Page *page)
 {
     GList *f;
 
-    for (f=page->frames; f; f = g_list_next(f))
+    if (tbo_page_len (page) > 0)
     {
-        tbo_frame_free ((Frame *) f->data);
+        for (f=tbo_page_get_frames (page); f; f=g_list_next(f))
+        {
+            tbo_frame_free ((Frame *) f->data);
+        }
     }
-
-    g_list_free (page->frames);
+    g_list_free (tbo_page_get_frames (page));
     free (page);
 }
 

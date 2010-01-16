@@ -40,10 +40,12 @@ update_toolbar (TboWindow *tbo)
 {
     GtkAction *prev;
     GtkAction *next;
+    GtkAction *delete;
 
-    // Page next and prev button sensitive
+    // Page next, prev and delete button sensitive
     prev = gtk_action_group_get_action (ACTION_GROUP, "PrevPage");
     next = gtk_action_group_get_action (ACTION_GROUP, "NextPage");
+    delete = gtk_action_group_get_action (ACTION_GROUP, "DelPage");
 
     if (tbo_comic_page_first (tbo->comic))
         gtk_action_set_sensitive (prev, FALSE);
@@ -54,7 +56,10 @@ update_toolbar (TboWindow *tbo)
         gtk_action_set_sensitive (next, FALSE);
     else
         gtk_action_set_sensitive (next, TRUE);
-
+    if (tbo_comic_len (tbo->comic) > 1)
+        gtk_action_set_sensitive (delete, TRUE);
+    else
+        gtk_action_set_sensitive (delete, FALSE);
 }
 
 gboolean 
@@ -68,6 +73,15 @@ gboolean
 add_new_page (GtkAction *action, TboWindow *tbo)
 {
     tbo_comic_new_page (tbo->comic);
+    tbo_window_update_status (tbo, 0, 0);
+    update_toolbar (tbo);
+    return FALSE;
+}
+
+gboolean
+del_current_page (GtkAction *action, TboWindow *tbo)
+{
+    tbo_comic_del_current_page (tbo->comic);
     tbo_window_update_status (tbo, 0, 0);
     update_toolbar (tbo);
     return FALSE;
@@ -107,9 +121,14 @@ static const GtkActionEntry tbo_tools_entries [] = {
       "Save current document",
       G_CALLBACK (toolbar_handler) },
 
+    // Page tools
     { "NewPage", GTK_STOCK_ADD, "New Page", "<control>P",
       "New page",
       G_CALLBACK (add_new_page) },
+
+    { "DelPage", GTK_STOCK_DELETE, "Delete Page", "",
+      "Delete current page",
+      G_CALLBACK (del_current_page) },
 
     { "PrevPage", GTK_STOCK_GO_BACK, "Prev Page", "",
       "Prev page",
