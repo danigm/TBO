@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include "ui-menu.h"
 #include "ui-toolbar.h"
 #include "config.h"
@@ -65,7 +66,7 @@ update_toolbar (TboWindow *tbo)
 gboolean 
 toolbar_handler (GtkWidget *widget, gpointer data)
 {
-    printf("toolbar: %s\n", ((TboWindow *)data)->comic->title);
+    printf(_("toolbar: %s\n"), ((TboWindow *)data)->comic->title);
     return FALSE;
 }
 
@@ -109,43 +110,43 @@ prev_page (GtkAction *action, TboWindow *tbo)
 
 
 static const GtkActionEntry tbo_tools_entries [] = {
-    { "NewFileTool", GTK_STOCK_NEW, "_New", "<control>N",
-      "New Comic",
+    { "NewFileTool", GTK_STOCK_NEW, N_("_New"), "<control>N",
+      N_("New Comic"),
       G_CALLBACK (tbo_comic_new_dialog) },
 
-    { "OpenFileTool", GTK_STOCK_OPEN, "_Open", "<control>O",
-      "Open comic",
+    { "OpenFileTool", GTK_STOCK_OPEN, N_("_Open"), "<control>O",
+      N_("Open comic"),
       G_CALLBACK (toolbar_handler) },
 
-    { "SaveFileTool", GTK_STOCK_SAVE, "_Save", "<control>S",
-      "Save current document",
+    { "SaveFileTool", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
+      N_("Save current document"),
       G_CALLBACK (toolbar_handler) },
 
     // Page tools
-    { "NewPage", GTK_STOCK_ADD, "New Page", "<control>P",
-      "New page",
+    { "NewPage", GTK_STOCK_ADD, N_("New Page"), "<control>P",
+      N_("New page"),
       G_CALLBACK (add_new_page) },
 
-    { "DelPage", GTK_STOCK_DELETE, "Delete Page", "",
-      "Delete current page",
+    { "DelPage", GTK_STOCK_DELETE, N_("Delete Page"), "",
+      N_("Delete current page"),
       G_CALLBACK (del_current_page) },
 
-    { "PrevPage", GTK_STOCK_GO_BACK, "Prev Page", "",
-      "Prev page",
+    { "PrevPage", GTK_STOCK_GO_BACK, N_("Prev Page"), "",
+      N_("Prev page"),
       G_CALLBACK (prev_page) },
 
-    { "NextPage", GTK_STOCK_GO_FORWARD, "Next Page", "",
-      "Next page",
+    { "NextPage", GTK_STOCK_GO_FORWARD, N_("Next Page"), "",
+      N_("Next page"),
       G_CALLBACK (next_page) },
 };
 
 static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
-    { "NewFrame", TBO_STOCK_FRAME, "New _Frame", "<control>F",
-      "New Frame",
+    { "NewFrame", TBO_STOCK_FRAME, N_("New _Frame"), "<control>F",
+      N_("New Frame"),
       G_CALLBACK (select_tool), FALSE },
 
-    { "Selector", TBO_STOCK_SELECTOR, "Selector", "",
-      "Selector",
+    { "Selector", TBO_STOCK_SELECTOR, N_("Selector"), "",
+      N_("Selector"),
       G_CALLBACK (select_tool), FALSE },
 };
 

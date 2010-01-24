@@ -35,7 +35,8 @@ tbo_SOURCES = \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \
-    		   -DDATA_DIR=\""$(pkgdatadir)"\"
+			-DGNOMELOCALEDIR=\"$(datadir)/locale\" \
+			-DDATA_DIR=\""$(pkgdatadir)"\"
 
 tbo_LDADD = @GTK_LIBS@
 
