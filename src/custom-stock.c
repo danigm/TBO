@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include "custom-stock.h"
 
 #define ICONDIR "/icons/"
@@ -30,7 +31,7 @@ void load_custom_stock ()
         image = (GdkPixbuf *) gdk_pixbuf_new_from_file (icons[i].image, &error);
         if (image == NULL)
         {
-            printf ("error loading image %s\n", icons[i].image);
+            printf (_("error loading image %s\n"), icons[i].image);
         }
 
         iconset = gtk_icon_set_new_from_pixbuf (image);

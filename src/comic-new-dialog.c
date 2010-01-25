@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include "comic-new-dialog.h"
 #include "tbo-window.h"
 
@@ -18,7 +19,7 @@ tbo_comic_new_dialog (GtkWidget *widget, TboWindow *window)
     int width;
     int height;
 
-    dialog = gtk_dialog_new_with_buttons ("New Comic", 
+    dialog = gtk_dialog_new_with_buttons (_("New Comic"),
                         GTK_WINDOW (window->window),
                         GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_STOCK_OK, 
@@ -30,7 +31,7 @@ tbo_comic_new_dialog (GtkWidget *widget, TboWindow *window)
     vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
     
     hbox = gtk_hbox_new (FALSE, FALSE);
-    label = gtk_label_new ("width: ");
+    label = gtk_label_new (_("width: "));
     gtk_widget_set_size_request (label, 60, -1);
     gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
     adjustment = gtk_adjustment_new (800, 0, 10000, 100, 100, 0);
@@ -40,7 +41,7 @@ tbo_comic_new_dialog (GtkWidget *widget, TboWindow *window)
     gtk_container_add (GTK_CONTAINER (vbox), hbox);
 
     hbox = gtk_hbox_new (FALSE, FALSE);
-    label = gtk_label_new ("height: ");
+    label = gtk_label_new (_("height: "));
     gtk_widget_set_size_request (label, 60, -1);
     gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
     adjustment = gtk_adjustment_new (500, 0, 10000, 100, 100, 0);

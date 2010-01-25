@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cairo.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 
 #include "ui-toolbar.h"
 

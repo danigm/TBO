@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 0.1\n"
 "Report-Msgid-Bugs-To: dani@danigm.net\n"
-"POT-Creation-Date: 2010-01-24 23:44+0100\n"
+"POT-Creation-Date: 2010-01-25 21:50+0100\n"
 "PO-Revision-Date: 2010-01-24 20:48+0100\n"
 "Last-Translator: Daniel Garcia <dani@danigm.net>\n"
 "Language-Team: \n"
@@ -20,15 +20,16 @@ msgstr ""
 msgid "toolbar: %s\n"
 msgstr "barra de herramientas: %s\n"
 
-#: ../src/ui-toolbar.c:113
+#. File menu
+#: ../src/ui-toolbar.c:113 ../src/ui-menu.c:28
 msgid "_New"
 msgstr "_Nuevo"
 
-#: ../src/ui-toolbar.c:114
+#: ../src/ui-toolbar.c:114 ../src/comic-new-dialog.c:22
 msgid "New Comic"
 msgstr "Nuevo Comic"
 
-#: ../src/ui-toolbar.c:117
+#: ../src/ui-toolbar.c:117 ../src/ui-menu.c:32
 msgid "_Open"
 msgstr "_Abrir"
 
@@ -36,11 +37,11 @@ msgstr "_Abrir"
 msgid "Open comic"
 msgstr "Abrir comic"
 
-#: ../src/ui-toolbar.c:121
+#: ../src/ui-toolbar.c:121 ../src/ui-menu.c:36
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../src/ui-toolbar.c:122
+#: ../src/ui-toolbar.c:122 ../src/ui-menu.c:37
 msgid "Save current document"
 msgstr "Guardar el documento actual"
 
@@ -88,3 +89,51 @@ msgstr "Nueva Vieta"
 #: ../src/ui-toolbar.c:148 ../src/ui-toolbar.c:149
 msgid "Selector"
 msgstr "Selector"
+
+#: ../src/comic-new-dialog.c:34
+msgid "width: "
+msgstr "ancho: "
+
+#: ../src/comic-new-dialog.c:44
+msgid "height: "
+msgstr "alto: "
+
+#: ../src/custom-stock.c:34
+#, c-format
+msgid "error loading image %s\n"
+msgstr "error cargando imagen %s\n"
+
+#: ../src/tbo-window.c:90
+msgid "Untitled"
+msgstr "Sintitulo"
+
+#: ../src/tbo-window.c:128
+#, c-format
+msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
+msgstr "página: %d de %d [ %5d,%5d ] | viñetas: %d"
+
+#. Toplevel
+#: ../src/ui-menu.c:24
+msgid "_File"
+msgstr "_Archivo"
+
+#: ../src/ui-menu.c:29
+msgid "Create a new file"
+msgstr "Crear un nuevo fichero"
+
+#: ../src/ui-menu.c:33
+msgid "Open a new file"
+msgstr "Abrir un fichero"
+
+#: ../src/ui-menu.c:40
+msgid "_Quit"
+msgstr "_Salir"
+
+#: ../src/ui-menu.c:41
+msgid "Quit"
+msgstr "Salir"
+
+#: ../src/ui-menu.c:55
+#, c-format
+msgid "Could not merge tbo-menu-ui.xml: %s"
+msgstr "No se ha podido utilizar tbo-menu-ui.xml: %s"

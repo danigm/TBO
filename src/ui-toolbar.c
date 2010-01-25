@@ -218,6 +218,7 @@ GtkWidget *generate_toolbar (TboWindow *window){
     }
 
     ACTION_GROUP = gtk_action_group_new ("ToolsActions");
+    gtk_action_group_set_translation_domain (ACTION_GROUP, NULL);
     gtk_action_group_add_actions (ACTION_GROUP, tbo_tools_entries,
                         G_N_ELEMENTS (tbo_tools_entries), window);
     gtk_action_group_add_toggle_actions (ACTION_GROUP, tbo_tools_toogle_entries,

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include "tbo-window.h"
 #include "comic.h"
 #include "ui-menu.h"
@@ -86,7 +87,7 @@ tbo_new_tbo (int width, int height)
     container = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (window), container);
 
-    comic = tbo_comic_new ("Untitled", width, height);
+    comic = tbo_comic_new (_("Untitled"), width, height);
     gtk_window_set_title (GTK_WINDOW (window), comic->title);
     scrolled = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -124,7 +125,7 @@ void
 tbo_window_update_status (TboWindow *tbo, int x, int y)
 {
     char buffer[200];
-    snprintf (buffer, 200, "page: %d of %d [ %5d,%5d ] | frames: %d",
+    snprintf (buffer, 200, _("page: %d of %d [ %5d,%5d ] | frames: %d"),
                     tbo_comic_page_index (tbo->comic),
                     tbo_comic_len (tbo->comic),
                     x, y,

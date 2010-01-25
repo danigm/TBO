@@ -1,4 +1,3 @@
-
 #include <gtk/gtk.h>
 #include <malloc.h>
 #include "comic.h"

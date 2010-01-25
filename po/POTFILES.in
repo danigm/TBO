@@ -1,3 +1,7 @@
 [encoding: UTF-8]
 src/ui-toolbar.c
 src/tbo.c
+src/comic-new-dialog.c
+src/custom-stock.c
+src/tbo-window.c
+src/ui-menu.c

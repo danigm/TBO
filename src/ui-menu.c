@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 
 #include "config.h"
 #include "ui-menu.h"
@@ -20,24 +21,24 @@ gboolean close_cb (GtkWidget *widget, gpointer data){
 static const GtkActionEntry tbo_menu_entries [] = {
     /* Toplevel */
 
-    { "File", NULL, "_File" },
+    { "File", NULL, N_("_File") },
 
     /* File menu */
 
-    { "NewFile", GTK_STOCK_NEW, "_New", "<control>N",
-      "Create a new file",
+    { "NewFile", GTK_STOCK_NEW, N_("_New"), "<control>N",
+      N_("Create a new file"),
       G_CALLBACK (tbo_comic_new_dialog) },
 
-    { "OpenFile", GTK_STOCK_OPEN, "_Open", "<control>O",
-      "Open a new file",
+    { "OpenFile", GTK_STOCK_OPEN, N_("_Open"), "<control>O",
+      N_("Open a new file"),
       G_CALLBACK (menu_handler) },
 
-    { "SaveFile", GTK_STOCK_SAVE, "_Save", "<control>S",
-      "Save current document",
+    { "SaveFile", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
+      N_("Save current document"),
       G_CALLBACK (menu_handler) },
 
-    { "Quit", GTK_STOCK_QUIT, "_Quit", "<control>Q",
-      "Quit",
+    { "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
+      N_("Quit"),
       G_CALLBACK (close_cb) },
 };
 
@@ -51,11 +52,12 @@ GtkWidget *generate_menu (TboWindow *window){
     gtk_ui_manager_add_ui_from_file (manager, DATA_DIR "/ui/tbo-menu-ui.xml", &error);
     if (error != NULL)
     {
-        g_warning ("Could not merge tbo-menu-ui.xml: %s", error->message);
+        g_warning (_("Could not merge tbo-menu-ui.xml: %s"), error->message);
         g_error_free (error);
     }
 
     action_group = gtk_action_group_new ("MenuActions");
+    gtk_action_group_set_translation_domain (action_group, NULL);
     gtk_action_group_add_actions (action_group, tbo_menu_entries,
                         G_N_ELEMENTS (tbo_menu_entries), window);
 
