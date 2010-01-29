@@ -24,6 +24,15 @@ static int START_M_W=0, START_M_H=0;
 gboolean CLICKED = FALSE;
 gboolean OVER_RESIZER = FALSE;
 gboolean RESIZING = FALSE;
+GtkWidget *SPIN_W = NULL;
+GtkWidget *SPIN_H = NULL;
+
+gboolean
+remove_cb (GtkWidget *widget, gpointer data)
+{
+    gtk_widget_destroy(widget);
+    return FALSE;
+}
 
 gboolean
 over_resizer (Frame *frame, int x, int y)
@@ -99,6 +108,11 @@ selector_tool_on_click (GtkWidget *widget,
     Frame *frame;
     gboolean found = FALSE;
 
+    GtkWidget *toolarea;
+    GtkObject *adjustment;
+
+    toolarea = tbo->toolarea;
+
     x = (int)event->x;
     y = (int)event->y;
 
@@ -111,6 +125,15 @@ selector_tool_on_click (GtkWidget *widget,
             // Selecting last occurrence.
             SELECTED = frame;
             found = TRUE;
+
+            if (!SPIN_W)
+            {
+                gtk_container_foreach (GTK_CONTAINER (toolarea), (GtkCallback)remove_cb, NULL);
+                adjustment = gtk_adjustment_new (SELECTED->x, 0, 10000, 1, 1, 0);
+                SPIN_W = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
+                gtk_box_pack_start (GTK_BOX (toolarea), SPIN_W, FALSE, FALSE, 0);
+                gtk_widget_show_all (toolarea);
+            }
         }
     }
     // resizing

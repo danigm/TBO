@@ -12,8 +12,8 @@
 static int NWINDOWS = 0;
 
 TboWindow *
-tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *status, 
-                GtkWidget *vbox, Comic *comic)
+tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *toolarea,
+                GtkWidget *status, GtkWidget *vbox, Comic *comic)
 {
     TboWindow *tbo;
     GList *list;
@@ -26,6 +26,7 @@ tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *status,
     tbo->status = status;
     tbo->vbox = vbox;
     tbo->comic = comic;
+    tbo->toolarea = toolarea;
 
     return tbo;
 }
@@ -98,9 +99,17 @@ tbo_new_tbo (int width, int height)
     darea = get_drawing_area (width, height);
     gtk_container_add (GTK_CONTAINER (scrolled), darea);
 
+    //TODO remove testlabel
+    testlabel = gtk_label_new ("test label");
+    hpaned = gtk_hpaned_new ();
+    tool_paned = gtk_vbox_new (FALSE, 0);
+    gtk_paned_set_position (GTK_PANED (hpaned), (int) (0.9 * width));
+    gtk_paned_add1 (GTK_PANED (hpaned), scrolled);
+    gtk_paned_add2 (GTK_PANED (hpaned), tool_paned);
+
     status = gtk_statusbar_new ();
 
-    tbo = tbo_window_new (window, scrolled, status, container, comic);
+    tbo = tbo_window_new (window, scrolled, tool_paned, status, container, comic);
     tbo_window_update_status (tbo, 0, 0);
 
     // ui-drawing.c (expose, motion and click)
@@ -117,15 +126,8 @@ tbo_new_tbo (int width, int height)
     gtk_box_pack_start (GTK_BOX (container), menu, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (container), toolbar, FALSE, FALSE, 0);
 
-    //TODO remove testlabel
-    testlabel = gtk_label_new ("test label");
-    hpaned = gtk_hpaned_new ();
-    tool_paned = gtk_vbox_new (FALSE, 0);
-    gtk_paned_set_position (GTK_PANED (hpaned), (int) (0.9 * width));
     gtk_container_add (GTK_CONTAINER (tool_paned), GTK_WIDGET (testlabel));
 
-    gtk_paned_add1 (GTK_PANED (hpaned), scrolled);
-    gtk_paned_add2 (GTK_PANED (hpaned), tool_paned);
     gtk_container_add (GTK_CONTAINER (container), hpaned);
 
     gtk_box_pack_start (GTK_BOX (container), status, FALSE, FALSE, 0);

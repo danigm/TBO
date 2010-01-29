@@ -8,6 +8,7 @@ typedef struct
 {
     GtkWidget *window;
     GtkWidget *dw_scroll;
+    GtkWidget *toolarea;
     GtkWidget *drawing;
     GtkWidget *status;
     GtkWidget *vbox;
@@ -15,7 +16,7 @@ typedef struct
 
 } TboWindow;
 
-TboWindow *tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *status, GtkWidget *vbox, Comic *comic);
+TboWindow *tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *toolarea, GtkWidget *status, GtkWidget *vbox, Comic *comic);
 void tbo_window_free (TboWindow *tbo);
 gboolean tbo_window_free_cb (GtkWidget *widget, GdkEventExpose *event, TboWindow *tbo);
 GdkPixbuf *create_pixbuf (const gchar * filename);
