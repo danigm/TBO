@@ -7,6 +7,7 @@
 #include "page.h"
 #include "frame.h"
 #include "comic.h"
+#include "ui-drawing.h"
 
 #define R_SIZE 10
 
@@ -26,12 +27,95 @@ gboolean OVER_RESIZER = FALSE;
 gboolean RESIZING = FALSE;
 GtkWidget *SPIN_W = NULL;
 GtkWidget *SPIN_H = NULL;
+GtkWidget *SPIN_X = NULL;
+GtkWidget *SPIN_Y = NULL;
+
+
+gboolean
+update_selected_cb (GtkSpinButton *widget, TboWindow *tbo)
+{
+    if (RESIZING || CLICKED || SELECTED == NULL || SPIN_X == NULL)
+        return FALSE;
+
+    SELECTED->x = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (SPIN_X));
+    SELECTED->y = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (SPIN_Y));
+    SELECTED->width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (SPIN_W));
+    SELECTED->height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (SPIN_H));
+
+    update_drawing (tbo);
+    return FALSE;
+}
 
 gboolean
 remove_cb (GtkWidget *widget, gpointer data)
 {
     gtk_widget_destroy(widget);
     return FALSE;
+}
+
+GtkWidget *add_spin_with_label (GtkWidget *toolarea, const char *string, int value)
+{
+        GtkWidget *label;
+        GtkWidget *spin;
+        GtkObject *adjustment;
+        GtkWidget *hpanel;
+
+        hpanel = gtk_hbox_new (FALSE, 0);
+        label = gtk_label_new (string);
+        adjustment = gtk_adjustment_new (value, 0, 10000, 1, 1, 0);
+        spin = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
+        gtk_box_pack_start (GTK_BOX (hpanel), label, TRUE, TRUE, 0);
+        gtk_misc_set_alignment (GTK_MISC (label), 1, 0);
+        gtk_box_pack_start (GTK_BOX (hpanel), spin, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (toolarea), hpanel, FALSE, FALSE, 0);
+
+        return spin;
+}
+
+void
+empty_tool_area (GtkWidget *toolarea)
+{
+    gtk_container_foreach (GTK_CONTAINER (toolarea), (GtkCallback)remove_cb, NULL);
+    SPIN_X = NULL;
+    SPIN_Y = NULL;
+    SPIN_H = NULL;
+    SPIN_W = NULL;
+}
+
+void
+update_tool_area (TboWindow *tbo)
+{
+    GtkWidget *toolarea = tbo->toolarea;
+
+    if (!SPIN_X)
+    {
+        empty_tool_area (toolarea);
+        SPIN_X = add_spin_with_label (toolarea, "x: ", SELECTED->x);
+        SPIN_Y = add_spin_with_label (toolarea, "y: ", SELECTED->y);
+        SPIN_W = add_spin_with_label (toolarea, "w: ", SELECTED->width);
+        SPIN_H = add_spin_with_label (toolarea, "h: ", SELECTED->height);
+
+        g_signal_connect (SPIN_X, "value-changed", G_CALLBACK (update_selected_cb), tbo);
+        g_signal_connect (SPIN_Y, "value-changed", G_CALLBACK (update_selected_cb), tbo);
+        g_signal_connect (SPIN_W, "value-changed", G_CALLBACK (update_selected_cb), tbo);
+        g_signal_connect (SPIN_H, "value-changed", G_CALLBACK (update_selected_cb), tbo);
+
+        gtk_widget_show_all (toolarea);
+    }
+
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (SPIN_X), SELECTED->x);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (SPIN_Y), SELECTED->y);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (SPIN_W), SELECTED->width);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (SPIN_H), SELECTED->height);
+}
+
+void
+set_selected (Frame *frame, TboWindow *tbo)
+{
+    SELECTED = frame;
+    empty_tool_area (tbo->toolarea);
+    if (SELECTED != NULL)
+        update_tool_area (tbo);
 }
 
 gboolean
@@ -76,12 +160,16 @@ selector_tool_on_move (GtkWidget *widget,
             {
                 SELECTED->width = abs (START_M_W - offset_x);
                 SELECTED->height = abs (START_M_H - offset_y);
+
+                update_tool_area (tbo);
             }
             // moving frame
             else
             {
                 SELECTED->x = START_M_X - offset_x;
                 SELECTED->y = START_M_Y - offset_y;
+
+                update_tool_area (tbo);
             }
         }
 
@@ -108,11 +196,6 @@ selector_tool_on_click (GtkWidget *widget,
     Frame *frame;
     gboolean found = FALSE;
 
-    GtkWidget *toolarea;
-    GtkObject *adjustment;
-
-    toolarea = tbo->toolarea;
-
     x = (int)event->x;
     y = (int)event->y;
 
@@ -123,17 +206,8 @@ selector_tool_on_click (GtkWidget *widget,
         if (tbo_frame_point_inside (frame, x, y))
         {
             // Selecting last occurrence.
-            SELECTED = frame;
+            set_selected (frame, tbo);
             found = TRUE;
-
-            if (!SPIN_W)
-            {
-                gtk_container_foreach (GTK_CONTAINER (toolarea), (GtkCallback)remove_cb, NULL);
-                adjustment = gtk_adjustment_new (SELECTED->x, 0, 10000, 1, 1, 0);
-                SPIN_W = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-                gtk_box_pack_start (GTK_BOX (toolarea), SPIN_W, FALSE, FALSE, 0);
-                gtk_widget_show_all (toolarea);
-            }
         }
     }
     // resizing
@@ -142,7 +216,7 @@ selector_tool_on_click (GtkWidget *widget,
         RESIZING = TRUE;
     }
     else if (!found)
-        SELECTED = NULL;
+        set_selected (NULL, tbo);
 
     START_X = x;
     START_Y = y;
@@ -230,15 +304,15 @@ selector_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
     if (SELECTED != NULL && event->keyval == GDK_Delete)
     {
         tbo_page_del_frame (page, SELECTED);
-        SELECTED = NULL;
+        set_selected (NULL, tbo);
     }
 
     if (event->keyval == GDK_Tab)
     {
-        SELECTED = tbo_page_next_frame (page);
+        set_selected (tbo_page_next_frame (page), tbo);
         if (SELECTED == NULL)
         {
-            SELECTED = tbo_page_first_frame (page);
+            set_selected (tbo_page_first_frame (page), tbo);
         }
     }
 }

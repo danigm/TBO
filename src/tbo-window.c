@@ -78,8 +78,6 @@ tbo_new_tbo (int width, int height)
     GtkWidget *status;
     GtkWidget *hpaned;
 
-    GtkWidget *testlabel;
-
     GtkUIManager *manager;
 
     NWINDOWS++;
@@ -99,11 +97,9 @@ tbo_new_tbo (int width, int height)
     darea = get_drawing_area (width, height);
     gtk_container_add (GTK_CONTAINER (scrolled), darea);
 
-    //TODO remove testlabel
-    testlabel = gtk_label_new ("test label");
     hpaned = gtk_hpaned_new ();
     tool_paned = gtk_vbox_new (FALSE, 0);
-    gtk_paned_set_position (GTK_PANED (hpaned), (int) (0.9 * width));
+    gtk_paned_set_position (GTK_PANED (hpaned), width - 200);
     gtk_paned_add1 (GTK_PANED (hpaned), scrolled);
     gtk_paned_add2 (GTK_PANED (hpaned), tool_paned);
 
@@ -125,8 +121,6 @@ tbo_new_tbo (int width, int height)
 
     gtk_box_pack_start (GTK_BOX (container), menu, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (container), toolbar, FALSE, FALSE, 0);
-
-    gtk_container_add (GTK_CONTAINER (tool_paned), GTK_WIDGET (testlabel));
 
     gtk_container_add (GTK_CONTAINER (container), hpaned);
 
