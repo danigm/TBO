@@ -65,3 +65,26 @@ tbo_frame_point_inside (Frame *frame, int x, int y)
         return 0;
 }
 
+void tbo_frame_draw_scaled (Frame *frame, cairo_t *cr, int width, int height)
+{
+    float scale_factor = 1.;
+    float scale_factor2 = 1.;
+    int RX, RY;
+
+    scale_factor = (width-20) / (float)frame->width;
+    scale_factor2 = (height-20) / (float)frame->height;
+
+    scale_factor = scale_factor > scale_factor2 ? scale_factor2 : scale_factor;
+
+
+    cairo_scale (cr, scale_factor, scale_factor);
+    RX = frame->x;
+    RY = frame->y;
+    frame->x = (width/2.0) - (frame->width*scale_factor / 2.0);
+    frame->x = frame->x / scale_factor;
+    frame->y = (height/2.0) - (frame->height*scale_factor / 2.0);
+    frame->y = frame->y / scale_factor;
+    tbo_frame_draw(frame, cr);
+    frame->x = RX;
+    frame->y = RY;
+}

@@ -15,6 +15,10 @@
 #include "frame-tool.h"
 #include "selector-tool.h"
 
+
+Frame *FRAME_VIEW = NULL;
+
+
 gboolean
 on_key_cb (GtkWidget    *widget,
            GdkEventKey  *event,
@@ -68,11 +72,18 @@ on_expose_cb(GtkWidget      *widget,
 
     page = tbo_comic_get_current_page (tbo->comic);
 
-    for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
+    if (!FRAME_VIEW)
     {
-        // draw each frame  
-        frame = (Frame *)frame_list->data;
-        tbo_frame_draw (frame, cr);
+        for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
+        {
+            // draw each frame
+            frame = (Frame *)frame_list->data;
+            tbo_frame_draw (frame, cr);
+        }
+    }
+    else
+    {
+        tbo_frame_draw_scaled (FRAME_VIEW, cr, width, height);
     }
 
     // Update drawing helpers
@@ -103,7 +114,7 @@ on_expose_cb(GtkWidget      *widget,
 
     cairo_text_extents(cr, text, &extents);
     cairo_move_to(cr, (width-extents.width)/2, (height+extents.height)/2);
-    
+
     cairo_show_text(cr, text);
     */
 
@@ -250,4 +261,16 @@ update_drawing (TboWindow *tbo)
             0, 0,
             tbo->comic->width,
             tbo->comic->height);
+}
+
+void
+set_frame_view (Frame *frame)
+{
+    FRAME_VIEW = frame;
+}
+
+Frame *
+get_frame_view ()
+{
+    return FRAME_VIEW;
 }

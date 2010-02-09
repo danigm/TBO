@@ -14,5 +14,7 @@ gboolean on_key_cb(GtkWidget *widget, GdkEventKey *event, TboWindow *tbo);
 void darea_connect_signals (TboWindow *tbo);
 GtkWidget * get_drawing_area (int width, int height);
 void update_drawing (TboWindow *tbo);
+void set_frame_view (Frame *frame);
+Frame *get_frame_view ();
 
 #endif

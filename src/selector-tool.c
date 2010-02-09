@@ -186,9 +186,22 @@ selector_tool_on_move (GtkWidget *widget,
 }
 
 void
-selector_tool_on_click (GtkWidget *widget,
-        GdkEventButton *event,
-        TboWindow *tbo)
+frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo) {}
+
+void
+frame_view_drawing (cairo_t *cr){}
+
+void
+frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
+{
+    if (SELECTED != NULL && event->keyval == GDK_Escape)
+    {
+        set_frame_view (NULL);
+    }
+}
+
+void
+page_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
 {
     int x, y;
     GList *frame_list;
@@ -198,6 +211,7 @@ selector_tool_on_click (GtkWidget *widget,
 
     x = (int)event->x;
     y = (int)event->y;
+
 
     page = tbo_comic_get_current_page (tbo->comic);
     for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
@@ -210,6 +224,7 @@ selector_tool_on_click (GtkWidget *widget,
             found = TRUE;
         }
     }
+
     // resizing
     if (SELECTED && over_resizer (SELECTED, x, y))
     {
@@ -217,6 +232,13 @@ selector_tool_on_click (GtkWidget *widget,
     }
     else if (!found)
         set_selected (NULL, tbo);
+
+    // double click, frame view
+    if (SELECTED && event->type == GDK_2BUTTON_PRESS)
+    {
+        set_frame_view (SELECTED);
+        empty_tool_area (tbo->toolarea);
+    }
 
     START_X = x;
     START_Y = y;
@@ -233,18 +255,7 @@ selector_tool_on_click (GtkWidget *widget,
 }
 
 void
-selector_tool_on_release (GtkWidget *widget,
-        GdkEventButton *event,
-        TboWindow *tbo)
-{
-    START_X = 0;
-    START_Y = 0;
-    CLICKED = FALSE;
-    RESIZING = FALSE;
-}
-
-void
-selector_tool_drawing (cairo_t *cr)
+page_view_drawing (cairo_t *cr)
 {
     const double dashes[] = {5, 5};
     Color border = {0.9, 0.9, 0};
@@ -296,11 +307,12 @@ selector_tool_drawing (cairo_t *cr)
 }
 
 void
-selector_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
+page_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
 {
     Page *page;
 
     page = tbo_comic_get_current_page (tbo->comic);
+
     if (SELECTED != NULL && event->keyval == GDK_Delete)
     {
         tbo_page_del_frame (page, SELECTED);
@@ -315,6 +327,46 @@ selector_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
             set_selected (tbo_page_first_frame (page), tbo);
         }
     }
+}
+
+void
+selector_tool_on_click (GtkWidget *widget,
+        GdkEventButton *event,
+        TboWindow *tbo)
+{
+    if (get_frame_view ())
+        frame_view_on_click (widget, event, tbo);
+    else
+        page_view_on_click (widget, event, tbo);
+}
+
+void
+selector_tool_on_release (GtkWidget *widget,
+        GdkEventButton *event,
+        TboWindow *tbo)
+{
+    START_X = 0;
+    START_Y = 0;
+    CLICKED = FALSE;
+    RESIZING = FALSE;
+}
+
+void
+selector_tool_drawing (cairo_t *cr)
+{
+    if (get_frame_view ())
+        frame_view_drawing (cr);
+    else
+        page_view_drawing (cr);
+}
+
+void
+selector_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
+{
+    if (get_frame_view ())
+        frame_view_on_key (widget, event, tbo);
+    else
+        page_view_on_key (widget, event, tbo);
 }
 
 Frame *
