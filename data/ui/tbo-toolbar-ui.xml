@@ -13,6 +13,8 @@
        <separator/>
        <toolitem name="selector" action="Selector"/>
        <toolitem name="newframe" action="NewFrame"/>
+       <separator/>
+       <toolitem name="doodle" action="Doodle"/>
      </placeholder>
     </toolbar>
 </ui>

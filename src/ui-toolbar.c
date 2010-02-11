@@ -9,6 +9,7 @@
 #include "tbo-window.h"
 #include "comic.h"
 #include "custom-stock.h"
+#include "ui-drawing.h"
 
 static int SELECTED_TOOL = NONE;
 static GtkActionGroup *ACTION_GROUP;
@@ -43,6 +44,9 @@ update_toolbar (TboWindow *tbo)
     GtkAction *next;
     GtkAction *delete;
 
+    GtkAction *doodle;
+    GtkAction *new_frame;
+
     // Page next, prev and delete button sensitive
     prev = gtk_action_group_get_action (ACTION_GROUP, "PrevPage");
     next = gtk_action_group_get_action (ACTION_GROUP, "NextPage");
@@ -61,6 +65,21 @@ update_toolbar (TboWindow *tbo)
         gtk_action_set_sensitive (delete, TRUE);
     else
         gtk_action_set_sensitive (delete, FALSE);
+
+    // Frame view disabled in page view
+    doodle = gtk_action_group_get_action (ACTION_GROUP, "Doodle");
+    new_frame = gtk_action_group_get_action (ACTION_GROUP, "NewFrame");
+
+    if (get_frame_view() == NULL)
+    {
+        gtk_action_set_sensitive (doodle, FALSE);
+        gtk_action_set_sensitive (new_frame, TRUE);
+    }
+    else
+    {
+        gtk_action_set_sensitive (doodle, TRUE);
+        gtk_action_set_sensitive (new_frame, FALSE);
+    }
 }
 
 gboolean 
@@ -141,6 +160,7 @@ static const GtkActionEntry tbo_tools_entries [] = {
 };
 
 static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
+    // Page view tools
     { "NewFrame", TBO_STOCK_FRAME, N_("New _Frame"), "<control>F",
       N_("New Frame"),
       G_CALLBACK (select_tool), FALSE },
@@ -148,11 +168,17 @@ static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
     { "Selector", TBO_STOCK_SELECTOR, N_("Selector"), "",
       N_("Selector"),
       G_CALLBACK (select_tool), FALSE },
+
+    // Frame view tools
+    { "Doodle", TBO_STOCK_DOODLE, N_("Doodle"), "",
+      N_("Doodle"),
+      G_CALLBACK (select_tool), FALSE },
 };
 
 static const tool_and_action tools_actions [] = {
     {FRAME, "NewFrame"},
     {SELECTOR, "Selector"},
+    {DOODLE, "Doodle"},
 };
 
 void

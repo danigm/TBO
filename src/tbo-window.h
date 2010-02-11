@@ -22,5 +22,6 @@ gboolean tbo_window_free_cb (GtkWidget *widget, GdkEventExpose *event, TboWindow
 GdkPixbuf *create_pixbuf (const gchar * filename);
 TboWindow * tbo_new_tbo (int width, int height);
 void tbo_window_update_status (TboWindow *tbo, int x, int y);
+void tbo_empty_tool_area (TboWindow *tbo);
 
 #endif

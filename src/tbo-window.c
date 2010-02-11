@@ -142,5 +142,18 @@ tbo_window_update_status (TboWindow *tbo, int x, int y)
                     tbo_page_len (tbo_comic_get_current_page (tbo->comic)));
     gtk_statusbar_push (GTK_STATUSBAR (tbo->status), 0, buffer);
     update_drawing (tbo);
+    update_toolbar (tbo);
 }
 
+gboolean
+remove_cb (GtkWidget *widget, gpointer data)
+{
+    gtk_widget_destroy(widget);
+    return FALSE;
+}
+
+void
+tbo_empty_tool_area (TboWindow *tbo)
+{
+    gtk_container_foreach (GTK_CONTAINER (tbo->toolarea), (GtkCallback)remove_cb, NULL);
+}

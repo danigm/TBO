@@ -1,2 +1,5 @@
 *.o
 *.log
+Makefile
+Makefile.in
+*~

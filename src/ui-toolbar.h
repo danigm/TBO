@@ -9,6 +9,7 @@ enum Tool
     NONE,
     SELECTOR,
     FRAME,
+    DOODLE,
 };
 
 enum Tool get_selected_tool ();

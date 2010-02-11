@@ -46,13 +46,6 @@ update_selected_cb (GtkSpinButton *widget, TboWindow *tbo)
     return FALSE;
 }
 
-gboolean
-remove_cb (GtkWidget *widget, gpointer data)
-{
-    gtk_widget_destroy(widget);
-    return FALSE;
-}
-
 GtkWidget *add_spin_with_label (GtkWidget *toolarea, const char *string, int value)
 {
         GtkWidget *label;
@@ -73,9 +66,9 @@ GtkWidget *add_spin_with_label (GtkWidget *toolarea, const char *string, int val
 }
 
 void
-empty_tool_area (GtkWidget *toolarea)
+empty_tool_area (TboWindow *tbo)
 {
-    gtk_container_foreach (GTK_CONTAINER (toolarea), (GtkCallback)remove_cb, NULL);
+    tbo_empty_tool_area (tbo);
     SPIN_X = NULL;
     SPIN_Y = NULL;
     SPIN_H = NULL;
@@ -89,7 +82,7 @@ update_tool_area (TboWindow *tbo)
 
     if (!SPIN_X)
     {
-        empty_tool_area (toolarea);
+        empty_tool_area (tbo);
         SPIN_X = add_spin_with_label (toolarea, "x: ", SELECTED->x);
         SPIN_Y = add_spin_with_label (toolarea, "y: ", SELECTED->y);
         SPIN_W = add_spin_with_label (toolarea, "w: ", SELECTED->width);
@@ -113,7 +106,7 @@ void
 set_selected (Frame *frame, TboWindow *tbo)
 {
     SELECTED = frame;
-    empty_tool_area (tbo->toolarea);
+    empty_tool_area (tbo);
     if (SELECTED != NULL)
         update_tool_area (tbo);
 }
@@ -237,7 +230,7 @@ page_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
     if (SELECTED && event->type == GDK_2BUTTON_PRESS)
     {
         set_frame_view (SELECTED);
-        empty_tool_area (tbo->toolarea);
+        empty_tool_area (tbo);
     }
 
     START_X = x;

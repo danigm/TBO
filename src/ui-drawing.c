@@ -14,6 +14,7 @@
 
 #include "frame-tool.h"
 #include "selector-tool.h"
+#include "doodle-tool.h"
 
 
 Frame *FRAME_VIEW = NULL;
@@ -34,6 +35,13 @@ on_key_cb (GtkWidget    *widget,
             update_drawing (tbo);
             tbo_window_update_status (tbo, 0, 0);
             break;
+
+        case DOODLE:
+            doodle_tool_on_key (widget, event, tbo);
+            update_drawing (tbo);
+            tbo_window_update_status (tbo, 0, 0);
+            break;
+
         case NONE:
         default:
             break;
@@ -100,6 +108,10 @@ on_expose_cb(GtkWidget      *widget,
             selector_tool_drawing (cr);
             break;
 
+        case DOODLE:
+            doodle_tool_drawing (cr);
+            break;
+
         case NONE:
         default:
             break;
@@ -145,6 +157,11 @@ on_move_cb (GtkWidget     *widget,
             update_drawing (tbo);
             break;
 
+        case DOODLE:
+            doodle_tool_on_move (widget, event, tbo);
+            update_drawing (tbo);
+            break;
+
         case NONE:
         default:
             break;
@@ -175,6 +192,11 @@ on_click_cb (GtkWidget    *widget,
             update_drawing (tbo);
             break;
 
+        case DOODLE:
+            doodle_tool_on_click (widget, event, tbo);
+            update_drawing (tbo);
+            break;
+
         case NONE:
         default:
             break;
@@ -202,6 +224,11 @@ on_release_cb (GtkWidget    *widget,
 
         case SELECTOR:
             selector_tool_on_release (widget, event, tbo);
+            update_drawing (tbo);
+            break;
+
+        case DOODLE:
+            doodle_tool_on_release (widget, event, tbo);
             update_drawing (tbo);
             break;
 

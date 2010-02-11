@@ -1,0 +1,7 @@
+Translations
+------------
+
+To generate translations file .po exec:
+
+$ cd po
+$ intool-update es
