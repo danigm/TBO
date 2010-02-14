@@ -11,8 +11,39 @@
 #include "custom-stock.h"
 #include "ui-drawing.h"
 
+#include "frame-tool.h"
+#include "selector-tool.h"
+#include "doodle-tool.h"
+
 static int SELECTED_TOOL = NONE;
 static GtkActionGroup *ACTION_GROUP;
+
+static ToolStruct TOOLS[] =
+{
+    {FRAME,
+     frame_tool_on_select,
+     frame_tool_on_move,
+     frame_tool_on_click,
+     frame_tool_on_release,
+     frame_tool_on_key,
+     frame_tool_drawing},
+
+    {SELECTOR,
+     selector_tool_on_select,
+     selector_tool_on_move,
+     selector_tool_on_click,
+     selector_tool_on_release,
+     selector_tool_on_key,
+     selector_tool_drawing},
+
+    {DOODLE,
+     doodle_tool_on_select,
+     doodle_tool_on_move,
+     doodle_tool_on_click,
+     doodle_tool_on_release,
+     doodle_tool_on_key,
+     doodle_tool_drawing},
+};
 
 typedef struct
 {
@@ -23,6 +54,7 @@ typedef struct
 
 void unselect (enum Tool tool);
 gboolean select_tool (GtkAction *action, TboWindow *tbo);
+void update_toolbar (TboWindow *tbo);
 
 enum Tool
 get_selected_tool ()
@@ -31,10 +63,13 @@ get_selected_tool ()
 }
 
 void
-set_selected_tool (enum Tool tool)
+set_selected_tool (enum Tool tool, TboWindow *tbo)
 {
     unselect (SELECTED_TOOL);
     SELECTED_TOOL = tool;
+
+    tool_signal (tool, TOOL_SELECT, tbo);
+    update_toolbar (tbo);
 }
 
 void
@@ -222,10 +257,9 @@ select_tool (GtkAction *action, TboWindow *tbo)
     }
 
     if (gtk_toggle_action_get_active (toggle_action))
-        set_selected_tool (tool);
+        set_selected_tool (tool, tbo);
     else
-        set_selected_tool (NONE);
-    update_toolbar (tbo);
+        set_selected_tool (NONE, tbo);
     tbo_window_update_status (tbo, 0, 0);
     return FALSE;
 }
@@ -259,3 +293,50 @@ GtkWidget *generate_toolbar (TboWindow *window){
     return toolbar;
 }
 
+void
+tool_signal (enum Tool tool, enum ToolSignal signal, gpointer data)
+{
+    int i;
+    ToolStruct *toolstruct = NULL;
+    void **pdata;
+
+    for (i=0; i<G_N_ELEMENTS (TOOLS); i++)
+    {
+        if (tool == TOOLS[i].tool)
+        {
+            toolstruct = &TOOLS[i];
+            break;
+        }
+    }
+
+    if (toolstruct)
+    {
+        switch (signal)
+        {
+            case TOOL_SELECT:
+                toolstruct->tool_on_select(data);
+                break;
+            case TOOL_MOVE:
+                pdata = data;
+                toolstruct->tool_on_move (pdata[0], pdata[1], pdata[2]);
+                break;
+            case TOOL_CLICK:
+                pdata = data;
+                toolstruct->tool_on_click (pdata[0], pdata[1], pdata[2]);
+                break;
+            case TOOL_RELEASE:
+                pdata = data;
+                toolstruct->tool_on_release (pdata[0], pdata[1], pdata[2]);
+                break;
+            case TOOL_KEY:
+                pdata = data;
+                toolstruct->tool_on_key (pdata[0], pdata[1], pdata[2]);
+                break;
+            case TOOL_DRAWING:
+                toolstruct->tool_drawing (data);
+                break;
+            default:
+                break;
+        }
+    }
+}

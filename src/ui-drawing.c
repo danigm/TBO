@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cairo.h>
 #include <gtk/gtk.h>
+#include <stdlib.h>
 #include <glib/gi18n.h>
 
 #include "ui-toolbar.h"
@@ -26,27 +27,17 @@ on_key_cb (GtkWidget    *widget,
            TboWindow    *tbo)
 {
     enum Tool tool;
+    void **data = malloc (sizeof(void *)*3);
+    data[0] = widget;
+    data[1] = event;
+    data[2] = tbo;
 
     tool = get_selected_tool ();
-    switch (tool)
-    {
-        case SELECTOR:
-            selector_tool_on_key (widget, event, tbo);
-            update_drawing (tbo);
-            tbo_window_update_status (tbo, 0, 0);
-            break;
+    tool_signal (tool, TOOL_KEY, data);
+    free (data);
 
-        case DOODLE:
-            doodle_tool_on_key (widget, event, tbo);
-            update_drawing (tbo);
-            tbo_window_update_status (tbo, 0, 0);
-            break;
-
-        case NONE:
-        default:
-            break;
-    }
-
+    update_drawing (tbo);
+    tbo_window_update_status (tbo, 0, 0);
     return FALSE;
 }
 
@@ -97,25 +88,7 @@ on_expose_cb(GtkWidget      *widget,
     // Update drawing helpers
 
     tool = get_selected_tool ();
-    // different behavior for each tool
-    switch (tool)
-    {
-        case FRAME:
-            frame_tool_drawing (cr);
-            break;
-
-        case SELECTOR:
-            selector_tool_drawing (cr);
-            break;
-
-        case DOODLE:
-            doodle_tool_drawing (cr);
-            break;
-
-        case NONE:
-        default:
-            break;
-    }
+    tool_signal (tool, TOOL_DRAWING, cr);
 
     // TBO rulz text example :P
     /*
@@ -142,31 +115,16 @@ on_move_cb (GtkWidget     *widget,
 {
 
     enum Tool tool;
+    void **data = malloc (sizeof(void *)*3);
+    data[0] = widget;
+    data[1] = event;
+    data[2] = tbo;
 
     tool = get_selected_tool ();
-    // different behavior for each tool
-    switch (tool)
-    {
-        case FRAME:
-            frame_tool_on_move (widget, event, tbo);
-            update_drawing (tbo);
-            break;
+    tool_signal (tool, TOOL_MOVE, data);
+    free (data);
 
-        case SELECTOR:
-            selector_tool_on_move (widget, event, tbo);
-            update_drawing (tbo);
-            break;
-
-        case DOODLE:
-            doodle_tool_on_move (widget, event, tbo);
-            update_drawing (tbo);
-            break;
-
-        case NONE:
-        default:
-            break;
-    }
-
+    update_drawing (tbo);
     tbo_window_update_status (tbo, (int)event->x, (int)event->y);
     return FALSE;
 }
@@ -177,66 +135,36 @@ on_click_cb (GtkWidget    *widget,
            TboWindow      *tbo)
 {
     enum Tool tool;
+    void **data = malloc (sizeof(void *)*3);
+    data[0] = widget;
+    data[1] = event;
+    data[2] = tbo;
 
     tool = get_selected_tool ();
-    // different behavior for each tool
-    switch (tool)
-    {
-        case FRAME:
-            frame_tool_on_click (widget, event, tbo);
-            update_drawing (tbo);
-            break;
+    tool_signal (tool, TOOL_CLICK, data);
+    free (data);
 
-        case SELECTOR:
-            selector_tool_on_click (widget, event, tbo);
-            update_drawing (tbo);
-            break;
-
-        case DOODLE:
-            doodle_tool_on_click (widget, event, tbo);
-            update_drawing (tbo);
-            break;
-
-        case NONE:
-        default:
-            break;
-    }
-
+    update_drawing (tbo);
     tbo_window_update_status (tbo, (int)event->x, (int)event->y);
     return FALSE;
 }
 
 gboolean
 on_release_cb (GtkWidget    *widget,
-           GdkEventButton *event,
-           TboWindow      *tbo)
+           GdkEventButton   *event,
+           TboWindow        *tbo)
 {
     enum Tool tool;
+    void **data = malloc (sizeof(void *)*3);
+    data[0] = widget;
+    data[1] = event;
+    data[2] = tbo;
 
     tool = get_selected_tool ();
-    // different behavior for each tool
-    switch (tool)
-    {
-        case FRAME:
-            frame_tool_on_release (widget, event, tbo);
-            update_drawing (tbo);
-            break;
+    tool_signal (tool, TOOL_RELEASE, data);
+    free (data);
 
-        case SELECTOR:
-            selector_tool_on_release (widget, event, tbo);
-            update_drawing (tbo);
-            break;
-
-        case DOODLE:
-            doodle_tool_on_release (widget, event, tbo);
-            update_drawing (tbo);
-            break;
-
-        case NONE:
-        default:
-            break;
-    }
-
+    update_drawing (tbo);
     tbo_window_update_status (tbo, (int)event->x, (int)event->y);
     return FALSE;
 }

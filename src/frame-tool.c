@@ -19,6 +19,10 @@ min (int x, int y)
 }
 
 void
+frame_tool_on_select (TboWindow *tbo)
+{}
+
+void
 frame_tool_on_move (GtkWidget *widget,
         GdkEventMotion *event,
         TboWindow *tbo)
@@ -78,6 +82,10 @@ frame_tool_on_release (GtkWidget *widget,
     if (TMP_FRAME) tbo_frame_free (TMP_FRAME);
     TMP_FRAME = NULL;
 }
+
+void
+frame_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
+{}
 
 Frame *
 get_tmp_frame (){

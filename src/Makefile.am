@@ -22,6 +22,7 @@ tbo_SOURCES = \
 	selector-tool.c \
 	doodle-tool.c \
 	custom-stock.c \
+	doodle-treeview.c \
 	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \
@@ -34,6 +35,7 @@ tbo_SOURCES = \
 	frame-tool.h \
 	selector-tool.h \
 	doodle-tool.h \
+	doodle-treeview.h \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \

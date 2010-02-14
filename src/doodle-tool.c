@@ -7,6 +7,19 @@
 #include "frame.h"
 #include "comic.h"
 #include "ui-drawing.h"
+#include "doodle-treeview.h"
+
+void
+doodle_tool_on_select (TboWindow *tbo)
+{
+    GtkWidget *tree;
+
+    tree = doodle_setup_tree ();
+    gtk_widget_show_all (tree);
+
+    tbo_empty_tool_area (tbo);
+    gtk_container_add (GTK_CONTAINER (tbo->toolarea), tree);
+}
 
 void doodle_tool_on_move (GtkWidget *widget, GdkEventMotion *event, TboWindow *tbo){}
 void doodle_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo){}

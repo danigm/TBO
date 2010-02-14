@@ -1,3 +1,5 @@
+SUBDIRS = doodle
+
 tbodir = $(datadir)/tbo
 tbo_DATA = *.png
 
@@ -10,4 +12,4 @@ tboicon_DATA = icons/*.svg
 EXTRA_DIST = \
 	*.png \
 	ui/*.xml \
-	icons/*.svg 
+	icons/*.svg

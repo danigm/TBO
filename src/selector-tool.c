@@ -132,6 +132,10 @@ over_resizer (Frame *frame, int x, int y)
 }
 
 void
+selector_tool_on_select (TboWindow *tbo)
+{}
+
+void
 selector_tool_on_move (GtkWidget *widget,
         GdkEventMotion *event,
         TboWindow *tbo)

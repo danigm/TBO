@@ -28,6 +28,7 @@ AC_CONFIG_FILES([
     Makefile
     src/Makefile
     data/Makefile
+    data/doodle/Makefile
     po/Makefile.in
 ])
 
