@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <gtk/gtk.h>
@@ -15,6 +16,19 @@ free_gstring_array (GArray *arr)
         g_string_free (mystr, TRUE);
     }
     g_array_free (arr, TRUE);
+}
+
+void
+get_base_name (gchar *str, gchar *ret, int size)
+{
+    gchar **paths;
+    gchar **dirname;
+    paths = g_strsplit (str, "/", 0);
+    dirname = paths;
+    while (*dirname) dirname++;
+    dirname--;
+    snprintf (ret, size, *dirname);
+    g_strfreev (paths);
 }
 
 GArray *
@@ -58,85 +72,33 @@ enum
    N_COLUMNS
 };
 
-void
-populate_tree_model(GtkTreeStore *store)
-{
-    GtkTreeIter iter;
-    GtkTreeIter iter2;
-
-    /* Append a row and fill in some data */
-    gtk_tree_store_append (store, &iter, NULL);
-    gtk_tree_store_set (store, &iter,
-                    TITLE_COLUMN, "titulo",
-                    AUTHOR_COLUMN, "autor",
-                    CHECKED_COLUMN, TRUE,
-                    -1);
-    gtk_tree_store_append (store, &iter2, &iter);
-    gtk_tree_store_set (store, &iter2,
-                    TITLE_COLUMN, "titulo2",
-                    AUTHOR_COLUMN, "autor2",
-                    CHECKED_COLUMN, FALSE,
-                    -1);
-
-}
-
 GtkWidget *
 doodle_setup_tree (void)
 {
-   GtkTreeStore *store;
-   GtkWidget *tree;
-   GtkTreeViewColumn *column;
-   GtkCellRenderer *renderer;
+    GtkWidget *expander;
+    GtkWidget *vbox;
+    gchar *dirname;
 
-   /* Create a model.  We are using the store model for now, though we
-    * could use any other GtkTreeModel */
-   store = gtk_tree_store_new (N_COLUMNS,
-                               G_TYPE_STRING,
-                               G_TYPE_STRING,
-                               G_TYPE_BOOLEAN);
+    dirname = malloc (255*sizeof(char));
 
-   /* custom function to fill the model with data */
-   populate_tree_model (store);
+    vbox = gtk_vbox_new (FALSE, 5);
 
-   /* Create a view */
-   tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+    GArray *arr = get_files (DATA_DIR "/doodle", TRUE);
+    int i;
+    GString *mystr;
+    for (i=0; i<arr->len; i++)
+    {
+        mystr = g_array_index (arr, GString*, i);
 
-   /* The view now holds a reference.  We can get rid of our own
-    * reference */
-   g_object_unref (G_OBJECT (store));
+        get_base_name (mystr->str, dirname, 255);
+        expander = gtk_expander_new (dirname);
+        gtk_container_add (GTK_CONTAINER (vbox), expander);
+    }
+    free_gstring_array (arr);
 
-   /* Create a cell render and arbitrarily make it red for demonstration
-    * purposes */
-   renderer = gtk_cell_renderer_text_new ();
-   g_object_set (G_OBJECT (renderer),
-                 "foreground", "red",
-                 NULL);
+    free (dirname);
 
-   /* Create a column, associating the "text" attribute of the
-    * cell_renderer to the first column of the model */
-   column = gtk_tree_view_column_new_with_attributes ("Author", renderer,
-                                                      "text", AUTHOR_COLUMN,
-                                                      NULL);
-
-   /* Add the column to the view. */
-   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-
-   /* Second column.. title of the book. */
-   renderer = gtk_cell_renderer_text_new ();
-   column = gtk_tree_view_column_new_with_attributes ("Title",
-                                                      renderer,
-                                                      "text", TITLE_COLUMN,
-                                                      NULL);
-   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-
-   /* Last column.. whether a book is checked out. */
-   renderer = gtk_cell_renderer_toggle_new ();
-   column = gtk_tree_view_column_new_with_attributes ("Checked out",
-                                                      renderer,
-                                                      "active", CHECKED_COLUMN,
-                                                      NULL);
-   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
-   return tree;
+    return vbox;
 }
 
 /*
