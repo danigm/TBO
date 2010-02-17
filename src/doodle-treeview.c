@@ -1,5 +1,54 @@
+#include <string.h>
+#include <sys/stat.h>
 #include <gtk/gtk.h>
 #include "doodle-treeview.h"
+
+void
+free_gstring_array (GArray *arr)
+{
+    int i;
+    GString *mystr;
+
+    for (i=0; i<arr->len; i++)
+    {
+        mystr = g_array_index (arr, GString*, i);
+        g_string_free (mystr, TRUE);
+    }
+    g_array_free (arr, TRUE);
+}
+
+GArray *
+get_files (gchar *base_dir, gboolean isdir)
+{
+    GError *error = NULL;
+    GDir *dir = g_dir_open (base_dir, 0, &error);
+    gchar complete_dir[255];
+    const gchar *filename;
+    struct stat filestat;
+    GArray *array = g_array_new (FALSE, FALSE, sizeof(GString*));
+
+    while (filename = g_dir_read_name (dir))
+    {
+        size_t strsize = sizeof (char) * (strlen (base_dir) + strlen (filename) + 2);
+        snprintf (complete_dir, strsize, "%s/%s", base_dir, filename);
+        stat (complete_dir, &filestat);
+
+        if (isdir && S_ISDIR (filestat.st_mode))
+        {
+            GString *dirname_to_append = g_string_new (complete_dir);
+            g_array_append_val (array, dirname_to_append);
+        }
+        else if (!isdir && !S_ISDIR (filestat.st_mode))
+        {
+            GString *filename_to_append = g_string_new (complete_dir);
+            g_array_append_val (array, filename_to_append);
+        }
+    }
+
+    g_dir_close (dir);
+
+    return array;
+}
 
 enum
 {
@@ -89,3 +138,19 @@ doodle_setup_tree (void)
    gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
    return tree;
 }
+
+/*
+void main()
+{
+    GArray *arr = get_files ("../data/doodle", FALSE);
+    int i;
+    GString *mystr;
+    for (i=0; i<arr->len; i++)
+    {
+        mystr = g_array_index (arr, GString*, i);
+        g_print ("%s\n", mystr->str);
+    }
+    free_gstring_array (arr);
+}
+// gcc doodle-treeview.c -o testing `pkg-config --cflags --libs gtk+-2.0`
+*/
