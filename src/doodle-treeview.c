@@ -4,6 +4,14 @@
 #include <gtk/gtk.h>
 #include "doodle-treeview.h"
 
+gboolean
+on_doodle_click_cb (GtkWidget      *widget,
+                    GdkEventButton *event,
+                    gpointer       *data)
+{
+    g_print ("doodle: %s\n", (char*)data);
+}
+
 void
 free_gstring_array (GArray *arr)
 {
@@ -71,8 +79,11 @@ doodle_add_body_images (gchar *dir, GtkWidget *expander)
     gchar *dirname;
     GtkWidget *table;
     GtkWidget *image;
+    GtkWidget *ebox;
     GdkPixbuf *pixbuf;
     int r, c=2;
+    int left, top;
+    int w, h=50;
 
     dirname = malloc (255*sizeof(char));
     snprintf (dirname, 255, "%s/%s", dir, "body");
@@ -85,15 +96,30 @@ doodle_add_body_images (gchar *dir, GtkWidget *expander)
     GString *mystr;
     for (i=0; i<arr->len; i++)
     {
+        top = i / 2;
+        left = i % 2;
+
         mystr = g_array_index (arr, GString*, i);
         image = gtk_image_new_from_file (mystr->str);
         pixbuf = gtk_image_get_pixbuf (GTK_IMAGE (image));
-        pixbuf = gdk_pixbuf_scale_simple (pixbuf, 50, 50, GDK_INTERP_BILINEAR);
+
+        w = gdk_pixbuf_get_width (pixbuf) * 50 / (float)gdk_pixbuf_get_height (pixbuf);
+        pixbuf = gdk_pixbuf_scale_simple (pixbuf, w, h, GDK_INTERP_BILINEAR);
+
         gtk_widget_destroy (GTK_WIDGET (image));
         image = gtk_image_new_from_pixbuf (pixbuf);
-        gtk_container_add (GTK_CONTAINER (table), image);
+        ebox = gtk_event_box_new ();
+        gtk_widget_add_events (ebox, GDK_BUTTON_PRESS_MASK |
+                                     GDK_BUTTON_RELEASE_MASK |
+                                     GDK_POINTER_MOTION_MASK);
+
+        g_signal_connect (ebox, "button_press_event", G_CALLBACK (on_doodle_click_cb), mystr->str);
+        gtk_container_add (GTK_CONTAINER (ebox), image);
+        gtk_table_attach_defaults (GTK_TABLE (table), ebox, left, left + 1, top, top + 1);
     }
-    free_gstring_array (arr);
+    // TODO free someday, when unselect tool
+    //
+    //free_gstring_array (arr);
     free (dirname);
 
     gtk_widget_show_all (GTK_WIDGET (table));
