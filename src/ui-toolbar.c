@@ -16,7 +16,7 @@
 #include "doodle-tool.h"
 
 static int SELECTED_TOOL = NONE;
-static GtkActionGroup *ACTION_GROUP;
+static GtkActionGroup *ACTION_GROUP = NULL;
 
 static ToolStruct TOOLS[] =
 {
@@ -82,6 +82,9 @@ update_toolbar (TboWindow *tbo)
     GtkAction *doodle;
     GtkAction *new_frame;
 
+    if (!ACTION_GROUP)
+        return;
+
     // Page next, prev and delete button sensitive
     prev = gtk_action_group_get_action (ACTION_GROUP, "PrevPage");
     next = gtk_action_group_get_action (ACTION_GROUP, "NextPage");
@@ -117,7 +120,7 @@ update_toolbar (TboWindow *tbo)
     }
 }
 
-gboolean 
+gboolean
 toolbar_handler (GtkWidget *widget, gpointer data)
 {
     printf(_("toolbar: %s\n"), ((TboWindow *)data)->comic->title);
@@ -142,7 +145,7 @@ del_current_page (GtkAction *action, TboWindow *tbo)
     return FALSE;
 }
 
-gboolean 
+gboolean
 next_page (GtkAction *action, TboWindow *tbo)
 {
     tbo_comic_next_page (tbo->comic);
@@ -226,7 +229,7 @@ unselect (enum Tool tool)
     {
         if (tools_actions[i].tool == tool)
         {
-            action = (GtkToggleAction *) gtk_action_group_get_action (ACTION_GROUP, 
+            action = (GtkToggleAction *) gtk_action_group_get_action (ACTION_GROUP,
                     tools_actions[i].action);
 
             gtk_toggle_action_set_active (action, FALSE);
@@ -289,7 +292,7 @@ GtkWidget *generate_toolbar (TboWindow *window){
     toolbar = gtk_ui_manager_get_widget (manager, "/toolbar");
 
     update_toolbar (window);
-    
+
     return toolbar;
 }
 
