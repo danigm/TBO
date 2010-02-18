@@ -64,13 +64,41 @@ get_files (gchar *base_dir, gboolean isdir)
     return array;
 }
 
-enum
+void
+doodle_add_body_images (gchar *dir, GtkWidget *expander)
 {
-   TITLE_COLUMN,
-   AUTHOR_COLUMN,
-   CHECKED_COLUMN,
-   N_COLUMNS
-};
+    int i;
+    gchar *dirname;
+    GtkWidget *table;
+    GtkWidget *image;
+    GdkPixbuf *pixbuf;
+    int r, c=2;
+
+    dirname = malloc (255*sizeof(char));
+    snprintf (dirname, 255, "%s/%s", dir, "body");
+
+    GArray *arr = get_files (dirname, FALSE);
+
+    r = (arr->len / c) + 1;
+    table = gtk_table_new (r, c, TRUE);
+
+    GString *mystr;
+    for (i=0; i<arr->len; i++)
+    {
+        mystr = g_array_index (arr, GString*, i);
+        image = gtk_image_new_from_file (mystr->str);
+        pixbuf = gtk_image_get_pixbuf (GTK_IMAGE (image));
+        pixbuf = gdk_pixbuf_scale_simple (pixbuf, 50, 50, GDK_INTERP_BILINEAR);
+        gtk_widget_destroy (GTK_WIDGET (image));
+        image = gtk_image_new_from_pixbuf (pixbuf);
+        gtk_container_add (GTK_CONTAINER (table), image);
+    }
+    free_gstring_array (arr);
+    free (dirname);
+
+    gtk_widget_show_all (GTK_WIDGET (table));
+    gtk_container_add (GTK_CONTAINER (expander), table);
+}
 
 GtkWidget *
 doodle_setup_tree (void)
@@ -93,6 +121,8 @@ doodle_setup_tree (void)
         get_base_name (mystr->str, dirname, 255);
         expander = gtk_expander_new (dirname);
         gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 5);
+
+        doodle_add_body_images (mystr->str, expander);
     }
     free_gstring_array (arr);
 
