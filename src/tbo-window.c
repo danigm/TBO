@@ -74,6 +74,7 @@ tbo_new_tbo (int width, int height)
     GtkWidget *menu;
     GtkWidget *toolbar;
     GtkWidget *scrolled;
+    GtkWidget *scrolled2;
     GtkWidget *darea;
     GtkWidget *status;
     GtkWidget *hpaned;
@@ -99,9 +100,13 @@ tbo_new_tbo (int width, int height)
 
     hpaned = gtk_hpaned_new ();
     tool_paned = gtk_vbox_new (FALSE, 0);
+    scrolled2 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled2), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled2), tool_paned);
+
     gtk_paned_set_position (GTK_PANED (hpaned), width - 200);
-    gtk_paned_add1 (GTK_PANED (hpaned), scrolled);
-    gtk_paned_add2 (GTK_PANED (hpaned), tool_paned);
+    gtk_paned_pack1 (GTK_PANED (hpaned), scrolled, TRUE, FALSE);
+    gtk_paned_pack2 (GTK_PANED (hpaned), scrolled2, TRUE, FALSE);
 
     status = gtk_statusbar_new ();
 

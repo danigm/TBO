@@ -48,6 +48,10 @@ on_expose_cb(GtkWidget      *widget,
 {
     cairo_t *cr;
     int width, height;
+
+    GdkWindow *window;
+    int w, h;
+
     char *text = "TBO rulz!";
     cairo_text_extents_t extents;
 
@@ -61,11 +65,16 @@ on_expose_cb(GtkWidget      *widget,
     height = tbo->comic->height;
     cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
 
+    window = gtk_widget_get_parent_window (GTK_WIDGET (widget));
+    gdk_drawable_get_size (GDK_DRAWABLE (window), &w, &h);
+    cairo_set_source_rgb (cr, 0, 0, 0);
+    cairo_rectangle (cr, 0, 0, w, h);
+    cairo_fill (cr);
     // white background and black border
     cairo_set_source_rgb(cr, 1, 1, 1);
     cairo_rectangle(cr, 0, 0, width+2, height+2);
     cairo_fill(cr);
-    cairo_set_source_rgb(cr, 0, 0, 0);
+    cairo_set_source_rgb(cr, 0.4, 0.4, 0.4);
     cairo_rectangle (cr, 1, 1, width, height);
     cairo_stroke (cr);
 
@@ -176,7 +185,7 @@ get_drawing_area (int width, int height)
     GtkWidget *drawing;
 
     drawing = gtk_layout_new(NULL, NULL);
-    gtk_layout_set_size(GTK_LAYOUT (drawing), width, height);
+    gtk_layout_set_size(GTK_LAYOUT (drawing), width+2, height+2);
 
     return drawing;
 }
