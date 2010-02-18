@@ -92,7 +92,7 @@ doodle_setup_tree (void)
 
         get_base_name (mystr->str, dirname, 255);
         expander = gtk_expander_new (dirname);
-        gtk_container_add (GTK_CONTAINER (vbox), expander);
+        gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 5);
     }
     free_gstring_array (arr);
 
