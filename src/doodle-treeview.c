@@ -2,6 +2,8 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <gtk/gtk.h>
+#include "ui-drawing.h"
+#include "frame.h"
 #include "doodle-treeview.h"
 
 void free_gstring_array (GArray *arr);
@@ -34,7 +36,8 @@ on_doodle_click_cb (GtkWidget      *widget,
                     GdkEventButton *event,
                     gpointer       *data)
 {
-    g_print ("doodle: %s\n", (char*)data);
+    Frame *frame = get_frame_view ();
+    g_print ("doodle: %s, %d\n", (char*)data, frame->x);
 }
 
 void
@@ -180,19 +183,3 @@ doodle_setup_tree (void)
 
     return vbox;
 }
-
-/*
-void main()
-{
-    GArray *arr = get_files ("../data/doodle", FALSE);
-    int i;
-    GString *mystr;
-    for (i=0; i<arr->len; i++)
-    {
-        mystr = g_array_index (arr, GString*, i);
-        g_print ("%s\n", mystr->str);
-    }
-    free_gstring_array (arr);
-}
-// gcc doodle-treeview.c -o testing `pkg-config --cflags --libs gtk+-2.0`
-*/
