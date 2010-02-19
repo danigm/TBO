@@ -21,6 +21,13 @@ doodle_tool_on_select (TboWindow *tbo)
     gtk_container_add (GTK_CONTAINER (tbo->toolarea), tree);
 }
 
+void
+doodle_tool_on_unselect (TboWindow *tbo)
+{
+    tbo_empty_tool_area (tbo);
+    doodle_free_all ();
+}
+
 void doodle_tool_on_move (GtkWidget *widget, GdkEventMotion *event, TboWindow *tbo){}
 void doodle_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo){}
 void doodle_tool_on_release (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo){}

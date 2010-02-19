@@ -6,6 +6,7 @@
 #include "tbo-window.h"
 
 void selector_tool_on_select (TboWindow *tbo);
+void selector_tool_on_unselect (TboWindow *tbo);
 void selector_tool_on_move (GtkWidget *widget, GdkEventMotion *event, TboWindow *tbo);
 void selector_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo);
 void selector_tool_on_release (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo);

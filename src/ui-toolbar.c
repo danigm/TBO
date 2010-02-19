@@ -22,6 +22,7 @@ static ToolStruct TOOLS[] =
 {
     {FRAME,
      frame_tool_on_select,
+     frame_tool_on_unselect,
      frame_tool_on_move,
      frame_tool_on_click,
      frame_tool_on_release,
@@ -30,6 +31,7 @@ static ToolStruct TOOLS[] =
 
     {SELECTOR,
      selector_tool_on_select,
+     selector_tool_on_unselect,
      selector_tool_on_move,
      selector_tool_on_click,
      selector_tool_on_release,
@@ -38,6 +40,7 @@ static ToolStruct TOOLS[] =
 
     {DOODLE,
      doodle_tool_on_select,
+     doodle_tool_on_unselect,
      doodle_tool_on_move,
      doodle_tool_on_click,
      doodle_tool_on_release,
@@ -52,7 +55,7 @@ typedef struct
 
 } tool_and_action;
 
-void unselect (enum Tool tool);
+void unselect (enum Tool tool, TboWindow *tbo);
 gboolean select_tool (GtkAction *action, TboWindow *tbo);
 void update_toolbar (TboWindow *tbo);
 
@@ -65,7 +68,7 @@ get_selected_tool ()
 void
 set_selected_tool (enum Tool tool, TboWindow *tbo)
 {
-    unselect (SELECTED_TOOL);
+    unselect (SELECTED_TOOL, tbo);
     SELECTED_TOOL = tool;
 
     tool_signal (tool, TOOL_SELECT, tbo);
@@ -220,7 +223,7 @@ static const tool_and_action tools_actions [] = {
 };
 
 void
-unselect (enum Tool tool)
+unselect (enum Tool tool, TboWindow *tbo)
 {
     int i;
     GtkToggleAction *action;
@@ -236,6 +239,7 @@ unselect (enum Tool tool)
             break;
         }
     }
+    tool_signal (tool, TOOL_UNSELECT, tbo);
 }
 
 gboolean
@@ -318,6 +322,9 @@ tool_signal (enum Tool tool, enum ToolSignal signal, gpointer data)
         {
             case TOOL_SELECT:
                 toolstruct->tool_on_select(data);
+                break;
+            case TOOL_UNSELECT:
+                toolstruct->tool_on_unselect(data);
                 break;
             case TOOL_MOVE:
                 pdata = data;

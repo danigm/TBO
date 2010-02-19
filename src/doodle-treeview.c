@@ -4,6 +4,31 @@
 #include <gtk/gtk.h>
 #include "doodle-treeview.h"
 
+void free_gstring_array (GArray *arr);
+
+static GArray *TO_FREE = NULL;
+
+void
+doodle_free_all ()
+{
+    int i;
+    if (!TO_FREE) return;
+    for (i=0; i<TO_FREE->len; i++)
+    {
+        free_gstring_array (g_array_index (TO_FREE, GArray*, i));
+    }
+    g_array_free (TO_FREE, TRUE);
+    TO_FREE = NULL;
+}
+
+void doodle_add_to_free (GArray *arr)
+{
+    if (!TO_FREE)
+        TO_FREE = g_array_new (FALSE, FALSE, sizeof(GArray*));
+
+    g_array_append_val (TO_FREE, arr);
+}
+
 gboolean
 on_doodle_click_cb (GtkWidget      *widget,
                     GdkEventButton *event,
@@ -117,9 +142,8 @@ doodle_add_body_images (gchar *dir, GtkWidget *expander)
         gtk_container_add (GTK_CONTAINER (ebox), image);
         gtk_table_attach_defaults (GTK_TABLE (table), ebox, left, left + 1, top, top + 1);
     }
-    // TODO free someday, when unselect tool
-    //
-    //free_gstring_array (arr);
+
+    doodle_add_to_free (arr);
     free (dirname);
 
     gtk_widget_show_all (GTK_WIDGET (table));

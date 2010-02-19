@@ -23,6 +23,10 @@ frame_tool_on_select (TboWindow *tbo)
 {}
 
 void
+frame_tool_on_unselect (TboWindow *tbo)
+{}
+
+void
 frame_tool_on_move (GtkWidget *widget,
         GdkEventMotion *event,
         TboWindow *tbo)

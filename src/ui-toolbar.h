@@ -7,6 +7,7 @@
 enum ToolSignal
 {
     TOOL_SELECT,
+    TOOL_UNSELECT,
     TOOL_MOVE,
     TOOL_CLICK,
     TOOL_RELEASE,
@@ -26,6 +27,7 @@ typedef struct
 {
     enum Tool tool;
     void (*tool_on_select) (TboWindow *);
+    void (*tool_on_unselect) (TboWindow *);
     void (*tool_on_move) (GtkWidget *, GdkEventMotion *, TboWindow *);
     void (*tool_on_click) (GtkWidget *, GdkEventButton *, TboWindow *);
     void (*tool_on_release) (GtkWidget *, GdkEventButton *, TboWindow *);
