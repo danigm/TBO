@@ -4,6 +4,42 @@
 #include "frame.h"
 #include "tbo-types.h"
 
+static int BASE_X = 0;
+static int BASE_Y = 0;
+static float SCALE_FACTOR = 0;
+
+void
+tbo_frame_set_scale_factor (Frame *frame, int width, int height)
+{
+    float scale_factor = 1.;
+    float scale_factor2 = 1.;
+
+    scale_factor = (width-20) / (float)frame->width;
+    scale_factor2 = (height-20) / (float)frame->height;
+
+    scale_factor = scale_factor > scale_factor2 ? scale_factor2 : scale_factor;
+
+    SCALE_FACTOR = scale_factor;
+}
+
+int
+tbo_frame_get_x_centered (Frame *frame, int width)
+{
+    int x;
+    x = (width/2.0) - (frame->width*SCALE_FACTOR / 2.0);
+    x = x / SCALE_FACTOR;
+    return x;
+}
+
+int
+tbo_frame_get_y_centered (Frame *frame, int height)
+{
+    int y;
+    y = (height/2.0) - (frame->height*SCALE_FACTOR / 2.0);
+    y = y / SCALE_FACTOR;
+    return y;
+}
+
 Frame *
 tbo_frame_new (int x, int y,
         int width, int height)
@@ -93,26 +129,43 @@ tbo_frame_point_inside (Frame *frame, int x, int y)
         return 0;
 }
 
+int
+tbo_frame_point_inside_obj (tbo_object *obj, int x, int y)
+{
+    int ox, oy, ow, oh;
+    tbo_frame_get_obj_relative (obj, &ox, &oy, &ow, &oh);
+    if ((x >= ox) &&
+            (x <= (ox + ow)) &&
+            (y >= oy) &&
+            (y <= (oy + oh)))
+        return 1;
+    else
+        return 0;
+}
+
+void
+tbo_frame_get_obj_relative (tbo_object *obj, int *x, int *y, int *w, int *h)
+{
+    *x = (BASE_X + obj->x) * SCALE_FACTOR;
+    *w = obj->width * SCALE_FACTOR;
+    *y = (BASE_Y + obj->y) * SCALE_FACTOR;
+    *h = obj->height * SCALE_FACTOR;
+}
+
 void tbo_frame_draw_scaled (Frame *frame, cairo_t *cr, int width, int height)
 {
-    float scale_factor = 1.;
-    float scale_factor2 = 1.;
     int RX, RY;
+    tbo_frame_set_scale_factor (frame, width, height);
 
-    scale_factor = (width-20) / (float)frame->width;
-    scale_factor2 = (height-20) / (float)frame->height;
-
-    scale_factor = scale_factor > scale_factor2 ? scale_factor2 : scale_factor;
-
-
-    cairo_scale (cr, scale_factor, scale_factor);
+    cairo_scale (cr, SCALE_FACTOR, SCALE_FACTOR);
     RX = frame->x;
     RY = frame->y;
-    frame->x = (width/2.0) - (frame->width*scale_factor / 2.0);
-    frame->x = frame->x / scale_factor;
-    frame->y = (height/2.0) - (frame->height*scale_factor / 2.0);
-    frame->y = frame->y / scale_factor;
-    tbo_frame_draw(frame, cr);
+    frame->x = tbo_frame_get_x_centered (frame, width);
+    frame->y = tbo_frame_get_y_centered (frame, height);
+    BASE_X = frame->x;
+    BASE_Y = frame->y;
+    tbo_frame_draw (frame, cr);
+    cairo_scale (cr, 1/SCALE_FACTOR, 1/SCALE_FACTOR);
     frame->x = RX;
     frame->y = RY;
 }
@@ -120,4 +173,10 @@ void tbo_frame_draw_scaled (Frame *frame, cairo_t *cr, int width, int height)
 void tbo_frame_add_obj (Frame *frame, tbo_object *obj)
 {
     frame->objects = g_list_append (frame->objects, obj);
+}
+
+float
+tbo_frame_get_scale_factor ()
+{
+    return SCALE_FACTOR;
 }

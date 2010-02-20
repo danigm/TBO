@@ -4,6 +4,7 @@
 #include <math.h>
 #include "selector-tool.h"
 #include "tbo-window.h"
+#include "tbo-types.h"
 #include "page.h"
 #include "frame.h"
 #include "comic.h"
@@ -19,6 +20,7 @@ typedef struct
 } Color;
 
 static Frame *SELECTED = NULL;
+static tbo_object *OBJ = NULL;
 static int START_X=0, START_Y=0;
 static int START_M_X=0, START_M_Y=0;
 static int START_M_W=0, START_M_H=0;
@@ -111,12 +113,40 @@ set_selected (Frame *frame, TboWindow *tbo)
         update_tool_area (tbo);
 }
 
+void
+set_selected_obj (tbo_object *obj, TboWindow *tbo)
+{
+    OBJ = obj;
+}
+
 gboolean
 over_resizer (Frame *frame, int x, int y)
 {
     int rx, ry;
     rx = frame->x + frame->width;
     ry = frame->y + frame->height;
+
+    if (((rx-R_SIZE) < x) &&
+        ((rx+R_SIZE) > x) &&
+        ((ry-R_SIZE) < y) &&
+        ((ry+R_SIZE) > y))
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+gboolean
+over_resizer_obj (tbo_object *obj, int x, int y)
+{
+    int rx, ry;
+    int ox, oy, ow, oh;
+    tbo_frame_get_obj_relative (OBJ, &ox, &oy, &ow, &oh);
+    rx = ox + ow;
+    ry = oy + oh;
 
     if (((rx-R_SIZE) < x) &&
         ((rx+R_SIZE) > x) &&
@@ -141,6 +171,166 @@ selector_tool_on_unselect (TboWindow *tbo)
 
 void
 selector_tool_on_move (GtkWidget *widget,
+        GdkEventMotion *event,
+        TboWindow *tbo)
+{
+    if (get_frame_view ())
+        frame_view_on_move (widget, event, tbo);
+    else
+        page_view_on_move (widget, event, tbo);
+}
+
+void
+frame_view_on_move (GtkWidget *widget,
+        GdkEventMotion *event,
+        TboWindow *tbo)
+{
+    int x, y, offset_x, offset_y;
+
+    x = (int)event->x;
+    y = (int)event->y;
+
+    if (OBJ != NULL)
+    {
+        if (CLICKED)
+        {
+            offset_x = (START_X - x);
+            offset_y = (START_Y - y);
+
+            // resizing frame
+            if (RESIZING)
+            {
+                OBJ->width = abs (START_M_W - offset_x);
+                OBJ->height = abs (START_M_H - offset_y);
+            }
+            // moving frame
+            else
+            {
+                OBJ->x = START_M_X - offset_x;
+                OBJ->y = START_M_Y - offset_y;
+            }
+        }
+
+        // over resizer
+        if (over_resizer_obj (OBJ, x, y))
+        {
+            OVER_RESIZER = TRUE;
+        }
+        else
+        {
+            OVER_RESIZER = FALSE;
+        }
+    }
+}
+
+void
+frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
+{
+    int x, y;
+    GList *obj_list;
+    Frame *frame;
+    tbo_object *obj;
+    gboolean found = FALSE;
+
+    x = (int)event->x;
+    y = (int)event->y;
+
+    frame = get_frame_view ();
+    for (obj_list = g_list_first (frame->objects); obj_list; obj_list = obj_list->next)
+    {
+        obj = (tbo_object *)obj_list->data;
+        if (tbo_frame_point_inside_obj (obj, x, y))
+        {
+            // Selecting last occurrence.
+            set_selected_obj (obj, tbo);
+            found = TRUE;
+        }
+    }
+
+    // resizing
+    if (OBJ && over_resizer_obj (OBJ, x, y))
+    {
+        RESIZING = TRUE;
+    }
+    else if (!found)
+        set_selected_obj (NULL, tbo);
+
+    START_X = x;
+    START_Y = y;
+
+    if (OBJ != NULL)
+    {
+        START_M_X = OBJ->x;
+        START_M_Y = OBJ->y;
+        START_M_W = OBJ->width;
+        START_M_H = OBJ->height;
+    }
+    CLICKED = TRUE;
+}
+
+void
+frame_view_drawing (cairo_t *cr)
+{
+    const double dashes[] = {5, 5};
+    Color border = {0.9, 0.9, 0};
+    Color white = {1, 1, 1};
+    Color black = {0, 0, 0};
+    Color *resizer_border;
+    Color *resizer_fill;
+    int x, y;
+
+    if (OBJ != NULL)
+    {
+        cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
+        cairo_set_line_width (cr, 1);
+        cairo_set_dash (cr, dashes, G_N_ELEMENTS (dashes), 0);
+        cairo_set_source_rgb (cr, border.r, border.g, border.b);
+        int ox, oy, ow, oh;
+        tbo_frame_get_obj_relative (OBJ, &ox, &oy, &ow, &oh);
+        cairo_rectangle (cr, ox, oy, ow, oh);
+        cairo_stroke (cr);
+
+        // resizer
+        if (OVER_RESIZER)
+        {
+            resizer_fill = &black;
+            resizer_border = &white;
+        }
+        else
+        {
+            resizer_fill = &white;
+            resizer_border = &black;
+        }
+
+        cairo_set_line_width (cr, 1);
+        cairo_set_dash (cr, dashes, 0, 0);
+
+        x = ox + ow;
+        y = oy + oh;
+
+        cairo_rectangle (cr, x, y, R_SIZE, R_SIZE);
+        cairo_set_source_rgb(cr, resizer_fill->r, resizer_fill->g, resizer_fill->b);
+        cairo_fill (cr);
+
+        cairo_set_source_rgb(cr, resizer_border->r, resizer_border->g, resizer_border->b);
+        cairo_rectangle (cr, x, y, R_SIZE, R_SIZE);
+        cairo_stroke (cr);
+
+        cairo_set_antialias (cr, CAIRO_ANTIALIAS_DEFAULT);
+    }
+}
+
+void
+frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
+{
+    if (SELECTED != NULL && event->keyval == GDK_Escape)
+    {
+        set_frame_view (NULL);
+    }
+}
+
+void
+page_view_on_move (GtkWidget *widget,
         GdkEventMotion *event,
         TboWindow *tbo)
 {
@@ -183,21 +373,6 @@ selector_tool_on_move (GtkWidget *widget,
         {
             OVER_RESIZER = FALSE;
         }
-    }
-}
-
-void
-frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo) {}
-
-void
-frame_view_drawing (cairo_t *cr){}
-
-void
-frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
-{
-    if (SELECTED != NULL && event->keyval == GDK_Escape)
-    {
-        set_frame_view (NULL);
     }
 }
 

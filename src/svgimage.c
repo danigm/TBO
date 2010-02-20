@@ -76,8 +76,8 @@ tbo_svg_image_draw (SVGImage *self, Frame *frame, cairo_t *cr)
         rsvg_handle_render_cairo (rsvg_handle, cr);
 
         cairo_scale (cr, 1/factorw, 1/factorh);
-        cairo_translate (cr, -frame->x+self->x,
-                             -frame->y+self->y);
+        cairo_translate (cr, -(frame->x+self->x),
+                             -(frame->y+self->y));
 
         cairo_reset_clip (cr);
 
