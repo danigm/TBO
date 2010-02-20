@@ -10,6 +10,7 @@
 void free_gstring_array (GArray *arr);
 
 static GArray *TO_FREE = NULL;
+static TboWindow *TBO = NULL;
 
 void
 doodle_free_all ()
@@ -39,6 +40,7 @@ on_doodle_click_cb (GtkWidget      *widget,
 {
     Frame *frame = get_frame_view ();
     SVGImage *svgimage = tbo_svgimage_new_width_params (0, 0, 0, 0, (char*)data);
+    update_drawing (TBO);
     tbo_frame_add_obj (frame, svgimage);
 }
 
@@ -156,11 +158,13 @@ doodle_add_body_images (gchar *dir, GtkWidget *expander)
 }
 
 GtkWidget *
-doodle_setup_tree (void)
+doodle_setup_tree (TboWindow *tbo)
 {
     GtkWidget *expander;
     GtkWidget *vbox;
     gchar *dirname;
+
+    TBO = tbo;
 
     dirname = malloc (255*sizeof(char));
 

@@ -14,7 +14,7 @@ doodle_tool_on_select (TboWindow *tbo)
 {
     GtkWidget *tree;
 
-    tree = doodle_setup_tree ();
+    tree = doodle_setup_tree (tbo);
     gtk_widget_show_all (tree);
 
     tbo_empty_tool_area (tbo);

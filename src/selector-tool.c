@@ -194,8 +194,8 @@ frame_view_on_move (GtkWidget *widget,
     {
         if (CLICKED)
         {
-            offset_x = (START_X - x);
-            offset_y = (START_Y - y);
+            offset_x = (START_X - x) / tbo_frame_get_scale_factor ();
+            offset_y = (START_Y - y) / tbo_frame_get_scale_factor ();
 
             // resizing frame
             if (RESIZING)

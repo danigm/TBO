@@ -66,19 +66,15 @@ tbo_svg_image_draw (SVGImage *self, Frame *frame, cairo_t *cr)
         float factorw = (float)self->width / (float)w;
         float factorh = (float)self->height / (float)h;
 
-        cairo_rectangle(cr, frame->x, frame->y, frame->width, frame->height);
+        cairo_rectangle(cr, frame->x+2, frame->y+2, frame->width-4, frame->height-4);
         cairo_clip (cr);
-
-        cairo_translate (cr, frame->x+self->x,
-                             frame->y+self->y);
+        cairo_translate (cr, frame->x+self->x, frame->y+self->y);
         cairo_scale (cr, factorw, factorh);
 
         rsvg_handle_render_cairo (rsvg_handle, cr);
 
         cairo_scale (cr, 1/factorw, 1/factorh);
-        cairo_translate (cr, -(frame->x+self->x),
-                             -(frame->y+self->y));
-
+        cairo_translate (cr, -(frame->x+self->x), -(frame->y+self->y));
         cairo_reset_clip (cr);
 
         g_object_unref (rsvg_handle);
