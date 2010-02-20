@@ -23,6 +23,7 @@ tbo_SOURCES = \
 	doodle-tool.c \
 	custom-stock.c \
 	doodle-treeview.c \
+	svgimage.c \
 	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \
@@ -36,12 +37,15 @@ tbo_SOURCES = \
 	selector-tool.h \
 	doodle-tool.h \
 	doodle-treeview.h \
+	svgimage.h \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \
+			 $(PACKAGE_CFLAGS) \
 			-DGNOMELOCALEDIR=\"$(datadir)/locale\" \
 			-DDATA_DIR=\""$(pkgdatadir)"\"
 
-tbo_LDADD = @GTK_LIBS@
+tbo_LDADD = @GTK_LIBS@ \
+			$(PACKAGE_LIBS)
 
 CLEANFILES = *~

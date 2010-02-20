@@ -2,6 +2,7 @@
 #include <cairo.h>
 #include <malloc.h>
 #include "frame.h"
+#include "tbo-types.h"
 
 Frame *
 tbo_frame_new (int x, int y,
@@ -20,12 +21,31 @@ tbo_frame_new (int x, int y,
     return new_frame;
 }
 
+static void
+free_objects (gpointer data,
+              gpointer user_data)
+{
+    tbo_object *obj = (tbo_object *)data;
+    obj->free (obj);
+}
+
 void 
 tbo_frame_free (Frame *frame)
 {
-    // TODO free all frame objects
+    g_list_foreach (g_list_first (frame->objects), free_objects, NULL);
     g_list_free (frame->objects);
     free (frame);
+}
+
+static void
+draw_objects (gpointer data,
+              gpointer user_data)
+{
+    void **pdata = user_data;
+    tbo_object *obj = (tbo_object *)data;
+    cairo_t *cr = (cairo_t *)pdata[0];
+    Frame *frame = (Frame *)pdata[1];
+    obj->draw (obj, frame, cr);
 }
 
 void
@@ -43,6 +63,14 @@ tbo_frame_draw_complete (Frame *frame, cairo_t *cr,
     cairo_rectangle (cr, frame->x, frame->y,
             frame->width, frame->height);
     cairo_stroke (cr);
+
+    void **crframe = malloc (sizeof(void*)*2);
+    crframe[0] = (void*)cr;
+    crframe[1] = (void*)frame;
+
+    g_list_foreach (g_list_first (frame->objects), draw_objects, crframe);
+
+    free (crframe);
 }
 
 void tbo_frame_draw (Frame *frame, cairo_t *cr)
@@ -87,4 +115,9 @@ void tbo_frame_draw_scaled (Frame *frame, cairo_t *cr, int width, int height)
     tbo_frame_draw(frame, cr);
     frame->x = RX;
     frame->y = RY;
+}
+
+void tbo_frame_add_obj (Frame *frame, tbo_object *obj)
+{
+    frame->objects = g_list_append (frame->objects, obj);
 }

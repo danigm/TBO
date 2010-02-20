@@ -16,6 +16,7 @@ void tbo_frame_draw_complete (Frame *frame, cairo_t *cr,
 void tbo_frame_draw (Frame *frame, cairo_t *cr);
 void tbo_frame_draw_scaled (Frame *frame, cairo_t *cr, int width, int height);
 int tbo_frame_point_inside (Frame *frame, int x, int y);
+void tbo_frame_add_obj (Frame *frame, tbo_object *obj);
 
 #endif
 

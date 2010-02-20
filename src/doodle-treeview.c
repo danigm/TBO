@@ -2,6 +2,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <gtk/gtk.h>
+#include "svgimage.h"
 #include "ui-drawing.h"
 #include "frame.h"
 #include "doodle-treeview.h"
@@ -37,7 +38,8 @@ on_doodle_click_cb (GtkWidget      *widget,
                     gpointer       *data)
 {
     Frame *frame = get_frame_view ();
-    g_print ("doodle: %s, %d\n", (char*)data, frame->x);
+    SVGImage *svgimage = tbo_svgimage_new_width_params (0, 0, 0, 0, (char*)data);
+    tbo_frame_add_obj (frame, svgimage);
 }
 
 void
