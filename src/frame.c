@@ -211,7 +211,8 @@ void tbo_frame_draw_scaled (Frame *frame, cairo_t *cr, int width, int height)
     frame->y = RY;
 }
 
-void tbo_frame_add_obj (Frame *frame, tbo_object *obj)
+void
+tbo_frame_add_obj (Frame *frame, tbo_object *obj)
 {
     frame->objects = g_list_append (frame->objects, obj);
 }
@@ -220,4 +221,11 @@ float
 tbo_frame_get_scale_factor ()
 {
     return SCALE_FACTOR;
+}
+
+void
+tbo_frame_del_obj (Frame *frame, tbo_object *obj)
+{
+    frame->objects = g_list_remove (g_list_first (frame->objects), obj);
+    obj->free (obj);
 }

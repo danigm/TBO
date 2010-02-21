@@ -276,18 +276,6 @@ frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
     x = (int)event->x;
     y = (int)event->y;
 
-    frame = get_frame_view ();
-    for (obj_list = g_list_first (frame->objects); obj_list; obj_list = obj_list->next)
-    {
-        obj = (tbo_object *)obj_list->data;
-        if (tbo_frame_point_inside_obj (obj, x, y))
-        {
-            // Selecting last occurrence.
-            set_selected_obj (obj, tbo);
-            found = TRUE;
-        }
-    }
-
     // resizing
     if (OBJ && over_resizer_obj (OBJ, x, y))
     {
@@ -297,8 +285,22 @@ frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
     {
         ROTATING = TRUE;
     }
-    else if (!found)
-        set_selected_obj (NULL, tbo);
+    else
+    {
+        frame = get_frame_view ();
+        for (obj_list = g_list_first (frame->objects); obj_list; obj_list = obj_list->next)
+        {
+            obj = (tbo_object *)obj_list->data;
+            if (tbo_frame_point_inside_obj (obj, x, y))
+            {
+                // Selecting last occurrence.
+                set_selected_obj (obj, tbo);
+                found = TRUE;
+            }
+        }
+        if (!found)
+            set_selected_obj (NULL, tbo);
+    }
 
     START_X = x;
     START_Y = y;
@@ -407,6 +409,12 @@ frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
     if (SELECTED != NULL && event->keyval == GDK_Escape)
     {
         set_frame_view (NULL);
+    }
+
+    if (OBJ != NULL && event->keyval == GDK_Delete)
+    {
+        tbo_frame_del_obj (SELECTED, OBJ);
+        set_selected_obj (NULL, tbo);
     }
 }
 

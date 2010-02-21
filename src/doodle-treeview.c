@@ -163,6 +163,7 @@ doodle_add_body_images (gchar *dir, GtkWidget *box)
     GtkWidget *expander = gtk_expander_new ("body");
     GtkWidget *table = doodle_add_images (dir, "body");
     gtk_container_add (GTK_CONTAINER (expander), table);
+    gtk_expander_set_expanded (GTK_EXPANDER (expander), TRUE);
     gtk_container_add (GTK_CONTAINER (box), expander);
 }
 
@@ -172,6 +173,7 @@ doodle_add_eyes_images (gchar *dir, GtkWidget *box)
     GtkWidget *expander = gtk_expander_new ("eyes");
     GtkWidget *table = doodle_add_images (dir, "eyes");
     gtk_container_add (GTK_CONTAINER (expander), table);
+    gtk_expander_set_expanded (GTK_EXPANDER (expander), TRUE);
     gtk_container_add (GTK_CONTAINER (box), expander);
 }
 
@@ -181,6 +183,7 @@ doodle_add_mouth_images (gchar *dir, GtkWidget *box)
     GtkWidget *expander = gtk_expander_new ("mouth");
     GtkWidget *table = doodle_add_images (dir, "mouth");
     gtk_container_add (GTK_CONTAINER (expander), table);
+    gtk_expander_set_expanded (GTK_EXPANDER (expander), TRUE);
     gtk_container_add (GTK_CONTAINER (box), expander);
 }
 
