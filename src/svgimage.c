@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 #include <gtk/gtk.h>
 #include <cairo.h>
 #include <librsvg/rsvg.h>
@@ -69,11 +70,13 @@ tbo_svg_image_draw (SVGImage *self, Frame *frame, cairo_t *cr)
         cairo_rectangle(cr, frame->x+2, frame->y+2, frame->width-4, frame->height-4);
         cairo_clip (cr);
         cairo_translate (cr, frame->x+self->x, frame->y+self->y);
+        cairo_rotate (cr, self->angle);
         cairo_scale (cr, factorw, factorh);
 
         rsvg_handle_render_cairo (rsvg_handle, cr);
 
         cairo_scale (cr, 1/factorw, 1/factorh);
+        cairo_rotate (cr, -self->angle);
         cairo_translate (cr, -(frame->x+self->x), -(frame->y+self->y));
         cairo_reset_clip (cr);
 

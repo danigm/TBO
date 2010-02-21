@@ -36,7 +36,7 @@ struct tbo_object
     int y;
     int width;
     int height;
-    float angle;
+    double angle;
     gboolean flipv;
     gboolean fliph;
     void (*free) (struct tbo_object *);

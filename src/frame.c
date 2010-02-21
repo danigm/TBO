@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <math.h>
 #include <cairo.h>
 #include <malloc.h>
 #include "frame.h"
@@ -133,11 +134,51 @@ int
 tbo_frame_point_inside_obj (tbo_object *obj, int x, int y)
 {
     int ox, oy, ow, oh;
+
     tbo_frame_get_obj_relative (obj, &ox, &oy, &ow, &oh);
-    if ((x >= ox) &&
-            (x <= (ox + ow)) &&
-            (y >= oy) &&
-            (y <= (oy + oh)))
+    int xnew1 = ox + (ow * cos (obj->angle));
+    int ynew1 = oy + (ow * sin (obj->angle));
+    int xnew2 = ox + (-oh * sin (obj->angle));
+    int ynew2 = oy + (oh * cos (obj->angle));
+    int xnew3 = ox + (ow * cos(obj->angle) - oh * sin(obj->angle));
+    int ynew3 = oy + (oh * cos(obj->angle) + ow * sin(obj->angle));
+
+    int xmax, ymax, xmin, ymin;
+
+    xmax = ox;
+    if (xnew1 > xmax)
+        xmax = xnew1;
+    if (xnew2 > xmax)
+        xmax = xnew2;
+    if (xnew3 > xmax)
+        xmax = xnew3;
+    ymax = oy;
+    if (ynew1 > ymax)
+        ymax = ynew1;
+    if (ynew2 > ymax)
+        ymax = ynew2;
+    if (ynew3 > ymax)
+        ymax = ynew3;
+
+    xmin = ox;
+    if (xnew1 < xmin)
+        xmin = xnew1;
+    if (xnew2 < xmin)
+        xmin = xnew2;
+    if (xnew3 < xmin)
+        xmin = xnew3;
+    ymin = oy;
+    if (ynew1 < ymin)
+        ymin = ynew1;
+    if (ynew2 < ymin)
+        ymin = ynew2;
+    if (ynew3 < ymin)
+        ymin = ynew3;
+
+    if ((x >= xmin) &&
+            (x <= xmax) &&
+            (y >= ymin) &&
+            (y <= ymax))
         return 1;
     else
         return 0;

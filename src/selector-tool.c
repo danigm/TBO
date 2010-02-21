@@ -24,9 +24,12 @@ static tbo_object *OBJ = NULL;
 static int START_X=0, START_Y=0;
 static int START_M_X=0, START_M_Y=0;
 static int START_M_W=0, START_M_H=0;
+static int X=0, Y=0;
 gboolean CLICKED = FALSE;
 gboolean OVER_RESIZER = FALSE;
+gboolean OVER_ROTATER = FALSE;
 gboolean RESIZING = FALSE;
+gboolean ROTATING = FALSE;
 GtkWidget *SPIN_W = NULL;
 GtkWidget *SPIN_H = NULL;
 GtkWidget *SPIN_X = NULL;
@@ -145,13 +148,35 @@ over_resizer_obj (tbo_object *obj, int x, int y)
     int rx, ry;
     int ox, oy, ow, oh;
     tbo_frame_get_obj_relative (OBJ, &ox, &oy, &ow, &oh);
-    rx = ox + ow;
-    ry = oy + oh;
+    rx = ox + (ow * cos(obj->angle) - oh * sin(obj->angle));
+    ry = oy + (oh * cos(obj->angle) + ow * sin(obj->angle));
 
     if (((rx-R_SIZE) < x) &&
         ((rx+R_SIZE) > x) &&
         ((ry-R_SIZE) < y) &&
         ((ry+R_SIZE) > y))
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+gboolean
+over_rotater_obj (tbo_object *obj, int x, int y)
+{
+    int rx, ry;
+    int ox, oy, ow, oh;
+    tbo_frame_get_obj_relative (OBJ, &ox, &oy, &ow, &oh);
+    rx = ox;
+    ry = oy;
+
+    if (((rx-R_SIZE/2.0) < x) &&
+        ((rx+R_SIZE/2.0) > x) &&
+        ((ry-R_SIZE/2.0) < y) &&
+        ((ry+R_SIZE/2.0) > y))
     {
         return TRUE;
     }
@@ -190,6 +215,9 @@ frame_view_on_move (GtkWidget *widget,
     x = (int)event->x;
     y = (int)event->y;
 
+    X = x;
+    Y = y;
+
     if (OBJ != NULL)
     {
         if (CLICKED)
@@ -197,13 +225,17 @@ frame_view_on_move (GtkWidget *widget,
             offset_x = (START_X - x) / tbo_frame_get_scale_factor ();
             offset_y = (START_Y - y) / tbo_frame_get_scale_factor ();
 
-            // resizing frame
+            // resizing object
             if (RESIZING)
             {
                 OBJ->width = abs (START_M_W - offset_x);
                 OBJ->height = abs (START_M_H - offset_y);
             }
-            // moving frame
+            else if (ROTATING)
+            {
+                OBJ->angle = atan2 (offset_y, offset_x);
+            }
+            // moving object
             else
             {
                 OBJ->x = START_M_X - offset_x;
@@ -219,6 +251,15 @@ frame_view_on_move (GtkWidget *widget,
         else
         {
             OVER_RESIZER = FALSE;
+        }
+        // over rotater
+        if (over_rotater_obj (OBJ, x, y))
+        {
+            OVER_ROTATER = TRUE;
+        }
+        else
+        {
+            OVER_ROTATER = FALSE;
         }
     }
 }
@@ -252,6 +293,10 @@ frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
     {
         RESIZING = TRUE;
     }
+    else if (OBJ && over_rotater_obj (OBJ, x, y))
+    {
+        ROTATING = TRUE;
+    }
     else if (!found)
         set_selected_obj (NULL, tbo);
 
@@ -277,6 +322,8 @@ frame_view_drawing (cairo_t *cr)
     Color black = {0, 0, 0};
     Color *resizer_border;
     Color *resizer_fill;
+    Color *rotater_border;
+    Color *rotater_fill;
     int x, y;
 
     if (OBJ != NULL)
@@ -287,7 +334,10 @@ frame_view_drawing (cairo_t *cr)
         cairo_set_source_rgb (cr, border.r, border.g, border.b);
         int ox, oy, ow, oh;
         tbo_frame_get_obj_relative (OBJ, &ox, &oy, &ow, &oh);
-        cairo_rectangle (cr, ox, oy, ow, oh);
+
+        cairo_translate (cr, ox, oy);
+        cairo_rotate (cr, OBJ->angle);
+        cairo_rectangle (cr, 0, 0, ow, oh);
         cairo_stroke (cr);
 
         // resizer
@@ -302,11 +352,23 @@ frame_view_drawing (cairo_t *cr)
             resizer_border = &black;
         }
 
+        // rotater
+        if (OVER_ROTATER)
+        {
+            rotater_fill = &black;
+            rotater_border = &white;
+        }
+        else
+        {
+            rotater_fill = &white;
+            rotater_border = &black;
+        }
+
         cairo_set_line_width (cr, 1);
         cairo_set_dash (cr, dashes, 0, 0);
 
-        x = ox + ow;
-        y = oy + oh;
+        x = ow;
+        y = oh;
 
         cairo_rectangle (cr, x, y, R_SIZE, R_SIZE);
         cairo_set_source_rgb(cr, resizer_fill->r, resizer_fill->g, resizer_fill->b);
@@ -316,7 +378,26 @@ frame_view_drawing (cairo_t *cr)
         cairo_rectangle (cr, x, y, R_SIZE, R_SIZE);
         cairo_stroke (cr);
 
+        // object rotate zone
+        cairo_set_source_rgb(cr, rotater_fill->r, rotater_fill->g, rotater_fill->b);
+        cairo_arc (cr, 0, 0, R_SIZE / 2., 0, 2 * M_PI);
+        cairo_fill (cr);
+        cairo_set_source_rgb(cr, rotater_border->r, rotater_border->g, rotater_border->b);
+        cairo_arc (cr, 0, 0, R_SIZE / 2., 0, 2 * M_PI);
+        cairo_stroke (cr);
+
+        cairo_rotate (cr, -OBJ->angle);
+        cairo_translate (cr, -ox, -oy);
+
         cairo_set_antialias (cr, CAIRO_ANTIALIAS_DEFAULT);
+
+        if (ROTATING)
+        {
+            cairo_set_source_rgb(cr, 1, 0, 0);
+            cairo_move_to (cr, ox, oy);
+            cairo_line_to (cr, X, Y);
+            cairo_stroke (cr);
+        }
     }
 }
 
@@ -525,6 +606,7 @@ selector_tool_on_release (GtkWidget *widget,
     START_Y = 0;
     CLICKED = FALSE;
     RESIZING = FALSE;
+    ROTATING = FALSE;
 }
 
 void
