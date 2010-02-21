@@ -104,8 +104,8 @@ get_files (gchar *base_dir, gboolean isdir)
     return array;
 }
 
-void
-doodle_add_body_images (gchar *dir, GtkWidget *expander)
+GtkWidget *
+doodle_add_images (gchar *dir, gchar *subdir)
 {
     int i;
     gchar *dirname;
@@ -118,7 +118,7 @@ doodle_add_body_images (gchar *dir, GtkWidget *expander)
     int w, h=50;
 
     dirname = malloc (255*sizeof(char));
-    snprintf (dirname, 255, "%s/%s", dir, "body");
+    snprintf (dirname, 255, "%s/%s", dir, subdir);
 
     GArray *arr = get_files (dirname, FALSE);
 
@@ -154,7 +154,34 @@ doodle_add_body_images (gchar *dir, GtkWidget *expander)
     free (dirname);
 
     gtk_widget_show_all (GTK_WIDGET (table));
+    return table;
+}
+
+void
+doodle_add_body_images (gchar *dir, GtkWidget *box)
+{
+    GtkWidget *expander = gtk_expander_new ("body");
+    GtkWidget *table = doodle_add_images (dir, "body");
     gtk_container_add (GTK_CONTAINER (expander), table);
+    gtk_container_add (GTK_CONTAINER (box), expander);
+}
+
+void
+doodle_add_eyes_images (gchar *dir, GtkWidget *box)
+{
+    GtkWidget *expander = gtk_expander_new ("eyes");
+    GtkWidget *table = doodle_add_images (dir, "eyes");
+    gtk_container_add (GTK_CONTAINER (expander), table);
+    gtk_container_add (GTK_CONTAINER (box), expander);
+}
+
+void
+doodle_add_mouth_images (gchar *dir, GtkWidget *box)
+{
+    GtkWidget *expander = gtk_expander_new ("mouth");
+    GtkWidget *table = doodle_add_images (dir, "mouth");
+    gtk_container_add (GTK_CONTAINER (expander), table);
+    gtk_container_add (GTK_CONTAINER (box), expander);
 }
 
 GtkWidget *
@@ -162,6 +189,7 @@ doodle_setup_tree (TboWindow *tbo)
 {
     GtkWidget *expander;
     GtkWidget *vbox;
+    GtkWidget *vbox2;
     gchar *dirname;
 
     TBO = tbo;
@@ -169,6 +197,7 @@ doodle_setup_tree (TboWindow *tbo)
     dirname = malloc (255*sizeof(char));
 
     vbox = gtk_vbox_new (FALSE, 5);
+    vbox2 = gtk_vbox_new (FALSE, 5);
 
     GArray *arr = get_files (DATA_DIR "/doodle", TRUE);
     int i;
@@ -180,8 +209,11 @@ doodle_setup_tree (TboWindow *tbo)
         get_base_name (mystr->str, dirname, 255);
         expander = gtk_expander_new (dirname);
         gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 5);
+        gtk_container_add (GTK_CONTAINER (expander), vbox2);
 
-        doodle_add_body_images (mystr->str, expander);
+        doodle_add_body_images (mystr->str, vbox2);
+        doodle_add_eyes_images (mystr->str, vbox2);
+        doodle_add_mouth_images (mystr->str, vbox2);
     }
     free_gstring_array (arr);
 
