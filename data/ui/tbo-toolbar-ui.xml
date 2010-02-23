@@ -15,6 +15,7 @@
        <toolitem name="newframe" action="NewFrame"/>
        <separator/>
        <toolitem name="doodle" action="Doodle"/>
+       <toolitem name="text" action="Text"/>
      </placeholder>
     </toolbar>
 </ui>

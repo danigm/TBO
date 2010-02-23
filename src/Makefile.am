@@ -23,6 +23,7 @@ tbo_SOURCES = \
 	doodle-tool.c \
 	custom-stock.c \
 	doodle-treeview.c \
+	text-tool.c \
 	svgimage.c \
 	tbo-window.h \
 	comic.h \
@@ -37,6 +38,7 @@ tbo_SOURCES = \
 	selector-tool.h \
 	doodle-tool.h \
 	doodle-treeview.h \
+	text-tool.h \
 	svgimage.h \
 	custom-stock.h
 

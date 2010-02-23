@@ -14,6 +14,7 @@
 #include "frame-tool.h"
 #include "selector-tool.h"
 #include "doodle-tool.h"
+#include "text-tool.h"
 
 static int SELECTED_TOOL = NONE;
 static GtkActionGroup *ACTION_GROUP = NULL;
@@ -46,6 +47,15 @@ static ToolStruct TOOLS[] =
      doodle_tool_on_release,
      doodle_tool_on_key,
      doodle_tool_drawing},
+
+    {TEXT,
+     text_tool_on_select,
+     text_tool_on_unselect,
+     text_tool_on_move,
+     text_tool_on_click,
+     text_tool_on_release,
+     text_tool_on_key,
+     text_tool_drawing},
 };
 
 typedef struct
@@ -83,6 +93,7 @@ update_toolbar (TboWindow *tbo)
     GtkAction *delete;
 
     GtkAction *doodle;
+    GtkAction *text;
     GtkAction *new_frame;
 
     if (!ACTION_GROUP)
@@ -109,16 +120,19 @@ update_toolbar (TboWindow *tbo)
 
     // Frame view disabled in page view
     doodle = gtk_action_group_get_action (ACTION_GROUP, "Doodle");
+    text = gtk_action_group_get_action (ACTION_GROUP, "Text");
     new_frame = gtk_action_group_get_action (ACTION_GROUP, "NewFrame");
 
     if (get_frame_view() == NULL)
     {
         gtk_action_set_sensitive (doodle, FALSE);
+        gtk_action_set_sensitive (text, FALSE);
         gtk_action_set_sensitive (new_frame, TRUE);
     }
     else
     {
         gtk_action_set_sensitive (doodle, TRUE);
+        gtk_action_set_sensitive (text, TRUE);
         gtk_action_set_sensitive (new_frame, FALSE);
     }
 }
@@ -214,12 +228,16 @@ static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
     { "Doodle", TBO_STOCK_DOODLE, N_("Doodle"), "",
       N_("Doodle"),
       G_CALLBACK (select_tool), FALSE },
+    { "Text", TBO_STOCK_TEXT, N_("Text"), "",
+      N_("Text"),
+      G_CALLBACK (select_tool), FALSE },
 };
 
 static const tool_and_action tools_actions [] = {
     {FRAME, "NewFrame"},
     {SELECTOR, "Selector"},
     {DOODLE, "Doodle"},
+    {TEXT, "Text"},
 };
 
 void

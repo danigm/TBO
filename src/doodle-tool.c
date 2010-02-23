@@ -8,6 +8,7 @@
 #include "comic.h"
 #include "ui-drawing.h"
 #include "doodle-treeview.h"
+#include "doodle-tool.h"
 
 void
 doodle_tool_on_select (TboWindow *tbo)
