@@ -12,5 +12,7 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
 void text_tool_on_release (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo);
 void text_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo);
 void text_tool_drawing (cairo_t *cr);
+const gchar * text_tool_get_font_name ();
+void text_tool_get_color (double *r, double *g, double *b);
 
 #endif

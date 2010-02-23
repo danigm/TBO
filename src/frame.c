@@ -193,6 +193,18 @@ tbo_frame_get_obj_relative (tbo_object *obj, int *x, int *y, int *w, int *h)
     *h = obj->height * SCALE_FACTOR;
 }
 
+int
+tbo_frame_get_base_x (int x)
+{
+    return (x / SCALE_FACTOR) - BASE_X;
+}
+
+int
+tbo_frame_get_base_y (int y)
+{
+    return (y / SCALE_FACTOR) - BASE_Y;
+}
+
 void tbo_frame_draw_scaled (Frame *frame, cairo_t *cr, int width, int height)
 {
     int RX, RY;

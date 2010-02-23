@@ -21,6 +21,8 @@ void tbo_frame_add_obj (Frame *frame, tbo_object *obj);
 void tbo_frame_del_obj (Frame *frame, tbo_object *obj);
 void tbo_frame_get_obj_relative (tbo_object *obj, int *x, int *y, int *w, int *h);
 float tbo_frame_get_scale_factor ();
+int tbo_frame_get_base_y (int y);
+int tbo_frame_get_base_x (int x);
 
 #endif
 
