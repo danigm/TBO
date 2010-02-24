@@ -70,7 +70,7 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
     x = tbo_frame_get_base_x (x);
     y = tbo_frame_get_base_y (y);
     text_tool_get_color (&r, &g, &b);
-    TextObj *text = tbo_text_new_width_params (x, y, 100, 20,
+    TextObj *text = tbo_text_new_width_params (x, y, 100, 0,
                                                "Texto",
                                                (char *)text_tool_get_font_name (),
                                                r, g, b);

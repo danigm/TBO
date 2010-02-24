@@ -99,6 +99,11 @@ tbo_text_draw (TextObj *self, Frame *frame, cairo_t *cr)
 
     float factorw = (float)self->width / (float)w;
     float factorh = (float)self->height / (float)h;
+    if (factorh == 1)
+    {
+        factorh = factorw;
+        self->height = self->height * factorw;
+    }
 
     cairo_rectangle(cr, frame->x+2, frame->y+2, frame->width-4, frame->height-4);
     cairo_clip (cr);
