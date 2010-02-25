@@ -30,6 +30,12 @@ typedef struct
 
 } Frame;
 
+enum TYPE
+{
+    SVGOBJ,
+    TEXTOBJ,
+};
+
 struct tbo_object
 {
     int x;
@@ -41,6 +47,7 @@ struct tbo_object
     gboolean fliph;
     void (*free) (struct tbo_object *);
     void (*draw) (struct tbo_object *, Frame *, cairo_t *);
+    enum TYPE type;
     gpointer data;
 };
 

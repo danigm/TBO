@@ -49,6 +49,7 @@ tbo_text_new ()
     text->data = text_data_new ("text", "Sans", 0, 0, 0);
     text->free = tbo_text_free;
     text->draw = tbo_text_draw;
+    text->type = TEXTOBJ;
     return text;
 }
 
@@ -68,6 +69,7 @@ tbo_text_new_width_params (int x,
     textobj->width = width;
     textobj->height = height;
     textobj->data = text_data_new (text, font_name, r, g, b);
+    textobj->type = TEXTOBJ;
     return textobj;
 }
 
@@ -118,4 +120,17 @@ tbo_text_draw (TextObj *self, Frame *frame, cairo_t *cr)
     cairo_rotate (cr, -self->angle);
     cairo_translate (cr, -(frame->x+self->x), -(frame->y+self->y));
     cairo_reset_clip (cr);
+}
+
+char *
+tbo_text_get_text (TextObj *self)
+{
+    return ((text_data *)self->data)->text->str;
+}
+
+void
+tbo_text_set_text (TextObj *self, const char *text)
+{
+    g_string_assign (((text_data *)self->data)->text, text);
+    self->height = 0;
 }

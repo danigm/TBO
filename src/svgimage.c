@@ -16,6 +16,7 @@ tbo_svgimage_new ()
     image->data = malloc(sizeof(char)*255);
     image->free =tbo_svg_image_free;
     image->draw =tbo_svg_image_draw;
+    image->type = SVGOBJ;
     return image;
 }
 
@@ -33,6 +34,7 @@ tbo_svgimage_new_width_params (int x,
     image->width = width;
     image->height = height;
     snprintf (image->data, 255, "%s", path);
+    image->type = SVGOBJ;
     return image;
 }
 

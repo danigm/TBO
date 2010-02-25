@@ -10,5 +10,7 @@ TextObj * tbo_text_new ();
 TextObj * tbo_text_new_width_params (int x, int y, int width, int height, const char *text, char *font_name, double r, double g, double b);
 void tbo_text_free (TextObj *self);
 void tbo_text_draw (TextObj *self, Frame *frame, cairo_t *cr);
+char *tbo_text_get_text (TextObj *self);
+void tbo_text_set_text (TextObj *self, const char *text);
 
 #endif
