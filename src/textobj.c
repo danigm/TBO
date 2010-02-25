@@ -158,3 +158,19 @@ tbo_text_set_text (TextObj *self, const char *text)
     g_string_assign (((text_data *)self->data)->text, text);
     self->height = 0;
 }
+
+void
+tbo_text_get_color (TextObj *self, GdkColor *color)
+{
+    text_data *data = (text_data*)self->data;
+    color->red = data->font_color->r * 65535;
+    color->green = data->font_color->g * 65535;
+    color->blue = data->font_color->b * 65535;
+}
+
+char *
+tbo_text_get_string (TextObj *self)
+{
+    text_data *data = (text_data *)self->data;
+    return pango_font_description_to_string (data->description);
+}

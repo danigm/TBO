@@ -113,13 +113,14 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
     gboolean found = FALSE;
     GList *obj_list;
     tbo_object * obj;
+    TextObj *text;
 
     for (obj_list = g_list_first (frame->objects); obj_list; obj_list = obj_list->next)
     {
         obj = (tbo_object *)obj_list->data;
         if (obj->type == TEXTOBJ && tbo_frame_point_inside_obj (obj, x, y))
         {
-            TEXT_SELECTED = (TextObj *)obj;
+            text = (TextObj *)obj;
             found = TRUE;
         }
     }
@@ -128,15 +129,13 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
         x = tbo_frame_get_base_x (x);
         y = tbo_frame_get_base_y (y);
         text_tool_get_color (&r, &g, &b);
-        TextObj *text = tbo_text_new_width_params (x, y, 100, 0,
-                                                   "Texto",
-                                                   (char *)text_tool_get_pango_font (),
-                                                   r, g, b);
+        text = tbo_text_new_width_params (x, y, 100, 0,
+                                          "Texto",
+                                          (char *)text_tool_get_pango_font (),
+                                          r, g, b);
         tbo_frame_add_obj (frame, text);
-        TEXT_SELECTED = text;
     }
-    if (TEXT_SELECTED)
-        gtk_text_buffer_set_text (TEXT_BUFFER, tbo_text_get_text (TEXT_SELECTED), -1);
+    text_tool_set_selected (text);
 }
 
 void text_tool_on_release (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
@@ -203,4 +202,17 @@ text_tool_get_color (double *r, double *g, double *b)
     *r = color.red / 65535.0;
     *g = color.green / 65535.0;
     *b = color.blue / 65535.0;
+}
+
+void
+text_tool_set_selected (TextObj *text)
+{
+    GdkColor color;
+    char *str = tbo_text_get_text (text);
+    TEXT_SELECTED = NULL;
+    gtk_font_button_set_font_name (GTK_FONT_BUTTON (FONT), tbo_text_get_string (text));
+    tbo_text_get_color (text, &color);
+    gtk_color_button_set_color (GTK_COLOR_BUTTON (FONT_COLOR), &color);
+    gtk_text_buffer_set_text (TEXT_BUFFER, str, -1);
+    TEXT_SELECTED = text;
 }

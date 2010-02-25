@@ -14,5 +14,7 @@ char *tbo_text_get_text (TextObj *self);
 void tbo_text_set_text (TextObj *self, const char *text);
 void tbo_text_change_font (TextObj *self, char *font);
 void tbo_text_change_color (TextObj *self, double r, double g, double b);
+void tbo_text_get_color (TextObj *self, GdkColor *color);
+char * tbo_text_get_string (TextObj *self);
 
 #endif
