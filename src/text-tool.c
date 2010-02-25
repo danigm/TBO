@@ -25,6 +25,24 @@ on_text_change (GtkTextBuffer *buf, gpointer data)
     }
 }
 
+void
+on_font_change (GtkFontButton *fbutton, gpointer data)
+{
+    if (TEXT_SELECTED)
+        tbo_text_change_font (TEXT_SELECTED, text_tool_get_pango_font ());
+}
+
+void
+on_color_change (GtkColorButton *cbutton, gpointer data)
+{
+    if (TEXT_SELECTED)
+    {
+        double r, g, b;
+        text_tool_get_color (&r, &g, &b);
+        tbo_text_change_color (TEXT_SELECTED, r, g, b);
+    }
+}
+
 GtkWidget *
 setup_toolarea (TboWindow *tbo)
 {
@@ -38,7 +56,9 @@ setup_toolarea (TboWindow *tbo)
     gtk_misc_set_alignment (GTK_MISC (font_color_label), 0, 0);
 
     FONT = gtk_font_button_new ();
+    g_signal_connect (FONT, "font-set", G_CALLBACK (on_font_change), NULL);
     FONT_COLOR = gtk_color_button_new ();
+    g_signal_connect (FONT_COLOR, "color-set", G_CALLBACK (on_color_change), NULL);
 
     vbox = gtk_vbox_new (FALSE, 5);
 
@@ -110,7 +130,7 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
         text_tool_get_color (&r, &g, &b);
         TextObj *text = tbo_text_new_width_params (x, y, 100, 0,
                                                    "Texto",
-                                                   (char *)text_tool_get_font_name (),
+                                                   (char *)text_tool_get_pango_font (),
                                                    r, g, b);
         tbo_frame_add_obj (frame, text);
         TEXT_SELECTED = text;
@@ -162,6 +182,17 @@ text_tool_get_font_name ()
     }
 
     return NULL;
+}
+
+char *
+text_tool_get_pango_font ()
+{
+    if (FONT)
+    {
+        return (char *)gtk_font_button_get_font_name (GTK_FONT_BUTTON (FONT));
+    }
+
+    return "Sans Normal 27";
 }
 
 void
