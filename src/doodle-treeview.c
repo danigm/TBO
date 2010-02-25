@@ -6,6 +6,7 @@
 #include "ui-drawing.h"
 #include "frame.h"
 #include "doodle-treeview.h"
+#include "dnd.h"
 
 void free_gstring_array (GArray *arr);
 
@@ -145,7 +146,18 @@ doodle_add_images (gchar *dir, gchar *subdir)
                                      GDK_BUTTON_RELEASE_MASK |
                                      GDK_POINTER_MOTION_MASK);
 
-        g_signal_connect (ebox, "button_press_event", G_CALLBACK (on_doodle_click_cb), mystr->str);
+        //g_signal_connect (ebox, "button_press_event", G_CALLBACK (on_doodle_click_cb), mystr->str);
+
+        // dnd
+        gtk_drag_source_set (ebox,
+                             GDK_BUTTON1_MASK,
+                             TARGET_LIST,
+                             N_TARGETS,
+                             GDK_ACTION_COPY);
+        g_signal_connect (ebox, "drag-data-get", G_CALLBACK (drag_data_get_handl), mystr->str);
+        g_signal_connect (ebox, "drag-begin", G_CALLBACK (drag_begin_handl), mystr->str);
+        g_signal_connect (ebox, "drag-end", G_CALLBACK (drag_end_handl), mystr->str);
+
         gtk_container_add (GTK_CONTAINER (ebox), image);
         gtk_table_attach_defaults (GTK_TABLE (table), ebox, left, left + 1, top, top + 1);
     }

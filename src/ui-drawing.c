@@ -16,6 +16,7 @@
 #include "frame-tool.h"
 #include "selector-tool.h"
 #include "doodle-tool.h"
+#include "dnd.h"
 
 
 Frame *FRAME_VIEW = NULL;
@@ -51,9 +52,6 @@ on_expose_cb(GtkWidget      *widget,
 
     GdkWindow *window;
     int w, h;
-
-    char *text = "TBO rulz!";
-    cairo_text_extents_t extents;
 
     Frame *frame;
     GList *frame_list;
@@ -98,19 +96,6 @@ on_expose_cb(GtkWidget      *widget,
 
     tool = get_selected_tool ();
     tool_signal (tool, TOOL_DRAWING, cr);
-
-    // TBO rulz text example :P
-    /*
-    cairo_set_source_rgb(cr, 0, 0, 0);
-    cairo_select_font_face(cr, "Courier", CAIRO_FONT_SLANT_NORMAL,
-            CAIRO_FONT_WEIGHT_NORMAL);
-    cairo_set_font_size(cr, 90.0);
-
-    cairo_text_extents(cr, text, &extents);
-    cairo_move_to(cr, (width-extents.width)/2, (height+extents.height)/2);
-
-    cairo_show_text(cr, text);
-    */
 
     cairo_destroy(cr);
 
@@ -216,6 +201,9 @@ darea_connect_signals (TboWindow *tbo)
     g_signal_connect (tbo->window, "key_press_event",
             G_CALLBACK (on_key_cb), tbo);
 
+    // drag & drop
+    gtk_drag_dest_set (drawing, GTK_DEST_DEFAULT_ALL, TARGET_LIST, N_TARGETS, GDK_ACTION_COPY);
+    g_signal_connect (drawing, "drag-data-received", G_CALLBACK(drag_data_received_handl), tbo);
 }
 
 void
