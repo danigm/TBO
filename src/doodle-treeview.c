@@ -106,7 +106,7 @@ get_files (gchar *base_dir, gboolean isdir)
 }
 
 GtkWidget *
-doodle_add_images (gchar *dir, gchar *subdir)
+doodle_add_images (gchar *dir)
 {
     int i;
     gchar *dirname;
@@ -118,8 +118,7 @@ doodle_add_images (gchar *dir, gchar *subdir)
     int left, top;
     int w, h=50;
 
-    dirname = malloc (255*sizeof(char));
-    snprintf (dirname, 255, "%s/%s", dir, subdir);
+    dirname = dir;
 
     GArray *arr = get_files (dirname, FALSE);
 
@@ -163,37 +162,18 @@ doodle_add_images (gchar *dir, gchar *subdir)
     }
 
     doodle_add_to_free (arr);
-    free (dirname);
 
     gtk_widget_show_all (GTK_WIDGET (table));
     return table;
 }
 
 void
-doodle_add_body_images (gchar *dir, GtkWidget *box)
+doodle_add_dir_images (gchar *dir, GtkWidget *box)
 {
-    GtkWidget *expander = gtk_expander_new ("body");
-    GtkWidget *table = doodle_add_images (dir, "body");
-    gtk_container_add (GTK_CONTAINER (expander), table);
-    gtk_expander_set_expanded (GTK_EXPANDER (expander), TRUE);
-    gtk_container_add (GTK_CONTAINER (box), expander);
-}
-
-void
-doodle_add_eyes_images (gchar *dir, GtkWidget *box)
-{
-    GtkWidget *expander = gtk_expander_new ("eyes");
-    GtkWidget *table = doodle_add_images (dir, "eyes");
-    gtk_container_add (GTK_CONTAINER (expander), table);
-    gtk_expander_set_expanded (GTK_EXPANDER (expander), TRUE);
-    gtk_container_add (GTK_CONTAINER (box), expander);
-}
-
-void
-doodle_add_mouth_images (gchar *dir, GtkWidget *box)
-{
-    GtkWidget *expander = gtk_expander_new ("mouth");
-    GtkWidget *table = doodle_add_images (dir, "mouth");
+    char base_name[255];
+    get_base_name (dir, base_name, 255);
+    GtkWidget *expander = gtk_expander_new (base_name);
+    GtkWidget *table = doodle_add_images (dir);
     gtk_container_add (GTK_CONTAINER (expander), table);
     gtk_expander_set_expanded (GTK_EXPANDER (expander), TRUE);
     gtk_container_add (GTK_CONTAINER (box), expander);
@@ -212,23 +192,27 @@ doodle_setup_tree (TboWindow *tbo)
     dirname = malloc (255*sizeof(char));
 
     vbox = gtk_vbox_new (FALSE, 5);
-    vbox2 = gtk_vbox_new (FALSE, 5);
 
     GArray *arr = get_files (DATA_DIR "/doodle", TRUE);
-    int i;
-    GString *mystr;
+    int i, j;
+    GString *mystr, *mystr2;
     for (i=0; i<arr->len; i++)
     {
         mystr = g_array_index (arr, GString*, i);
 
+        vbox2 = gtk_vbox_new (FALSE, 5);
         get_base_name (mystr->str, dirname, 255);
         expander = gtk_expander_new (dirname);
         gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 5);
         gtk_container_add (GTK_CONTAINER (expander), vbox2);
 
-        doodle_add_body_images (mystr->str, vbox2);
-        doodle_add_eyes_images (mystr->str, vbox2);
-        doodle_add_mouth_images (mystr->str, vbox2);
+        GArray *subdir = get_files (mystr->str, TRUE);
+        for (j=0; j<subdir->len; j++)
+        {
+            mystr2 = g_array_index (subdir, GString*, j);
+            doodle_add_dir_images (mystr2->str, vbox2);
+        }
+        free_gstring_array (subdir);
     }
     free_gstring_array (arr);
 
