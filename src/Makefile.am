@@ -27,6 +27,7 @@ tbo_SOURCES = \
 	textobj.c \
 	svgimage.c \
 	dnd.c \
+	tbo-object.c \
 	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \
@@ -44,6 +45,7 @@ tbo_SOURCES = \
 	svgimage.h \
 	textobj.h \
 	dnd.h \
+	tbo-object.h \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \

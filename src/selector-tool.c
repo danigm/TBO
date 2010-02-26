@@ -5,6 +5,7 @@
 #include "selector-tool.h"
 #include "tbo-window.h"
 #include "tbo-types.h"
+#include "tbo-object.h"
 #include "page.h"
 #include "frame.h"
 #include "comic.h"
@@ -411,10 +412,23 @@ frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
         set_frame_view (NULL);
     }
 
-    if (OBJ != NULL && event->keyval == GDK_Delete)
+    if (OBJ != NULL)
     {
-        tbo_frame_del_obj (SELECTED, OBJ);
-        set_selected_obj (NULL, tbo);
+        switch (event->keyval)
+        {
+            case GDK_Delete:
+                tbo_frame_del_obj (SELECTED, OBJ);
+                set_selected_obj (NULL, tbo);
+                break;
+            case GDK_v:
+                tbo_object_flipv (OBJ);
+                break;
+            case GDK_h:
+                tbo_object_fliph (OBJ);
+                break;
+            default:
+                break;
+        }
     }
 }
 

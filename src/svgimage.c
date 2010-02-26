@@ -17,6 +17,8 @@ tbo_svgimage_new ()
     image->free =tbo_svg_image_free;
     image->draw =tbo_svg_image_draw;
     image->type = SVGOBJ;
+    image->flipv = FALSE;
+    image->fliph = FALSE;
     return image;
 }
 
@@ -35,6 +37,8 @@ tbo_svgimage_new_width_params (int x,
     image->height = height;
     snprintf (image->data, 255, "%s", path);
     image->type = SVGOBJ;
+    image->flipv = FALSE;
+    image->fliph = FALSE;
     return image;
 }
 
@@ -69,14 +73,20 @@ tbo_svg_image_draw (SVGImage *self, Frame *frame, cairo_t *cr)
         float factorw = (float)self->width / (float)w;
         float factorh = (float)self->height / (float)h;
 
+        // Fliping
+        cairo_matrix_t mx = {1, 0, 0, 1, 0, 0};
+        tbo_object_get_flip_matrix (self, &mx);
+
         cairo_rectangle(cr, frame->x+2, frame->y+2, frame->width-4, frame->height-4);
         cairo_clip (cr);
         cairo_translate (cr, frame->x+self->x, frame->y+self->y);
         cairo_rotate (cr, self->angle);
         cairo_scale (cr, factorw, factorh);
+        cairo_transform (cr, &mx);
 
         rsvg_handle_render_cairo (rsvg_handle, cr);
 
+        cairo_transform (cr, &mx);
         cairo_scale (cr, 1/factorw, 1/factorh);
         cairo_rotate (cr, -self->angle);
         cairo_translate (cr, -(frame->x+self->x), -(frame->y+self->y));

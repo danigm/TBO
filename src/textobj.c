@@ -69,6 +69,8 @@ tbo_text_new ()
     text->free = tbo_text_free;
     text->draw = tbo_text_draw;
     text->type = TEXTOBJ;
+    text->flipv = FALSE;
+    text->fliph = FALSE;
     return text;
 }
 
@@ -89,6 +91,8 @@ tbo_text_new_width_params (int x,
     textobj->height = height;
     textobj->data = text_data_new (text, font, r, g, b);
     textobj->type = TEXTOBJ;
+    textobj->flipv = FALSE;
+    textobj->fliph = FALSE;
     return textobj;
 }
 
@@ -132,14 +136,20 @@ tbo_text_draw (TextObj *self, Frame *frame, cairo_t *cr)
         self->height = self->height * factorw;
     }
 
+    // Fliping
+    cairo_matrix_t mx = {1, 0, 0, 1, 0, 0};
+    tbo_object_get_flip_matrix (self, &mx);
+
     cairo_rectangle(cr, frame->x+2, frame->y+2, frame->width-4, frame->height-4);
     cairo_clip (cr);
     cairo_translate (cr, frame->x+self->x, frame->y+self->y);
     cairo_rotate (cr, self->angle);
     cairo_scale (cr, factorw, factorh);
+    cairo_transform (cr, &mx);
 
     pango_cairo_show_layout (cr, layout);
 
+    cairo_transform (cr, &mx);
     cairo_scale (cr, 1/factorw, 1/factorh);
     cairo_rotate (cr, -self->angle);
     cairo_translate (cr, -(frame->x+self->x), -(frame->y+self->y));
