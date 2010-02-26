@@ -220,3 +220,33 @@ doodle_setup_tree (TboWindow *tbo)
 
     return vbox;
 }
+
+void
+tbo_object_order_down (tbo_object *self)
+{
+    Frame *frame = get_frame_view ();
+    GList *list = g_list_find (frame->objects, self);
+    GList *prev = g_list_previous (list);
+    tbo_object *tmp;
+    if (prev)
+    {
+        tmp = (tbo_object*)list->data;
+        list->data = prev->data;
+        prev->data = tmp;
+    }
+}
+
+void
+tbo_object_order_up (tbo_object *self)
+{
+    Frame *frame = get_frame_view ();
+    GList *list = g_list_find (frame->objects, self);
+    GList *next = g_list_next (list);
+    tbo_object *tmp;
+    if (next)
+    {
+        tmp = (tbo_object*)list->data;
+        list->data = next->data;
+        next->data = tmp;
+    }
+}
