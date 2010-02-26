@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
+#include "ui-drawing.h"
 #include "tbo-types.h"
 #include "tbo-object.h"
 
@@ -38,5 +39,57 @@ tbo_object_get_flip_matrix (tbo_object *self, cairo_matrix_t *mx)
         mx->xx = fliph.xx; mx->yx = fliph.yx; mx->yy = fliph.yy;
         mx->x0 = self->width;
         mx->y0 = 0;
+    }
+}
+
+void
+tbo_object_order_down (tbo_object *self)
+{
+    Frame *frame = get_frame_view ();
+    GList *list = g_list_find (frame->objects, self);
+    GList *prev = g_list_previous (list);
+    tbo_object *tmp;
+    if (prev)
+    {
+        tmp = (tbo_object*)list->data;
+        list->data = prev->data;
+        prev->data = tmp;
+    }
+}
+
+void
+tbo_object_order_up (tbo_object *self)
+{
+    Frame *frame = get_frame_view ();
+    GList *list = g_list_find (frame->objects, self);
+    GList *next = g_list_next (list);
+    tbo_object *tmp;
+    if (next)
+    {
+        tmp = (tbo_object*)list->data;
+        list->data = next->data;
+        next->data = tmp;
+    }
+}
+
+void
+tbo_object_move (tbo_object *self, enum MOVE_OPT type)
+{
+    switch (type)
+    {
+        case MOVE_UP:
+            self->y -= MOVING_OFFSET;
+            break;
+        case MOVE_DOWN:
+            self->y += MOVING_OFFSET;
+            break;
+        case MOVE_LEFT:
+            self->x -= MOVING_OFFSET;
+            break;
+        case MOVE_RIGHT:
+            self->x += MOVING_OFFSET;
+            break;
+        default:
+            break;
     }
 }

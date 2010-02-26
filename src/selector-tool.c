@@ -433,16 +433,16 @@ frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
                 tbo_object_order_down (OBJ);
                 break;
             case GDK_Up:
-                printf ("up\n");
+                tbo_object_move (OBJ, MOVE_UP);
                 break;
             case GDK_Down:
-                printf ("down\n");
+                tbo_object_move (OBJ, MOVE_DOWN);
                 break;
             case GDK_Left:
-                printf ("left\n");
+                tbo_object_move (OBJ, MOVE_LEFT);
                 break;
             case GDK_Right:
-                printf ("right\n");
+                tbo_object_move (OBJ, MOVE_RIGHT);
                 break;
             default:
                 break;
