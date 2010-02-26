@@ -26,20 +26,24 @@ on_text_change (GtkTextBuffer *buf, gpointer data)
 }
 
 void
-on_font_change (GtkFontButton *fbutton, gpointer data)
+on_font_change (GtkFontButton *fbutton, TboWindow *tbo)
 {
     if (TEXT_SELECTED)
+    {
         tbo_text_change_font (TEXT_SELECTED, text_tool_get_pango_font ());
+        update_drawing (tbo);
+    }
 }
 
 void
-on_color_change (GtkColorButton *cbutton, gpointer data)
+on_color_change (GtkColorButton *cbutton, TboWindow *tbo)
 {
     if (TEXT_SELECTED)
     {
         double r, g, b;
         text_tool_get_color (&r, &g, &b);
         tbo_text_change_color (TEXT_SELECTED, r, g, b);
+        update_drawing (tbo);
     }
 }
 
@@ -50,15 +54,16 @@ setup_toolarea (TboWindow *tbo)
     GtkWidget *hbox;
     GtkWidget *font_color_label = gtk_label_new (_("Font:"));
     GtkWidget *font_label = gtk_label_new (_("Text color:"));
+    GtkWidget *scroll;
     GtkWidget *view;
 
     gtk_misc_set_alignment (GTK_MISC (font_label), 0, 0);
     gtk_misc_set_alignment (GTK_MISC (font_color_label), 0, 0);
 
     FONT = gtk_font_button_new ();
-    g_signal_connect (FONT, "font-set", G_CALLBACK (on_font_change), NULL);
+    g_signal_connect (FONT, "font-set", G_CALLBACK (on_font_change), tbo);
     FONT_COLOR = gtk_color_button_new ();
-    g_signal_connect (FONT_COLOR, "color-set", G_CALLBACK (on_color_change), NULL);
+    g_signal_connect (FONT_COLOR, "color-set", G_CALLBACK (on_color_change), tbo);
 
     vbox = gtk_vbox_new (FALSE, 5);
 
@@ -72,12 +77,15 @@ setup_toolarea (TboWindow *tbo)
     gtk_box_pack_start (GTK_BOX (hbox), FONT_COLOR, TRUE, TRUE, 5);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 5);
 
+    scroll = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     view = gtk_text_view_new ();
     gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (view), GTK_WRAP_WORD);
     TEXT_BUFFER = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
     gtk_text_buffer_set_text (TEXT_BUFFER, "", -1);
-    g_signal_connect (TEXT_BUFFER, "changed", G_CALLBACK (on_text_change), NULL);
-    gtk_box_pack_start (GTK_BOX (vbox), view, FALSE, FALSE, 5);
+    g_signal_connect (TEXT_BUFFER, "changed", G_CALLBACK (on_text_change), tbo);
+    gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scroll), view);
+    gtk_box_pack_start (GTK_BOX (vbox), scroll, FALSE, FALSE, 5);
 
     return vbox;
 }
