@@ -16,6 +16,20 @@ foomouth_DATA = foo/mouth/*.svg
 fooeyesdir = $(datadir)/tbo/doodle/foo/eyes
 fooeyes_DATA = foo/eyes/*.svg
 
+#######
+# BAR #
+#######
+
+barbodydir = $(datadir)/tbo/doodle/bar/body
+barbody_DATA = bar/body/*.svg
+
+##############
+# ACCESORIES #
+##############
+
+accpcsdir = $(datadir)/tbo/doodle/accesories/pcs
+accpcs_DATA = accesories/pcs/*.svg
+
 ###########
 # BUBBLES #
 ###########
@@ -29,8 +43,10 @@ EXTRA_DIST = \
 	doodle1/body/*.svg
 	doodle1/mouth/*.svg
 	doodle1/eyes/*.svg
+	bar/body/*.svg
 	foo/body/*.svg
 	foo/mouth/*.svg
 	foo/eyes/*.svg
+	accesories/pcs/*.svg
 	bubble/ellipse/*.svg
 	bubble/square/*.svg
