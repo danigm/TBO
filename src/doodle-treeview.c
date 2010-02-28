@@ -116,7 +116,7 @@ doodle_add_images (gchar *dir)
     GdkPixbuf *pixbuf;
     int r, c=2;
     int left, top;
-    int w, h=50;
+    int w=50, h;
 
     dirname = dir;
 
@@ -135,7 +135,7 @@ doodle_add_images (gchar *dir)
         image = gtk_image_new_from_file (mystr->str);
         pixbuf = gtk_image_get_pixbuf (GTK_IMAGE (image));
 
-        w = gdk_pixbuf_get_width (pixbuf) * 50 / (float)gdk_pixbuf_get_height (pixbuf);
+        h = gdk_pixbuf_get_height (pixbuf) * 50 / (float)gdk_pixbuf_get_width (pixbuf);
         pixbuf = gdk_pixbuf_scale_simple (pixbuf, w, h, GDK_INTERP_BILINEAR);
 
         gtk_widget_destroy (GTK_WIDGET (image));
