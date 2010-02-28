@@ -8,6 +8,7 @@
 static int BASE_X = 0;
 static int BASE_Y = 0;
 static float SCALE_FACTOR = 0;
+static Color BASE_COLOR = {1, 1, 1};
 
 void
 tbo_frame_set_scale_factor (Frame *frame, int width, int height)
@@ -54,6 +55,11 @@ tbo_frame_new (int x, int y,
     new_frame->y = y;
     new_frame->width = width;
     new_frame->height = height;
+    new_frame->border = TRUE;
+    new_frame->color = malloc (sizeof (Color));
+    new_frame->color->r = BASE_COLOR.r;
+    new_frame->color->g = BASE_COLOR.g;
+    new_frame->color->b = BASE_COLOR.b;
 
     return new_frame;
 }
@@ -66,11 +72,12 @@ free_objects (gpointer data,
     obj->free (obj);
 }
 
-void 
+void
 tbo_frame_free (Frame *frame)
 {
     g_list_foreach (g_list_first (frame->objects), free_objects, NULL);
     g_list_free (frame->objects);
+    free (frame->color);
     free (frame);
 }
 
@@ -91,15 +98,19 @@ tbo_frame_draw_complete (Frame *frame, cairo_t *cr,
         float border_r, float border_g, float border_b,
         int line_width)
 {
-    cairo_set_line_width (cr, line_width);
     cairo_set_source_rgb(cr, fill_r, fill_g, fill_b);
     cairo_rectangle(cr, frame->x, frame->y,
             frame->width, frame->height);
     cairo_fill(cr);
-    cairo_set_source_rgb(cr, border_r, border_g, border_b);
-    cairo_rectangle (cr, frame->x, frame->y,
-            frame->width, frame->height);
-    cairo_stroke (cr);
+
+    cairo_set_line_width (cr, line_width);
+    if (frame->border)
+    {
+        cairo_set_source_rgb(cr, border_r, border_g, border_b);
+        cairo_rectangle (cr, frame->x, frame->y,
+                frame->width, frame->height);
+        cairo_stroke (cr);
+    }
 
     void **crframe = malloc (sizeof(void*)*2);
     crframe[0] = (void*)cr;
@@ -110,11 +121,14 @@ tbo_frame_draw_complete (Frame *frame, cairo_t *cr,
     free (crframe);
 }
 
-void tbo_frame_draw (Frame *frame, cairo_t *cr)
+void
+tbo_frame_draw (Frame *frame, cairo_t *cr)
 {
+    Color border = {0, 0, 0};
+    Color *fill = frame->color;
     tbo_frame_draw_complete (frame, cr,
-            1, 1, 1,
-            0, 0, 0,
+            fill->r, fill->g, fill->b,
+            border.r, border.g, border.b,
             4);
 }
 
@@ -240,4 +254,15 @@ tbo_frame_del_obj (Frame *frame, tbo_object *obj)
 {
     frame->objects = g_list_remove (g_list_first (frame->objects), obj);
     obj->free (obj);
+}
+
+void
+tbo_frame_set_color (Frame *frame, GdkColor *color)
+{
+    frame->color->r = color->red / 65535.0;
+    frame->color->g = color->green / 65535.0;
+    frame->color->b = color->blue / 65535.0;
+    BASE_COLOR.r = frame->color->r;
+    BASE_COLOR.g = frame->color->g;
+    BASE_COLOR.b = frame->color->b;
 }

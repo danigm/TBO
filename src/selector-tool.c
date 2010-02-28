@@ -1,3 +1,4 @@
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <cairo.h>
@@ -12,13 +13,6 @@
 #include "ui-drawing.h"
 
 #define R_SIZE 10
-
-typedef struct
-{
-    double r;
-    double g;
-    double b;
-} Color;
 
 static Frame *SELECTED = NULL;
 static tbo_object *OBJ = NULL;
@@ -48,6 +42,30 @@ update_selected_cb (GtkSpinButton *widget, TboWindow *tbo)
     SELECTED->width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (SPIN_W));
     SELECTED->height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (SPIN_H));
 
+    update_drawing (tbo);
+    return FALSE;
+}
+
+gboolean
+update_color_cb (GtkColorButton *button, TboWindow *tbo)
+{
+    if (RESIZING || CLICKED || SELECTED == NULL)
+        return FALSE;
+
+    GdkColor color = {0,0,0};
+    gtk_color_button_get_color (button, &color);
+    tbo_frame_set_color (SELECTED, &color);
+    update_drawing (tbo);
+    return FALSE;
+}
+
+gboolean
+update_border_cb (GtkToggleButton *button, TboWindow *tbo)
+{
+    if (RESIZING || CLICKED || SELECTED == NULL)
+        return FALSE;
+
+    SELECTED->border = !SELECTED->border;
     update_drawing (tbo);
     return FALSE;
 }
@@ -85,6 +103,11 @@ void
 update_tool_area (TboWindow *tbo)
 {
     GtkWidget *toolarea = tbo->toolarea;
+    GtkWidget *hpanel;
+    GtkWidget *label;
+    GtkWidget *color;
+    GtkWidget *border;
+    GdkColor gdk_color = {0, 0, 0};
 
     if (!SPIN_X)
     {
@@ -98,6 +121,25 @@ update_tool_area (TboWindow *tbo)
         g_signal_connect (SPIN_Y, "value-changed", G_CALLBACK (update_selected_cb), tbo);
         g_signal_connect (SPIN_W, "value-changed", G_CALLBACK (update_selected_cb), tbo);
         g_signal_connect (SPIN_H, "value-changed", G_CALLBACK (update_selected_cb), tbo);
+
+        hpanel = gtk_hbox_new (FALSE, 0);
+        label = gtk_label_new (_("Color: "));
+        gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+        color = gtk_color_button_new ();
+        gdk_color.red = SELECTED->color->r * 65535;
+        gdk_color.green = SELECTED->color->g * 65535;
+        gdk_color.blue = SELECTED->color->b * 65535;
+        gtk_color_button_set_color (GTK_COLOR_BUTTON (color), &gdk_color);
+
+        gtk_box_pack_start (GTK_BOX (hpanel), label, TRUE, TRUE, 5);
+        gtk_box_pack_start (GTK_BOX (hpanel), color, TRUE, TRUE, 5);
+        gtk_box_pack_start (GTK_BOX (toolarea), hpanel, FALSE, FALSE, 5);
+        g_signal_connect (color, "color-set", G_CALLBACK (update_color_cb), tbo);
+
+        border = gtk_check_button_new_with_label (_("border"));
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (border), SELECTED->border);
+        gtk_box_pack_start (GTK_BOX (toolarea), border, FALSE, FALSE, 5);
+        g_signal_connect (border, "toggled", G_CALLBACK (update_border_cb), tbo);
 
         gtk_widget_show_all (toolarea);
     }

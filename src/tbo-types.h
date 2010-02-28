@@ -6,6 +6,13 @@
 
 typedef struct
 {
+    double r;
+    double g;
+    double b;
+} Color;
+
+typedef struct
+{
     char *title;
     int width;
     int height;
@@ -26,6 +33,8 @@ typedef struct
     int y;
     int width;
     int height;
+    gboolean border;
+    Color *color;
     GList *objects;
 
 } Frame;

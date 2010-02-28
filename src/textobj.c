@@ -7,13 +7,6 @@
 
 typedef struct
 {
-    double r;
-    double g;
-    double b;
-} Color;
-
-typedef struct
-{
     GString *text;
     PangoFontDescription *description;
     Color *font_color;
