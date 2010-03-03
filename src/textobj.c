@@ -129,7 +129,6 @@ tbo_text_draw (TextObj *self, Frame *frame, cairo_t *cr)
         self->height = self->height * factorw;
     }
 
-    // Fliping
     cairo_matrix_t mx = {1, 0, 0, 1, 0, 0};
     tbo_object_get_flip_matrix (self, &mx);
 
@@ -137,13 +136,13 @@ tbo_text_draw (TextObj *self, Frame *frame, cairo_t *cr)
     cairo_clip (cr);
     cairo_translate (cr, frame->x+self->x, frame->y+self->y);
     cairo_rotate (cr, self->angle);
-    cairo_scale (cr, factorw, factorh);
     cairo_transform (cr, &mx);
+    cairo_scale (cr, factorw, factorh);
 
     pango_cairo_show_layout (cr, layout);
 
-    cairo_transform (cr, &mx);
     cairo_scale (cr, 1/factorw, 1/factorh);
+    cairo_transform (cr, &mx);
     cairo_rotate (cr, -self->angle);
     cairo_translate (cr, -(frame->x+self->x), -(frame->y+self->y));
     cairo_reset_clip (cr);

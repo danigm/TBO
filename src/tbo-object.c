@@ -25,21 +25,19 @@ tbo_object_fliph (tbo_object *self)
 void
 tbo_object_get_flip_matrix (tbo_object *self, cairo_matrix_t *mx)
 {
-    cairo_matrix_t flipv = {1, 0, 0, -1, 0, 0};
-    cairo_matrix_t fliph = {-1, 0, 0, 1, 0, 0};
+    cairo_matrix_t flipv = {1, 0, 0, 1, 0, 0};
+    cairo_matrix_t fliph = {1, 0, 0, 1, 0, 0};
 
     if (self->flipv)
     {
-        mx->xx = flipv.xx; mx->yx = flipv.yx; mx->yy = flipv.yy;
-        mx->x0 = 0;
-        mx->y0 = self->height;
+        cairo_matrix_init (&flipv, 1, 0, 0, -1, 0, self->height);
     }
-    else if (self->fliph)
+    if (self->fliph)
     {
-        mx->xx = fliph.xx; mx->yx = fliph.yx; mx->yy = fliph.yy;
-        mx->x0 = self->width;
-        mx->y0 = 0;
+        cairo_matrix_init (&fliph, -1, 0, 0, 1, self->width, 0);
     }
+
+    cairo_matrix_multiply (mx, &flipv, &fliph);
 }
 
 void
