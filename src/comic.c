@@ -1,4 +1,8 @@
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include <malloc.h>
 #include <string.h>
 #include "comic.h"
@@ -8,7 +12,7 @@ Comic *
 tbo_comic_new (const char *title, int width, int height)
 {
     Comic *new_comic;
-    
+
     new_comic = malloc(sizeof(Comic));
     new_comic->title = malloc(strlen(title)*sizeof(char));
     sprintf (new_comic->title, "%s", title);
@@ -45,7 +49,7 @@ tbo_comic_new_page (Comic *comic){
     return page;
 }
 
-void 
+void
 tbo_comic_del_page (Comic *comic, int nth)
 {
     Page *page;
@@ -134,3 +138,37 @@ tbo_comic_del_current_page (Comic *comic)
     tbo_comic_set_current_page (comic, page);
     return TRUE;
 }
+
+void
+tbo_comic_save (Comic *comic, char *filename)
+{
+    GList *p;
+    char buffer[255];
+    FILE *file = fopen (filename, "w");
+    if (!file)
+    {
+        snprintf (buffer, 255, _("Failed saving: %s"), strerror (errno));
+        GtkWidget *dialog = gtk_message_dialog_new (NULL,
+                                                    GTK_DIALOG_MODAL,
+                                                    GTK_MESSAGE_ERROR,
+                                                    GTK_BUTTONS_CLOSE,
+                                                    buffer);
+        perror (_("failed saving"));
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy ((GtkWidget *) dialog);
+        return;
+    }
+
+    snprintf (buffer, 255, "<tbo>\n");
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
+
+    for (p=g_list_first (comic->pages); p; p = g_list_next(p))
+    {
+        tbo_page_save ((Page *) p->data, file);
+    }
+
+    snprintf (buffer, 255, "</tbo>\n");
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
+    fclose (file);
+}
+

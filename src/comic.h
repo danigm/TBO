@@ -17,6 +17,7 @@ Page *tbo_comic_next_page (Comic *comic);
 Page *tbo_comic_prev_page (Comic *comic);
 Page *tbo_comic_get_current_page (Comic *comic);
 void tbo_comic_set_current_page (Comic *comic, Page *page);
+void tbo_comic_save (Comic *comic, char *filename);
 
 #endif
 

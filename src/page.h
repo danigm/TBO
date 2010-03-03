@@ -2,6 +2,7 @@
 #define __TBO_PAGE__
 
 #include <gtk/gtk.h>
+#include <stdio.h>
 #include "tbo-types.h"
 
 Page *tbo_page_new (Comic *comic);
@@ -19,6 +20,7 @@ Frame *tbo_page_prev_frame (Page *page);
 Frame *tbo_page_get_current_frame (Page *page);
 void tbo_page_set_current_frame (Page *page, Frame *frame);
 GList *tbo_page_get_frames (Page *page);
+void tbo_page_save (Page *page, FILE *file);
 
 #endif
 

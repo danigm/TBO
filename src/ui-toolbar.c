@@ -6,6 +6,7 @@
 #include "ui-toolbar.h"
 #include "config.h"
 #include "comic-new-dialog.h"
+#include "comic-saveas-dialog.h"
 #include "tbo-window.h"
 #include "comic.h"
 #include "custom-stock.h"
@@ -194,7 +195,7 @@ static const GtkActionEntry tbo_tools_entries [] = {
 
     { "SaveFileTool", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
       N_("Save current document"),
-      G_CALLBACK (toolbar_handler) },
+      G_CALLBACK (tbo_comic_saveas_dialog) },
 
     // Page tools
     { "NewPage", GTK_STOCK_ADD, N_("New Page"), "<control>P",

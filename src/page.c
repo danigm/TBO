@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <gtk/gtk.h>
 #include <malloc.h>
 #include "comic.h"
@@ -134,4 +135,14 @@ GList *
 tbo_page_get_frames (Page *page)
 {
     return g_list_first (page->frames);
+}
+
+void
+tbo_page_save (Page *page, FILE *file)
+{
+    char buffer[255];
+    snprintf (buffer, 255, "<page>\n");
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
+    snprintf (buffer, 255, "</page>\n");
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
 }

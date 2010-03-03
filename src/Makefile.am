@@ -12,6 +12,7 @@ tbo_SOURCES = \
 	tbo-window.c \
 	comic.c \
 	comic-new-dialog.c \
+	comic-saveas-dialog.c \
 	frame.c \
 	page.c \
 	tbo.c \
@@ -31,6 +32,7 @@ tbo_SOURCES = \
 	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \
+	comic-saveas-dialog.h \
 	frame.h \
 	page.h \
 	tbo-types.h \
