@@ -1,8 +1,11 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
+#include <stdio.h>
 #include "ui-drawing.h"
 #include "tbo-types.h"
 #include "tbo-object.h"
+#include "svgimage.h"
+#include "textobj.h"
 
 void
 tbo_object_flipv (tbo_object *self)
@@ -90,4 +93,10 @@ tbo_object_move (tbo_object *self, enum MOVE_OPT type)
         default:
             break;
     }
+}
+
+void
+tbo_object_save (tbo_object *self, FILE *file)
+{
+    self->save (self, file);
 }

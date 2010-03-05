@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <gtk/gtk.h>
 #include <cairo.h>
@@ -14,8 +15,9 @@ tbo_svgimage_new ()
     SVGImage *image;
     image = malloc (sizeof(SVGImage));
     image->data = malloc(sizeof(char)*255);
-    image->free =tbo_svg_image_free;
-    image->draw =tbo_svg_image_draw;
+    image->free = tbo_svg_image_free;
+    image->draw = tbo_svg_image_draw;
+    image->save = tbo_svg_image_save;
     image->type = SVGOBJ;
     image->flipv = FALSE;
     image->fliph = FALSE;
@@ -93,4 +95,21 @@ tbo_svg_image_draw (SVGImage *self, Frame *frame, cairo_t *cr)
 
         g_object_unref (rsvg_handle);
     }
+}
+
+void
+tbo_svg_image_save (SVGImage *self, FILE *file)
+{
+    char buffer[1024];
+
+    snprintf (buffer, 1024, "   <svgimage x=\"%d\" y=\"%d\" "
+                           "width=\"%d\" height=\"%d\" "
+                           "angle=\"%f\" flipv=\"%d\" fliph=\"%d\" "
+                           "path=\"%s\">\n ",
+                           self->x, self->y, self->width, self->height,
+                           self->angle, self->flipv, self->fliph, (char*)self->data);
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
+
+    snprintf (buffer, 1024, "   </svgimage>\n");
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
 }

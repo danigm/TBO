@@ -2,6 +2,7 @@
 #define __TBO_TEXT_OBJ__
 
 #include <cairo.h>
+#include <stdio.h>
 #include "tbo-types.h"
 
 typedef tbo_object TextObj;
@@ -16,5 +17,6 @@ void tbo_text_change_font (TextObj *self, char *font);
 void tbo_text_change_color (TextObj *self, double r, double g, double b);
 void tbo_text_get_color (TextObj *self, GdkColor *color);
 char * tbo_text_get_string (TextObj *self);
+void tbo_text_save (TextObj *self, FILE *file);
 
 #endif

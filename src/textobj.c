@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <gtk/gtk.h>
 #include <cairo.h>
 #include "textobj.h"
@@ -61,6 +62,7 @@ tbo_text_new ()
     text->data = text_data_new ("text", "Sans Normal 27", 0, 0, 0);
     text->free = tbo_text_free;
     text->draw = tbo_text_draw;
+    text->save = tbo_text_save;
     text->type = TEXTOBJ;
     text->flipv = FALSE;
     text->fliph = FALSE;
@@ -175,4 +177,29 @@ tbo_text_get_string (TextObj *self)
 {
     text_data *data = (text_data *)self->data;
     return pango_font_description_to_string (data->description);
+}
+
+void
+tbo_text_save (TextObj *self, FILE *file)
+{
+    char buffer[1024];
+
+    text_data *data = (text_data*)self->data;
+    snprintf (buffer, 1024, "   <text x=\"%d\" y=\"%d\" "
+                           "width=\"%d\" height=\"%d\" "
+                           "angle=\"%f\" flipv=\"%d\" fliph=\"%d\" "
+                           "font=\"%s\" "
+                           "r=\"%f\" g=\"%f\" b=\"%f\">\n",
+                           self->x, self->y, self->width, self->height,
+                           self->angle, self->flipv, self->fliph,
+                           pango_font_description_to_string (data->description),
+                           data->font_color->r, data->font_color->g,
+                           data->font_color->b);
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
+
+    snprintf (buffer, 1024, "%s", data->text->str);
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
+
+    snprintf (buffer, 1024, "\n   </text>\n");
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
 }

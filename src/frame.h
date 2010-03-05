@@ -3,6 +3,7 @@
 
 #include <gtk/gtk.h>
 #include <cairo.h>
+#include <stdio.h>
 #include "tbo-types.h"
 
 Frame *tbo_frame_new (int x, int y, int witdh, int heigth);
@@ -24,6 +25,7 @@ float tbo_frame_get_scale_factor ();
 int tbo_frame_get_base_y (int y);
 int tbo_frame_get_base_x (int x);
 void tbo_frame_set_color (Frame *frame, GdkColor *color);
+void tbo_frame_save (Frame *frame, FILE *file);
 
 #endif
 

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <gtk/gtk.h>
 #include <malloc.h>
 #include "comic.h"
@@ -141,8 +142,15 @@ void
 tbo_page_save (Page *page, FILE *file)
 {
     char buffer[255];
-    snprintf (buffer, 255, "<page>\n");
+    GList *f;
+    snprintf (buffer, 255, " <page>\n");
     fwrite (buffer, sizeof (char), strlen (buffer), file);
-    snprintf (buffer, 255, "</page>\n");
+
+    for (f=g_list_first (page->frames); f; f = g_list_next(f))
+    {
+        tbo_frame_save ((Frame *) f->data, file);
+    }
+
+    snprintf (buffer, 255, " </page>\n");
     fwrite (buffer, sizeof (char), strlen (buffer), file);
 }

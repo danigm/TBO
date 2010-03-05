@@ -2,8 +2,11 @@
 #include <math.h>
 #include <cairo.h>
 #include <malloc.h>
+#include <stdio.h>
+#include <string.h>
 #include "frame.h"
 #include "tbo-types.h"
+#include "tbo-object.h"
 
 static int BASE_X = 0;
 static int BASE_Y = 0;
@@ -265,4 +268,27 @@ tbo_frame_set_color (Frame *frame, GdkColor *color)
     BASE_COLOR.r = frame->color->r;
     BASE_COLOR.g = frame->color->g;
     BASE_COLOR.b = frame->color->b;
+}
+
+void
+tbo_frame_save (Frame *frame, FILE *file)
+{
+    char buffer[255];
+    GList *o;
+
+    snprintf (buffer, 255, "  <frame x=\"%d\" y=\"%d\" width=\"%d\" "
+                           "height=\"%d\" border=\"%d\" "
+                           "r=\"%f\" g=\"%f\" b=\"%f\">\n",
+                            frame->x, frame->y, frame->width,
+                            frame->height, frame->border,
+                            frame->color->r, frame->color->g, frame->color->b);
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
+
+    for (o=g_list_first (frame->objects); o; o = g_list_next(o))
+    {
+        tbo_object_save ((tbo_object *) o->data, file);
+    }
+
+    snprintf (buffer, 255, "  </frame>\n");
+    fwrite (buffer, sizeof (char), strlen (buffer), file);
 }

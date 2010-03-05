@@ -159,7 +159,10 @@ tbo_comic_save (Comic *comic, char *filename)
         return;
     }
 
-    snprintf (buffer, 255, "<tbo>\n");
+    snprintf (buffer, 255, "<tbo title=\"%s\" width=\"%d\" height=\"%d\">\n",
+                                                                comic->title,
+                                                                comic->width,
+                                                                comic->height);
     fwrite (buffer, sizeof (char), strlen (buffer), file);
 
     for (p=g_list_first (comic->pages); p; p = g_list_next(p))

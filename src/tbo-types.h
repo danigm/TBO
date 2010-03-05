@@ -2,6 +2,7 @@
 #define __TBO_TYPES__
 
 #include <gtk/gtk.h>
+#include <stdio.h>
 #include <cairo.h>
 
 typedef struct
@@ -56,6 +57,7 @@ struct tbo_object
     gboolean fliph;
     void (*free) (struct tbo_object *);
     void (*draw) (struct tbo_object *, Frame *, cairo_t *);
+    void (*save) (struct tbo_object *, FILE *);
     enum TYPE type;
     gpointer data;
 };

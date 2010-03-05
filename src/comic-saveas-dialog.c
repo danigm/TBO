@@ -23,7 +23,7 @@ tbo_comic_saveas_dialog (GtkWidget *widget, TboWindow *window)
                                                NULL);
 
     snprintf (buffer, 255, "%s.tbo", window->comic->title);
-    gtk_file_chooser_set_current_name (filechooser, buffer);
+    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (filechooser), buffer);
     response = gtk_dialog_run (GTK_DIALOG (filechooser));
 
     if (response == GTK_RESPONSE_ACCEPT)
