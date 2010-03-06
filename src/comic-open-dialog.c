@@ -39,6 +39,7 @@ tbo_comic_open_dialog (GtkWidget *widget, TboWindow *window)
     {
         filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filechooser));
         tbo_comic_open (window, filename);
+        tbo_window_set_path (window, filename);
         update_drawing (window);
         tbo_window_update_status (window, 0, 0);
     }

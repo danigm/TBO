@@ -6,6 +6,16 @@
 #include "comic.h"
 
 gboolean
+tbo_comic_save_dialog (GtkWidget *widget, TboWindow *window)
+{
+    if (window->path)
+        tbo_comic_save (window, window->path);
+    else
+        tbo_comic_saveas_dialog (widget, window);
+    return FALSE;
+}
+
+gboolean
 tbo_comic_saveas_dialog (GtkWidget *widget, TboWindow *window)
 {
     gint response;
@@ -32,6 +42,7 @@ tbo_comic_saveas_dialog (GtkWidget *widget, TboWindow *window)
     {
         filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filechooser));
         tbo_comic_save (window, filename);
+        tbo_window_set_path (window, filename);
     }
 
     gtk_widget_destroy ((GtkWidget *) filechooser);

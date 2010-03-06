@@ -27,6 +27,7 @@ tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *toolarea,
     tbo->vbox = vbox;
     tbo->comic = comic;
     tbo->toolarea = toolarea;
+    tbo->path = NULL;
 
     return tbo;
 }
@@ -36,7 +37,18 @@ tbo_window_free (TboWindow *tbo)
 {
     tbo_comic_free (tbo->comic);
     gtk_widget_destroy (tbo->window);
+    if (tbo->path)
+        free (tbo->path);
     free (tbo);
+}
+
+void
+tbo_window_set_path (TboWindow *tbo, const char *path)
+{
+    if (tbo->path)
+        free (tbo->path);
+    tbo->path = malloc (255 * sizeof (char));
+    snprintf (tbo->path, 255, "%s", path);
 }
 
 gboolean 

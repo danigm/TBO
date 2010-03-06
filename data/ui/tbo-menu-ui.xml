@@ -4,6 +4,7 @@
        <menuitem name="New" action="NewFile" />
        <menuitem name="Open" action="OpenFile" />
        <menuitem name="Save" action="SaveFile" />
+       <menuitem name="SaveAs" action="SaveFileAs" />
        <menuitem name="Quit" action="Quit" />
      </menu>
     </menubar>

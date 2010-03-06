@@ -13,7 +13,7 @@ typedef struct
     GtkWidget *status;
     GtkWidget *vbox;
     Comic *comic;
-
+    char *path;
 } TboWindow;
 
 TboWindow *tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *toolarea, GtkWidget *status, GtkWidget *vbox, Comic *comic);
@@ -23,5 +23,6 @@ GdkPixbuf *create_pixbuf (const gchar * filename);
 TboWindow * tbo_new_tbo (int width, int height);
 void tbo_window_update_status (TboWindow *tbo, int x, int y);
 void tbo_empty_tool_area (TboWindow *tbo);
+void tbo_window_set_path (TboWindow *tbo, const char *path);
 
 #endif

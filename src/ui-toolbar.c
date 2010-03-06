@@ -196,7 +196,7 @@ static const GtkActionEntry tbo_tools_entries [] = {
 
     { "SaveFileTool", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
       N_("Save current document"),
-      G_CALLBACK (tbo_comic_saveas_dialog) },
+      G_CALLBACK (tbo_comic_save_dialog) },
 
     // Page tools
     { "NewPage", GTK_STOCK_ADD, N_("New Page"), "<control>P",

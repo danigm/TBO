@@ -37,6 +37,10 @@ static const GtkActionEntry tbo_menu_entries [] = {
 
     { "SaveFile", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
       N_("Save current document"),
+      G_CALLBACK (tbo_comic_save_dialog) },
+
+    { "SaveFileAs", GTK_STOCK_SAVE_AS, N_("_Save as"), "",
+      N_("Save current document as ..."),
       G_CALLBACK (tbo_comic_saveas_dialog) },
 
     { "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
