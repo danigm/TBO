@@ -12,6 +12,7 @@
 #include "tbo-object.h"
 #include "svgimage.h"
 #include "textobj.h"
+#include "tbo-utils.h"
 
 char *TITLE;
 
@@ -242,12 +243,9 @@ tbo_comic_load (char *filename)
             NULL,
             NULL);
 
-    // Basename -> TODO tbo-utils
-    gchar **basename = g_strsplit (filename, "/", -1);
-    gchar **pointer = basename;
-    while (*pointer) pointer++;
-    TITLE = g_strdup (*--pointer);
-    g_strfreev (basename);
+    char base_name[255];
+    get_base_name (filename, base_name, 255);
+    TITLE = g_strdup(base_name);
 
     if (g_file_get_contents (filename, &text, &length, NULL) == FALSE) {
         GtkWidget *dialog = gtk_message_dialog_new (NULL,

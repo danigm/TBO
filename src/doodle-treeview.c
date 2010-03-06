@@ -7,6 +7,7 @@
 #include "frame.h"
 #include "doodle-treeview.h"
 #include "dnd.h"
+#include "tbo-utils.h"
 
 void free_gstring_array (GArray *arr);
 
@@ -57,19 +58,6 @@ free_gstring_array (GArray *arr)
         g_string_free (mystr, TRUE);
     }
     g_array_free (arr, TRUE);
-}
-
-void
-get_base_name (gchar *str, gchar *ret, int size)
-{
-    gchar **paths;
-    gchar **dirname;
-    paths = g_strsplit (str, "/", 0);
-    dirname = paths;
-    while (*dirname) dirname++;
-    dirname--;
-    snprintf (ret, size, *dirname);
-    g_strfreev (paths);
 }
 
 GArray *

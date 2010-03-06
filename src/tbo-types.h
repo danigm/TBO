@@ -14,7 +14,7 @@ typedef struct
 
 typedef struct
 {
-    char *title;
+    char title[255];
     int width;
     int height;
     GList *pages;

@@ -31,6 +31,7 @@ tbo_SOURCES = \
 	dnd.c \
 	tbo-object.c \
 	comic-load.c \
+	tbo-utils.c \
 	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \
@@ -52,6 +53,7 @@ tbo_SOURCES = \
 	dnd.h \
 	tbo-object.h \
 	comic-load.h \
+	tbo-utils.h \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \

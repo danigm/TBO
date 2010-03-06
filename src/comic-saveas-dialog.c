@@ -22,14 +22,16 @@ tbo_comic_saveas_dialog (GtkWidget *widget, TboWindow *window)
                                                GTK_RESPONSE_ACCEPT,
                                                NULL);
 
-    snprintf (buffer, 255, "%s.tbo", window->comic->title);
+    snprintf (buffer, 250, "%s", window->comic->title);
+    if (!g_str_has_suffix ((window->comic->title), ".tbo"))
+        strcat (buffer, ".tbo");
     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (filechooser), buffer);
     response = gtk_dialog_run (GTK_DIALOG (filechooser));
 
     if (response == GTK_RESPONSE_ACCEPT)
     {
         filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filechooser));
-        tbo_comic_save (window->comic, filename);
+        tbo_comic_save (window, filename);
     }
 
     gtk_widget_destroy ((GtkWidget *) filechooser);

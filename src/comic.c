@@ -10,6 +10,7 @@
 #include "tbo-window.h"
 #include "page.h"
 #include "comic-load.h"
+#include "tbo-utils.h"
 
 Comic *
 tbo_comic_new (const char *title, int width, int height)
@@ -17,8 +18,7 @@ tbo_comic_new (const char *title, int width, int height)
     Comic *new_comic;
 
     new_comic = malloc(sizeof(Comic));
-    new_comic->title = malloc(strlen(title)*sizeof(char));
-    sprintf (new_comic->title, "%s", title);
+    snprintf (new_comic->title, 255, "%s", title);
     new_comic->width = width;
     new_comic->height = height;
     new_comic->pages = NULL;
@@ -38,7 +38,6 @@ tbo_comic_free (Comic *comic)
     }
 
     g_list_free (g_list_first (comic->pages));
-    free (comic->title);
     free (comic);
 }
 
@@ -143,11 +142,13 @@ tbo_comic_del_current_page (Comic *comic)
 }
 
 void
-tbo_comic_save (Comic *comic, char *filename)
+tbo_comic_save (TboWindow *tbo, char *filename)
 {
     GList *p;
     char buffer[255];
     FILE *file = fopen (filename, "w");
+    Comic *comic = tbo->comic;
+
     if (!file)
     {
         snprintf (buffer, 255, _("Failed saving: %s"), strerror (errno));
@@ -161,6 +162,8 @@ tbo_comic_save (Comic *comic, char *filename)
         gtk_widget_destroy ((GtkWidget *) dialog);
         return;
     }
+    get_base_name (filename, comic->title, 255);
+    gtk_window_set_title (GTK_WINDOW (tbo->window), comic->title);
 
     snprintf (buffer, 255, "<tbo width=\"%d\" height=\"%d\">\n",
                                                     comic->width,
