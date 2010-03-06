@@ -13,6 +13,7 @@ tbo_SOURCES = \
 	comic.c \
 	comic-new-dialog.c \
 	comic-saveas-dialog.c \
+	comic-open-dialog.c \
 	frame.c \
 	page.c \
 	tbo.c \
@@ -29,10 +30,12 @@ tbo_SOURCES = \
 	svgimage.c \
 	dnd.c \
 	tbo-object.c \
+	comic-load.c \
 	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \
 	comic-saveas-dialog.h \
+	comic-open-dialog.h \
 	frame.h \
 	page.h \
 	tbo-types.h \
@@ -48,6 +51,7 @@ tbo_SOURCES = \
 	textobj.h \
 	dnd.h \
 	tbo-object.h \
+	comic-load.h \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \

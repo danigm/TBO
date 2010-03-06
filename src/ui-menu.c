@@ -6,6 +6,7 @@
 #include "ui-menu.h"
 #include "comic-new-dialog.h"
 #include "comic-saveas-dialog.h"
+#include "comic-open-dialog.h"
 #include "tbo-window.h"
 
 gboolean menu_handler (GtkWidget *widget, gpointer data){
@@ -32,7 +33,7 @@ static const GtkActionEntry tbo_menu_entries [] = {
 
     { "OpenFile", GTK_STOCK_OPEN, N_("_Open"), "<control>O",
       N_("Open a new file"),
-      G_CALLBACK (menu_handler) },
+      G_CALLBACK (tbo_comic_open_dialog) },
 
     { "SaveFile", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
       N_("Save current document"),

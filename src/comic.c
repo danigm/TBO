@@ -6,7 +6,10 @@
 #include <malloc.h>
 #include <string.h>
 #include "comic.h"
+#include "tbo-types.h"
+#include "tbo-window.h"
 #include "page.h"
+#include "comic-load.h"
 
 Comic *
 tbo_comic_new (const char *title, int width, int height)
@@ -159,10 +162,9 @@ tbo_comic_save (Comic *comic, char *filename)
         return;
     }
 
-    snprintf (buffer, 255, "<tbo title=\"%s\" width=\"%d\" height=\"%d\">\n",
-                                                                comic->title,
-                                                                comic->width,
-                                                                comic->height);
+    snprintf (buffer, 255, "<tbo width=\"%d\" height=\"%d\">\n",
+                                                    comic->width,
+                                                    comic->height);
     fwrite (buffer, sizeof (char), strlen (buffer), file);
 
     for (p=g_list_first (comic->pages); p; p = g_list_next(p))
@@ -175,3 +177,14 @@ tbo_comic_save (Comic *comic, char *filename)
     fclose (file);
 }
 
+void
+tbo_comic_open (TboWindow *window, char *filename)
+{
+    Comic *newcomic = tbo_comic_load (filename);
+    if (newcomic)
+    {
+        tbo_comic_free (window->comic);
+        window->comic = newcomic;
+        gtk_window_set_title (GTK_WINDOW (window->window), window->comic->title);
+    }
+}

@@ -7,6 +7,7 @@
 #include "config.h"
 #include "comic-new-dialog.h"
 #include "comic-saveas-dialog.h"
+#include "comic-open-dialog.h"
 #include "tbo-window.h"
 #include "comic.h"
 #include "custom-stock.h"
@@ -191,7 +192,7 @@ static const GtkActionEntry tbo_tools_entries [] = {
 
     { "OpenFileTool", GTK_STOCK_OPEN, N_("_Open"), "<control>O",
       N_("Open comic"),
-      G_CALLBACK (toolbar_handler) },
+      G_CALLBACK (tbo_comic_open_dialog) },
 
     { "SaveFileTool", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
       N_("Save current document"),
