@@ -1,7 +1,24 @@
 [encoding: UTF-8]
-src/ui-toolbar.c
-src/tbo.c
+src/comic.c
+src/comic-load.c
 src/comic-new-dialog.c
+src/comic-open-dialog.c
+src/comic-saveas-dialog.c
 src/custom-stock.c
+src/dnd.c
+src/doodle-tool.c
+src/doodle-treeview.c
+src/frame.c
+src/frame-tool.c
+src/page.c
+src/selector-tool.c
+src/svgimage.c
+src/tbo.c
+src/tbo-object.c
+src/tbo-utils.c
 src/tbo-window.c
+src/textobj.c
+src/text-tool.c
+src/ui-drawing.c
 src/ui-menu.c
+src/ui-toolbar.c
