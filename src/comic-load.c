@@ -122,7 +122,7 @@ create_tbo_svgimage (const gchar **attribute_names, const gchar **attribute_valu
     };
 
     parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
-    
+
     svg = tbo_svgimage_new_width_params (x, y, width, height, path);
     tbo_frame_add_obj (CURRENT_FRAME, svg);
 }

@@ -141,7 +141,8 @@ doodle_add_images (gchar *dir)
                              TARGET_LIST,
                              N_TARGETS,
                              GDK_ACTION_COPY);
-        g_signal_connect (ebox, "drag-data-get", G_CALLBACK (drag_data_get_handl), mystr->str);
+        g_signal_connect (ebox, "drag-data-get", G_CALLBACK (drag_data_get_handl),
+                                                mystr->str + strlen (DATA_DIR "/doodle/"));
         g_signal_connect (ebox, "drag-begin", G_CALLBACK (drag_begin_handl), mystr->str);
         g_signal_connect (ebox, "drag-end", G_CALLBACK (drag_end_handl), mystr->str);
 

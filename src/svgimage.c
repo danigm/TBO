@@ -2,11 +2,14 @@
 #include <string.h>
 #include <math.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include <cairo.h>
 #include <librsvg/rsvg.h>
 #include <librsvg/rsvg-cairo.h>
 #include "svgimage.h"
 #include "tbo-types.h"
+
+#define DOODLE_DIR DATA_DIR "/doodle/"
 
 
 SVGImage *
@@ -48,7 +51,7 @@ void
 tbo_svg_image_free (SVGImage *self)
 {
     free (self->data);
-    free (self);   
+    free (self);
 }
 
 void
@@ -57,7 +60,14 @@ tbo_svg_image_draw (SVGImage *self, Frame *frame, cairo_t *cr)
     GError *error = NULL;
     RsvgHandle *rsvg_handle = NULL;
     RsvgDimensionData rsvg_dimension_data;
-    rsvg_handle = rsvg_handle_new_from_file (self->data, &error);
+    char path[255];
+    snprintf (path, 255, DOODLE_DIR "%s", self->data);
+    rsvg_handle = rsvg_handle_new_from_file (path, &error);
+    if (!rsvg_handle)
+    {
+        g_print (_("Couldn't load %s\n"), path);
+        return;
+    }
     if (error != NULL)
     {
         g_print ("%s\n", error->message);
