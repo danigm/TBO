@@ -5,6 +5,9 @@
        <menuitem name="Open" action="OpenFile" />
        <menuitem name="Save" action="SaveFile" />
        <menuitem name="SaveAs" action="SaveFileAs" />
+       <separator/>
+       <menuitem name="Export as png" action="ToPNG" />
+       <separator/>
        <menuitem name="Quit" action="Quit" />
      </menu>
     </menubar>

@@ -8,6 +8,9 @@
 #include "comic-saveas-dialog.h"
 #include "comic-open-dialog.h"
 #include "tbo-window.h"
+#include "ui-drawing.h"
+#include "export.h"
+
 
 gboolean menu_handler (GtkWidget *widget, gpointer data){
     printf ("Menu :%s\n", ((TboWindow *) data)->comic->title);
@@ -17,6 +20,13 @@ gboolean menu_handler (GtkWidget *widget, gpointer data){
 gboolean close_cb (GtkWidget *widget, gpointer data){
     printf ("Ventana cerrada\n");
     tbo_window_free_cb (widget, NULL, ((TboWindow *) data));
+    return FALSE;
+}
+
+gboolean
+tbo_menu_to_png (GtkWidget *widget, TboWindow *tbo)
+{
+    tbo_export_to_png (tbo);
     return FALSE;
 }
 
@@ -42,6 +52,10 @@ static const GtkActionEntry tbo_menu_entries [] = {
     { "SaveFileAs", GTK_STOCK_SAVE_AS, N_("_Save as"), "",
       N_("Save current document as ..."),
       G_CALLBACK (tbo_comic_saveas_dialog) },
+
+    { "ToPNG", GTK_STOCK_FILE, N_("Export as png"), "",
+      N_("Save current document as png"),
+      G_CALLBACK (tbo_menu_to_png) },
 
     { "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
       N_("Quit"),

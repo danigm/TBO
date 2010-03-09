@@ -21,6 +21,57 @@
 
 Frame *FRAME_VIEW = NULL;
 
+void
+tbo_drawing_draw_page (cairo_t *cr, Page *page, int w, int h)
+{
+    Frame *frame;
+    GList *frame_list;
+
+    // white background
+    cairo_set_source_rgb(cr, 1, 1, 1);
+    cairo_rectangle(cr, 0, 0, w+2, h+2);
+    cairo_fill(cr);
+
+    for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
+    {
+        // draw each frame
+        frame = (Frame *)frame_list->data;
+        tbo_frame_draw (frame, cr);
+    }
+}
+
+void
+tbo_drawing_draw (cairo_t *cr, TboWindow *tbo)
+{
+    Frame *frame;
+    GList *frame_list;
+    Page *page;
+
+    int w, h;
+
+    w = tbo->comic->width;
+    h = tbo->comic->height;
+    // white background
+    cairo_set_source_rgb(cr, 1, 1, 1);
+    cairo_rectangle(cr, 0, 0, w+2, h+2);
+    cairo_fill(cr);
+
+    page = tbo_comic_get_current_page (tbo->comic);
+
+    if (!FRAME_VIEW)
+    {
+        for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
+        {
+            // draw each frame
+            frame = (Frame *)frame_list->data;
+            tbo_frame_draw (frame, cr);
+        }
+    }
+    else
+    {
+        tbo_frame_draw_scaled (FRAME_VIEW, cr, w, h);
+    }
+}
 
 gboolean
 on_key_cb (GtkWidget    *widget,
@@ -48,52 +99,22 @@ on_expose_cb(GtkWidget      *widget,
              TboWindow       *tbo)
 {
     cairo_t *cr;
-    int width, height;
-
-    GdkWindow *window;
     int w, h;
-
-    Frame *frame;
-    GList *frame_list;
-    Page *page;
-
     enum Tool tool;
+    GdkWindow *window;
 
-    width = tbo->comic->width;
-    height = tbo->comic->height;
     cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
 
     window = gtk_widget_get_parent_window (GTK_WIDGET (widget));
     gdk_drawable_get_size (GDK_DRAWABLE (window), &w, &h);
+
     cairo_set_source_rgb (cr, 0, 0, 0);
     cairo_rectangle (cr, 0, 0, w, h);
     cairo_fill (cr);
-    // white background and black border
-    cairo_set_source_rgb(cr, 1, 1, 1);
-    cairo_rectangle(cr, 0, 0, width+2, height+2);
-    cairo_fill(cr);
-    cairo_set_source_rgb(cr, 0.4, 0.4, 0.4);
-    cairo_rectangle (cr, 1, 1, width, height);
-    cairo_stroke (cr);
 
-    page = tbo_comic_get_current_page (tbo->comic);
-
-    if (!FRAME_VIEW)
-    {
-        for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
-        {
-            // draw each frame
-            frame = (Frame *)frame_list->data;
-            tbo_frame_draw (frame, cr);
-        }
-    }
-    else
-    {
-        tbo_frame_draw_scaled (FRAME_VIEW, cr, width, height);
-    }
+    tbo_drawing_draw (cr, tbo);
 
     // Update drawing helpers
-
     tool = get_selected_tool ();
     tool_signal (tool, TOOL_DRAWING, cr);
 

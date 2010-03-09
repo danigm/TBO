@@ -27,6 +27,7 @@ tbo_SOURCES = \
 	doodle-treeview.c \
 	text-tool.c \
 	textobj.c \
+	export.c \
 	svgimage.c \
 	dnd.c \
 	tbo-object.c \
@@ -54,6 +55,7 @@ tbo_SOURCES = \
 	tbo-object.h \
 	comic-load.h \
 	tbo-utils.h \
+	export.h \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \
