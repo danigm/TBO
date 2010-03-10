@@ -5,6 +5,6 @@
 #include <cairo.h>
 #include "tbo-window.h"
 
-gboolean tbo_export_to_png (TboWindow *tbo);
+gboolean tbo_export (TboWindow *tbo, const char *);
 
 #endif
