@@ -18,5 +18,7 @@ void set_frame_view (Frame *frame);
 Frame *get_frame_view ();
 void tbo_drawing_draw (cairo_t *cr, TboWindow *tbo);
 void tbo_drawing_draw_page (cairo_t *cr, Page *page, int w, int h);
+void tbo_drawing_zoom_in (TboWindow *tbo);
+void tbo_drawing_zoom_out (TboWindow *tbo);
 
 #endif

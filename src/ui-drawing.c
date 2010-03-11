@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cairo.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
 
@@ -20,6 +21,8 @@
 
 
 Frame *FRAME_VIEW = NULL;
+float ZOOM_STEP = 0.05;
+float ZOOM = 1;
 
 void
 tbo_drawing_draw_page (cairo_t *cr, Page *page, int w, int h)
@@ -29,7 +32,7 @@ tbo_drawing_draw_page (cairo_t *cr, Page *page, int w, int h)
 
     // white background
     cairo_set_source_rgb(cr, 1, 1, 1);
-    cairo_rectangle(cr, 0, 0, w+2, h+2);
+    cairo_rectangle(cr, 0, 0, w, h);
     cairo_fill(cr);
 
     for (frame_list = tbo_page_get_frames (page); frame_list; frame_list = frame_list->next)
@@ -53,8 +56,10 @@ tbo_drawing_draw (cairo_t *cr, TboWindow *tbo)
     h = tbo->comic->height;
     // white background
     cairo_set_source_rgb(cr, 1, 1, 1);
-    cairo_rectangle(cr, 0, 0, w+2, h+2);
+    cairo_rectangle(cr, 0, 0, w*ZOOM, h*ZOOM);
     cairo_fill(cr);
+
+    cairo_scale (cr, ZOOM, ZOOM);
 
     page = tbo_comic_get_current_page (tbo->comic);
 
@@ -90,13 +95,25 @@ on_key_cb (GtkWidget    *widget,
 
     update_drawing (tbo);
     tbo_window_update_status (tbo, 0, 0);
+
+    switch (event->keyval)
+    {
+        case GDK_plus:
+            tbo_drawing_zoom_in (tbo);
+            break;
+        case GDK_minus:
+            tbo_drawing_zoom_out (tbo);
+            break;
+        default:
+            break;
+    }
     return FALSE;
 }
 
 gboolean
-on_expose_cb(GtkWidget      *widget,
-             GdkEventExpose *event,
-             TboWindow       *tbo)
+on_expose_cb (GtkWidget      *widget,
+              GdkEventExpose *event,
+              TboWindow       *tbo)
 {
     cairo_t *cr;
     int w, h;
@@ -132,6 +149,8 @@ on_move_cb (GtkWidget     *widget,
     enum Tool tool;
     void **data = malloc (sizeof(void *)*3);
     data[0] = widget;
+    event->x = event->x / ZOOM;
+    event->y = event->y / ZOOM;
     data[1] = event;
     data[2] = tbo;
 
@@ -152,6 +171,8 @@ on_click_cb (GtkWidget    *widget,
     enum Tool tool;
     void **data = malloc (sizeof(void *)*3);
     data[0] = widget;
+    event->x = event->x / ZOOM;
+    event->y = event->y / ZOOM;
     data[1] = event;
     data[2] = tbo;
 
@@ -172,6 +193,9 @@ on_release_cb (GtkWidget    *widget,
     enum Tool tool;
     void **data = malloc (sizeof(void *)*3);
     data[0] = widget;
+    event->x = event->x / ZOOM;
+    event->y = event->y / ZOOM;
+
     data[1] = event;
     data[2] = tbo;
 
@@ -191,7 +215,7 @@ get_drawing_area (int width, int height)
     GtkWidget *drawing;
 
     drawing = gtk_layout_new(NULL, NULL);
-    gtk_layout_set_size(GTK_LAYOUT (drawing), width+2, height+2);
+    gtk_layout_set_size (GTK_LAYOUT (drawing), width+2, height+2);
 
     return drawing;
 }
@@ -246,4 +270,18 @@ Frame *
 get_frame_view ()
 {
     return FRAME_VIEW;
+}
+
+void tbo_drawing_zoom_in (TboWindow *tbo)
+{
+    ZOOM += ZOOM_STEP;
+    gtk_layout_set_size (GTK_LAYOUT (tbo->drawing), tbo->comic->width*ZOOM, tbo->comic->height*ZOOM);
+    update_drawing (tbo);
+}
+
+void tbo_drawing_zoom_out (TboWindow *tbo)
+{
+    ZOOM -= ZOOM_STEP;
+    gtk_layout_set_size (GTK_LAYOUT (tbo->drawing), tbo->comic->width*ZOOM, tbo->comic->height*ZOOM);
+    update_drawing (tbo);
 }

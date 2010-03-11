@@ -16,6 +16,9 @@
        <separator/>
        <toolitem name="doodle" action="Doodle"/>
        <toolitem name="text" action="Text"/>
+       <separator/>
+       <toolitem name="zoomin" action="Zoomin"/>
+       <toolitem name="zoomout" action="Zoomout"/>
      </placeholder>
     </toolbar>
 </ui>

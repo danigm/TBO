@@ -184,6 +184,19 @@ prev_page (GtkAction *action, TboWindow *tbo)
     return FALSE;
 }
 
+gboolean
+zoom_in (GtkAction *action, TboWindow *tbo)
+{
+    tbo_drawing_zoom_in (tbo);
+    return FALSE;
+}
+
+gboolean
+zoom_out (GtkAction *action, TboWindow *tbo)
+{
+    tbo_drawing_zoom_out (tbo);
+    return FALSE;
+}
 
 static const GtkActionEntry tbo_tools_entries [] = {
     { "NewFileTool", GTK_STOCK_NEW, N_("_New"), "<control>N",
@@ -214,6 +227,14 @@ static const GtkActionEntry tbo_tools_entries [] = {
     { "NextPage", GTK_STOCK_GO_FORWARD, N_("Next Page"), "",
       N_("Next page"),
       G_CALLBACK (next_page) },
+
+    // Zoom tools
+    { "Zoomin", GTK_STOCK_ZOOM_IN, N_("Zoom in"), "",
+      N_("Zoom in"),
+      G_CALLBACK (zoom_in) },
+    { "Zoomout", GTK_STOCK_ZOOM_OUT, N_("Zoom out"), "",
+      N_("Zoom out"),
+      G_CALLBACK (zoom_out) },
 };
 
 static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
