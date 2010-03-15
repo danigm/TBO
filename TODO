@@ -1,1 +1,44 @@
+TBO TODO things:
+----------------
 
+ * Upgrade performance loading doodle-tool area.
+
+ * Undo/Redo tool. (hard)
+
+ * Change between tools with keys: (middle)
+    * 's' for selector
+    * 'f' for frame
+    * 'd' for doodle
+    * 't' for text
+    ...
+
+ * Copy and paste frame and objects in frame (easy)
+
+ * Ask for size at export as png, pdf and svg. (easy)
+
+ * Zoom levels: (easy)
+    * no zoom, '1' key
+    * fit drawing to window, '2' key
+    * fit to select, '3' key
+
+ * Edit menu: (middle)
+    * delete object
+
+ * Import png/jpeg/gif/svg files to frame (middle)
+
+ * Group objects in frame (hard)
+
+ * Add doodle library: (easy)
+    * arrows
+    * more bubbles
+    * more accesories
+    * more doodle
+
+ * Doodle libraries from ~/.tbo/doodle (middle)
+
+--
+note: Difficult is right each TODO and could be:
+    * hard: Require much time and knowlegde of how all program works.
+    * middle: No require much time but require som knowledge of
+              program.
+    * easy: Only require basic C/GTK+/Cairo knowledge.
