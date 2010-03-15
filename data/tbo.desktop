@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Exec=tbo
+Icon=tbo
+Type=Application
+Terminal=false
+Name=TBO
+GenericName=TBO
+StartupNotify=true
+Categories=Graphics;VectorGraphics;GTK;
