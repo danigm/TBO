@@ -254,10 +254,13 @@ darea_connect_signals (TboWindow *tbo)
 void
 update_drawing (TboWindow *tbo)
 {
+    int w, h;
+    w = tbo->comic->width * ZOOM;
+    h = tbo->comic->height * ZOOM;
+
     gtk_widget_queue_draw_area (tbo->drawing,
             0, 0,
-            tbo->comic->width,
-            tbo->comic->height);
+            w, h);
 }
 
 void
