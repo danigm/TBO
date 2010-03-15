@@ -288,3 +288,9 @@ void tbo_drawing_zoom_out (TboWindow *tbo)
     gtk_layout_set_size (GTK_LAYOUT (tbo->drawing), tbo->comic->width*ZOOM, tbo->comic->height*ZOOM);
     update_drawing (tbo);
 }
+
+float
+tbo_drawing_get_zoom ()
+{
+    return ZOOM;
+}

@@ -20,5 +20,6 @@ void tbo_drawing_draw (cairo_t *cr, TboWindow *tbo);
 void tbo_drawing_draw_page (cairo_t *cr, Page *page, int w, int h);
 void tbo_drawing_zoom_in (TboWindow *tbo);
 void tbo_drawing_zoom_out (TboWindow *tbo);
+float tbo_drawing_get_zoom ();
 
 #endif
