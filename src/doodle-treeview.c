@@ -168,6 +168,27 @@ doodle_add_dir_images (gchar *dir, GtkWidget *box)
     gtk_container_add (GTK_CONTAINER (box), expander);
 }
 
+void
+on_expand_cb (GtkExpander *expander, GString *str)
+{
+    GString *mystr2;
+    int i;
+    GtkWidget *vbox = g_list_first (gtk_container_get_children (GTK_CONTAINER (expander)))->data;
+    int numofchilds = g_list_length (gtk_container_get_children (GTK_CONTAINER (vbox)));
+    if (numofchilds == 0)
+    {
+        GArray *subdir = get_files (str->str, TRUE);
+        for (i=0; i<subdir->len; i++)
+        {
+            mystr2 = g_array_index (subdir, GString*, i);
+            doodle_add_dir_images (mystr2->str, vbox);
+        }
+        free_gstring_array (subdir);
+        g_string_free (str, TRUE);
+    }
+    gtk_widget_show_all (GTK_WIDGET (vbox));
+}
+
 GtkWidget *
 doodle_setup_tree (TboWindow *tbo)
 {
@@ -179,6 +200,7 @@ doodle_setup_tree (TboWindow *tbo)
     TBO = tbo;
 
     dirname = malloc (255*sizeof(char));
+    char label_format[255];
 
     vbox = gtk_vbox_new (FALSE, 5);
 
@@ -191,17 +213,14 @@ doodle_setup_tree (TboWindow *tbo)
 
         vbox2 = gtk_vbox_new (FALSE, 5);
         get_base_name (mystr->str, dirname, 255);
-        expander = gtk_expander_new (dirname);
+        snprintf (label_format, 255, "<span underline=\"single\" size=\"large\" weight=\"ultrabold\">%s</span>", dirname);
+        expander = gtk_expander_new (label_format);
+        gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
         gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 5);
         gtk_container_add (GTK_CONTAINER (expander), vbox2);
 
-        GArray *subdir = get_files (mystr->str, TRUE);
-        for (j=0; j<subdir->len; j++)
-        {
-            mystr2 = g_array_index (subdir, GString*, j);
-            doodle_add_dir_images (mystr2->str, vbox2);
-        }
-        free_gstring_array (subdir);
+        mystr2 = g_string_new (mystr->str);
+        g_signal_connect (GTK_EXPANDER (expander), "activate", G_CALLBACK (on_expand_cb), mystr2);
     }
     free_gstring_array (arr);
 
