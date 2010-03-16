@@ -172,10 +172,13 @@ over_resizer (Frame *frame, int x, int y)
     rx = frame->x + frame->width;
     ry = frame->y + frame->height;
 
-    if (((rx-R_SIZE) < x) &&
-        ((rx+R_SIZE) > x) &&
-        ((ry-R_SIZE) < y) &&
-        ((ry+R_SIZE) > y))
+    float r_size;
+    r_size = R_SIZE / tbo_drawing_get_zoom ();
+
+    if (((rx-r_size) < x) &&
+        ((rx+r_size) > x) &&
+        ((ry-r_size) < y) &&
+        ((ry+r_size) > y))
     {
         return TRUE;
     }
@@ -194,10 +197,13 @@ over_resizer_obj (tbo_object *obj, int x, int y)
     rx = ox + (ow * cos(obj->angle) - oh * sin(obj->angle));
     ry = oy + (oh * cos(obj->angle) + ow * sin(obj->angle));
 
-    if (((rx-R_SIZE) < x) &&
-        ((rx+R_SIZE) > x) &&
-        ((ry-R_SIZE) < y) &&
-        ((ry+R_SIZE) > y))
+    float r_size;
+    r_size = R_SIZE / tbo_drawing_get_zoom ();
+
+    if (((rx-r_size) < x) &&
+        ((rx+r_size) > x) &&
+        ((ry-r_size) < y) &&
+        ((ry+r_size) > y))
     {
         return TRUE;
     }
@@ -216,10 +222,13 @@ over_rotater_obj (tbo_object *obj, int x, int y)
     rx = ox;
     ry = oy;
 
-    if (((rx-R_SIZE/2.0) < x) &&
-        ((rx+R_SIZE/2.0) > x) &&
-        ((ry-R_SIZE/2.0) < y) &&
-        ((ry+R_SIZE/2.0) > y))
+    float r_size;
+    r_size = R_SIZE / tbo_drawing_get_zoom ();
+
+    if (((rx-r_size/2.0) < x) &&
+        ((rx+r_size/2.0) > x) &&
+        ((ry-r_size/2.0) < y) &&
+        ((ry+r_size/2.0) > y))
     {
         return TRUE;
     }
@@ -370,6 +379,7 @@ frame_view_drawing (cairo_t *cr)
     Color *rotater_border;
     Color *rotater_fill;
     int x, y;
+    float r_size;
 
     if (OBJ != NULL)
     {
@@ -415,21 +425,25 @@ frame_view_drawing (cairo_t *cr)
         x = ow;
         y = oh;
 
-        cairo_rectangle (cr, x, y, R_SIZE, R_SIZE);
+        r_size = R_SIZE / tbo_drawing_get_zoom ();
+        cairo_set_line_width (cr, 1/tbo_drawing_get_zoom ());
+
+        cairo_rectangle (cr, x, y, r_size, r_size);
         cairo_set_source_rgb(cr, resizer_fill->r, resizer_fill->g, resizer_fill->b);
         cairo_fill (cr);
 
         cairo_set_source_rgb(cr, resizer_border->r, resizer_border->g, resizer_border->b);
-        cairo_rectangle (cr, x, y, R_SIZE, R_SIZE);
+        cairo_rectangle (cr, x, y, r_size, r_size);
         cairo_stroke (cr);
 
         // object rotate zone
         cairo_set_source_rgb(cr, rotater_fill->r, rotater_fill->g, rotater_fill->b);
-        cairo_arc (cr, 0, 0, R_SIZE / 2., 0, 2 * M_PI);
+        cairo_arc (cr, 0, 0, r_size / 2., 0, 2 * M_PI);
         cairo_fill (cr);
         cairo_set_source_rgb(cr, rotater_border->r, rotater_border->g, rotater_border->b);
-        cairo_arc (cr, 0, 0, R_SIZE / 2., 0, 2 * M_PI);
+        cairo_arc (cr, 0, 0, r_size / 2., 0, 2 * M_PI);
         cairo_stroke (cr);
+        cairo_set_line_width (cr, tbo_drawing_get_zoom ());
 
         cairo_rotate (cr, -OBJ->angle);
         cairo_translate (cr, -ox, -oy);
@@ -603,6 +617,7 @@ page_view_drawing (cairo_t *cr)
     Color *resizer_border;
     Color *resizer_fill;
     int x, y;
+    float r_size;
 
     if (SELECTED != NULL)
     {
@@ -632,13 +647,16 @@ page_view_drawing (cairo_t *cr)
         x = SELECTED->x + SELECTED->width;
         y = SELECTED->y + SELECTED->height;
 
-        cairo_rectangle (cr, x, y, R_SIZE, R_SIZE);
+        r_size = R_SIZE / tbo_drawing_get_zoom ();
+        cairo_set_line_width (cr, 1 / tbo_drawing_get_zoom ());
+        cairo_rectangle (cr, x, y, r_size, r_size);
         cairo_set_source_rgb(cr, resizer_fill->r, resizer_fill->g, resizer_fill->b);
         cairo_fill (cr);
 
         cairo_set_source_rgb(cr, resizer_border->r, resizer_border->g, resizer_border->b);
-        cairo_rectangle (cr, x, y, R_SIZE, R_SIZE);
+        cairo_rectangle (cr, x, y, r_size, r_size);
         cairo_stroke (cr);
+        cairo_set_line_width (cr, tbo_drawing_get_zoom ());
 
         cairo_set_antialias (cr, CAIRO_ANTIALIAS_DEFAULT);
 
