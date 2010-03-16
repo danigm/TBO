@@ -23,6 +23,8 @@
 Frame *FRAME_VIEW = NULL;
 float ZOOM_STEP = 0.05;
 float ZOOM = 1;
+int DRAWING_W = 0;
+int DRAWING_H = 0;
 
 void
 tbo_drawing_draw_page (cairo_t *cr, Page *page, int w, int h)
@@ -116,17 +118,16 @@ on_expose_cb (GtkWidget      *widget,
               TboWindow       *tbo)
 {
     cairo_t *cr;
-    int w, h;
     enum Tool tool;
     GdkWindow *window;
 
     cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
 
     window = gtk_widget_get_parent_window (GTK_WIDGET (widget));
-    gdk_drawable_get_size (GDK_DRAWABLE (window), &w, &h);
+    gdk_drawable_get_size (GDK_DRAWABLE (window), &DRAWING_W, &DRAWING_H);
 
     cairo_set_source_rgb (cr, 0, 0, 0);
-    cairo_rectangle (cr, 0, 0, w, h);
+    cairo_rectangle (cr, 0, 0, DRAWING_W, DRAWING_H);
     cairo_fill (cr);
 
     tbo_drawing_draw (cr, tbo);
@@ -254,13 +255,9 @@ darea_connect_signals (TboWindow *tbo)
 void
 update_drawing (TboWindow *tbo)
 {
-    int w, h;
-    w = tbo->comic->width * ZOOM;
-    h = tbo->comic->height * ZOOM;
-
     gtk_widget_queue_draw_area (tbo->drawing,
             0, 0,
-            w, h);
+            DRAWING_W, DRAWING_H);
 }
 
 void
