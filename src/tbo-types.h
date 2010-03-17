@@ -58,6 +58,7 @@ struct tbo_object
     void (*free) (struct tbo_object *);
     void (*draw) (struct tbo_object *, Frame *, cairo_t *);
     void (*save) (struct tbo_object *, FILE *);
+    struct tbo_object * (*clone) (struct tbo_object *);
     enum TYPE type;
     gpointer data;
 };

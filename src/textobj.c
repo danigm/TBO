@@ -63,6 +63,7 @@ tbo_text_new ()
     text->free = tbo_text_free;
     text->draw = tbo_text_draw;
     text->save = tbo_text_save;
+    text->clone = tbo_text_clone;
     text->type = TEXTOBJ;
     text->flipv = FALSE;
     text->fliph = FALSE;
@@ -202,4 +203,28 @@ tbo_text_save (TextObj *self, FILE *file)
 
     snprintf (buffer, 1024, "\n   </text>\n");
     fwrite (buffer, sizeof (char), strlen (buffer), file);
+}
+
+TextObj *
+tbo_text_clone (TextObj *self)
+{
+    TextObj *newtext;
+    text_data *data;
+    data = (text_data*)self->data;
+
+    newtext = tbo_text_new ();
+    newtext->flipv = self->flipv;
+    newtext->fliph = self->fliph;
+    tbo_text_change_color (newtext, data->font_color->r,
+                                    data->font_color->g,
+                                    data->font_color->b);
+    tbo_text_change_font (newtext, tbo_text_get_string (self));
+    tbo_text_set_text (newtext, data->text->str);
+    newtext->angle = self->angle;
+    newtext->x = self->x;
+    newtext->y = self->y;
+    newtext->width = self->width;
+    newtext->height = self->height;
+
+    return newtext;
 }

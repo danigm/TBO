@@ -500,6 +500,16 @@ frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
             case GDK_Right:
                 tbo_object_move (OBJ, MOVE_RIGHT);
                 break;
+            case GDK_d:
+                if (event->state & GDK_CONTROL_MASK)
+                {
+                    tbo_object *cloned_obj = OBJ->clone (OBJ);
+                    cloned_obj->x += 10;
+                    cloned_obj->y -= 10;
+                    tbo_frame_add_obj (SELECTED, cloned_obj);
+                    set_selected_obj (cloned_obj, tbo);
+                }
+                break;
             default:
                 break;
         }

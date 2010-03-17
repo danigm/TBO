@@ -28,6 +28,7 @@ the frame with "selector" tool. In frame view you can draw:
  * With arrows keys you can move the selected object
  * To flip the current object use "v" key and "h" key
  * You can remove a frame object selecting it and pressing "del" key
+ * You can clone an object pressing ctrl+d
  * To return to "page view" press "esc" key
 
 You can control the zoom with "+" and "-" keys or with zoom tools

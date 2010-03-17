@@ -18,5 +18,6 @@ void tbo_text_change_color (TextObj *self, double r, double g, double b);
 void tbo_text_get_color (TextObj *self, GdkColor *color);
 char * tbo_text_get_string (TextObj *self);
 void tbo_text_save (TextObj *self, FILE *file);
+TextObj * tbo_text_clone (TextObj *self);
 
 #endif

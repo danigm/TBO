@@ -21,6 +21,7 @@ tbo_svgimage_new ()
     image->free = tbo_svg_image_free;
     image->draw = tbo_svg_image_draw;
     image->save = tbo_svg_image_save;
+    image->clone = tbo_svg_image_clone;
     image->type = SVGOBJ;
     image->flipv = FALSE;
     image->fliph = FALSE;
@@ -122,4 +123,21 @@ tbo_svg_image_save (SVGImage *self, FILE *file)
 
     snprintf (buffer, 1024, "   </svgimage>\n");
     fwrite (buffer, sizeof (char), strlen (buffer), file);
+}
+
+SVGImage *
+tbo_svg_image_clone (SVGImage *self)
+{
+    SVGImage *newimage;
+
+    newimage = tbo_svgimage_new_width_params (self->x,
+                                              self->y,
+                                              self->width,
+                                              self->height,
+                                              self->data);
+    newimage->angle = self->angle;
+    newimage->flipv = self->flipv;
+    newimage->fliph = self->fliph;
+
+    return newimage;
 }
