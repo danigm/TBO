@@ -16,6 +16,7 @@ When you run TBO you are in "page view", and here you can:
  * Delete current page
  * Select/move/resize current page frames with select tool
  * You can remove a frame selecting it and pressing "del" key
+ * You can clone a frame pressing ctrl+d
  * Create new page frames
 
 When you have a frame you can go to "frame view" by double clicking in

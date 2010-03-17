@@ -45,6 +45,12 @@ tbo_page_new_frame (Page *page, int x, int y,
 }
 
 void
+tbo_page_add_frame (Page *page, Frame *frame)
+{
+    page->frames = g_list_append (page->frames, frame);
+}
+
+void
 tbo_page_del_frame_by_index (Page *page, int nth)
 {
     Frame *frame;

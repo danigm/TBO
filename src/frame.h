@@ -26,6 +26,7 @@ int tbo_frame_get_base_y (int y);
 int tbo_frame_get_base_x (int x);
 void tbo_frame_set_color (Frame *frame, GdkColor *color);
 void tbo_frame_save (Frame *frame, FILE *file);
+Frame *tbo_frame_clone (Frame *frame);
 
 #endif
 

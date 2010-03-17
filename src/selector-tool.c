@@ -686,13 +686,28 @@ page_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
         set_selected (NULL, tbo);
     }
 
-    if (event->keyval == GDK_Tab)
+    switch (event->keyval)
     {
-        set_selected (tbo_page_next_frame (page), tbo);
-        if (SELECTED == NULL)
-        {
-            set_selected (tbo_page_first_frame (page), tbo);
-        }
+        case GDK_Tab:
+            set_selected (tbo_page_next_frame (page), tbo);
+            if (SELECTED == NULL)
+            {
+                set_selected (tbo_page_first_frame (page), tbo);
+            }
+            break;
+
+        case GDK_d:
+            if ((event->state & GDK_CONTROL_MASK) && SELECTED)
+            {
+                Frame *cloned_frame = tbo_frame_clone (SELECTED);
+                cloned_frame->x += 10;
+                cloned_frame->y -= 10;
+                tbo_page_add_frame (page, cloned_frame);
+                set_selected (cloned_frame, tbo);
+            }
+            break;
+        default:
+            break;
     }
 }
 

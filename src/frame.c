@@ -292,3 +292,24 @@ tbo_frame_save (Frame *frame, FILE *file)
     snprintf (buffer, 255, "  </frame>\n");
     fwrite (buffer, sizeof (char), strlen (buffer), file);
 }
+
+Frame *
+tbo_frame_clone (Frame *frame)
+{
+    GList *o;
+    tbo_object *cur_object;
+    Frame *newframe = tbo_frame_new (frame->x, frame->y,
+                                     frame->width, frame->height);
+
+    for (o=g_list_first (frame->objects); o; o = g_list_next(o))
+    {
+        cur_object = (tbo_object *) o->data;
+        tbo_frame_add_obj (newframe, cur_object->clone (cur_object));
+    }
+    newframe->border = frame->border;
+    newframe->color->r = frame->color->r;
+    newframe->color->g = frame->color->g;
+    newframe->color->b = frame->color->b;
+
+    return newframe;
+}
