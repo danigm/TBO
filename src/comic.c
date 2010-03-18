@@ -196,10 +196,24 @@ void
 tbo_comic_open (TboWindow *window, char *filename)
 {
     Comic *newcomic = tbo_comic_load (filename);
+    int nth;
     if (newcomic)
     {
         tbo_comic_free (window->comic);
         window->comic = newcomic;
         gtk_window_set_title (GTK_WINDOW (window->window), window->comic->title);
+
+        for (nth=gtk_notebook_get_n_pages (GTK_NOTEBOOK (window->notebook)); nth>0; nth--)
+        {
+            gtk_notebook_remove_page (GTK_NOTEBOOK (window->notebook), nth);
+        }
+
+        for (nth=1; nth<tbo_comic_len (window->comic); nth++)
+        {
+            gtk_notebook_insert_page (GTK_NOTEBOOK (window->notebook),
+                                      create_darea (window),
+                                      NULL,
+                                      nth);
+        }
     }
 }
