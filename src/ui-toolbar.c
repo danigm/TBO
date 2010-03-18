@@ -77,6 +77,33 @@ get_selected_tool ()
     return SELECTED_TOOL;
 }
 
+
+void
+set_current_tab_page (TboWindow *tbo, gboolean setit)
+{
+    int nth;
+
+    nth = tbo_comic_page_index (tbo->comic);
+    if (setit)
+        gtk_notebook_set_current_page (GTK_NOTEBOOK (tbo->notebook), nth);
+    tbo->drawing = gtk_bin_get_child (GTK_BIN (gtk_notebook_get_nth_page (GTK_NOTEBOOK (tbo->notebook), nth)));
+    set_frame_view (NULL);
+    set_selected_tool (NONE, tbo);
+}
+
+gboolean
+notebook_switch_page_cb (GtkNotebook     *notebook,
+                         GtkNotebookPage *page,
+                         guint            page_num,
+                         TboWindow        *tbo)
+{
+    tbo_comic_set_current_page_nth (tbo->comic, page_num);
+    set_current_tab_page (tbo, FALSE);
+    update_toolbar (tbo);
+    tbo_window_update_status (tbo, 0, 0);
+    return FALSE;
+}
+
 void
 set_selected_tool (enum Tool tool, TboWindow *tbo)
 {
@@ -142,14 +169,18 @@ update_toolbar (TboWindow *tbo)
 gboolean
 toolbar_handler (GtkWidget *widget, gpointer data)
 {
-    printf(_("toolbar: %s\n"), ((TboWindow *)data)->comic->title);
     return FALSE;
 }
 
 gboolean
 add_new_page (GtkAction *action, TboWindow *tbo)
 {
-    tbo_comic_new_page (tbo->comic);
+    Page *page = tbo_comic_new_page (tbo->comic);
+    int nth = tbo_comic_page_nth (tbo->comic, page);
+    gtk_notebook_insert_page (GTK_NOTEBOOK (tbo->notebook),
+                              create_darea (tbo),
+                              NULL,
+                              nth);
     tbo_window_update_status (tbo, 0, 0);
     update_toolbar (tbo);
     return FALSE;
@@ -158,7 +189,10 @@ add_new_page (GtkAction *action, TboWindow *tbo)
 gboolean
 del_current_page (GtkAction *action, TboWindow *tbo)
 {
+    int nth = tbo_comic_page_index (tbo->comic);
     tbo_comic_del_current_page (tbo->comic);
+    set_current_tab_page (tbo, TRUE);
+    gtk_notebook_remove_page (GTK_NOTEBOOK (tbo->notebook), nth);
     tbo_window_update_status (tbo, 0, 0);
     update_toolbar (tbo);
     return FALSE;
@@ -168,6 +202,7 @@ gboolean
 next_page (GtkAction *action, TboWindow *tbo)
 {
     tbo_comic_next_page (tbo->comic);
+    set_current_tab_page (tbo, TRUE);
     update_toolbar (tbo);
     tbo_window_update_status (tbo, 0, 0);
 
@@ -178,6 +213,7 @@ gboolean
 prev_page (GtkAction *action, TboWindow *tbo)
 {
     tbo_comic_prev_page (tbo->comic);
+    set_current_tab_page (tbo, TRUE);
     update_toolbar (tbo);
     tbo_window_update_status (tbo, 0, 0);
 

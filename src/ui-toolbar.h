@@ -43,5 +43,7 @@ void set_selected_tool (enum Tool tool, TboWindow *tbo);
 
 GtkWidget *generate_toolbar (TboWindow *window);
 
+gboolean notebook_switch_page_cb (GtkNotebook *notebook, GtkNotebookPage *page, guint page_num, TboWindow *tbo);
+
 #endif
 

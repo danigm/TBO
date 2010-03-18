@@ -12,7 +12,8 @@
 static int NWINDOWS = 0;
 
 TboWindow *
-tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *toolarea,
+tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll,
+                GtkWidget *notebook, GtkWidget *toolarea,
                 GtkWidget *status, GtkWidget *vbox, Comic *comic)
 {
     TboWindow *tbo;
@@ -27,6 +28,7 @@ tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *toolarea,
     tbo->vbox = vbox;
     tbo->comic = comic;
     tbo->toolarea = toolarea;
+    tbo->notebook = notebook;
     tbo->path = NULL;
 
     return tbo;
@@ -75,6 +77,23 @@ GdkPixbuf *create_pixbuf (const gchar * filename)
    return pixbuf;
 }
 
+GtkWidget *
+create_darea (TboWindow *tbo)
+{
+    GtkWidget *scrolled;
+    GtkWidget *darea;
+    int width=tbo->comic->width, height=tbo->comic->height;
+
+    scrolled = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    darea = get_drawing_area (width, height);
+    gtk_container_add (GTK_CONTAINER (scrolled), darea);
+    darea_connect_signals (tbo, darea);
+    gtk_widget_show_all (scrolled);
+
+    return scrolled;
+}
+
 TboWindow *
 tbo_new_tbo (int width, int height)
 {
@@ -90,6 +109,7 @@ tbo_new_tbo (int width, int height)
     GtkWidget *darea;
     GtkWidget *status;
     GtkWidget *hpaned;
+    GtkWidget *notebook;
 
     GtkUIManager *manager;
 
@@ -109,6 +129,9 @@ tbo_new_tbo (int width, int height)
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     darea = get_drawing_area (width, height);
     gtk_container_add (GTK_CONTAINER (scrolled), darea);
+    notebook = gtk_notebook_new ();
+    gtk_notebook_set_scrollable (GTK_NOTEBOOK (notebook), TRUE);
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), scrolled, NULL);
 
     hpaned = gtk_hpaned_new ();
     tool_paned = gtk_vbox_new (FALSE, 0);
@@ -117,17 +140,20 @@ tbo_new_tbo (int width, int height)
     gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled2), tool_paned);
 
     gtk_paned_set_position (GTK_PANED (hpaned), width - 200);
-    gtk_paned_pack1 (GTK_PANED (hpaned), scrolled, TRUE, FALSE);
+    gtk_paned_pack1 (GTK_PANED (hpaned), notebook, TRUE, FALSE);
     gtk_paned_pack2 (GTK_PANED (hpaned), scrolled2, TRUE, FALSE);
 
     status = gtk_statusbar_new ();
 
-    tbo = tbo_window_new (window, scrolled, tool_paned, status, container, comic);
+    tbo = tbo_window_new (window, scrolled, notebook, tool_paned, status, container, comic);
     tbo_window_update_status (tbo, 0, 0);
 
     // ui-drawing.c (expose, motion and click)
-    darea_connect_signals (tbo);
+    darea_connect_signals (tbo, darea);
 
+    // key press event
+    g_signal_connect (tbo->notebook, "switch-page", G_CALLBACK (notebook_switch_page_cb), tbo);
+    g_signal_connect (tbo->window, "key_press_event", G_CALLBACK (on_key_cb), tbo);
     g_signal_connect (window, "delete-event", G_CALLBACK (tbo_window_free_cb), tbo);
 
     // Generando la barra de herramientas de la aplicacion

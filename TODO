@@ -1,9 +1,6 @@
 TBO TODO things:
 ----------------
 
- * Each page should be a tab (GtkNotebook) maybe sharing the same
- * content as child (the scrolled drawing area). (middle)
-
  * Undo/Redo tool. (hard)
 
  * Change between tools with keys: (middle)

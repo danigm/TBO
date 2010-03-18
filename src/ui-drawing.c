@@ -222,11 +222,8 @@ get_drawing_area (int width, int height)
 }
 
 void
-darea_connect_signals (TboWindow *tbo)
+darea_connect_signals (TboWindow *tbo, GtkWidget *drawing)
 {
-    GtkWidget *drawing;
-    drawing = tbo->drawing;
-
     gtk_widget_add_events (drawing, GDK_BUTTON_PRESS_MASK |
                                     GDK_BUTTON_RELEASE_MASK |
                                     GDK_POINTER_MOTION_MASK);
@@ -243,13 +240,19 @@ darea_connect_signals (TboWindow *tbo)
     g_signal_connect (drawing, "motion_notify_event",
             G_CALLBACK (on_move_cb), tbo);
 
-    // key press event
-    g_signal_connect (tbo->window, "key_press_event",
-            G_CALLBACK (on_key_cb), tbo);
-
     // drag & drop
     gtk_drag_dest_set (drawing, GTK_DEST_DEFAULT_ALL, TARGET_LIST, N_TARGETS, GDK_ACTION_COPY);
     g_signal_connect (drawing, "drag-data-received", G_CALLBACK(drag_data_received_handl), tbo);
+}
+
+void
+darea_disconnect_signals (TboWindow *tbo, GtkWidget *drawing)
+{
+    g_signal_handlers_disconnect_by_func (drawing, G_CALLBACK (on_expose_cb), tbo);
+    g_signal_handlers_disconnect_by_func (drawing, G_CALLBACK (on_click_cb), tbo);
+    g_signal_handlers_disconnect_by_func (drawing, G_CALLBACK (on_release_cb), tbo);
+    g_signal_handlers_disconnect_by_func (drawing, G_CALLBACK (on_move_cb), tbo);
+    g_signal_handlers_disconnect_by_func (drawing, G_CALLBACK(drag_data_received_handl), tbo);
 }
 
 void

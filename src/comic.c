@@ -70,7 +70,13 @@ tbo_comic_len (Comic *comic)
 int
 tbo_comic_page_index (Comic *comic)
 {
-    return g_list_position ( g_list_first (comic->pages), comic->pages) + 1;
+    return g_list_position ( g_list_first (comic->pages), comic->pages);
+}
+
+int
+tbo_comic_page_nth (Comic *comic, Page *page)
+{
+    return g_list_index (g_list_first (comic->pages), page);
 }
 
 Page *
@@ -107,10 +113,16 @@ tbo_comic_set_current_page (Comic *comic, Page *page)
     comic->pages = g_list_find (g_list_first (comic->pages), page);
 }
 
+void
+tbo_comic_set_current_page_nth (Comic *comic, int nth)
+{
+    comic->pages = g_list_nth (g_list_first (comic->pages), nth);
+}
+
 gboolean
 tbo_comic_page_first (Comic *comic)
 {
-    if (tbo_comic_page_index (comic) == 1)
+    if (tbo_comic_page_index (comic) == 0)
         return TRUE;
     return FALSE;
 }
@@ -118,7 +130,7 @@ tbo_comic_page_first (Comic *comic)
 gboolean
 tbo_comic_page_last (Comic *comic)
 {
-    if (tbo_comic_page_index (comic) == tbo_comic_len (comic))
+    if (tbo_comic_page_index (comic) == tbo_comic_len (comic) - 1)
         return TRUE;
     return FALSE;
 }
@@ -136,7 +148,7 @@ tbo_comic_del_current_page (Comic *comic)
     page = tbo_comic_next_page (comic);
     if (page == NULL)
         page = tbo_comic_prev_page (comic);
-    tbo_comic_del_page (comic, nth-1);
+    tbo_comic_del_page (comic, nth);
     tbo_comic_set_current_page (comic, page);
     return TRUE;
 }
