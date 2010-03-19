@@ -491,6 +491,12 @@ frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
             case GDK_Up:
                 tbo_object_move (OBJ, MOVE_UP);
                 break;
+            case GDK_less:
+                tbo_object_resize (OBJ, RESIZE_LESS);
+                break;
+            case GDK_greater:
+                tbo_object_resize (OBJ, RESIZE_GREATER);
+                break;
             case GDK_Down:
                 tbo_object_move (OBJ, MOVE_DOWN);
                 break;

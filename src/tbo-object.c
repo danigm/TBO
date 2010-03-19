@@ -96,6 +96,27 @@ tbo_object_move (tbo_object *self, enum MOVE_OPT type)
 }
 
 void
+tbo_object_resize (tbo_object *self, enum RESIZE_OPT type)
+{
+    switch (type)
+    {
+        case RESIZE_LESS:
+            if (self->width > 10 && self->height > 10)
+            {
+                self->width *= 0.95;
+                self->height *= 0.95;
+            }
+            break;
+        case RESIZE_GREATER:
+            self->width *= 1.05;
+            self->height *= 1.05;
+            break;
+        default:
+            break;
+    }
+}
+
+void
 tbo_object_save (tbo_object *self, FILE *file)
 {
     self->save (self, file);
