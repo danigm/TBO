@@ -1,0 +1,70 @@
+========================
+Proyecto TBO (by danigm)
+========================
+
+Introducción
+============
+
+El proyecto consiste en una herramienta de dibujo simple, dónde puedes
+añadir páginas, viñetas y objetos a las viñetas. La idea principal es
+que cualquiera pueda crear un cómic en cinco minutos sin necesidad de
+saber dibujar, simplemente arrastrando modelos al área de dibujo y
+añadiendo el texto a estos.
+
+El objetivo de este proyecto es conseguir una herramienta para hacer
+pequeños tutoriales técnicos o presentaciones sin necesidad de saber
+dibujar y de una manera fácil.
+
+Dependencias
+============
+
+Es una aplicación GTK pensada para el escritorio gnome, así pues
+depende de GTK+, Cairo y glib.
+
+Para la compilación depende de GCC, autotools y gnome-common para el
+autogen.sh
+
+Cómo se instala
+===============
+
+El código se puede conseguir de diferentes fuentes:
+
+ * github (tgz) http://github.com/danigm/TBO/tarball/master
+ * github (git) *git clone git://github.com/danigm/TBO.git*
+ * forja de rediris *svn checkout https://forja.rediris.es/svn/cusl4-tbo*
+
+Se instala utilizando las herramientas autotools. Una vez descargado
+el código:
+
+::
+
+    $ ./autogen.sh
+    $ make
+    $ sudo make install
+
+Una vez instalado, debería aparecer el icono de TBO en el menú de
+*aplicaciones*, dentro de la categoría *gráficos*.
+
+También se puede ejecutar desde la terminal con el comando **tbo**
+
+Usando el programa
+------------------
+
+Para saber cómo usar el programa en detalle lee el fichero *README* que
+viene en el código (inglés).
+
+Promoción para dar a conocer el proyecto
+========================================
+
+Para dar a conocer el proyecto TBO en la comunidad de software libre
+he hecho varias cosas:
+
+ * He añadido un hook al repositorio para que cada commit sea
+   publicado en twitter.
+ * He publicado un post en la web linuxhispano.net
+   (http://www.linuxhispano.net/2010/03/18/tbo-programa-de-creacion-de-comics-tira/)
+ * He añadido el proyecto a la red social de programadores github
+   (http://github.com/danigm/tbo)
+ * Estoy intentando conseguir que TBO sea parte del proyecto gnome
+   (https://bugzilla.gnome.org/show_bug.cgi?id=612865)
+
