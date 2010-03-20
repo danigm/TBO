@@ -30,6 +30,16 @@ barbody_DATA = bar/body/*.svg
 accpcsdir = $(datadir)/tbo/doodle/accesories/pcs
 accpcs_DATA = accesories/pcs/*.svg
 
+# TANGO ICONS
+tangodevdir = $(datadir)/tbo/doodle/accesories/devices
+tangodev_DATA = accesories/devices/*.svg
+
+tangoemdir = $(datadir)/tbo/doodle/accesories/emotes
+tangoem_DATA = accesories/emotes/*.svg
+
+tangoacdir = $(datadir)/tbo/doodle/accesories/actions
+tangoac_DATA = accesories/actions/*.svg
+
 ###########
 # BUBBLES #
 ###########
@@ -55,6 +65,9 @@ EXTRA_DIST = \
 	foo/mouth/*.svg
 	foo/eyes/*.svg
 	accesories/pcs/*.svg
+	accesories/devices/*.svg
+	accesories/emotes/*.svg
+	accesories/actions/*.svg
 	bubble/ellipse/*.svg
 	bubble/square/*.svg
 	guadalinex/andatuz/*.svg
