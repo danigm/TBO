@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 0.1\n"
 "Report-Msgid-Bugs-To: dani@danigm.net\n"
-"POT-Creation-Date: 2010-03-06 21:45+0100\n"
+"POT-Creation-Date: 2010-03-20 11:05+0100\n"
 "PO-Revision-Date: 2010-01-24 20:48+0100\n"
 "Last-Translator: Daniel Garcia <dani@danigm.net>\n"
 "Language-Team: \n"
@@ -15,12 +15,12 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/comic.c:154
+#: ../src/comic.c:166
 #, c-format
 msgid "Failed saving: %s"
 msgstr "Fallo guardando: %s"
 
-#: ../src/comic.c:160
+#: ../src/comic.c:172
 msgid "failed saving"
 msgstr "fallo guardando"
 
@@ -32,7 +32,7 @@ msgstr "No se ha podido cargar el fichero"
 msgid "Couldn't parse file"
 msgstr "No se ha podido parsear el fichero"
 
-#: ../src/comic-new-dialog.c:22 ../src/ui-toolbar.c:190
+#: ../src/comic-new-dialog.c:22 ../src/ui-toolbar.c:239
 msgid "New Comic"
 msgstr "Nuevo Comic"
 
@@ -65,6 +65,10 @@ msgstr "Guardar como"
 msgid "error loading image %s\n"
 msgstr "error cargando imagen %s\n"
 
+#: ../src/export.c:27
+msgid "Export as"
+msgstr "Exportar como"
+
 #: ../src/selector-tool.c:126
 msgid "Color: "
 msgstr "Color: "
@@ -73,11 +77,16 @@ msgstr "Color: "
 msgid "border"
 msgstr "borde"
 
-#: ../src/tbo-window.c:106
+#: ../src/svgimage.c:69
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr "No se puede cargar %s\n"
+
+#: ../src/tbo-window.c:126
 msgid "Untitled"
 msgstr "Sintitulo"
 
-#: ../src/tbo-window.c:155
+#: ../src/tbo-window.c:181
 #, c-format
 msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
 msgstr "página: %d de %d [ %5d,%5d ] | viñetas: %d"
@@ -90,117 +99,161 @@ msgstr "Fuente:"
 msgid "Text color:"
 msgstr "Color del texto:"
 
+#: ../src/ui-menu.c:30
+msgid "TBO comic editor"
+msgstr "Editor de comic TBO"
+
 #. Toplevel
-#: ../src/ui-menu.c:26
+#: ../src/ui-menu.c:63
 msgid "_File"
 msgstr "_Archivo"
 
+#: ../src/ui-menu.c:64
+msgid "Help"
+msgstr "Ayuda"
+
 #. File menu
-#: ../src/ui-menu.c:30 ../src/ui-toolbar.c:189
+#: ../src/ui-menu.c:68 ../src/ui-toolbar.c:238
 msgid "_New"
 msgstr "_Nuevo"
 
-#: ../src/ui-menu.c:31
+#: ../src/ui-menu.c:69
 msgid "Create a new file"
 msgstr "Crear un nuevo fichero"
 
-#: ../src/ui-menu.c:34 ../src/ui-toolbar.c:193
+#: ../src/ui-menu.c:72 ../src/ui-toolbar.c:242
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../src/ui-menu.c:35
+#: ../src/ui-menu.c:73
 msgid "Open a new file"
 msgstr "Abrir un fichero"
 
-#: ../src/ui-menu.c:38 ../src/ui-toolbar.c:197
+#: ../src/ui-menu.c:76 ../src/ui-toolbar.c:246
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../src/ui-menu.c:39 ../src/ui-toolbar.c:198
+#: ../src/ui-menu.c:77 ../src/ui-toolbar.c:247
 msgid "Save current document"
 msgstr "Guardar el documento actual"
 
-#: ../src/ui-menu.c:42
+#: ../src/ui-menu.c:80
 msgid "_Save as"
 msgstr "_Guardar como"
 
-#: ../src/ui-menu.c:43
+#: ../src/ui-menu.c:81
 msgid "Save current document as ..."
 msgstr "Guardar el documento actual como ..."
 
-#: ../src/ui-menu.c:46
+#: ../src/ui-menu.c:84
+msgid "Export as png"
+msgstr "Exportar a png"
+
+#: ../src/ui-menu.c:85
+msgid "Save current document as png"
+msgstr "Guardar el documento actual como png"
+
+#: ../src/ui-menu.c:88
+msgid "Export as pdf"
+msgstr "Exportar a pdf"
+
+#: ../src/ui-menu.c:89
+msgid "Save current document as pdf"
+msgstr "Guardar el documento actual como pdf"
+
+#: ../src/ui-menu.c:92
+msgid "Export as svg"
+msgstr "Exportar a svg"
+
+#: ../src/ui-menu.c:93
+msgid "Save current document as svg"
+msgstr "Guardar el documento actual como svg"
+
+#: ../src/ui-menu.c:96
 msgid "_Quit"
 msgstr "_Salir"
 
-#: ../src/ui-menu.c:47
+#: ../src/ui-menu.c:97
 msgid "Quit"
 msgstr "Salir"
 
-#: ../src/ui-menu.c:61
+#. Help menu
+#: ../src/ui-menu.c:102 ../src/ui-menu.c:103
+msgid "About"
+msgstr "Acerca de"
+
+#: ../src/ui-menu.c:117
 #, c-format
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "No se ha podido utilizar tbo-menu-ui.xml: %s"
 
-#: ../src/ui-toolbar.c:145
-#, c-format
-msgid "toolbar: %s\n"
-msgstr "barra de herramientas: %s\n"
-
-#: ../src/ui-toolbar.c:194
+#: ../src/ui-toolbar.c:243
 msgid "Open comic"
 msgstr "Abrir comic"
 
 #. Page tools
-#: ../src/ui-toolbar.c:202
+#: ../src/ui-toolbar.c:251
 msgid "New Page"
 msgstr "Nueva Página"
 
-#: ../src/ui-toolbar.c:203
+#: ../src/ui-toolbar.c:252
 msgid "New page"
 msgstr "Nueva página"
 
-#: ../src/ui-toolbar.c:206
+#: ../src/ui-toolbar.c:255
 msgid "Delete Page"
 msgstr "Borrar Página"
 
-#: ../src/ui-toolbar.c:207
+#: ../src/ui-toolbar.c:256
 msgid "Delete current page"
 msgstr "Borrar la página actual"
 
-#: ../src/ui-toolbar.c:210
+#: ../src/ui-toolbar.c:259
 msgid "Prev Page"
 msgstr "Página anterior"
 
-#: ../src/ui-toolbar.c:211
+#: ../src/ui-toolbar.c:260
 msgid "Prev page"
 msgstr "Página anterior"
 
-#: ../src/ui-toolbar.c:214
+#: ../src/ui-toolbar.c:263
 msgid "Next Page"
 msgstr "Página siguiente"
 
-#: ../src/ui-toolbar.c:215
+#: ../src/ui-toolbar.c:264
 msgid "Next page"
 msgstr "Página siguiente"
 
+#. Zoom tools
+#: ../src/ui-toolbar.c:268 ../src/ui-toolbar.c:269
+msgid "Zoom in"
+msgstr "Acercar"
+
+#: ../src/ui-toolbar.c:271 ../src/ui-toolbar.c:272
+msgid "Zoom out"
+msgstr "Alejar"
+
 #. Page view tools
-#: ../src/ui-toolbar.c:221
+#: ../src/ui-toolbar.c:278
 msgid "New _Frame"
 msgstr "Nueva _Vieta"
 
-#: ../src/ui-toolbar.c:222
+#: ../src/ui-toolbar.c:279
 msgid "New Frame"
 msgstr "Nueva Vieta"
 
-#: ../src/ui-toolbar.c:225 ../src/ui-toolbar.c:226
+#: ../src/ui-toolbar.c:282 ../src/ui-toolbar.c:283
 msgid "Selector"
 msgstr "Selector"
 
 #. Frame view tools
-#: ../src/ui-toolbar.c:230 ../src/ui-toolbar.c:231
+#: ../src/ui-toolbar.c:287 ../src/ui-toolbar.c:288
 msgid "Doodle"
 msgstr "Monigote"
 
-#: ../src/ui-toolbar.c:233 ../src/ui-toolbar.c:234
+#: ../src/ui-toolbar.c:290 ../src/ui-toolbar.c:291
 msgid "Text"
 msgstr "Texto"
+
+#~ msgid "toolbar: %s\n"
+#~ msgstr "barra de herramientas: %s\n"

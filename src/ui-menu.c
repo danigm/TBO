@@ -24,6 +24,19 @@ gboolean close_cb (GtkWidget *widget, gpointer data){
 }
 
 gboolean
+about_cb (GtkWidget *widget, TboWindow *tbo){
+    const gchar *authors[] = {"danigm <dani@danigm.net>", NULL};
+    gtk_show_about_dialog (GTK_WINDOW (tbo->window),
+            "name", _("TBO comic editor"),
+            "version", VERSION,
+            "authors", authors,
+            "website", "http://github.com/danigm/tbo",
+            NULL);
+
+    return FALSE;
+}
+
+gboolean
 tbo_menu_to_png (GtkWidget *widget, TboWindow *tbo)
 {
     tbo_export (tbo, "png");
@@ -48,6 +61,7 @@ static const GtkActionEntry tbo_menu_entries [] = {
     /* Toplevel */
 
     { "File", NULL, N_("_File") },
+    { "Help", NULL, N_("Help") },
 
     /* File menu */
 
@@ -82,6 +96,12 @@ static const GtkActionEntry tbo_menu_entries [] = {
     { "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
       N_("Quit"),
       G_CALLBACK (close_cb) },
+
+    /* Help menu */
+
+    { "About", GTK_STOCK_ABOUT, N_("About"), "",
+      N_("About"),
+      G_CALLBACK (about_cb) },
 };
 
 GtkWidget *generate_menu (TboWindow *window){

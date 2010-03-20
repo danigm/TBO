@@ -12,6 +12,9 @@
        <separator/>
        <menuitem name="Quit" action="Quit" />
      </menu>
+     <menu name="HelpMenu" action="Help">
+         <menuitem name="About" action="About" />
+     </menu>
     </menubar>
 </ui>
 
