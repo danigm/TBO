@@ -39,6 +39,13 @@ bubbleellipse_DATA = bubble/ellipse/*.svg
 bubblesquaredir = $(datadir)/tbo/doodle/bubble/square
 bubblesquare_DATA = bubble/square/*.svg
 
+##############
+# GUADALINEX #
+##############
+
+guadalinexdir = $(datadir)/tbo/doodle/guadalinex/andatuz
+guadalinex_DATA = guadalinex/andatuz/*.svg
+
 EXTRA_DIST = \
 	doodle1/body/*.svg
 	doodle1/mouth/*.svg
@@ -50,3 +57,4 @@ EXTRA_DIST = \
 	accesories/pcs/*.svg
 	bubble/ellipse/*.svg
 	bubble/square/*.svg
+	guadalinex/andatuz/*.svg
