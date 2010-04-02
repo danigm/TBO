@@ -221,6 +221,13 @@ prev_page (GtkAction *action, TboWindow *tbo)
 }
 
 gboolean
+zoom_100 (GtkAction *action, TboWindow *tbo)
+{
+    tbo_drawing_zoom_100 (tbo);
+    return FALSE;
+}
+
+gboolean
 zoom_in (GtkAction *action, TboWindow *tbo)
 {
     tbo_drawing_zoom_in (tbo);
@@ -268,6 +275,9 @@ static const GtkActionEntry tbo_tools_entries [] = {
     { "Zoomin", GTK_STOCK_ZOOM_IN, N_("Zoom in"), "",
       N_("Zoom in"),
       G_CALLBACK (zoom_in) },
+    { "Zoom100", GTK_STOCK_ZOOM_100, N_("Zoom 1:1"), "",
+      N_("Zoom 1:1"),
+      G_CALLBACK (zoom_100) },
     { "Zoomout", GTK_STOCK_ZOOM_OUT, N_("Zoom out"), "",
       N_("Zoom out"),
       G_CALLBACK (zoom_out) },

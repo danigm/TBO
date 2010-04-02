@@ -25,6 +25,7 @@ float ZOOM_STEP = 0.05;
 float ZOOM = 1;
 int DRAWING_W = 0;
 int DRAWING_H = 0;
+gboolean KEY_BINDER = TRUE;
 
 void
 tbo_drawing_draw_page (cairo_t *cr, Page *page, int w, int h)
@@ -98,16 +99,22 @@ on_key_cb (GtkWidget    *widget,
     update_drawing (tbo);
     tbo_window_update_status (tbo, 0, 0);
 
-    switch (event->keyval)
+    if (KEY_BINDER)
     {
-        case GDK_plus:
-            tbo_drawing_zoom_in (tbo);
-            break;
-        case GDK_minus:
-            tbo_drawing_zoom_out (tbo);
-            break;
-        default:
-            break;
+        switch (event->keyval)
+        {
+            case GDK_plus:
+                tbo_drawing_zoom_in (tbo);
+                break;
+            case GDK_minus:
+                tbo_drawing_zoom_out (tbo);
+                break;
+            case GDK_1:
+                tbo_drawing_zoom_100 (tbo);
+                break;
+            default:
+                break;
+        }
     }
     return FALSE;
 }
@@ -289,8 +296,21 @@ void tbo_drawing_zoom_out (TboWindow *tbo)
     update_drawing (tbo);
 }
 
+void tbo_drawing_zoom_100 (TboWindow *tbo)
+{
+    ZOOM = 1;
+    gtk_layout_set_size (GTK_LAYOUT (tbo->drawing), tbo->comic->width*ZOOM, tbo->comic->height*ZOOM);
+    update_drawing (tbo);
+}
+
 float
 tbo_drawing_get_zoom ()
 {
     return ZOOM;
+}
+
+void
+set_key_binder (gboolean binder)
+{
+    KEY_BINDER = binder;
 }

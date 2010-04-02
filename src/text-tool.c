@@ -13,6 +13,19 @@ static TextObj *TEXT_SELECTED = NULL;
 static GtkTextBuffer *TEXT_BUFFER = NULL;
 
 void
+on_tview_focus_in (GtkWidget *view, GdkEventFocus *event, gpointer data)
+{
+    set_key_binder (FALSE);
+}
+
+void
+on_tview_focus_out (GtkWidget *view, GdkEventFocus *event, gpointer data)
+{
+    set_key_binder (TRUE);
+}
+
+
+void
 on_text_change (GtkTextBuffer *buf, gpointer data)
 {
     GtkTextIter start, end;
@@ -52,8 +65,8 @@ setup_toolarea (TboWindow *tbo)
 {
     GtkWidget *vbox;
     GtkWidget *hbox;
-    GtkWidget *font_color_label = gtk_label_new (_("Font:"));
-    GtkWidget *font_label = gtk_label_new (_("Text color:"));
+    GtkWidget *font_color_label = gtk_label_new (_("Text color:"));
+    GtkWidget *font_label = gtk_label_new (_("Font:"));
     GtkWidget *scroll;
     GtkWidget *view;
 
@@ -80,6 +93,10 @@ setup_toolarea (TboWindow *tbo)
     scroll = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     view = gtk_text_view_new ();
+    gtk_widget_add_events (view, GDK_FOCUS_CHANGE_MASK);
+    g_signal_connect (view, "focus-in-event", G_CALLBACK (on_tview_focus_in), tbo);
+    g_signal_connect (view, "focus-out-event", G_CALLBACK (on_tview_focus_out), tbo);
+
     gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (view), GTK_WRAP_WORD);
     TEXT_BUFFER = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
     gtk_text_buffer_set_text (TEXT_BUFFER, "", -1);
@@ -107,6 +124,7 @@ void text_tool_on_unselect (TboWindow *tbo)
         gtk_widget_destroy (GTK_WIDGET (FONT_COLOR));
     */
     tbo_empty_tool_area (tbo);
+    set_key_binder (TRUE);
 }
 
 void text_tool_on_move (GtkWidget *widget, GdkEventMotion *event, TboWindow *tbo)

@@ -123,7 +123,7 @@ update_tool_area (TboWindow *tbo)
         g_signal_connect (SPIN_H, "value-changed", G_CALLBACK (update_selected_cb), tbo);
 
         hpanel = gtk_hbox_new (FALSE, 0);
-        label = gtk_label_new (_("Color: "));
+        label = gtk_label_new (_("Background color: "));
         gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
         color = gtk_color_button_new ();
         gdk_color.red = SELECTED->color->r * 65535;

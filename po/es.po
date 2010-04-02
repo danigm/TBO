@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 0.1\n"
 "Report-Msgid-Bugs-To: dani@danigm.net\n"
-"POT-Creation-Date: 2010-03-20 11:05+0100\n"
+"POT-Creation-Date: 2010-04-03 00:45+0200\n"
 "PO-Revision-Date: 2010-01-24 20:48+0100\n"
 "Last-Translator: Daniel Garcia <dani@danigm.net>\n"
 "Language-Team: \n"
@@ -32,7 +32,7 @@ msgstr "No se ha podido cargar el fichero"
 msgid "Couldn't parse file"
 msgstr "No se ha podido parsear el fichero"
 
-#: ../src/comic-new-dialog.c:22 ../src/ui-toolbar.c:239
+#: ../src/comic-new-dialog.c:22 ../src/ui-toolbar.c:246
 msgid "New Comic"
 msgstr "Nuevo Comic"
 
@@ -70,8 +70,8 @@ msgid "Export as"
 msgstr "Exportar como"
 
 #: ../src/selector-tool.c:126
-msgid "Color: "
-msgstr "Color: "
+msgid "Background color: "
+msgstr "Color de fondo: "
 
 #: ../src/selector-tool.c:139
 msgid "border"
@@ -91,13 +91,13 @@ msgstr "Sintitulo"
 msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
 msgstr "página: %d de %d [ %5d,%5d ] | viñetas: %d"
 
-#: ../src/text-tool.c:55
-msgid "Font:"
-msgstr "Fuente:"
-
-#: ../src/text-tool.c:56
+#: ../src/text-tool.c:68
 msgid "Text color:"
 msgstr "Color del texto:"
+
+#: ../src/text-tool.c:69
+msgid "Font:"
+msgstr "Fuente:"
 
 #: ../src/ui-menu.c:30
 msgid "TBO comic editor"
@@ -113,7 +113,7 @@ msgid "Help"
 msgstr "Ayuda"
 
 #. File menu
-#: ../src/ui-menu.c:68 ../src/ui-toolbar.c:238
+#: ../src/ui-menu.c:68 ../src/ui-toolbar.c:245
 msgid "_New"
 msgstr "_Nuevo"
 
@@ -121,7 +121,7 @@ msgstr "_Nuevo"
 msgid "Create a new file"
 msgstr "Crear un nuevo fichero"
 
-#: ../src/ui-menu.c:72 ../src/ui-toolbar.c:242
+#: ../src/ui-menu.c:72 ../src/ui-toolbar.c:249
 msgid "_Open"
 msgstr "_Abrir"
 
@@ -129,11 +129,11 @@ msgstr "_Abrir"
 msgid "Open a new file"
 msgstr "Abrir un fichero"
 
-#: ../src/ui-menu.c:76 ../src/ui-toolbar.c:246
+#: ../src/ui-menu.c:76 ../src/ui-toolbar.c:253
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../src/ui-menu.c:77 ../src/ui-toolbar.c:247
+#: ../src/ui-menu.c:77 ../src/ui-toolbar.c:254
 msgid "Save current document"
 msgstr "Guardar el documento actual"
 
@@ -187,73 +187,80 @@ msgstr "Acerca de"
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "No se ha podido utilizar tbo-menu-ui.xml: %s"
 
-#: ../src/ui-toolbar.c:243
+#: ../src/ui-toolbar.c:250
 msgid "Open comic"
 msgstr "Abrir comic"
 
 #. Page tools
-#: ../src/ui-toolbar.c:251
+#: ../src/ui-toolbar.c:258
 msgid "New Page"
 msgstr "Nueva Página"
 
-#: ../src/ui-toolbar.c:252
+#: ../src/ui-toolbar.c:259
 msgid "New page"
 msgstr "Nueva página"
 
-#: ../src/ui-toolbar.c:255
+#: ../src/ui-toolbar.c:262
 msgid "Delete Page"
 msgstr "Borrar Página"
 
-#: ../src/ui-toolbar.c:256
+#: ../src/ui-toolbar.c:263
 msgid "Delete current page"
 msgstr "Borrar la página actual"
 
-#: ../src/ui-toolbar.c:259
+#: ../src/ui-toolbar.c:266
 msgid "Prev Page"
 msgstr "Página anterior"
 
-#: ../src/ui-toolbar.c:260
+#: ../src/ui-toolbar.c:267
 msgid "Prev page"
 msgstr "Página anterior"
 
-#: ../src/ui-toolbar.c:263
+#: ../src/ui-toolbar.c:270
 msgid "Next Page"
 msgstr "Página siguiente"
 
-#: ../src/ui-toolbar.c:264
+#: ../src/ui-toolbar.c:271
 msgid "Next page"
 msgstr "Página siguiente"
 
 #. Zoom tools
-#: ../src/ui-toolbar.c:268 ../src/ui-toolbar.c:269
+#: ../src/ui-toolbar.c:275 ../src/ui-toolbar.c:276
 msgid "Zoom in"
 msgstr "Acercar"
 
-#: ../src/ui-toolbar.c:271 ../src/ui-toolbar.c:272
+#: ../src/ui-toolbar.c:278 ../src/ui-toolbar.c:279
+msgid "Zoom 1:1"
+msgstr "Escala 1:1"
+
+#: ../src/ui-toolbar.c:281 ../src/ui-toolbar.c:282
 msgid "Zoom out"
 msgstr "Alejar"
 
 #. Page view tools
-#: ../src/ui-toolbar.c:278
+#: ../src/ui-toolbar.c:288
 msgid "New _Frame"
 msgstr "Nueva _Vieta"
 
-#: ../src/ui-toolbar.c:279
+#: ../src/ui-toolbar.c:289
 msgid "New Frame"
 msgstr "Nueva Vieta"
 
-#: ../src/ui-toolbar.c:282 ../src/ui-toolbar.c:283
+#: ../src/ui-toolbar.c:292 ../src/ui-toolbar.c:293
 msgid "Selector"
 msgstr "Selector"
 
 #. Frame view tools
-#: ../src/ui-toolbar.c:287 ../src/ui-toolbar.c:288
+#: ../src/ui-toolbar.c:297 ../src/ui-toolbar.c:298
 msgid "Doodle"
 msgstr "Monigote"
 
-#: ../src/ui-toolbar.c:290 ../src/ui-toolbar.c:291
+#: ../src/ui-toolbar.c:300 ../src/ui-toolbar.c:301
 msgid "Text"
 msgstr "Texto"
+
+#~ msgid "Color: "
+#~ msgstr "Color: "
 
 #~ msgid "toolbar: %s\n"
 #~ msgstr "barra de herramientas: %s\n"
