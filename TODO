@@ -3,13 +3,6 @@ TBO TODO things:
 
  * Undo/Redo tool. (hard)
 
- * Change between tools with keys: (middle)
-    * 's' for selector
-    * 'f' for frame
-    * 'd' for doodle
-    * 't' for text
-    ...
-
  * Ask for size at export as png, pdf and svg. (easy)
 
  * Zoom levels: (easy)

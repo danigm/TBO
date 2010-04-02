@@ -112,6 +112,18 @@ on_key_cb (GtkWidget    *widget,
             case GDK_1:
                 tbo_drawing_zoom_100 (tbo);
                 break;
+            case GDK_s:
+                set_selected_tool_and_action (SELECTOR, tbo);
+                break;
+            case GDK_t:
+                set_selected_tool_and_action (TEXT, tbo);
+                break;
+            case GDK_d:
+                set_selected_tool_and_action (DOODLE, tbo);
+                break;
+            case GDK_f:
+                set_selected_tool_and_action (FRAME, tbo);
+                break;
             default:
                 break;
         }

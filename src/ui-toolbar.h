@@ -40,6 +40,7 @@ void tool_signal (enum Tool tool, enum ToolSignal signal, gpointer data);
 
 enum Tool get_selected_tool ();
 void set_selected_tool (enum Tool tool, TboWindow *tbo);
+void set_selected_tool_and_action (enum Tool tool, TboWindow *tbo);
 
 GtkWidget *generate_toolbar (TboWindow *window);
 

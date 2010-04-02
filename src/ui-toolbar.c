@@ -310,6 +310,30 @@ static const tool_and_action tools_actions [] = {
 };
 
 void
+set_selected_tool_and_action (enum Tool tool, TboWindow *tbo)
+{
+    GtkToggleAction *action;
+    enum Tool action_tool;
+    gchar *name;
+
+    int i;
+    GtkToggleActionEntry entry;
+
+    for (i=0; i<G_N_ELEMENTS (tools_actions); i++)
+    {
+        if (tool == tools_actions[i].tool)
+        {
+            name = (gchar *) tools_actions[i].action;
+            break;
+        }
+    }
+
+    action = (GtkToggleAction *) gtk_action_group_get_action (ACTION_GROUP, name);
+    if (gtk_action_is_sensitive (GTK_ACTION (action)))
+        gtk_toggle_action_set_active (action, TRUE);
+}
+
+void
 unselect (enum Tool tool, TboWindow *tbo)
 {
     int i;
