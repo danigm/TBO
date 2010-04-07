@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 0.1\n"
 "Report-Msgid-Bugs-To: dani@danigm.net\n"
-"POT-Creation-Date: 2010-04-03 00:45+0200\n"
+"POT-Creation-Date: 2010-04-07 23:25+0200\n"
 "PO-Revision-Date: 2010-01-24 20:48+0100\n"
 "Last-Translator: Daniel Garcia <dani@danigm.net>\n"
 "Language-Team: \n"
@@ -24,15 +24,15 @@ msgstr "Fallo guardando: %s"
 msgid "failed saving"
 msgstr "fallo guardando"
 
-#: ../src/comic-load.c:255
+#: ../src/comic-load.c:287
 msgid "Couldn't load file"
 msgstr "No se ha podido cargar el fichero"
 
-#: ../src/comic-load.c:264
+#: ../src/comic-load.c:296
 msgid "Couldn't parse file"
 msgstr "No se ha podido parsear el fichero"
 
-#: ../src/comic-new-dialog.c:22 ../src/ui-toolbar.c:246
+#: ../src/comic-new-dialog.c:22 ../src/ui-toolbar.c:289
 msgid "New Comic"
 msgstr "Nuevo Comic"
 
@@ -52,7 +52,7 @@ msgstr "Abrir"
 msgid "TBO files"
 msgstr "Ficheros TBO"
 
-#: ../src/comic-open-dialog.c:32
+#: ../src/comic-open-dialog.c:32 ../src/ui-toolbar.c:269
 msgid "All files"
 msgstr "Todos los ficheros"
 
@@ -60,7 +60,7 @@ msgstr "Todos los ficheros"
 msgid "Save as"
 msgstr "Guardar como"
 
-#: ../src/custom-stock.c:36
+#: ../src/custom-stock.c:37
 #, c-format
 msgid "error loading image %s\n"
 msgstr "error cargando imagen %s\n"
@@ -113,7 +113,7 @@ msgid "Help"
 msgstr "Ayuda"
 
 #. File menu
-#: ../src/ui-menu.c:68 ../src/ui-toolbar.c:245
+#: ../src/ui-menu.c:68 ../src/ui-toolbar.c:288
 msgid "_New"
 msgstr "_Nuevo"
 
@@ -121,7 +121,7 @@ msgstr "_Nuevo"
 msgid "Create a new file"
 msgstr "Crear un nuevo fichero"
 
-#: ../src/ui-menu.c:72 ../src/ui-toolbar.c:249
+#: ../src/ui-menu.c:72 ../src/ui-toolbar.c:292
 msgid "_Open"
 msgstr "_Abrir"
 
@@ -129,11 +129,11 @@ msgstr "_Abrir"
 msgid "Open a new file"
 msgstr "Abrir un fichero"
 
-#: ../src/ui-menu.c:76 ../src/ui-toolbar.c:253
+#: ../src/ui-menu.c:76 ../src/ui-toolbar.c:296
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../src/ui-menu.c:77 ../src/ui-toolbar.c:254
+#: ../src/ui-menu.c:77 ../src/ui-toolbar.c:297
 msgid "Save current document"
 msgstr "Guardar el documento actual"
 
@@ -187,75 +187,88 @@ msgstr "Acerca de"
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "No se ha podido utilizar tbo-menu-ui.xml: %s"
 
-#: ../src/ui-toolbar.c:250
+#: ../src/ui-toolbar.c:256
+msgid "Add an Image"
+msgstr "Añadir una imagen"
+
+#: ../src/ui-toolbar.c:264
+msgid "png"
+msgstr "png"
+
+#: ../src/ui-toolbar.c:293
 msgid "Open comic"
 msgstr "Abrir comic"
 
 #. Page tools
-#: ../src/ui-toolbar.c:258
+#: ../src/ui-toolbar.c:301
 msgid "New Page"
 msgstr "Nueva Página"
 
-#: ../src/ui-toolbar.c:259
+#: ../src/ui-toolbar.c:302
 msgid "New page"
 msgstr "Nueva página"
 
-#: ../src/ui-toolbar.c:262
+#: ../src/ui-toolbar.c:305
 msgid "Delete Page"
 msgstr "Borrar Página"
 
-#: ../src/ui-toolbar.c:263
+#: ../src/ui-toolbar.c:306
 msgid "Delete current page"
 msgstr "Borrar la página actual"
 
-#: ../src/ui-toolbar.c:266
+#: ../src/ui-toolbar.c:309
 msgid "Prev Page"
 msgstr "Página anterior"
 
-#: ../src/ui-toolbar.c:267
+#: ../src/ui-toolbar.c:310
 msgid "Prev page"
 msgstr "Página anterior"
 
-#: ../src/ui-toolbar.c:270
+#: ../src/ui-toolbar.c:313
 msgid "Next Page"
 msgstr "Página siguiente"
 
-#: ../src/ui-toolbar.c:271
+#: ../src/ui-toolbar.c:314
 msgid "Next page"
 msgstr "Página siguiente"
 
 #. Zoom tools
-#: ../src/ui-toolbar.c:275 ../src/ui-toolbar.c:276
+#: ../src/ui-toolbar.c:318 ../src/ui-toolbar.c:319
 msgid "Zoom in"
 msgstr "Acercar"
 
-#: ../src/ui-toolbar.c:278 ../src/ui-toolbar.c:279
+#: ../src/ui-toolbar.c:321 ../src/ui-toolbar.c:322
 msgid "Zoom 1:1"
 msgstr "Escala 1:1"
 
-#: ../src/ui-toolbar.c:281 ../src/ui-toolbar.c:282
+#: ../src/ui-toolbar.c:324 ../src/ui-toolbar.c:325
 msgid "Zoom out"
 msgstr "Alejar"
 
+#. Png image tool
+#: ../src/ui-toolbar.c:329 ../src/ui-toolbar.c:330
+msgid "Image"
+msgstr "Imagen"
+
 #. Page view tools
-#: ../src/ui-toolbar.c:288
+#: ../src/ui-toolbar.c:336
 msgid "New _Frame"
 msgstr "Nueva _Vieta"
 
-#: ../src/ui-toolbar.c:289
+#: ../src/ui-toolbar.c:337
 msgid "New Frame"
 msgstr "Nueva Vieta"
 
-#: ../src/ui-toolbar.c:292 ../src/ui-toolbar.c:293
+#: ../src/ui-toolbar.c:340 ../src/ui-toolbar.c:341
 msgid "Selector"
 msgstr "Selector"
 
 #. Frame view tools
-#: ../src/ui-toolbar.c:297 ../src/ui-toolbar.c:298
+#: ../src/ui-toolbar.c:345 ../src/ui-toolbar.c:346
 msgid "Doodle"
 msgstr "Monigote"
 
-#: ../src/ui-toolbar.c:300 ../src/ui-toolbar.c:301
+#: ../src/ui-toolbar.c:348 ../src/ui-toolbar.c:349
 msgid "Text"
 msgstr "Texto"
 

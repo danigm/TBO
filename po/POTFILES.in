@@ -14,6 +14,7 @@ src/frame-tool.c
 src/page.c
 src/selector-tool.c
 src/svgimage.c
+src/piximage.c
 src/tbo.c
 src/tbo-object.c
 src/tbo-utils.c
@@ -37,7 +38,7 @@ src/frame.h
 src/frame-tool.h
 src/page.h
 src/selector-tool.h
-src/svgimage.h
+src/piximage.h
 src/tbo-object.h
 src/tbo-types.h
 src/tbo-utils.h
