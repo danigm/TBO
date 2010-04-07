@@ -2,167 +2,29 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
    width="20.14827"
    height="5.7293687"
-   id="svg2"
-   sodipodi:version="0.32"
-   inkscape:version="0.47 r22583"
-   version="1.0"
-   sodipodi:docname="line.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   id="svg2">
   <defs
-     id="defs4">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       id="perspective3033"
-       inkscape:vp_x="-50 : 600 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="700 : 600 : 1"
-       inkscape:persp3d-origin="300 : 400 : 1" />
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       id="perspective3032"
-       inkscape:vp_x="-50 : 600 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="700 : 600 : 1"
-       inkscape:persp3d-origin="300 : 400 : 1" />
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       id="perspective3031"
-       inkscape:vp_x="-50 : 600 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="700 : 600 : 1"
-       inkscape:persp3d-origin="300 : 400 : 1" />
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       id="perspective3030"
-       inkscape:vp_x="-50 : 600 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="700 : 600 : 1"
-       inkscape:persp3d-origin="300 : 400 : 1" />
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       id="perspective3029"
-       inkscape:vp_x="-50 : 600 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="700 : 600 : 1"
-       inkscape:persp3d-origin="300 : 400 : 1" />
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       id="perspective2997"
-       inkscape:vp_x="-50 : 600 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="700 : 600 : 1"
-       inkscape:persp3d-origin="300 : 400 : 1" />
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       id="perspective2996"
-       inkscape:vp_x="-50 : 600 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="700 : 600 : 1"
-       inkscape:persp3d-origin="300 : 400 : 1" />
-  </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="1"
-     inkscape:pageshadow="2"
-     inkscape:zoom="1.4969038"
-     inkscape:cx="72.48295"
-     inkscape:cy="4.0766222"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer2"
-     width="1062.99px"
-     borderlayer="true"
-     inkscape:window-width="1024"
-     inkscape:window-height="575"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
-     showgrid="false"
-     inkscape:window-maximized="1" />
-  <metadata
-     id="metadata7">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-        <dc:date />
-        <dc:creator>
-          <cc:Agent>
-            <dc:title />
-          </cc:Agent>
-        </dc:creator>
-        <dc:rights>
-          <cc:Agent>
-            <dc:title />
-          </cc:Agent>
-        </dc:rights>
-        <dc:publisher>
-          <cc:Agent>
-            <dc:title />
-          </cc:Agent>
-        </dc:publisher>
-        <dc:identifier />
-        <dc:source />
-        <dc:relation />
-        <dc:language />
-        <dc:subject>
-          <rdf:Bag />
-        </dc:subject>
-        <dc:coverage />
-        <dc:description />
-        <dc:contributor>
-          <cc:Agent>
-            <dc:title />
-          </cc:Agent>
-        </dc:contributor>
-        <cc:license
-           rdf:resource="" />
-      </cc:Work>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
+     id="defs4" />
   <g
-     inkscape:label="fondo"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-120.01569,-1014.7589)" />
+     transform="translate(-120.01569,-1014.7589)"
+     id="layer1" />
   <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="dibujos"
-     transform="translate(-120.01569,-1014.7589)">
+     transform="translate(-120.01569,-1014.7589)"
+     id="layer2">
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.99999988;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 137.99156,1015.2589 1.6724,3.2493 c -6.98284,2.3252 -13.21533,1.6491 -19.14827,-0.2253"
        id="path4978"
-       sodipodi:nodetypes="ccc" />
+       style="fill:none;stroke:#000000;stroke-width:0.99999988;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
   </g>
   <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="globos"
-     transform="translate(-120.01569,-1014.7589)" />
+     transform="translate(-120.01569,-1014.7589)"
+     id="layer3" />
   <g
-     inkscape:groupmode="layer"
-     id="layer4"
-     inkscape:label="vinietas"
-     transform="translate(-120.01569,-1014.7589)" />
+     transform="translate(-120.01569,-1014.7589)"
+     id="layer4" />
 </svg>
