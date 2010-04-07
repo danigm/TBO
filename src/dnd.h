@@ -5,15 +5,13 @@
 #include "tbo-window.h"
 
 enum {
-        TARGET_INT32,
-        TARGET_STRING,
-        TARGET_ROOTWIN
+    TARGET_STRING,
 };
 
 
 static GtkTargetEntry TARGET_LIST[] = {
-        { "STRING",     0, TARGET_STRING },
-        { "text/plain", 0, TARGET_STRING },
+    { "STRING",     0, TARGET_STRING },
+    { "text/plain", 0, TARGET_STRING },
 };
 
 static guint N_TARGETS = G_N_ELEMENTS (TARGET_LIST);

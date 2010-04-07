@@ -29,6 +29,7 @@ tbo_SOURCES = \
 	textobj.c \
 	export.c \
 	svgimage.c \
+	piximage.c \
 	dnd.c \
 	tbo-object.c \
 	comic-load.c \
@@ -50,6 +51,7 @@ tbo_SOURCES = \
 	doodle-treeview.h \
 	text-tool.h \
 	svgimage.h \
+	piximage.h \
 	textobj.h \
 	dnd.h \
 	tbo-object.h \

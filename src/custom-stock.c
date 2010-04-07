@@ -21,7 +21,8 @@ void load_custom_stock ()
         {DATA_DIR ICONDIR "frame.svg", TBO_STOCK_FRAME},
         {DATA_DIR ICONDIR "selector.svg", TBO_STOCK_SELECTOR},
         {DATA_DIR ICONDIR "doodle.svg", TBO_STOCK_DOODLE},
-        {DATA_DIR ICONDIR "text.svg", TBO_STOCK_TEXT}
+        {DATA_DIR ICONDIR "text.svg", TBO_STOCK_TEXT},
+        {DATA_DIR ICONDIR "pix.svg", TBO_STOCK_PIX},
     };
 
     int i;

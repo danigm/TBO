@@ -12,6 +12,7 @@
 #include "tbo-object.h"
 #include "svgimage.h"
 #include "textobj.h"
+#include "piximage.h"
 #include "tbo-utils.h"
 
 char *TITLE;
@@ -101,6 +102,33 @@ create_tbo_frame (const gchar **attribute_names, const gchar **attribute_values)
 }
 
 void
+create_tbo_piximage (const gchar **attribute_names, const gchar **attribute_values)
+{
+    PIXImage *pix;
+    int x=0, y=0;
+    int width=0, height=0;
+    float angle=0.0;
+    int flipv=0, fliph=0;
+    char path[255];
+
+    struct attr attrs[] = {
+        {"x", "%d", &x},
+        {"y", "%d", &y},
+        {"width", "%d", &width},
+        {"height", "%d", &height},
+        {"flipv", "%d", &flipv},
+        {"fliph", "%d", &fliph},
+        {"angle", "%f", &angle},
+        {"path", "%s", path},
+    };
+
+    parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
+
+    pix = tbo_piximage_new_width_params (x, y, width, height, path);
+    tbo_frame_add_obj (CURRENT_FRAME, pix);
+}
+
+void
 create_tbo_svgimage (const gchar **attribute_names, const gchar **attribute_values)
 {
     SVGImage *svg;
@@ -186,6 +214,10 @@ start_element (GMarkupParseContext *context,
     else if (strcmp (element_name, "svgimage") == 0)
     {
         create_tbo_svgimage (attribute_names, attribute_values);
+    }
+    else if (strcmp (element_name, "piximage") == 0)
+    {
+        create_tbo_piximage (attribute_names, attribute_values);
     }
     else if (strcmp (element_name, "text") == 0)
     {

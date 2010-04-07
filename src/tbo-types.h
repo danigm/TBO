@@ -43,6 +43,7 @@ typedef struct
 enum TYPE
 {
     SVGOBJ,
+    PIXOBJ,
     TEXTOBJ,
 };
 

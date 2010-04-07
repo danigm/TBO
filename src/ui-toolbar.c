@@ -17,6 +17,7 @@
 #include "selector-tool.h"
 #include "doodle-tool.h"
 #include "text-tool.h"
+#include "piximage.h"
 
 static int SELECTED_TOOL = NONE;
 static GtkActionGroup *ACTION_GROUP = NULL;
@@ -125,6 +126,7 @@ update_toolbar (TboWindow *tbo)
     GtkAction *doodle;
     GtkAction *text;
     GtkAction *new_frame;
+    GtkAction *pix;
 
     if (!ACTION_GROUP)
         return;
@@ -152,17 +154,20 @@ update_toolbar (TboWindow *tbo)
     doodle = gtk_action_group_get_action (ACTION_GROUP, "Doodle");
     text = gtk_action_group_get_action (ACTION_GROUP, "Text");
     new_frame = gtk_action_group_get_action (ACTION_GROUP, "NewFrame");
+    pix = gtk_action_group_get_action (ACTION_GROUP, "Pix");
 
     if (get_frame_view() == NULL)
     {
         gtk_action_set_sensitive (doodle, FALSE);
         gtk_action_set_sensitive (text, FALSE);
+        gtk_action_set_sensitive (pix, FALSE);
         gtk_action_set_sensitive (new_frame, TRUE);
     }
     else
     {
         gtk_action_set_sensitive (doodle, TRUE);
         gtk_action_set_sensitive (text, TRUE);
+        gtk_action_set_sensitive (pix, TRUE);
         gtk_action_set_sensitive (new_frame, FALSE);
     }
 }
@@ -242,6 +247,43 @@ zoom_out (GtkAction *action, TboWindow *tbo)
     return FALSE;
 }
 
+gboolean
+add_pix (GtkAction *action, TboWindow *tbo)
+{
+    GtkWidget *dialog;
+    GtkFileFilter *filter;
+
+    dialog = gtk_file_chooser_dialog_new (_("Add an Image"),
+                     GTK_WINDOW (tbo->window),
+                     GTK_FILE_CHOOSER_ACTION_OPEN,
+                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                     GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+                     NULL);
+
+    filter = gtk_file_filter_new ();
+    gtk_file_filter_set_name (filter, _("png"));
+    gtk_file_filter_add_pattern (filter, "*.png");
+    gtk_file_filter_add_pattern (filter, "*.PNG");
+    gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+    filter = gtk_file_filter_new ();
+    gtk_file_filter_set_name (filter, _("All files"));
+    gtk_file_filter_add_pattern (filter, "*");
+    gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+    {
+        char *filename;
+        filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+        PIXImage *piximage = tbo_piximage_new_width_params (0, 0, 0, 0, filename);
+        tbo_frame_add_obj (get_frame_view(), piximage);
+        update_drawing (tbo);
+        g_free (filename);
+    }
+
+    gtk_widget_destroy (dialog);
+    return FALSE;
+}
+
 static const GtkActionEntry tbo_tools_entries [] = {
     { "NewFileTool", GTK_STOCK_NEW, N_("_New"), "<control>N",
       N_("New Comic"),
@@ -282,6 +324,11 @@ static const GtkActionEntry tbo_tools_entries [] = {
     { "Zoomout", GTK_STOCK_ZOOM_OUT, N_("Zoom out"), "",
       N_("Zoom out"),
       G_CALLBACK (zoom_out) },
+
+    // Png image tool
+    { "Pix", TBO_STOCK_PIX, N_("Image"), "",
+      N_("Image"),
+      G_CALLBACK (add_pix) },
 };
 
 static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
