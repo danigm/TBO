@@ -86,7 +86,8 @@ set_current_tab_page (TboWindow *tbo, gboolean setit)
     nth = tbo_comic_page_index (tbo->comic);
     if (setit)
         gtk_notebook_set_current_page (GTK_NOTEBOOK (tbo->notebook), nth);
-    tbo->drawing = gtk_bin_get_child (GTK_BIN (gtk_notebook_get_nth_page (GTK_NOTEBOOK (tbo->notebook), nth)));
+    tbo->dw_scroll = gtk_notebook_get_nth_page (GTK_NOTEBOOK (tbo->notebook), nth);
+    tbo->drawing = gtk_bin_get_child (GTK_BIN (tbo->dw_scroll));
     set_frame_view (NULL);
     set_selected_tool (NONE, tbo);
 }

@@ -17,6 +17,7 @@ drag_data_received_handl (GtkWidget *widget,
                           guint time,
                           TboWindow *tbo)
 {
+    GtkAdjustment *adj;
     float zoom = tbo_drawing_get_zoom ();
     glong   *_idata;
     gchar   *_sdata;
@@ -44,8 +45,11 @@ drag_data_received_handl (GtkWidget *widget,
                 _sdata = (gchar*)selection_data->data;
 
                 Frame *frame = get_frame_view ();
-                int rx = tbo_frame_get_base_x (x / zoom);
-                int ry = tbo_frame_get_base_y (y / zoom);
+                adj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
+                int rx = tbo_frame_get_base_x ((x + gtk_adjustment_get_value(adj)) / zoom);
+                adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
+                int ry = tbo_frame_get_base_y ((y + gtk_adjustment_get_value(adj)) / zoom);
+
                 SVGImage *svgimage = tbo_svgimage_new_width_params (rx, ry, 0, 0, _sdata);
                 update_drawing (tbo);
                 tbo_frame_add_obj (frame, svgimage);
