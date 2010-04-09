@@ -6,6 +6,20 @@ doodle1eyesdir = $(datadir)/tbo/doodle/doodle1/eyes
 doodle1eyes_DATA = doodle1/eyes/*.svg
 
 #######
+# TBO #
+#######
+
+tbologodir = $(datadir)/tbo/doodle/tbo/logo
+tbologo_DATA = tbo/logo/*.svg
+
+#######
+# DGM #
+#######
+
+dgmbodydir = $(datadir)/tbo/doodle/dgm/body
+dgmbody_DATA = dgm/body/*.svg
+
+#######
 # FOO #
 #######
 
@@ -71,3 +85,5 @@ EXTRA_DIST = \
 	bubble/ellipse/*.svg
 	bubble/square/*.svg
 	guadalinex/andatuz/*.svg
+	dgm/body/*.svg
+	tbo/logo/*.svg
