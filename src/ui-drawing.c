@@ -342,3 +342,10 @@ set_key_binder (gboolean binder)
 {
     KEY_BINDER = binder;
 }
+
+void
+tbo_drawing_adjust_scroll (TboWindow *tbo)
+{
+    gtk_layout_set_size (GTK_LAYOUT (tbo->drawing), tbo->comic->width*ZOOM, tbo->comic->height*ZOOM);
+    update_drawing (tbo);
+}

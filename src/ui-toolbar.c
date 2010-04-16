@@ -103,6 +103,7 @@ notebook_switch_page_cb (GtkNotebook     *notebook,
     set_current_tab_page (tbo, FALSE);
     update_toolbar (tbo);
     tbo_window_update_status (tbo, 0, 0);
+    tbo_drawing_adjust_scroll (tbo);
     return FALSE;
 }
 
@@ -211,6 +212,7 @@ next_page (GtkAction *action, TboWindow *tbo)
     set_current_tab_page (tbo, TRUE);
     update_toolbar (tbo);
     tbo_window_update_status (tbo, 0, 0);
+    tbo_drawing_adjust_scroll (tbo);
 
     return FALSE;
 }
@@ -222,6 +224,7 @@ prev_page (GtkAction *action, TboWindow *tbo)
     set_current_tab_page (tbo, TRUE);
     update_toolbar (tbo);
     tbo_window_update_status (tbo, 0, 0);
+    tbo_drawing_adjust_scroll (tbo);
 
     return FALSE;
 }

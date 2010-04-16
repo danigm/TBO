@@ -25,5 +25,6 @@ void tbo_drawing_zoom_100 (TboWindow *tbo);
 void tbo_drawing_zoom_fit (TboWindow *tbo);
 float tbo_drawing_get_zoom ();
 void set_key_binder (gboolean binder);
+void tbo_drawing_adjust_scroll (TboWindow *tbo);
 
 #endif
