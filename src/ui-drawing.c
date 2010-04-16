@@ -143,7 +143,7 @@ on_expose_cb (GtkWidget      *widget,
     cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
 
     window = gtk_widget_get_parent_window (GTK_WIDGET (widget));
-    gdk_drawable_get_size (GDK_DRAWABLE (window), &DRAWING_W, &DRAWING_H);
+    gdk_drawable_get_size (GDK_DRAWABLE (GTK_LAYOUT (widget)->bin_window), &DRAWING_W, &DRAWING_H);
 
     cairo_set_source_rgb (cr, 0, 0, 0);
     cairo_rectangle (cr, 0, 0, DRAWING_W, DRAWING_H);
