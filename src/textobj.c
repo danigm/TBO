@@ -71,7 +71,7 @@ tbo_text_new ()
 }
 
 TextObj *
-tbo_text_new_width_params (int x,
+tbo_text_new_with_params (int x,
                            int y,
                            int width,
                            int height,

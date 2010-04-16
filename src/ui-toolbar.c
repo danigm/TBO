@@ -274,7 +274,7 @@ add_pix (GtkAction *action, TboWindow *tbo)
     {
         char *filename;
         filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-        PIXImage *piximage = tbo_piximage_new_width_params (0, 0, 0, 0, filename);
+        PIXImage *piximage = tbo_piximage_new_with_params (0, 0, 0, 0, filename);
         tbo_frame_add_obj (get_frame_view(), piximage);
         update_drawing (tbo);
         g_free (filename);

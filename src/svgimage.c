@@ -29,7 +29,7 @@ tbo_svgimage_new ()
 }
 
 SVGImage *
-tbo_svgimage_new_width_params (int x,
+tbo_svgimage_new_with_params (int x,
                                int y,
                                int width,
                                int height,
@@ -130,11 +130,11 @@ tbo_svg_image_clone (SVGImage *self)
 {
     SVGImage *newimage;
 
-    newimage = tbo_svgimage_new_width_params (self->x,
-                                              self->y,
-                                              self->width,
-                                              self->height,
-                                              self->data);
+    newimage = tbo_svgimage_new_with_params (self->x,
+                                             self->y,
+                                             self->width,
+                                             self->height,
+                                             self->data);
     newimage->angle = self->angle;
     newimage->flipv = self->flipv;
     newimage->fliph = self->fliph;

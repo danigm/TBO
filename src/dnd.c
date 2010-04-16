@@ -50,7 +50,7 @@ drag_data_received_handl (GtkWidget *widget,
                 adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
                 int ry = tbo_frame_get_base_y ((y + gtk_adjustment_get_value(adj)) / zoom);
 
-                SVGImage *svgimage = tbo_svgimage_new_width_params (rx, ry, 0, 0, _sdata);
+                SVGImage *svgimage = tbo_svgimage_new_with_params (rx, ry, 0, 0, _sdata);
                 update_drawing (tbo);
                 tbo_frame_add_obj (frame, svgimage);
 

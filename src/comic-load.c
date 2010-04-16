@@ -124,7 +124,7 @@ create_tbo_piximage (const gchar **attribute_names, const gchar **attribute_valu
 
     parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
 
-    pix = tbo_piximage_new_width_params (x, y, width, height, path);
+    pix = tbo_piximage_new_with_params (x, y, width, height, path);
     pix->angle = angle;
     pix->flipv = flipv;
     pix->fliph = fliph;
@@ -154,7 +154,7 @@ create_tbo_svgimage (const gchar **attribute_names, const gchar **attribute_valu
 
     parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
 
-    svg = tbo_svgimage_new_width_params (x, y, width, height, path);
+    svg = tbo_svgimage_new_with_params (x, y, width, height, path);
     svg->angle = angle;
     svg->flipv = flipv;
     svg->fliph = fliph;
@@ -187,7 +187,7 @@ create_tbo_text (const gchar **attribute_names, const gchar **attribute_values)
     };
 
     parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
-    textobj = tbo_text_new_width_params (x, y, width, height, "text", font, r, g, b);
+    textobj = tbo_text_new_with_params (x, y, width, height, "text", font, r, g, b);
     textobj->angle = angle;
     textobj->flipv = flipv;
     textobj->fliph = fliph;

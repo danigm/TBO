@@ -27,7 +27,7 @@ tbo_piximage_new ()
 }
 
 PIXImage *
-tbo_piximage_new_width_params (int x,
+tbo_piximage_new_with_params (int x,
                                int y,
                                int width,
                                int height,
@@ -114,7 +114,7 @@ tbo_pix_image_clone (PIXImage *self)
 {
     PIXImage *newimage;
 
-    newimage = tbo_piximage_new_width_params (self->x,
+    newimage = tbo_piximage_new_with_params (self->x,
                                               self->y,
                                               self->width,
                                               self->height,

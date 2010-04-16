@@ -41,7 +41,7 @@ on_doodle_click_cb (GtkWidget      *widget,
                     gpointer       *data)
 {
     Frame *frame = get_frame_view ();
-    SVGImage *svgimage = tbo_svgimage_new_width_params (0, 0, 0, 0, (char*)data);
+    SVGImage *svgimage = tbo_svgimage_new_with_params (0, 0, 0, 0, (char*)data);
     update_drawing (TBO);
     tbo_frame_add_obj (frame, svgimage);
 }
