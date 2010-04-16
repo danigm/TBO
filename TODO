@@ -6,8 +6,6 @@ TBO TODO things:
  * Ask for size at export as png, pdf and svg. (easy)
 
  * Zoom levels: (easy)
-    * no zoom, '1' key
-    * fit drawing to window, '2' key
     * fit to select, '3' key
 
  * Edit menu: (middle)

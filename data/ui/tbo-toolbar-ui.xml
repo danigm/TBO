@@ -21,6 +21,7 @@
        <toolitem name="zoom100" action="Zoom100"/>
        <toolitem name="zoomout" action="Zoomout"/>
        <toolitem name="zoomin" action="Zoomin"/>
+       <toolitem name="zoomfit" action="Zoomfit"/>
      </placeholder>
     </toolbar>
 </ui>

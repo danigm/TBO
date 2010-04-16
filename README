@@ -33,7 +33,8 @@ the frame with "selector" tool. In frame view you can draw:
  * You can clone an object pressing "ctrl+d"
  * To return to "page view" press "esc" key
 
-You can control the zoom with "+" and "-" keys or with zoom tools
+You can control the zoom with "+" and "-" keys or with zoom tools. You
+can set the 1:1 zoom with "1" key or fit to window with "2" key.
 
 .tbo files
 ----------

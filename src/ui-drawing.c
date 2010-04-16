@@ -4,6 +4,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
+#include <math.h>
 
 #include "ui-toolbar.h"
 
@@ -23,8 +24,6 @@
 Frame *FRAME_VIEW = NULL;
 float ZOOM_STEP = 0.05;
 float ZOOM = 1;
-int DRAWING_W = 0;
-int DRAWING_H = 0;
 gboolean KEY_BINDER = TRUE;
 
 void
@@ -112,6 +111,9 @@ on_key_cb (GtkWidget    *widget,
             case GDK_1:
                 tbo_drawing_zoom_100 (tbo);
                 break;
+            case GDK_2:
+                tbo_drawing_zoom_fit (tbo);
+                break;
             case GDK_s:
                 set_selected_tool_and_action (SELECTOR, tbo);
                 break;
@@ -142,11 +144,9 @@ on_expose_cb (GtkWidget      *widget,
 
     cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
 
-    window = gtk_widget_get_parent_window (GTK_WIDGET (widget));
-    gdk_drawable_get_size (GDK_DRAWABLE (GTK_LAYOUT (widget)->bin_window), &DRAWING_W, &DRAWING_H);
-
     cairo_set_source_rgb (cr, 0, 0, 0);
-    cairo_rectangle (cr, 0, 0, DRAWING_W, DRAWING_H);
+    cairo_rectangle (cr, 0, 0, widget->allocation.width,
+                               widget->allocation.height);
     cairo_fill (cr);
 
     tbo_drawing_draw (cr, tbo);
@@ -279,7 +279,8 @@ update_drawing (TboWindow *tbo)
 {
     gtk_widget_queue_draw_area (tbo->drawing,
             0, 0,
-            DRAWING_W, DRAWING_H);
+            tbo->drawing->allocation.width,
+            tbo->drawing->allocation.height);
 }
 
 void
@@ -311,6 +312,21 @@ void tbo_drawing_zoom_out (TboWindow *tbo)
 void tbo_drawing_zoom_100 (TboWindow *tbo)
 {
     ZOOM = 1;
+    gtk_layout_set_size (GTK_LAYOUT (tbo->drawing), tbo->comic->width*ZOOM, tbo->comic->height*ZOOM);
+    update_drawing (tbo);
+}
+
+void tbo_drawing_zoom_fit (TboWindow *tbo)
+{
+    float z1, z2;
+    int w, h;
+    w = tbo->drawing->allocation.width;
+    h = tbo->drawing->allocation.height;
+
+    z1 = fabs ((float)w / (float)tbo->comic->width);
+    z2 = fabs ((float)h / (float)tbo->comic->height);
+    ZOOM = z1 < z2 ? z1 : z2;
+
     gtk_layout_set_size (GTK_LAYOUT (tbo->drawing), tbo->comic->width*ZOOM, tbo->comic->height*ZOOM);
     update_drawing (tbo);
 }
