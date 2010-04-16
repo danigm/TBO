@@ -12,20 +12,22 @@ static GtkWidget *FONT_COLOR = NULL;
 static TextObj *TEXT_SELECTED = NULL;
 static GtkTextBuffer *TEXT_BUFFER = NULL;
 
-void
+gboolean
 on_tview_focus_in (GtkWidget *view, GdkEventFocus *event, gpointer data)
 {
     set_key_binder (FALSE);
+    return FALSE;
 }
 
-void
+gboolean
 on_tview_focus_out (GtkWidget *view, GdkEventFocus *event, gpointer data)
 {
     set_key_binder (TRUE);
+    return FALSE;
 }
 
 
-void
+gboolean
 on_text_change (GtkTextBuffer *buf, gpointer data)
 {
     GtkTextIter start, end;
@@ -36,9 +38,10 @@ on_text_change (GtkTextBuffer *buf, gpointer data)
     {
         tbo_text_set_text (TEXT_SELECTED, gtk_text_buffer_get_text (buf, &start, &end, FALSE));
     }
+    return FALSE;
 }
 
-void
+gboolean
 on_font_change (GtkFontButton *fbutton, TboWindow *tbo)
 {
     if (TEXT_SELECTED)
@@ -46,9 +49,10 @@ on_font_change (GtkFontButton *fbutton, TboWindow *tbo)
         tbo_text_change_font (TEXT_SELECTED, text_tool_get_pango_font ());
         update_drawing (tbo);
     }
+    return FALSE;
 }
 
-void
+gboolean
 on_color_change (GtkColorButton *cbutton, TboWindow *tbo)
 {
     if (TEXT_SELECTED)
@@ -58,6 +62,7 @@ on_color_change (GtkColorButton *cbutton, TboWindow *tbo)
         tbo_text_change_color (TEXT_SELECTED, r, g, b);
         update_drawing (tbo);
     }
+    return FALSE;
 }
 
 GtkWidget *
@@ -155,7 +160,7 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
         x = tbo_frame_get_base_x (x);
         y = tbo_frame_get_base_y (y);
         text_tool_get_color (&r, &g, &b);
-        text = tbo_text_new_width_params (x, y, 100, 0,
+        text = tbo_text_new_with_params (x, y, 100, 0,
                                           "Texto",
                                           (char *)text_tool_get_pango_font (),
                                           r, g, b);
