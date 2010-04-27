@@ -8,6 +8,7 @@
 #include "doodle-treeview.h"
 #include "dnd.h"
 #include "tbo-utils.h"
+#include "tbo-files.h"
 
 void free_gstring_array (GArray *arr);
 
@@ -64,17 +65,23 @@ GArray *
 get_files (gchar *base_dir, gboolean isdir)
 {
     GError *error = NULL;
-    GDir *dir = g_dir_open (base_dir, 0, &error);
     gchar complete_dir[255];
     const gchar *filename;
     struct stat filestat;
+    int st;
     GArray *array = g_array_new (FALSE, FALSE, sizeof(GString*));
+
+    st = stat (base_dir, &filestat);
+    if (st)
+        return NULL;
+
+    GDir *dir = g_dir_open (base_dir, 0, &error);
 
     while (filename = g_dir_read_name (dir))
     {
         size_t strsize = sizeof (char) * (strlen (base_dir) + strlen (filename) + 2);
         snprintf (complete_dir, strsize, "%s/%s", base_dir, filename);
-        stat (complete_dir, &filestat);
+        st = stat (complete_dir, &filestat);
 
         if (isdir && S_ISDIR (filestat.st_mode))
         {
@@ -142,7 +149,7 @@ doodle_add_images (gchar *dir)
                              N_TARGETS,
                              GDK_ACTION_COPY);
         g_signal_connect (ebox, "drag-data-get", G_CALLBACK (drag_data_get_handl),
-                                                mystr->str + strlen (DATA_DIR "/doodle/"));
+                                                mystr->str + tbo_files_prefix_len (mystr->str));
         g_signal_connect (ebox, "drag-begin", G_CALLBACK (drag_begin_handl), mystr->str);
         g_signal_connect (ebox, "drag-end", G_CALLBACK (drag_end_handl), mystr->str);
 
@@ -201,28 +208,37 @@ doodle_setup_tree (TboWindow *tbo)
 
     dirname = malloc (255*sizeof(char));
     char label_format[255];
+    int i, j, k;
 
     vbox = gtk_vbox_new (FALSE, 5);
 
-    GArray *arr = get_files (DATA_DIR "/doodle", TRUE);
-    int i, j;
+    GArray *arr = NULL;
     GString *mystr, *mystr2;
-    for (i=0; i<arr->len; i++)
+
+    char **possible_dirs = tbo_files_get_dirs ();
+    for (k=0; possible_dirs[k]; k++)
     {
-        mystr = g_array_index (arr, GString*, i);
+        arr = get_files (possible_dirs[k], TRUE);
+        if (!arr) continue;
 
-        vbox2 = gtk_vbox_new (FALSE, 5);
-        get_base_name (mystr->str, dirname, 255);
-        snprintf (label_format, 255, "<span underline=\"single\" size=\"large\" weight=\"ultrabold\">%s</span>", dirname);
-        expander = gtk_expander_new (label_format);
-        gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
-        gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 5);
-        gtk_container_add (GTK_CONTAINER (expander), vbox2);
+        for (i=0; i<arr->len; i++)
+        {
+            mystr = g_array_index (arr, GString*, i);
 
-        mystr2 = g_string_new (mystr->str);
-        g_signal_connect (GTK_EXPANDER (expander), "activate", G_CALLBACK (on_expand_cb), mystr2);
+            vbox2 = gtk_vbox_new (FALSE, 5);
+            get_base_name (mystr->str, dirname, 255);
+            snprintf (label_format, 255, "<span underline=\"single\" size=\"large\" weight=\"ultrabold\">%s</span>", dirname);
+            expander = gtk_expander_new (label_format);
+            gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
+            gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 5);
+            gtk_container_add (GTK_CONTAINER (expander), vbox2);
+
+            mystr2 = g_string_new (mystr->str);
+            g_signal_connect (GTK_EXPANDER (expander), "activate", G_CALLBACK (on_expand_cb), mystr2);
+        }
+        free_gstring_array (arr);
     }
-    free_gstring_array (arr);
+    tbo_files_free (possible_dirs);
 
     free (dirname);
 

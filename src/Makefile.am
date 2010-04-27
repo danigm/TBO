@@ -34,6 +34,8 @@ tbo_SOURCES = \
 	tbo-object.c \
 	comic-load.c \
 	tbo-utils.c \
+	tbo-files.c \
+	tbo-files.h \
 	tbo-window.h \
 	comic.h \
 	comic-new-dialog.h \

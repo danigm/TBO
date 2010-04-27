@@ -8,8 +8,7 @@
 #include <librsvg/rsvg-cairo.h>
 #include "svgimage.h"
 #include "tbo-types.h"
-
-#define DOODLE_DIR DATA_DIR "/doodle/"
+#include "tbo-files.h"
 
 
 SVGImage *
@@ -62,7 +61,7 @@ tbo_svg_image_draw (SVGImage *self, Frame *frame, cairo_t *cr)
     RsvgHandle *rsvg_handle = NULL;
     RsvgDimensionData rsvg_dimension_data;
     char path[255];
-    snprintf (path, 255, DOODLE_DIR "%s", self->data);
+    tbo_files_expand_path (self->data, &path);
     rsvg_handle = rsvg_handle_new_from_file (path, &error);
     if (!rsvg_handle)
     {
