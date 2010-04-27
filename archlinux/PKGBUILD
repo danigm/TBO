@@ -8,7 +8,7 @@ arch=('i686' 'x86_64')
 url="http://github.com/danigm/tbo/"
 license=('GPL3')
 depends=('gtk2' 'cairo' 'librsvg')
-makedepends=('gnome-common')
+makedepends=('gnome-common git intltool automake gcc')
 source=()
 md5sums=()
 
