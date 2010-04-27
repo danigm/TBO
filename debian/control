@@ -1,0 +1,21 @@
+Source: tbo
+Section: gnome
+Priority: optional
+Maintainer: Daniel Garcia <dani@danigm.net>
+Build-Depends: debhelper (>= 5),
+               pkg-config,
+               libglib2.0-dev (>= 2.18.0),
+               libgtk2.0-dev (>= 2.16.0),
+               libgnome2-dev (>= 2.14.0),
+               gnome-pkg-tools (>= 0.10),
+               intltool (>= 0.40.0)
+Standards-Version: 3.8.1
+Homepage: http://danigm.net/TBO
+
+Package: tbo
+Architecture: any
+Depends: ${shlibs:Depends},
+         libgtk2.0-0,
+         ${misc:Depends}
+Description: Intuitive GNOME comic creator
+ TBO is a simple and easy drag and drop comic creator.

@@ -71,19 +71,19 @@ guadalinexdir = $(datadir)/tbo/doodle/guadalinex/andatuz
 guadalinex_DATA = guadalinex/andatuz/*.svg
 
 EXTRA_DIST = \
-	doodle1/body/*.svg
-	doodle1/mouth/*.svg
-	doodle1/eyes/*.svg
-	bar/body/*.svg
-	foo/body/*.svg
-	foo/mouth/*.svg
-	foo/eyes/*.svg
-	accesories/pcs/*.svg
-	accesories/devices/*.svg
-	accesories/emotes/*.svg
-	accesories/actions/*.svg
-	bubble/ellipse/*.svg
-	bubble/square/*.svg
-	guadalinex/andatuz/*.svg
-	dgm/body/*.svg
+	doodle1/body/*.svg \
+	doodle1/mouth/*.svg \
+	doodle1/eyes/*.svg \
+	bar/body/*.svg \
+	foo/body/*.svg \
+	foo/mouth/*.svg \
+	foo/eyes/*.svg \
+	accesories/pcs/*.svg \
+	accesories/devices/*.svg \
+	accesories/emotes/*.svg \
+	accesories/actions/*.svg \
+	bubble/ellipse/*.svg \
+	bubble/square/*.svg \
+	guadalinex/andatuz/*.svg \
+	dgm/body/*.svg \
 	tbo/logo/*.svg
