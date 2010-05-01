@@ -163,12 +163,12 @@ tbo_comic_save (TboWindow *tbo, char *filename)
 
     if (!file)
     {
-        snprintf (buffer, 255, _("Failed saving: %s"), strerror (errno));
         GtkWidget *dialog = gtk_message_dialog_new (NULL,
                                                     GTK_DIALOG_MODAL,
                                                     GTK_MESSAGE_ERROR,
                                                     GTK_BUTTONS_CLOSE,
-                                                    buffer);
+                                                    _("Failed saving: %s"),
+                                                    strerror (errno));
         perror (_("failed saving"));
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy ((GtkWidget *) dialog);
@@ -182,7 +182,7 @@ tbo_comic_save (TboWindow *tbo, char *filename)
                                                     comic->height);
     fwrite (buffer, sizeof (char), strlen (buffer), file);
 
-    for (p=g_list_first (comic->pages); p; p = g_list_next(p))
+    for (p = g_list_first (comic->pages); p; p = g_list_next(p))
     {
         tbo_page_save ((Page *) p->data, file);
     }
