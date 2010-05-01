@@ -25,6 +25,7 @@ tbo_SOURCES = \
 	doodle-tool.c \
 	custom-stock.c \
 	doodle-treeview.c \
+	tbo-tooltip.c \
 	text-tool.c \
 	textobj.c \
 	export.c \
@@ -55,6 +56,7 @@ tbo_SOURCES = \
 	svgimage.h \
 	piximage.h \
 	textobj.h \
+	tbo-tooltip.h \
 	dnd.h \
 	tbo-object.h \
 	comic-load.h \

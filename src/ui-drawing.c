@@ -20,6 +20,8 @@
 #include "doodle-tool.h"
 #include "dnd.h"
 
+#include "tbo-tooltip.h"
+
 
 Frame *FRAME_VIEW = NULL;
 float ZOOM_STEP = 0.05;
@@ -151,6 +153,8 @@ on_expose_cb (GtkWidget      *widget,
 
     tbo_drawing_draw (cr, tbo);
 
+    tbo_tooltip_draw (cr);
+
     // Update drawing helpers
     tool = get_selected_tool ();
     tool_signal (tool, TOOL_DRAWING, cr);
@@ -180,6 +184,7 @@ on_move_cb (GtkWidget     *widget,
 
     update_drawing (tbo);
     tbo_window_update_status (tbo, (int)event->x, (int)event->y);
+
     return FALSE;
 }
 

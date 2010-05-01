@@ -11,6 +11,7 @@
 #include "frame.h"
 #include "comic.h"
 #include "ui-drawing.h"
+#include "tbo-tooltip.h"
 
 #define R_SIZE 10
 
@@ -567,6 +568,21 @@ page_view_on_move (GtkWidget *widget,
             OVER_RESIZER = FALSE;
         }
     }
+
+    GList *frame_list;
+    Page *page = tbo_comic_get_current_page (tbo->comic);
+    gboolean found = FALSE;
+
+    for (frame_list = tbo_page_get_frames (page); frame_list && !found; frame_list = frame_list->next)
+    {
+        if (tbo_frame_point_inside ((Frame*)frame_list->data, (int)event->x, (int)event->y))
+        {
+            tbo_tooltip_set (_("double click here"), (int)event->x + 10, (int)event->y + 10);
+            found = TRUE;
+        }
+    }
+    if (!found)
+        tbo_tooltip_set(NULL, 0, 0);
 }
 
 void
