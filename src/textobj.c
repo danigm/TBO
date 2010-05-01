@@ -198,7 +198,7 @@ tbo_text_save (TextObj *self, FILE *file)
                            data->font_color->b);
     fwrite (buffer, sizeof (char), strlen (buffer), file);
 
-    snprintf (buffer, 1024, "%s", data->text->str);
+    snprintf (buffer, 1024, "%s", g_markup_escape_text (data->text->str, strlen (data->text->str)));
     fwrite (buffer, sizeof (char), strlen (buffer), file);
 
     snprintf (buffer, 1024, "\n   </text>\n");
