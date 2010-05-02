@@ -570,14 +570,19 @@ page_view_on_move (GtkWidget *widget,
     }
 
     GList *frame_list;
+    Frame *frame;
     Page *page = tbo_comic_get_current_page (tbo->comic);
     gboolean found = FALSE;
+    int x1, y1;
 
     for (frame_list = tbo_page_get_frames (page); frame_list && !found; frame_list = frame_list->next)
     {
-        if (tbo_frame_point_inside ((Frame*)frame_list->data, (int)event->x, (int)event->y))
+        if (tbo_frame_point_inside ((Frame*)frame_list->data, x, y))
         {
-            tbo_tooltip_set (_("double click here"), (int)event->x + 10, (int)event->y + 10);
+            frame = (Frame*)frame_list->data;
+            x1 = frame->x + (frame->width / 2);
+            y1 = frame->y + (frame->height / 2);
+            tbo_tooltip_set (_("double click here"), x1, y1);
             found = TRUE;
         }
     }
