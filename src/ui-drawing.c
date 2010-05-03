@@ -292,10 +292,6 @@ void
 set_frame_view (Frame *frame)
 {
     FRAME_VIEW = frame;
-    if (frame)
-    {
-        tbo_tooltip_set (NULL, 0, 0);
-    }
 }
 
 Frame *

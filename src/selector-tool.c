@@ -582,12 +582,12 @@ page_view_on_move (GtkWidget *widget,
             frame = (Frame*)frame_list->data;
             x1 = frame->x + (frame->width / 2);
             y1 = frame->y + (frame->height / 2);
-            tbo_tooltip_set (_("double click here"), x1, y1);
+            tbo_tooltip_set (_("double click here"), x1, y1, tbo);
             found = TRUE;
         }
     }
     if (!found)
-        tbo_tooltip_set(NULL, 0, 0);
+        tbo_tooltip_set(NULL, 0, 0, tbo);
 }
 
 void
@@ -628,6 +628,9 @@ page_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
     {
         set_frame_view (SELECTED);
         empty_tool_area (tbo);
+        tbo_tooltip_set (NULL, 0, 0, tbo);
+        // TODO add tooltip_notify
+        //tbo_tooltip_set (_("press esc to go back"), 200, 50, tbo);
     }
 
     START_X = x;
