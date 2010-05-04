@@ -630,7 +630,7 @@ page_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
         empty_tool_area (tbo);
         tbo_tooltip_set (NULL, 0, 0, tbo);
         // TODO add tooltip_notify
-        //tbo_tooltip_set (_("press esc to go back"), 200, 50, tbo);
+        tbo_tooltip_set_center_timeout (_("press esc to go back"), 3000, tbo);
     }
 
     START_X = x;

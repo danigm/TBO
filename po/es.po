@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 0.1\n"
 "Report-Msgid-Bugs-To: dani@danigm.net\n"
-"POT-Creation-Date: 2010-05-02 23:18+0200\n"
+"POT-Creation-Date: 2010-05-04 23:47+0200\n"
 "PO-Revision-Date: 2010-01-24 20:48+0100\n"
 "Last-Translator: Daniel Garcia <dani@danigm.net>\n"
 "Language-Team: \n"
@@ -80,6 +80,11 @@ msgstr "borde"
 #: ../src/selector-tool.c:585
 msgid "double click here"
 msgstr "haz doble click aquí"
+
+#. TODO add tooltip_notify
+#: ../src/selector-tool.c:633
+msgid "press esc to go back"
+msgstr "pulsa esc para volver atrás"
 
 #: ../src/svgimage.c:68
 #, c-format

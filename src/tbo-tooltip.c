@@ -68,6 +68,13 @@ decrease_alpha_cb (gpointer p)
     return TRUE;
 }
 
+gboolean
+quit_tooltip_cb (gpointer p)
+{
+    tbo_tooltip_set (NULL, 0, 0, (TboWindow*) p);
+    return FALSE;
+}
+
 void
 tbo_tooltip_draw_background (cairo_t *cr, int w, int h)
 {
@@ -158,4 +165,15 @@ tbo_tooltip_draw (cairo_t *cr)
     pango_cairo_show_layout (cr, layout);
 
     cairo_translate (cr, -posx, -posy);
+}
+
+void
+tbo_tooltip_set_center_timeout (const char *tooltip, int timeout, TboWindow *tbo)
+{
+    int x, y;
+    x = tbo->drawing->allocation.width / 2;
+    y = tbo->drawing->allocation.height / 2;
+
+    tbo_tooltip_set (tooltip, x, y, tbo);
+    g_timeout_add (timeout, quit_tooltip_cb, tbo);
 }
