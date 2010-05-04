@@ -170,6 +170,7 @@ tbo_new_tbo (int width, int height)
     gtk_box_pack_start (GTK_BOX (container), status, FALSE, FALSE, 0);
 
     gtk_widget_show_all (window);
+    set_selected_tool_and_action (SELECTOR, tbo);
 
     return tbo;
 }

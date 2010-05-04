@@ -202,7 +202,14 @@ on_click_cb (GtkWidget    *widget,
     data[2] = tbo;
 
     tool = get_selected_tool ();
-    tool_signal (tool, TOOL_CLICK, data);
+    switch (tool)
+    {
+        case DOODLE:
+            set_selected_tool_and_action (SELECTOR, tbo);
+            tool = SELECTOR;
+        default:
+            tool_signal (tool, TOOL_CLICK, data);
+    }
     free (data);
 
     update_drawing (tbo);
