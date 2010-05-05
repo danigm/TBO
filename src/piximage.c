@@ -20,6 +20,7 @@ tbo_piximage_new ()
     image->draw = tbo_pix_image_draw;
     image->save = tbo_pix_image_save;
     image->clone = tbo_pix_image_clone;
+    image->angle = 0.0;
     image->type = PIXOBJ;
     image->flipv = FALSE;
     image->fliph = FALSE;

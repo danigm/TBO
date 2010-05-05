@@ -21,6 +21,7 @@ tbo_svgimage_new ()
     image->draw = tbo_svg_image_draw;
     image->save = tbo_svg_image_save;
     image->clone = tbo_svg_image_clone;
+    image->angle = 0.0;
     image->type = SVGOBJ;
     image->flipv = FALSE;
     image->fliph = FALSE;

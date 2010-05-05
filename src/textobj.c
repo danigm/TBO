@@ -64,6 +64,7 @@ tbo_text_new ()
     text->draw = tbo_text_draw;
     text->save = tbo_text_save;
     text->clone = tbo_text_clone;
+    text->angle = 0.0;
     text->type = TEXTOBJ;
     text->flipv = FALSE;
     text->fliph = FALSE;
