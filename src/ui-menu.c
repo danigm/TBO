@@ -61,6 +61,7 @@ static const GtkActionEntry tbo_menu_entries [] = {
     /* Toplevel */
 
     { "File", NULL, N_("_File") },
+    { "Edit", NULL, N_("_Edit") },
     { "Help", NULL, N_("Help") },
 
     /* File menu */
@@ -96,6 +97,21 @@ static const GtkActionEntry tbo_menu_entries [] = {
     { "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
       N_("Quit"),
       G_CALLBACK (close_cb) },
+
+    /* edit menu */
+
+    { "CloneObj", GTK_STOCK_COPY, N_("Clone"), "<control>d",
+      N_("Clone"),
+      G_CALLBACK (menu_handler) },
+    { "DeleteObj", GTK_STOCK_DELETE, N_("Delete"), "Delete",
+      N_("Delete"),
+      G_CALLBACK (menu_handler) },
+    { "FlipHObj", NULL, N_("Horizontal flip"), "h",
+      N_("Horizontal flip"),
+      G_CALLBACK (menu_handler) },
+    { "FlipVObj", NULL, N_("Vertical flip"), "v",
+      N_("Vertical flip"),
+      G_CALLBACK (menu_handler) },
 
     /* Help menu */
 
