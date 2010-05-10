@@ -19,23 +19,22 @@ tbologo_DATA = tbo/logo/*.svg
 dgmbodydir = $(datadir)/tbo/doodle/dgm/body
 dgmbody_DATA = dgm/body/*.svg
 
-#######
-# FOO #
-#######
+######
+# LH #
+######
 
-foobodydir = $(datadir)/tbo/doodle/foo/body
-foobody_DATA = foo/body/*.svg
-foomouthdir = $(datadir)/tbo/doodle/foo/mouth
-foomouth_DATA = foo/mouth/*.svg
-fooeyesdir = $(datadir)/tbo/doodle/foo/eyes
-fooeyes_DATA = foo/eyes/*.svg
-
-#######
-# BAR #
-#######
-
-barbodydir = $(datadir)/tbo/doodle/bar/body
-barbody_DATA = bar/body/*.svg
+lhfoodir = $(datadir)/tbo/doodle/linuxhispano/foo
+lhfoo_DATA = linuxhispano/foo/*.svg
+lhmouthdir = $(datadir)/tbo/doodle/linuxhispano/mouth
+lhmouth_DATA = linuxhispano/mouth/*.svg
+lheyesdir = $(datadir)/tbo/doodle/linuxhispano/eyes
+lheyes_DATA = linuxhispano/eyes/*.svg
+lhbardir = $(datadir)/tbo/doodle/linuxhispano/bar
+lhbar_DATA = linuxhispano/bar/*.svg
+lhgirldir = $(datadir)/tbo/doodle/linuxhispano/girl
+lhgirl_DATA = linuxhispano/girl/*.svg
+lhemiliodir = $(datadir)/tbo/doodle/linuxhispano/emilio
+lhemilio_DATA = linuxhispano/emilio/*.svg
 
 ##############
 # ACCESORIES #
@@ -74,10 +73,12 @@ EXTRA_DIST = \
 	doodle1/body/*.svg \
 	doodle1/mouth/*.svg \
 	doodle1/eyes/*.svg \
-	bar/body/*.svg \
-	foo/body/*.svg \
-	foo/mouth/*.svg \
-	foo/eyes/*.svg \
+	linuxhispano/foo/*.svg \
+	linuxhispano/bar/*.svg \
+	linuxhispano/girl/*.svg \
+	linuxhispano/emilio/*.svg \
+	linuxhispano/mouth/*.svg \
+	linuxhispano/eyes/*.svg \
 	accesories/pcs/*.svg \
 	accesories/devices/*.svg \
 	accesories/emotes/*.svg \
