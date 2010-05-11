@@ -59,7 +59,10 @@ tbo_drawing_draw (cairo_t *cr, TboWindow *tbo)
     w = tbo->comic->width;
     h = tbo->comic->height;
     // white background
-    cairo_set_source_rgb(cr, 1, 1, 1);
+    if (get_frame_view ())
+        cairo_set_source_rgb(cr, 0, 0, 0);
+    else
+        cairo_set_source_rgb(cr, 1, 1, 1);
     cairo_rectangle(cr, 0, 0, w*ZOOM, h*ZOOM);
     cairo_fill(cr);
 
