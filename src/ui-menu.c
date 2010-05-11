@@ -163,10 +163,19 @@ gboolean close_cb (GtkWidget *widget, gpointer data){
 gboolean
 about_cb (GtkWidget *widget, TboWindow *tbo){
     const gchar *authors[] = {"danigm <dani@danigm.net>", NULL};
+    const gchar *artists[] = {"danigm <dani@danigm.net>",
+                              "",
+                              "Arcadia http://www.arcadiaproject.org :",
+                              "Samuel Navas Portillo",
+                              "Daniel Pavón Pérez",
+                              "Juan Jesús Pérez Luna",
+                              NULL};
+
     gtk_show_about_dialog (GTK_WINDOW (tbo->window),
             "name", _("TBO comic editor"),
             "version", VERSION,
             "authors", authors,
+            "artists", artists,
             "website", "http://github.com/danigm/tbo",
             NULL);
 

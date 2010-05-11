@@ -12,6 +12,13 @@ doodle1eyes_DATA = doodle1/eyes/*.svg
 tbologodir = $(datadir)/tbo/doodle/tbo/logo
 tbologo_DATA = tbo/logo/*.svg
 
+###########
+# ARCADIA #
+###########
+
+arcadiadir = $(datadir)/tbo/doodle/arcadia/one
+arcadia_DATA = arcadia/one/*.svg
+
 #######
 # DGM #
 #######
@@ -87,4 +94,5 @@ EXTRA_DIST = \
 	bubble/square/*.svg \
 	guadalinex/andatuz/*.svg \
 	dgm/body/*.svg \
+	arcadia/one/*.svg \
 	tbo/logo/*.svg
