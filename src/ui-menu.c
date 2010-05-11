@@ -250,10 +250,10 @@ static const GtkActionEntry tbo_menu_entries [] = {
       N_("Vertical flip"),
       G_CALLBACK (flip_v_cb) },
     { "OrderUpObj", NULL, N_("Move to front"), "Page_Up",
-      N_("Move up"),
+      N_("Move to front"),
       G_CALLBACK ( order_up_cb ) },
     { "OrderDownObj", NULL, N_("Move to back"), "Page_Down",
-      N_("Move up"),
+      N_("Move to back"),
       G_CALLBACK ( order_down_cb ) },
 
     /* Help menu */
