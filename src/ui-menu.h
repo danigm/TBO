@@ -5,5 +5,6 @@
 #include "tbo-window.h"
 
 GtkWidget *generate_menu (TboWindow *window);
+void update_menubar (TboWindow *tbo);
 
 #endif

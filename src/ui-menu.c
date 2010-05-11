@@ -10,10 +10,147 @@
 #include "tbo-window.h"
 #include "ui-drawing.h"
 #include "export.h"
+#include "selector-tool.h"
+#include "comic.h"
+#include "frame.h"
+#include "page.h"
 
+static GtkActionGroup *MENU_ACTION_GROUP = NULL;
+
+void
+update_menubar (TboWindow *tbo)
+{
+    GtkAction *action;
+    int i;
+    char *actions[20] = {"FlipHObj", "FlipVObj", "OrderUpObj", "OrderDownObj", "DeleteObj", "CloneObj"};
+    int elements = 6;
+    int obj_n_elements = 4;
+    gboolean activated = FALSE;
+
+    tbo_object *obj = selector_tool_get_selected_obj ();
+    Frame *frame = selector_tool_get_selected_frame ();
+
+    if (!MENU_ACTION_GROUP)
+        return;
+
+    if (get_frame_view () && obj)
+    {
+        for (i=0; i<elements; i++)
+        {
+            action = gtk_action_group_get_action (MENU_ACTION_GROUP, actions[i]);
+            gtk_action_set_sensitive (action, TRUE);
+        }
+    }
+    else if (!get_frame_view () && frame)
+    {
+        for (i=obj_n_elements; i<elements; i++)
+        {
+            action = gtk_action_group_get_action (MENU_ACTION_GROUP, actions[i]);
+            gtk_action_set_sensitive (action, TRUE);
+        }
+    }
+    else
+    {
+        for (i=0; i<elements; i++)
+        {
+            action = gtk_action_group_get_action (MENU_ACTION_GROUP, actions[i]);
+            gtk_action_set_sensitive (action, FALSE);
+        }
+    }
+}
 
 gboolean menu_handler (GtkWidget *widget, gpointer data){
     printf ("Menu :%s\n", ((TboWindow *) data)->comic->title);
+    return FALSE;
+}
+
+gboolean
+clone_obj_cb (GtkWidget *widget, gpointer data)
+{
+    tbo_object *obj = selector_tool_get_selected_obj ();
+    Frame *frame = selector_tool_get_selected_frame ();
+    Page *page = tbo_comic_get_current_page (((TboWindow*)data)->comic);
+
+    if (!get_frame_view () && frame)
+    {
+        Frame *cloned_frame = tbo_frame_clone (frame);
+        cloned_frame->x += 10;
+        cloned_frame->y -= 10;
+        tbo_page_add_frame (page, cloned_frame);
+        set_selected (cloned_frame, (TboWindow*)data);
+    }
+    else if (obj && get_frame_view ())
+    {
+        tbo_object *cloned_obj = obj->clone (obj);
+        cloned_obj->x += 10;
+        cloned_obj->y -= 10;
+        tbo_frame_add_obj (frame, cloned_obj);
+        set_selected_obj (cloned_obj, (TboWindow*)data);
+    }
+    update_drawing ((TboWindow *)data);
+    return FALSE;
+}
+
+gboolean
+delete_obj_cb (GtkWidget *widget, gpointer data)
+{
+    TboWindow *tbo = (TboWindow *)data;
+
+    tbo_object *obj = selector_tool_get_selected_obj ();
+    Frame *frame = selector_tool_get_selected_frame ();
+    Page *page = tbo_comic_get_current_page (((TboWindow*)data)->comic);
+
+    if (obj && get_frame_view ())
+    {
+        tbo_frame_del_obj (frame, obj);
+        set_selected_obj (NULL, tbo);
+    }
+    else if (!get_frame_view () && frame)
+    {
+        tbo_page_del_frame (page, frame);
+        set_selected (NULL, tbo);
+    }
+    update_drawing ((TboWindow *)data);
+    return FALSE;
+}
+
+gboolean
+flip_v_cb (GtkWidget *widget, gpointer data)
+{
+    tbo_object *obj = selector_tool_get_selected_obj ();
+    if (obj)
+        tbo_object_flipv (obj);
+    update_drawing ((TboWindow *)data);
+    return FALSE;
+}
+
+gboolean
+flip_h_cb (GtkWidget *widget, gpointer data)
+{
+    tbo_object *obj = selector_tool_get_selected_obj ();
+    if (obj)
+        tbo_object_fliph (obj);
+    update_drawing ((TboWindow *)data);
+    return FALSE;
+}
+
+gboolean
+order_up_cb (GtkWidget *widget, gpointer data)
+{
+    tbo_object *obj = selector_tool_get_selected_obj ();
+    if (obj)
+        tbo_object_order_up (obj);
+    update_drawing ((TboWindow *)data);
+    return FALSE;
+}
+
+gboolean
+order_down_cb (GtkWidget *widget, gpointer data)
+{
+    tbo_object *obj = selector_tool_get_selected_obj ();
+    if (obj)
+        tbo_object_order_down (obj);
+    update_drawing ((TboWindow *)data);
     return FALSE;
 }
 
@@ -102,16 +239,22 @@ static const GtkActionEntry tbo_menu_entries [] = {
 
     { "CloneObj", GTK_STOCK_COPY, N_("Clone"), "<control>d",
       N_("Clone"),
-      G_CALLBACK (menu_handler) },
+      G_CALLBACK (clone_obj_cb) },
     { "DeleteObj", GTK_STOCK_DELETE, N_("Delete"), "Delete",
       N_("Delete"),
-      G_CALLBACK (menu_handler) },
+      G_CALLBACK (delete_obj_cb) },
     { "FlipHObj", NULL, N_("Horizontal flip"), "h",
       N_("Horizontal flip"),
-      G_CALLBACK (menu_handler) },
+      G_CALLBACK (flip_h_cb) },
     { "FlipVObj", NULL, N_("Vertical flip"), "v",
       N_("Vertical flip"),
-      G_CALLBACK (menu_handler) },
+      G_CALLBACK (flip_v_cb) },
+    { "OrderUpObj", NULL, N_("Move to front"), "Page_Up",
+      N_("Move up"),
+      G_CALLBACK ( order_up_cb ) },
+    { "OrderDownObj", NULL, N_("Move to back"), "Page_Down",
+      N_("Move up"),
+      G_CALLBACK ( order_down_cb ) },
 
     /* Help menu */
 
@@ -122,7 +265,6 @@ static const GtkActionEntry tbo_menu_entries [] = {
 
 GtkWidget *generate_menu (TboWindow *window){
     GtkWidget *menu;
-    GtkActionGroup *action_group;
     GtkUIManager *manager;
     GError *error = NULL;
 
@@ -134,15 +276,15 @@ GtkWidget *generate_menu (TboWindow *window){
         g_error_free (error);
     }
 
-    action_group = gtk_action_group_new ("MenuActions");
-    gtk_action_group_set_translation_domain (action_group, NULL);
-    gtk_action_group_add_actions (action_group, tbo_menu_entries,
+    MENU_ACTION_GROUP = gtk_action_group_new ("MenuActions");
+    gtk_action_group_set_translation_domain (MENU_ACTION_GROUP, NULL);
+    gtk_action_group_add_actions (MENU_ACTION_GROUP, tbo_menu_entries,
                         G_N_ELEMENTS (tbo_menu_entries), window);
 
-    gtk_ui_manager_insert_action_group (manager, action_group, 0);
+    gtk_ui_manager_insert_action_group (manager, MENU_ACTION_GROUP, 0);
 
     menu = gtk_ui_manager_get_widget (manager, "/menubar");
-    
+
     return menu;
 }
 

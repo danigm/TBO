@@ -158,12 +158,14 @@ set_selected (Frame *frame, TboWindow *tbo)
     empty_tool_area (tbo);
     if (SELECTED != NULL)
         update_tool_area (tbo);
+    update_menubar (tbo);
 }
 
 void
 set_selected_obj (tbo_object *obj, TboWindow *tbo)
 {
     OBJ = obj;
+    update_menubar (tbo);
 }
 
 gboolean
@@ -788,3 +790,9 @@ selector_tool_get_selected_frame ()
     return SELECTED;
 }
 
+
+tbo_object *
+selector_tool_get_selected_obj ()
+{
+    return OBJ;
+}

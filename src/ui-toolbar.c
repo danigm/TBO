@@ -171,6 +171,7 @@ update_toolbar (TboWindow *tbo)
         gtk_action_set_sensitive (pix, TRUE);
         gtk_action_set_sensitive (new_frame, FALSE);
     }
+    update_menubar (tbo);
 }
 
 gboolean

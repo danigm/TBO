@@ -17,6 +17,8 @@
        <menuitem name="delete" action="DeleteObj" />
        <menuitem name="fliph" action="FlipHObj" />
        <menuitem name="flipv" action="FlipVObj" />
+       <menuitem name="orderup" action="OrderUpObj" />
+       <menuitem name="orderdown" action="OrderDownObj" />
      </menu>
      <menu name="HelpMenu" action="Help">
          <menuitem name="About" action="About" />
