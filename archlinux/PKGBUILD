@@ -1,7 +1,7 @@
 # Maintainer: Daniel Garcia <dani@danigm.net>
 
 pkgname=tbo-git
-pkgver=20100407
+pkgver=20100514
 pkgrel=1
 pkgdesc="Gnome easy and fun comic editor"
 arch=('i686' 'x86_64')
