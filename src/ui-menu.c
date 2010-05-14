@@ -169,6 +169,9 @@ about_cb (GtkWidget *widget, TboWindow *tbo){
                               "Samuel Navas Portillo",
                               "Daniel Pavón Pérez",
                               "Juan Jesús Pérez Luna",
+                              "",
+                              "zapatebeo:",
+                              "Alfonso de Cala",
                               NULL};
 
     gtk_show_about_dialog (GTK_WINDOW (tbo->window),
@@ -176,7 +179,7 @@ about_cb (GtkWidget *widget, TboWindow *tbo){
             "version", VERSION,
             "authors", authors,
             "artists", artists,
-            "website", "http://github.com/danigm/tbo",
+            "website", "http://trac.danigm.net/tbo",
             NULL);
 
     return FALSE;
