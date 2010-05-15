@@ -28,7 +28,7 @@ tbo_comic_new_dialog (GtkWidget *widget, TboWindow *window)
                         GTK_RESPONSE_REJECT,
                         NULL);
     
-    vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+    vbox = (GTK_DIALOG (dialog))->vbox;
     
     hbox = gtk_hbox_new (FALSE, FALSE);
     label = gtk_label_new (_("width: "));
