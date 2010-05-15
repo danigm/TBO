@@ -2,13 +2,14 @@ Source: tbo
 Section: gnome
 Priority: optional
 Maintainer: Daniel Garcia <dani@danigm.net>
-Build-Depends: debhelper (>= 5),
+Build-Depends: debhelper,
                pkg-config,
-               libglib2.0-dev (>= 2.18.0),
-               libgtk2.0-dev (>= 2.16.0),
-               libgnome2-dev (>= 2.14.0),
-               gnome-pkg-tools (>= 0.10),
-               intltool (>= 0.40.0)
+               libglib2.0-dev,
+               libgtk2.0-dev,
+               libgnome2-dev,
+               librsvg2-dev,
+               gnome-pkg-tools,
+               intltool
 Standards-Version: 3.8.1
 Homepage: http://danigm.net/TBO
 
