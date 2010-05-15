@@ -51,6 +51,15 @@ static ToolStruct TOOLS[] =
      doodle_tool_on_key,
      doodle_tool_drawing},
 
+    {BUBBLE,
+     doodle_tool_bubble_on_select,
+     doodle_tool_bubble_on_unselect,
+     doodle_tool_on_move,
+     doodle_tool_on_click,
+     doodle_tool_on_release,
+     doodle_tool_on_key,
+     doodle_tool_drawing},
+
     {TEXT,
      text_tool_on_select,
      text_tool_on_unselect,
@@ -125,6 +134,7 @@ update_toolbar (TboWindow *tbo)
     GtkAction *delete;
 
     GtkAction *doodle;
+    GtkAction *bubble;
     GtkAction *text;
     GtkAction *new_frame;
     GtkAction *pix;
@@ -153,6 +163,7 @@ update_toolbar (TboWindow *tbo)
 
     // Frame view disabled in page view
     doodle = gtk_action_group_get_action (ACTION_GROUP, "Doodle");
+    bubble = gtk_action_group_get_action (ACTION_GROUP, "Bubble");
     text = gtk_action_group_get_action (ACTION_GROUP, "Text");
     new_frame = gtk_action_group_get_action (ACTION_GROUP, "NewFrame");
     pix = gtk_action_group_get_action (ACTION_GROUP, "Pix");
@@ -160,6 +171,7 @@ update_toolbar (TboWindow *tbo)
     if (get_frame_view() == NULL)
     {
         gtk_action_set_sensitive (doodle, FALSE);
+        gtk_action_set_sensitive (bubble, FALSE);
         gtk_action_set_sensitive (text, FALSE);
         gtk_action_set_sensitive (pix, FALSE);
         gtk_action_set_sensitive (new_frame, TRUE);
@@ -167,6 +179,7 @@ update_toolbar (TboWindow *tbo)
     else
     {
         gtk_action_set_sensitive (doodle, TRUE);
+        gtk_action_set_sensitive (bubble, TRUE);
         gtk_action_set_sensitive (text, TRUE);
         gtk_action_set_sensitive (pix, TRUE);
         gtk_action_set_sensitive (new_frame, FALSE);
@@ -347,19 +360,22 @@ static const GtkActionEntry tbo_tools_entries [] = {
 
 static const GtkToggleActionEntry tbo_tools_toogle_entries [] = {
     // Page view tools
-    { "NewFrame", TBO_STOCK_FRAME, N_("New _Frame"), "<control>F",
+    { "NewFrame", TBO_STOCK_FRAME, N_("New _Frame"), "f",
       N_("New Frame"),
       G_CALLBACK (select_tool), FALSE },
 
-    { "Selector", TBO_STOCK_SELECTOR, N_("Selector"), "",
+    { "Selector", TBO_STOCK_SELECTOR, N_("Selector"), "s",
       N_("Selector"),
       G_CALLBACK (select_tool), FALSE },
 
     // Frame view tools
-    { "Doodle", TBO_STOCK_DOODLE, N_("Doodle"), "",
+    { "Doodle", TBO_STOCK_DOODLE, N_("Doodle"), "d",
       N_("Doodle"),
       G_CALLBACK (select_tool), FALSE },
-    { "Text", TBO_STOCK_TEXT, N_("Text"), "",
+    { "Bubble", TBO_STOCK_BUBBLE, N_("Booble"), "b",
+      N_("Bubble"),
+      G_CALLBACK (select_tool), FALSE },
+    { "Text", TBO_STOCK_TEXT, N_("Text"), "t",
       N_("Text"),
       G_CALLBACK (select_tool), FALSE },
 };
@@ -368,6 +384,7 @@ static const tool_and_action tools_actions [] = {
     {FRAME, "NewFrame"},
     {SELECTOR, "Selector"},
     {DOODLE, "Doodle"},
+    {BUBBLE, "Bubble"},
     {TEXT, "Text"},
 };
 

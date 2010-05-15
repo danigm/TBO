@@ -6,6 +6,7 @@
 #define TBO_STOCK_DOODLE "tbo-doodle"
 #define TBO_STOCK_TEXT "tbo-text"
 #define TBO_STOCK_PIX "tbo-pix"
+#define TBO_STOCK_BUBBLE "tbo-bubble"
 
 void load_custom_stock ();
 

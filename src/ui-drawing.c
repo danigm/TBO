@@ -128,6 +128,9 @@ on_key_cb (GtkWidget    *widget,
             case GDK_d:
                 set_selected_tool_and_action (DOODLE, tbo);
                 break;
+            case GDK_b:
+                set_selected_tool_and_action (BUBBLE, tbo);
+                break;
             case GDK_f:
                 set_selected_tool_and_action (FRAME, tbo);
                 break;
@@ -207,6 +210,7 @@ on_click_cb (GtkWidget    *widget,
     tool = get_selected_tool ();
     switch (tool)
     {
+        case BUBBLE:
         case DOODLE:
             set_selected_tool_and_action (SELECTOR, tbo);
             tool = SELECTOR;

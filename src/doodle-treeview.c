@@ -62,7 +62,7 @@ free_gstring_array (GArray *arr)
 }
 
 GArray *
-get_files (gchar *base_dir, gboolean isdir)
+get_files (gchar *base_dir, gboolean isdir, gboolean bubble_mode)
 {
     GError *error = NULL;
     gchar complete_dir[255];
@@ -82,6 +82,11 @@ get_files (gchar *base_dir, gboolean isdir)
         size_t strsize = sizeof (char) * (strlen (base_dir) + strlen (filename) + 2);
         snprintf (complete_dir, strsize, "%s/%s", base_dir, filename);
         st = stat (complete_dir, &filestat);
+
+        if (isdir && bubble_mode && strcmp (filename, "bubble"))
+            continue;
+        if (!strcmp (filename, "bubble") && !bubble_mode)
+            continue;
 
         if (isdir && S_ISDIR (filestat.st_mode))
         {
@@ -115,7 +120,7 @@ doodle_add_images (gchar *dir)
 
     dirname = dir;
 
-    GArray *arr = get_files (dirname, FALSE);
+    GArray *arr = get_files (dirname, FALSE, FALSE);
 
     r = (arr->len / c) + 1;
     table = gtk_table_new (r, c, TRUE);
@@ -175,7 +180,7 @@ doodle_add_dir_images (gchar *dir, GtkWidget *box)
     gtk_container_add (GTK_CONTAINER (box), expander);
 }
 
-void
+gboolean
 on_expand_cb (GtkExpander *expander, GString *str)
 {
     GString *mystr2;
@@ -184,7 +189,7 @@ on_expand_cb (GtkExpander *expander, GString *str)
     int numofchilds = g_list_length (gtk_container_get_children (GTK_CONTAINER (vbox)));
     if (numofchilds == 0)
     {
-        GArray *subdir = get_files (str->str, TRUE);
+        GArray *subdir = get_files (str->str, TRUE, FALSE);
         for (i=0; i<subdir->len; i++)
         {
             mystr2 = g_array_index (subdir, GString*, i);
@@ -194,10 +199,11 @@ on_expand_cb (GtkExpander *expander, GString *str)
         g_string_free (str, TRUE);
     }
     gtk_widget_show_all (GTK_WIDGET (vbox));
+    return FALSE;
 }
 
 GtkWidget *
-doodle_setup_tree (TboWindow *tbo)
+doodle_setup_tree (TboWindow *tbo, gboolean bubble_mode)
 {
     GtkWidget *expander;
     GtkWidget *vbox;
@@ -218,7 +224,7 @@ doodle_setup_tree (TboWindow *tbo)
     char **possible_dirs = tbo_files_get_dirs ();
     for (k=0; possible_dirs[k]; k++)
     {
-        arr = get_files (possible_dirs[k], TRUE);
+        arr = get_files (possible_dirs[k], TRUE, bubble_mode);
         if (!arr) continue;
 
         for (i=0; i<arr->len; i++)
@@ -235,6 +241,12 @@ doodle_setup_tree (TboWindow *tbo)
 
             mystr2 = g_string_new (mystr->str);
             g_signal_connect (GTK_EXPANDER (expander), "activate", G_CALLBACK (on_expand_cb), mystr2);
+
+            if (bubble_mode)
+            {
+                gtk_expander_set_expanded (GTK_EXPANDER (expander), TRUE);
+                on_expand_cb (GTK_EXPANDER (expander), mystr2);
+            }
         }
         free_gstring_array (arr);
     }

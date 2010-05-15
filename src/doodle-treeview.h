@@ -4,7 +4,7 @@
 #include <gtk/gtk.h>
 #include "tbo-window.h"
 
-GtkWidget * doodle_setup_tree (TboWindow *tbo);
+GtkWidget * doodle_setup_tree (TboWindow *tbo, gboolean bubble_mode);
 void doodle_free_all ();
 
 #endif

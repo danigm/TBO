@@ -10,12 +10,29 @@
 #include "doodle-treeview.h"
 #include "doodle-tool.h"
 
+static gboolean BUBBLE_MODE = FALSE;
+
+void
+doodle_tool_bubble_on_select (TboWindow *tbo)
+{
+    BUBBLE_MODE = TRUE;
+    doodle_tool_on_select (tbo);
+}
+
+void
+doodle_tool_bubble_on_unselect (TboWindow *tbo)
+{
+    doodle_tool_on_unselect (tbo);
+    BUBBLE_MODE = FALSE;
+}
+
 void
 doodle_tool_on_select (TboWindow *tbo)
 {
     GtkWidget *tree;
 
-    tree = doodle_setup_tree (tbo);
+    tree = doodle_setup_tree (tbo, BUBBLE_MODE);
+
     gtk_widget_show_all (tree);
 
     tbo_empty_tool_area (tbo);

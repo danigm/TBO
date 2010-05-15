@@ -21,6 +21,7 @@ enum Tool
     SELECTOR,
     FRAME,
     DOODLE,
+    BUBBLE,
     TEXT,
 };
 

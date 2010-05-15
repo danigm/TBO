@@ -24,6 +24,8 @@ the frame with "selector" tool. In frame view you can draw:
 
  * You can add some doodle with doodle-tool, selecting what you want
    from tool-area and drag&drop it into drawing area.
+ * You can add some bubbles with bubble-tool, selecting what you want
+   from tool-area and drag&drop it into drawing area.
  * You can add text to doodle with text-tool
  * You can select/Move/resize/rotate objects in frame with select-tool
  * You can resize an object using "<" and ">" keys.

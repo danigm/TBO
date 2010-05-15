@@ -16,6 +16,7 @@
        <separator/>
        <toolitem name="doodle" action="Doodle"/>
        <toolitem name="text" action="Text"/>
+       <toolitem name="bubble" action="Bubble"/>
        <toolitem name="pix" action="Pix"/>
        <separator/>
        <toolitem name="zoom100" action="Zoom100"/>
