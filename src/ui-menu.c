@@ -170,7 +170,7 @@ about_cb (GtkWidget *widget, TboWindow *tbo){
                               "Daniel Pavón Pérez",
                               "Juan Jesús Pérez Luna",
                               "",
-                              "zapatebeo:",
+                              "Zapatero & Rajoy:",
                               "Alfonso de Cala",
                               NULL};
 

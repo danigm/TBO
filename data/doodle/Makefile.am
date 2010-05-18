@@ -18,6 +18,8 @@ tbologo_DATA = tbo/logo/*.svg
 
 psoedir = $(datadir)/tbo/doodle/political/psoe
 psoe_DATA = political/psoe/*.svg
+ppdir = $(datadir)/tbo/doodle/political/pp
+pp_DATA = political/pp/*.svg
 
 ###########
 # ARCADIA #
@@ -103,4 +105,5 @@ EXTRA_DIST = \
 	dgm/body/*.svg \
 	arcadia/one/*.svg \
 	political/psoe/*.svg \
+	political/pp/*.svg \
 	tbo/logo/*.svg
