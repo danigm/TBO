@@ -85,6 +85,17 @@ bubblesquare_DATA = bubble/square/*.svg
 guadalinexdir = $(datadir)/tbo/doodle/guadalinex/andatuz
 guadalinex_DATA = guadalinex/andatuz/*.svg
 
+#############
+# SOUTHPARK #
+#############
+
+sppoliticsdir = $(datadir)/tbo/doodle/southpark/politics
+sppolitics_DATA = southpark/politics/*.svg
+spmouthdir = $(datadir)/tbo/doodle/southpark/mouth
+spmouth_DATA = southpark/mouth/*.svg
+speyedir = $(datadir)/tbo/doodle/southpark/eye
+speye_DATA = southpark/eye/*.svg
+
 EXTRA_DIST = \
 	doodle1/body/*.svg \
 	doodle1/mouth/*.svg \
@@ -106,4 +117,7 @@ EXTRA_DIST = \
 	arcadia/one/*.svg \
 	political/psoe/*.svg \
 	political/pp/*.svg \
+	southpark/politics/*.svg \
+	southpark/mouth/*.svg \
+	southpark/eye/*.svg \
 	tbo/logo/*.svg

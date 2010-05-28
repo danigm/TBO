@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="34.649704"
+   height="18"
+   id="svg3080"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="m12.svg">
+  <defs
+     id="defs3082">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective3088" />
+    <inkscape:perspective
+       id="perspective3098"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4396">
+      <path
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.05400002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 1229.2232,172.31765 c 0.1148,-3.85943 -15.7758,-13.18081 -34.2791,-15.69524 -10.254,-1.39342 -22.619,3.87465 -21.6499,8.9635 0.6349,3.33363 13.4297,2.23802 20.2034,2.18946 13.422,-0.0962 34.8004,6.1668 35.7256,4.54228 z"
+         id="path4398"
+         sodipodi:nodetypes="csssc" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.197787"
+     inkscape:cx="17.324852"
+     inkscape:cy="9"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1024"
+     inkscape:window-height="551"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3085">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-616.8287,-303.60871)">
+    <g
+       style="display:inline"
+       id="g4110"
+       transform="matrix(0.5232497,0,0,0.5232497,590.52597,150.75687)"
+       inkscape:export-filename="/home/rgarcia/my.art/south_park_project/characters/textures/mouths/12.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299">
+      <path
+         inkscape:export-ydpi="299"
+         inkscape:export-xdpi="299"
+         inkscape:export-filename="/home/rgarcia/my.art/south_park_project/characters/textures/mouths/10.png"
+         sodipodi:nodetypes="csssaaas"
+         id="path4250-0"
+         d="m 67.444386,317.16819 c 0.118983,-3.40164 -3.158442,-8.67977 0.638539,-9.57518 11.440444,-2.69789 20.055114,-2.09326 29.967594,-1.05909 5.787091,0.60377 4.557951,13.4069 1.773066,17.89915 -1.187055,1.91481 -4.688457,0.53811 -6.993448,0.19936 -4.897488,-0.71975 -9.081126,-4.68416 -14.036385,-4.67019 -1.88387,0.005 -3.467459,2.10378 -5.325206,1.80553 -2.536483,-0.40722 -6.100482,-2.41763 -6.02416,-4.59958 z"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.95324969;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <rect
+         y="292.12027"
+         x="50.268032"
+         height="34.400402"
+         width="66.220207"
+         id="rect4275-0"
+         style="fill:none;stroke:none;display:inline"
+         inkscape:export-filename="/home/rgarcia/my.art/south_park_test/mouths/4.png"
+         inkscape:export-xdpi="299"
+         inkscape:export-ydpi="299" />
+      <path
+         id="rect4027"
+         d="m 75.620761,306.22702 c -2.393936,0.3062 -4.882193,0.74976 -7.527272,1.37352 -0.226741,0.0535 -0.443302,0.13513 -0.621818,0.21852 l 0,4.96341 8.14909,0 0,-6.55545 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <path
+         id="rect4027-2"
+         d="m 83.638943,305.66512 c -2.390824,0.0282 -4.81614,0.16704 -7.363636,0.46825 l 0,6.6491 8.14909,0 0,-7.11735 c -0.261987,3.8e-4 -0.522415,-0.003 -0.785454,0 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;display:inline" />
+      <path
+         id="rect4105"
+         d="m 84.882579,305.66512 -1.669091,15.23362 c 3.192386,1.21274 6.237841,3.24865 9.621818,3.74597 0.677518,0.0996 1.463085,0.26805 2.258181,0.43703 l 2.061819,-18.63621 c -4.197622,-0.42908 -8.182074,-0.76242 -12.272727,-0.78041 z"
+         style="fill:#800000;fill-opacity:1;stroke:none" />
+      <path
+         id="rect4027-8"
+         d="m 85.046215,305.66512 0,6.99248 8.149091,0 0,-6.58666 c -2.733136,-0.23126 -5.41998,-0.38819 -8.149091,-0.40582 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;display:inline" />
+      <path
+         id="rect4027-85"
+         d="m 93.653488,306.10215 0,6.55545 8.149082,0 0,-1.74812 c -0.52761,-2.3843 -1.70198,-4.15521 -3.763628,-4.3703 -1.489317,-0.15538 -2.940746,-0.31078 -4.385454,-0.43703 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;display:inline" />
+    </g>
+  </g>
+</svg>
