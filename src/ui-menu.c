@@ -172,6 +172,9 @@ about_cb (GtkWidget *widget, TboWindow *tbo){
                               "",
                               "Zapatero & Rajoy:",
                               "Alfonso de Cala",
+                              "",
+                              "South park style:",
+                              "Rafael García <bladecoder@gmail.com>",
                               NULL};
 
     gtk_show_about_dialog (GTK_WINDOW (tbo->window),
