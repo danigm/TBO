@@ -1,5 +1,5 @@
 AC_PREREQ(2.60)
-AC_INIT([tbo], [0.95], [dani@danigm.net])
+AC_INIT([tbo], [0.98], [dani@danigm.net])
 AC_CONFIG_AUX_DIR([build])
 AM_INIT_AUTOMAKE([1.9.6 -Wall -Werror dist-bzip2])
 
