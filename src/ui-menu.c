@@ -161,6 +161,16 @@ gboolean close_cb (GtkWidget *widget, gpointer data){
 }
 
 gboolean
+tutorial_cb (GtkWidget *widget, TboWindow *tbo){
+    char *filename = DATA_DIR "/tut.tbo";
+    tbo_comic_open (tbo, filename);
+    tbo_window_set_path (tbo, filename);
+    update_drawing (tbo);
+    tbo_window_update_status (tbo, 0, 0);
+    return FALSE;
+}
+
+gboolean
 about_cb (GtkWidget *widget, TboWindow *tbo){
     const gchar *authors[] = {"danigm <dani@danigm.net>", NULL};
     const gchar *artists[] = {"danigm <dani@danigm.net>",
@@ -272,6 +282,9 @@ static const GtkActionEntry tbo_menu_entries [] = {
       G_CALLBACK ( order_down_cb ) },
 
     /* Help menu */
+    { "Tutorial", NULL, N_("Tutorial"), "",
+      N_("Tutorial"),
+      G_CALLBACK (tutorial_cb) },
 
     { "About", GTK_STOCK_ABOUT, N_("About"), "",
       N_("About"),

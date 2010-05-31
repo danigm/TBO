@@ -21,6 +21,7 @@
        <menuitem name="orderdown" action="OrderDownObj" />
      </menu>
      <menu name="HelpMenu" action="Help">
+         <menuitem name="Tutorial" action="Tutorial" />
          <menuitem name="About" action="About" />
      </menu>
     </menubar>
