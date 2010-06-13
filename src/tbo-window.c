@@ -13,6 +13,7 @@ static int NWINDOWS = 0;
 
 TboWindow *
 tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll,
+                GtkWidget *scroll2,
                 GtkWidget *notebook, GtkWidget *toolarea,
                 GtkWidget *status, GtkWidget *vbox, Comic *comic)
 {
@@ -22,6 +23,7 @@ tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll,
     tbo = malloc (sizeof (TboWindow));
     tbo->window = window;
     tbo->dw_scroll = dw_scroll;
+    tbo->scroll2 = scroll2;
     list = gtk_container_get_children (GTK_CONTAINER (dw_scroll));
     tbo->drawing = GTK_WIDGET (list->data);
     tbo->status = status;
@@ -145,7 +147,7 @@ tbo_new_tbo (int width, int height)
 
     status = gtk_statusbar_new ();
 
-    tbo = tbo_window_new (window, scrolled, notebook, tool_paned, status, container, comic);
+    tbo = tbo_window_new (window, scrolled, scrolled2, notebook, tool_paned, status, container, comic);
     tbo_window_update_status (tbo, 0, 0);
 
     // ui-drawing.c (expose, motion and click)
@@ -192,7 +194,7 @@ tbo_window_update_status (TboWindow *tbo, int x, int y)
 gboolean
 remove_cb (GtkWidget *widget, gpointer data)
 {
-    gtk_widget_destroy(widget);
+    gtk_widget_destroy (widget);
     return FALSE;
 }
 
