@@ -3,7 +3,8 @@ Section: gnome
 Priority: optional
 Maintainer: Daniel Garcia <dani@danigm.net>
 Uploaders: Roberto C. Morano <rcmorano@emergya.es>
-Build-Depends: debhelper,
+Build-Depends: cdbs,
+               debhelper,
                pkg-config,
                libglib2.0-dev,
                libgtk2.0-dev,
