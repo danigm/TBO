@@ -1,3 +1,10 @@
+tbo (0.98~git20100623+2295523-0ubuntu1) lucid; urgency=low
+
+  * New upstream release
+  * debian/rules: simplified by using cdbs
+
+ -- Roberto C. Morano <rcmorano@emergya.es>  Wed, 30 Jun 2010 13:46:12 +0200
+
 tbo (0.93.001.git.e250) unstable; urgency=low
 
   * Initial Release.
