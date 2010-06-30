@@ -12,15 +12,6 @@ doodle1eyes_DATA = doodle1/eyes/*.svg
 tbologodir = $(datadir)/tbo/doodle/tbo/logo
 tbologo_DATA = tbo/logo/*.svg
 
-#############
-# Political #
-#############
-
-psoedir = $(datadir)/tbo/doodle/political/psoe
-psoe_DATA = political/psoe/*.svg
-ppdir = $(datadir)/tbo/doodle/political/pp
-pp_DATA = political/pp/*.svg
-
 ###########
 # ARCADIA #
 ###########
@@ -118,8 +109,6 @@ EXTRA_DIST = \
 	guadalinex/andatuz/*.svg \
 	dgm/body/*.svg \
 	arcadia/one/*.svg \
-	political/psoe/*.svg \
-	political/pp/*.svg \
 	southpark/politics/*.svg \
 	southpark/mouth/*.svg \
 	southpark/eye/*.svg \
