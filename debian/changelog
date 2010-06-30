@@ -1,3 +1,10 @@
+tbo (0.98~git20100623+2295523-0ubuntu1guada1) lucid; urgency=low
+
+  * Removed political sprites
+  * debian/control: added cdbs as depend
+
+ -- Roberto C. Morano <rcmorano@emergya.es>  Wed, 30 Jun 2010 13:46:12 +0200
+
 tbo (0.98~git20100623+2295523-0ubuntu1) lucid; urgency=low
 
   * New upstream release
