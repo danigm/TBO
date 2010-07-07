@@ -6,9 +6,7 @@
        <menuitem name="Save" action="SaveFile" />
        <menuitem name="SaveAs" action="SaveFileAs" />
        <separator/>
-       <menuitem name="Export as png" action="ToPNG" />
-       <menuitem name="Export as pdf" action="ToPDF" />
-       <menuitem name="Export as svg" action="ToSVG" />
+       <menuitem name="Export as..." action="ToPNG" />
        <separator/>
        <menuitem name="Quit" action="Quit" />
      </menu>

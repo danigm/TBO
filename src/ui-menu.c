@@ -199,23 +199,9 @@ about_cb (GtkWidget *widget, TboWindow *tbo){
 }
 
 gboolean
-tbo_menu_to_png (GtkWidget *widget, TboWindow *tbo)
+tbo_menu_export (GtkWidget *widget, TboWindow *tbo)
 {
-    tbo_export (tbo, "png");
-    return FALSE;
-}
-
-gboolean
-tbo_menu_to_pdf (GtkWidget *widget, TboWindow *tbo)
-{
-    tbo_export (tbo, "pdf");
-    return FALSE;
-}
-
-gboolean
-tbo_menu_to_svg (GtkWidget *widget, TboWindow *tbo)
-{
-    tbo_export (tbo, "svg");
+    tbo_export (tbo);
     return FALSE;
 }
 
@@ -244,17 +230,9 @@ static const GtkActionEntry tbo_menu_entries [] = {
       N_("Save current document as ..."),
       G_CALLBACK (tbo_comic_saveas_dialog) },
 
-    { "ToPNG", GTK_STOCK_FILE, N_("Export as png"), "",
-      N_("Save current document as png"),
-      G_CALLBACK (tbo_menu_to_png) },
-
-    { "ToPDF", GTK_STOCK_FILE, N_("Export as pdf"), "",
-      N_("Save current document as pdf"),
-      G_CALLBACK (tbo_menu_to_pdf) },
-
-    { "ToSVG", GTK_STOCK_FILE, N_("Export as svg"), "",
-      N_("Save current document as svg"),
-      G_CALLBACK (tbo_menu_to_svg) },
+    { "ToPNG", GTK_STOCK_FILE, N_("Export as..."), "",
+      N_("Save current document as..."),
+      G_CALLBACK (tbo_menu_export) },
 
     { "Quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q",
       N_("Quit"),
