@@ -25,7 +25,7 @@ Translations
 To generate translations file .po exec:
 
 $ cd po
-$ intlool-update es
+$ intltool-update es
 
 'es' is the language code. Then you need to translate the .po file.
 
