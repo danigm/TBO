@@ -7,7 +7,7 @@
 
 #include "export.h"
 #include "ui-drawing.h"
-
+#include "tbo-ui-utils.h"
 
 gboolean
 filedialog_cb (GtkWidget *widget, gpointer data)
@@ -56,6 +56,8 @@ tbo_export (TboWindow *tbo, const gchar *export_to)
     GtkWidget *fileinput;
     GtkWidget *filelabel;
     GtkWidget *filebutton;
+    GtkWidget *spinw;
+    GtkWidget *spinh;
 
     dialog = gtk_dialog_new_with_buttons (_("Export as"),
                                             GTK_WINDOW (tbo->window),
@@ -77,6 +79,10 @@ tbo_export (TboWindow *tbo, const gchar *export_to)
     gtk_container_add (GTK_CONTAINER (hbox), fileinput);
     gtk_container_add (GTK_CONTAINER (hbox), filebutton);
     gtk_container_add (GTK_CONTAINER (vbox), hbox);
+
+    spinw = add_spin_with_label (vbox, _("width: "), tbo->comic->width);
+    spinh = add_spin_with_label (vbox, _("height: "), tbo->comic->width);
+
     gtk_widget_show_all (GTK_WIDGET (vbox));
 
     g_signal_connect (filebutton, "clicked", G_CALLBACK (filedialog_cb), fileinput);

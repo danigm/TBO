@@ -36,6 +36,7 @@ tbo_SOURCES = \
 	comic-load.c \
 	tbo-utils.c \
 	tbo-files.c \
+	tbo-ui-utils.c \
 	tbo-files.h \
 	tbo-window.h \
 	comic.h \
@@ -62,6 +63,7 @@ tbo_SOURCES = \
 	comic-load.h \
 	tbo-utils.h \
 	export.h \
+	tbo-ui-utils.h \
 	custom-stock.h
 
 tbo_CFLAGS = @GTK_CFLAGS@ \
