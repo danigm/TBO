@@ -15,7 +15,7 @@ add_spin_with_label (GtkWidget *container, const gchar *string, gint value)
         adjustment = gtk_adjustment_new (value, 0, 10000, 1, 1, 0);
         spin = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
         gtk_box_pack_start (GTK_BOX (hpanel), label, TRUE, TRUE, 5);
-        gtk_box_pack_start (GTK_BOX (hpanel), spin, TRUE, TRUE, 5);
+        gtk_box_pack_start (GTK_BOX (hpanel), spin, FALSE, FALSE, 5);
         gtk_box_pack_start (GTK_BOX (container), hpanel, FALSE, FALSE, 5);
 
         return spin;
