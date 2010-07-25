@@ -2,10 +2,10 @@
 
 pkgname=tbo-git
 pkgver=20100725
-pkgrel=1
+pkgrel=2
 pkgdesc="Gnome easy and fun comic editor"
 arch=('i686' 'x86_64')
-url="http://github.com/danigm/tbo/"
+url="http://trac.danigm.net/tbo"
 license=('GPL3')
 depends=('gtk2' 'cairo' 'librsvg')
 makedepends=('gnome-common git intltool automake gcc')
