@@ -100,7 +100,6 @@ on_key_cb (GtkWidget    *widget,
     tool_signal (tool, TOOL_KEY, data);
     free (data);
 
-    update_drawing (tbo);
     tbo_window_update_status (tbo, 0, 0);
 
     if (KEY_BINDER)
@@ -188,7 +187,6 @@ on_move_cb (GtkWidget     *widget,
     tool_signal (tool, TOOL_MOVE, data);
     free (data);
 
-    update_drawing (tbo);
     tbo_window_update_status (tbo, (int)event->x, (int)event->y);
 
     return FALSE;
@@ -219,7 +217,6 @@ on_click_cb (GtkWidget    *widget,
     }
     free (data);
 
-    update_drawing (tbo);
     tbo_window_update_status (tbo, (int)event->x, (int)event->y);
     return FALSE;
 }
@@ -242,7 +239,6 @@ on_release_cb (GtkWidget    *widget,
     tool_signal (tool, TOOL_RELEASE, data);
     free (data);
 
-    update_drawing (tbo);
     tbo_window_update_status (tbo, (int)event->x, (int)event->y);
     return FALSE;
 }

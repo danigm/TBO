@@ -240,6 +240,8 @@ selector_tool_on_move (GtkWidget *widget,
         frame_view_on_move (widget, event, tbo);
     else
         page_view_on_move (widget, event, tbo);
+
+    update_drawing (tbo);
 }
 
 void
@@ -505,6 +507,7 @@ frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
                 break;
         }
     }
+    update_drawing (tbo);
 }
 
 void
@@ -734,6 +737,8 @@ selector_tool_on_click (GtkWidget *widget,
         frame_view_on_click (widget, event, tbo);
     else
         page_view_on_click (widget, event, tbo);
+
+    update_drawing (tbo);
 }
 
 void

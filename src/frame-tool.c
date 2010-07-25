@@ -53,6 +53,7 @@ frame_tool_on_move (GtkWidget *widget,
             TMP_FRAME->y = min (N_FRAME_Y, y);
         }
     }
+    update_drawing (tbo);
 }
 
 void

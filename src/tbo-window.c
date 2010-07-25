@@ -187,7 +187,6 @@ tbo_window_update_status (TboWindow *tbo, int x, int y)
                     x, y,
                     tbo_page_len (tbo_comic_get_current_page (tbo->comic)));
     gtk_statusbar_push (GTK_STATUSBAR (tbo->status), 0, buffer);
-    update_drawing (tbo);
     update_toolbar (tbo);
 }
 
