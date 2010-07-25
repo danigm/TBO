@@ -153,8 +153,8 @@ on_expose_cb (GtkWidget      *widget,
     cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
 
     cairo_set_source_rgb (cr, 0, 0, 0);
-    cairo_rectangle (cr, 0, 0, widget->allocation.width,
-                               widget->allocation.height);
+    cairo_rectangle (cr, 0, 0, tbo->comic->width,
+                               tbo->comic->height);
     cairo_fill (cr);
 
     tbo_drawing_draw (cr, tbo);
