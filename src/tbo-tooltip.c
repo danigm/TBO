@@ -7,11 +7,11 @@
 #include "tbo-tooltip.h"
 #include "tbo-window.h"
 
+#define TOOLTIP_ALPHA 0.7
+
 static GString *TOOLTIP = NULL;
 static int X=0, Y=0;
 static double ALPHA = 0.0;
-static double INC_ALPHA = 0.10;
-static gboolean DECREASING = FALSE;
 
 void
 cairo_rounded_rectangle (cairo_t *cr, int xx, int yy, int w, int h)
@@ -32,40 +32,6 @@ cairo_rounded_rectangle (cairo_t *cr, int xx, int yy, int w, int h)
     cairo_arc (cr, x + radius, y + height - radius, radius, 90 * degrees, 180 * degrees);
     cairo_arc (cr, x + radius, y + radius, radius, 180 * degrees, 270 * degrees);
     cairo_close_path (cr);
-}
-
-gboolean
-increase_alpha_cb (gpointer p)
-{
-    if (ALPHA >= 0.7)
-    {
-        ALPHA = 0.7;
-        return FALSE;
-    }
-
-    ALPHA += INC_ALPHA;
-    update_drawing ((TboWindow *)p);
-    return TRUE;
-}
-
-gboolean
-decrease_alpha_cb (gpointer p)
-{
-    if (!DECREASING)
-        return FALSE;
-
-    if (ALPHA <= 0.0 || !p)
-    {
-        ALPHA = 0.0;
-        g_string_free (TOOLTIP, TRUE);
-        TOOLTIP = NULL;
-        update_drawing ((TboWindow *)p);
-        return FALSE;
-    }
-
-    ALPHA -= INC_ALPHA;
-    update_drawing ((TboWindow *)p);
-    return TRUE;
 }
 
 gboolean
@@ -94,9 +60,7 @@ tbo_tooltip_set (const char *tooltip, int x, int y, TboWindow *tbo)
         if (tooltip)
         {
             TOOLTIP = g_string_new (tooltip);
-            ALPHA = 0.0;
-            g_timeout_add (50, increase_alpha_cb, tbo);
-            DECREASING = FALSE;
+            ALPHA = TOOLTIP_ALPHA;
             X = x;
             Y = y;
         }
@@ -107,26 +71,25 @@ tbo_tooltip_set (const char *tooltip, int x, int y, TboWindow *tbo)
         if (x == X && y == Y && !strcmp (tooltip, TOOLTIP->str))
             return;
 
-        if (!tooltip)
+        // removing tooltip if tooltip == NULL
+        if (!tooltip && TOOLTIP)
         {
-            if (!DECREASING)
-            {
-                g_timeout_add (50, decrease_alpha_cb, tbo);
-                DECREASING = TRUE;
-            }
+            ALPHA = 0.0;
+            g_string_free (TOOLTIP, TRUE);
+            TOOLTIP = NULL;
         }
         else
         {
             g_string_free (TOOLTIP, TRUE);
 
             TOOLTIP = g_string_new (tooltip);
-            ALPHA = 0.0;
-            g_timeout_add (50, increase_alpha_cb, tbo);
-            DECREASING = FALSE;
+            ALPHA = TOOLTIP_ALPHA;
             X = x;
             Y = y;
         }
     }
+
+    update_drawing (tbo);
 }
 
 GString *
