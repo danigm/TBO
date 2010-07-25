@@ -705,14 +705,6 @@ page_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
 
     switch (event->keyval)
     {
-        case GDK_Tab:
-            set_selected (tbo_page_next_frame (page), tbo);
-            if (SELECTED == NULL)
-            {
-                set_selected (tbo_page_first_frame (page), tbo);
-            }
-            break;
-
         case GDK_d:
             if ((event->state & GDK_CONTROL_MASK) && SELECTED)
             {
