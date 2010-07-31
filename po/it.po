@@ -1,0 +1,346 @@
+# Spanish Translation
+# Copyright (C) 2010
+# This file is distributed under the same license as the TBO package.
+# Daniel Garcia <dani@danigm.net>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE 0.1\n"
+"Report-Msgid-Bugs-To: dani@danigm.net\n"
+"POT-Creation-Date: 2010-07-31 12:58+0200\n"
+"PO-Revision-Date: 2010-07-28 11:45+0100\n"
+"Last-Translator: Flavio Pastore <ironbishop@fsfe.org>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/comic.c:170
+#, c-format
+msgid "Failed saving: %s"
+msgstr "Salvataggio fallito: %s"
+
+#: ../src/comic.c:172
+msgid "failed saving"
+msgstr "Salvataggio fallito"
+
+#: ../src/comic-load.c:295
+msgid "Couldn't load file"
+msgstr "Impossibile caricare il file"
+
+#: ../src/comic-load.c:304
+msgid "Couldn't parse file"
+msgstr "Impossibile leggere il file"
+
+#: ../src/comic-new-dialog.c:22 ../src/ui-toolbar.c:313
+msgid "New Comic"
+msgstr "Nuovo fumetto"
+
+#: ../src/comic-new-dialog.c:34 ../src/export.c:126
+msgid "width: "
+msgstr "largh.: "
+
+#: ../src/comic-new-dialog.c:44 ../src/export.c:127
+msgid "height: "
+msgstr "alt.: "
+
+#: ../src/comic-open-dialog.c:18
+msgid "Open"
+msgstr "Apri"
+
+#: ../src/comic-open-dialog.c:28
+msgid "TBO files"
+msgstr "file TBO"
+
+#: ../src/comic-open-dialog.c:32 ../src/ui-toolbar.c:293
+msgid "All files"
+msgstr "Tutti i file"
+
+#: ../src/comic-saveas-dialog.c:26
+msgid "Save as"
+msgstr "Salva con nome..."
+
+#: ../src/custom-stock.c:38
+#, c-format
+msgid "error loading image %s\n"
+msgstr "Impossibile caricare immagine %s\n"
+
+#: ../src/export.c:51 ../src/export.c:102
+msgid "Export as"
+msgstr "Esporta come"
+
+#: ../src/export.c:118
+msgid "Filename: "
+msgstr "Nome del file: "
+
+#: ../src/export.c:142
+msgid "guess by extension"
+msgstr "In base all'estensione"
+
+#: ../src/selector-tool.c:109
+msgid "Background color: "
+msgstr "Colore di sfondo: "
+
+#: ../src/selector-tool.c:122
+msgid "border"
+msgstr "bordo"
+
+#: ../src/selector-tool.c:572
+msgid "double click here"
+msgstr "doppio click qui"
+
+#. TODO add tooltip_notify
+#: ../src/selector-tool.c:620
+msgid "press esc to go back"
+msgstr "premi ESC per andare indietro"
+
+#: ../src/svgimage.c:69
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr "Impossibile caricare %s\n"
+
+#: ../src/tbo-window.c:128
+msgid "Untitled"
+msgstr "Senza titolo"
+
+#: ../src/tbo-window.c:184
+#, c-format
+msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
+msgstr "oagina: %d di %d [ %5d,%5d ] | vignette: %d"
+
+#: ../src/text-tool.c:73
+msgid "Text color:"
+msgstr "Colore del testo: "
+
+#: ../src/text-tool.c:74
+msgid "Font:"
+msgstr "Carattere:"
+
+#: ../src/ui-menu.c:191
+msgid "TBO comic editor"
+msgstr "Editor di fumetti TBO"
+
+#: ../src/ui-menu.c:196
+msgid "translator-credits"
+msgstr ""
+"Flavio Pastore <ironbishop@fsfe.org> 2010"
+
+#. Toplevel
+#: ../src/ui-menu.c:212
+msgid "_File"
+msgstr "_File"
+
+#: ../src/ui-menu.c:213
+msgid "_Edit"
+msgstr "_Modifica"
+
+#: ../src/ui-menu.c:214
+msgid "Help"
+msgstr "Aiuto"
+
+#. File menu
+#: ../src/ui-menu.c:218 ../src/ui-toolbar.c:312
+msgid "_New"
+msgstr "_Nuovo"
+
+#: ../src/ui-menu.c:219
+msgid "Create a new file"
+msgstr "Crea un nuovo file"
+
+#: ../src/ui-menu.c:222 ../src/ui-toolbar.c:316
+msgid "_Open"
+msgstr "_Apri"
+
+#: ../src/ui-menu.c:223
+msgid "Open a new file"
+msgstr "Apri un nuovo file"
+
+#: ../src/ui-menu.c:226 ../src/ui-toolbar.c:320
+msgid "_Save"
+msgstr "_Salva"
+
+#: ../src/ui-menu.c:227 ../src/ui-toolbar.c:321
+msgid "Save current document"
+msgstr "Salva il documento corrente"
+
+#: ../src/ui-menu.c:230
+msgid "_Save as"
+msgstr "_Salva con nome..."
+
+#: ../src/ui-menu.c:231
+msgid "Save current document as ..."
+msgstr "Salva il documento corrente con nome..."
+
+#: ../src/ui-menu.c:234
+msgid "Export as..."
+msgstr "Exporta come..."
+
+#: ../src/ui-menu.c:235
+msgid "Save current document as..."
+msgstr "Salva il documento corrente con nome..."
+
+#: ../src/ui-menu.c:238
+msgid "_Quit"
+msgstr "_Esci"
+
+#: ../src/ui-menu.c:239
+msgid "Quit"
+msgstr "Esci"
+
+#. edit menu
+#: ../src/ui-menu.c:244 ../src/ui-menu.c:245
+msgid "Clone"
+msgstr "Clona"
+
+#: ../src/ui-menu.c:247 ../src/ui-menu.c:248
+msgid "Delete"
+msgstr "Cancella"
+
+#: ../src/ui-menu.c:250 ../src/ui-menu.c:251
+msgid "Horizontal flip"
+msgstr "Specchia orizzontalmente"
+
+#: ../src/ui-menu.c:253 ../src/ui-menu.c:254
+msgid "Vertical flip"
+msgstr "Specchia verticalmente"
+
+#: ../src/ui-menu.c:256 ../src/ui-menu.c:257
+msgid "Move to front"
+msgstr "Porta avanti"
+
+#: ../src/ui-menu.c:259 ../src/ui-menu.c:260
+msgid "Move to back"
+msgstr "Porta indietro"
+
+#. Help menu
+#: ../src/ui-menu.c:264 ../src/ui-menu.c:265
+msgid "Tutorial"
+msgstr "Tutorial"
+
+#: ../src/ui-menu.c:268 ../src/ui-menu.c:269
+msgid "About"
+msgstr "Informazioni su"
+
+#: ../src/ui-menu.c:282
+#, c-format
+msgid "Could not merge tbo-menu-ui.xml: %s"
+msgstr "Impossibile usare tbo-menu-ui.xml: %s"
+
+#: ../src/ui-toolbar.c:280
+msgid "Add an Image"
+msgstr "Aggiungi immagine"
+
+#: ../src/ui-toolbar.c:288
+msgid "png"
+msgstr "png"
+
+#: ../src/ui-toolbar.c:317
+msgid "Open comic"
+msgstr "Apri fumetto"
+
+#. Page tools
+#: ../src/ui-toolbar.c:325
+msgid "New Page"
+msgstr "Nuova Pagina"
+
+#: ../src/ui-toolbar.c:326
+msgid "New page"
+msgstr "Nuova pagina"
+
+#: ../src/ui-toolbar.c:329
+msgid "Delete Page"
+msgstr "Cancella pagina"
+
+#: ../src/ui-toolbar.c:330
+msgid "Delete current page"
+msgstr "Cancella la pagina corrente"
+
+#: ../src/ui-toolbar.c:333
+msgid "Prev Page"
+msgstr "Pagina precedente"
+
+#: ../src/ui-toolbar.c:334
+msgid "Prev page"
+msgstr "Pagina seguente"
+
+#: ../src/ui-toolbar.c:337
+msgid "Next Page"
+msgstr "Prossima pagina"
+
+#: ../src/ui-toolbar.c:338
+msgid "Next page"
+msgstr "Prossima pagina"
+
+#. Zoom tools
+#: ../src/ui-toolbar.c:342 ../src/ui-toolbar.c:343
+msgid "Zoom in"
+msgstr "Zoom avanti"
+
+#: ../src/ui-toolbar.c:345 ../src/ui-toolbar.c:346
+msgid "Zoom 1:1"
+msgstr "Zoom 1:1"
+
+#: ../src/ui-toolbar.c:348 ../src/ui-toolbar.c:349
+msgid "Zoom fit"
+msgstr "Adatta"
+
+#: ../src/ui-toolbar.c:351 ../src/ui-toolbar.c:352
+msgid "Zoom out"
+msgstr "Zoom indietro"
+
+#. Png image tool
+#: ../src/ui-toolbar.c:356 ../src/ui-toolbar.c:357
+msgid "Image"
+msgstr "Immagine"
+
+#. Page view tools
+#: ../src/ui-toolbar.c:363
+msgid "New _Frame"
+msgstr "Nuova _Vignetta"
+
+#: ../src/ui-toolbar.c:364
+msgid "New Frame"
+msgstr "Nuova Vignetta"
+
+#: ../src/ui-toolbar.c:367 ../src/ui-toolbar.c:368
+msgid "Selector"
+msgstr "Selezione"
+
+#. Frame view tools
+#: ../src/ui-toolbar.c:372 ../src/ui-toolbar.c:373
+#, fuzzy
+msgid "Doodle"
+msgstr "Doodle"
+
+#: ../src/ui-toolbar.c:375
+#, fuzzy
+msgid "Booble"
+msgstr "Booble"
+
+#: ../src/ui-toolbar.c:376
+#, fuzzy
+msgid "Bubble"
+msgstr "Bubble"
+
+#: ../src/ui-toolbar.c:378 ../src/ui-toolbar.c:379
+msgid "Text"
+msgstr "Testo"
+
+#~ msgid "Export as png"
+#~ msgstr "Exportar a png"
+
+#~ msgid "Save current document as png"
+#~ msgstr "Guardar el documento actual como png"
+
+#~ msgid "Export as pdf"
+#~ msgstr "Exportar a pdf"
+
+#~ msgid "Save current document as pdf"
+#~ msgstr "Guardar el documento actual como pdf"
+
+#~ msgid "Export as svg"
+#~ msgstr "Exportar a svg"
+
+#~ msgid "Save current document as svg"
+#~ msgstr "Guardar el documento actual como svg"
