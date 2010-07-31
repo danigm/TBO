@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 0.1\n"
 "Report-Msgid-Bugs-To: dani@danigm.net\n"
-"POT-Creation-Date: 2010-07-08 01:29+0200\n"
+"POT-Creation-Date: 2010-07-31 12:57+0200\n"
 "PO-Revision-Date: 2010-01-24 20:48+0100\n"
 "Last-Translator: Daniel Garcia <dani@danigm.net>\n"
 "Language-Team: \n"
@@ -86,12 +86,12 @@ msgstr "Color de fondo: "
 msgid "border"
 msgstr "borde"
 
-#: ../src/selector-tool.c:569
+#: ../src/selector-tool.c:572
 msgid "double click here"
 msgstr "haz doble click aquí"
 
 #. TODO add tooltip_notify
-#: ../src/selector-tool.c:617
+#: ../src/selector-tool.c:620
 msgid "press esc to go back"
 msgstr "pulsa esc para volver atrás"
 
@@ -121,103 +121,108 @@ msgstr "Fuente:"
 msgid "TBO comic editor"
 msgstr "Editor de comic TBO"
 
+#: ../src/ui-menu.c:196
+msgid "translator-credits"
+msgstr ""
+"Daniel García Moreno <dani@danigm.net> 2010"
+
 #. Toplevel
-#: ../src/ui-menu.c:211
+#: ../src/ui-menu.c:212
 msgid "_File"
 msgstr "_Archivo"
 
-#: ../src/ui-menu.c:212
+#: ../src/ui-menu.c:213
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../src/ui-menu.c:213
+#: ../src/ui-menu.c:214
 msgid "Help"
 msgstr "Ayuda"
 
 #. File menu
-#: ../src/ui-menu.c:217 ../src/ui-toolbar.c:312
+#: ../src/ui-menu.c:218 ../src/ui-toolbar.c:312
 msgid "_New"
 msgstr "_Nuevo"
 
-#: ../src/ui-menu.c:218
+#: ../src/ui-menu.c:219
 msgid "Create a new file"
 msgstr "Crear un nuevo fichero"
 
-#: ../src/ui-menu.c:221 ../src/ui-toolbar.c:316
+#: ../src/ui-menu.c:222 ../src/ui-toolbar.c:316
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../src/ui-menu.c:222
+#: ../src/ui-menu.c:223
 msgid "Open a new file"
 msgstr "Abrir un fichero"
 
-#: ../src/ui-menu.c:225 ../src/ui-toolbar.c:320
+#: ../src/ui-menu.c:226 ../src/ui-toolbar.c:320
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../src/ui-menu.c:226 ../src/ui-toolbar.c:321
+#: ../src/ui-menu.c:227 ../src/ui-toolbar.c:321
 msgid "Save current document"
 msgstr "Guardar el documento actual"
 
-#: ../src/ui-menu.c:229
+#: ../src/ui-menu.c:230
 msgid "_Save as"
 msgstr "_Guardar como"
 
-#: ../src/ui-menu.c:230
+#: ../src/ui-menu.c:231
 msgid "Save current document as ..."
 msgstr "Guardar el documento actual como ..."
 
-#: ../src/ui-menu.c:233
+#: ../src/ui-menu.c:234
 msgid "Export as..."
 msgstr "Exportar como..."
 
-#: ../src/ui-menu.c:234
+#: ../src/ui-menu.c:235
 msgid "Save current document as..."
 msgstr "Guardar el documento actual como ..."
 
-#: ../src/ui-menu.c:237
+#: ../src/ui-menu.c:238
 msgid "_Quit"
 msgstr "_Salir"
 
-#: ../src/ui-menu.c:238
+#: ../src/ui-menu.c:239
 msgid "Quit"
 msgstr "Salir"
 
 #. edit menu
-#: ../src/ui-menu.c:243 ../src/ui-menu.c:244
+#: ../src/ui-menu.c:244 ../src/ui-menu.c:245
 msgid "Clone"
 msgstr "Clonar"
 
-#: ../src/ui-menu.c:246 ../src/ui-menu.c:247
+#: ../src/ui-menu.c:247 ../src/ui-menu.c:248
 msgid "Delete"
 msgstr "Eliminar"
 
-#: ../src/ui-menu.c:249 ../src/ui-menu.c:250
+#: ../src/ui-menu.c:250 ../src/ui-menu.c:251
 msgid "Horizontal flip"
 msgstr "Reflejo horizontal"
 
-#: ../src/ui-menu.c:252 ../src/ui-menu.c:253
+#: ../src/ui-menu.c:253 ../src/ui-menu.c:254
 msgid "Vertical flip"
 msgstr "Reflejo vertical"
 
-#: ../src/ui-menu.c:255 ../src/ui-menu.c:256
+#: ../src/ui-menu.c:256 ../src/ui-menu.c:257
 msgid "Move to front"
 msgstr "Mover al frente"
 
-#: ../src/ui-menu.c:258 ../src/ui-menu.c:259
+#: ../src/ui-menu.c:259 ../src/ui-menu.c:260
 msgid "Move to back"
 msgstr "Mober atrás"
 
 #. Help menu
-#: ../src/ui-menu.c:263 ../src/ui-menu.c:264
+#: ../src/ui-menu.c:264 ../src/ui-menu.c:265
 msgid "Tutorial"
 msgstr ""
 
-#: ../src/ui-menu.c:267 ../src/ui-menu.c:268
+#: ../src/ui-menu.c:268 ../src/ui-menu.c:269
 msgid "About"
 msgstr "Acerca de"
 
-#: ../src/ui-menu.c:281
+#: ../src/ui-menu.c:282
 #, c-format
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "No se ha podido utilizar tbo-menu-ui.xml: %s"

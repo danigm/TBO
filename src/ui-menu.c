@@ -193,6 +193,7 @@ about_cb (GtkWidget *widget, TboWindow *tbo){
             "authors", authors,
             "artists", artists,
             "website", "http://trac.danigm.net/tbo",
+            "translator-credits", _("translator-credits"),
             NULL);
 
     return FALSE;
