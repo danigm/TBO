@@ -148,12 +148,13 @@ on_expose_cb (GtkWidget      *widget,
     cairo_t *cr;
     enum Tool tool;
     GdkWindow *window;
+    gint w, h;
 
     cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
+    gdk_drawable_get_size (GDK_DRAWABLE (GTK_LAYOUT (widget)->bin_window), &w, &h);
 
     cairo_set_source_rgb (cr, 0, 0, 0);
-    cairo_rectangle (cr, 0, 0, tbo->comic->width,
-                               tbo->comic->height);
+    cairo_rectangle (cr, 0, 0, w, h);
     cairo_fill (cr);
 
     tbo_drawing_draw (cr, tbo);

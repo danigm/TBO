@@ -28,7 +28,7 @@ on_tview_focus_out (GtkWidget *view, GdkEventFocus *event, gpointer data)
 
 
 gboolean
-on_text_change (GtkTextBuffer *buf, gpointer data)
+on_text_change (GtkTextBuffer *buf, TboWindow *tbo)
 {
     GtkTextIter start, end;
     gtk_text_buffer_get_start_iter (buf, &start);
@@ -37,6 +37,7 @@ on_text_change (GtkTextBuffer *buf, gpointer data)
     if (TEXT_SELECTED)
     {
         tbo_text_set_text (TEXT_SELECTED, gtk_text_buffer_get_text (buf, &start, &end, FALSE));
+        update_drawing (tbo);
     }
     return FALSE;
 }
@@ -161,12 +162,13 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
         y = tbo_frame_get_base_y (y);
         text_tool_get_color (&r, &g, &b);
         text = tbo_text_new_with_params (x, y, 100, 0,
-                                          "Texto",
+                                          _("Texto"),
                                           (char *)text_tool_get_pango_font (),
                                           r, g, b);
         tbo_frame_add_obj (frame, text);
     }
     text_tool_set_selected (text);
+    update_drawing (tbo);
 }
 
 void text_tool_on_release (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
