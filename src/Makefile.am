@@ -1,14 +1,13 @@
 ## Process this file with automake to generate a Makefile.in
 ## To build all programs with GTK+ uncomment these lines.
-##AM_CPPFLAGS = @GTK_CFLAGS@
-##AM_LDADD = @GTK_LIBS@
 
 AM_CPPFLAGS = -I$(top_srcdir) -I$(includedir) $(GNOME_INCLUDEDIR) \
          -DG_LOG_DOMAIN=\"tbo\"
 
 bin_PROGRAMS = tbo
+noinst_PROGRAMS = typestest
 
-tbo_SOURCES = \
+SOURCES = \
 	tbo-window.c \
 	comic.c \
 	comic-new-dialog.c \
@@ -16,7 +15,6 @@ tbo_SOURCES = \
 	comic-open-dialog.c \
 	frame.c \
 	page.c \
-	tbo.c \
 	ui-drawing.c \
 	ui-menu.c \
 	ui-toolbar.c \
@@ -64,14 +62,22 @@ tbo_SOURCES = \
 	tbo-utils.h \
 	export.h \
 	tbo-ui-utils.h \
+	tbo-object-base.h \
+	tbo-object-base.c \
+	tbo-object-svg.h \
+	tbo-object-svg.c \
 	custom-stock.h
 
-tbo_CFLAGS = @GTK_CFLAGS@ \
+AM_CFLAGS = @GTK_CFLAGS@ \
 			 $(PACKAGE_CFLAGS) \
 			-DGNOMELOCALEDIR=\"$(datadir)/locale\" \
 			-DDATA_DIR=\""$(pkgdatadir)"\"
-
 tbo_LDADD = @GTK_LIBS@ \
 			$(PACKAGE_LIBS)
+typestest_LDADD = @GTK_LIBS@ \
+				$(PACKAGE_LIBS)
+
+typestest_SOURCES = $(SOURCES) typestest.c
+tbo_SOURCES = $(SOURCES) tbo.c
 
 CLEANFILES = *~
