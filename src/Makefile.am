@@ -66,6 +66,8 @@ SOURCES = \
 	tbo-object-base.c \
 	tbo-object-svg.h \
 	tbo-object-svg.c \
+	tbo-object-text.h \
+	tbo-object-text.c \
 	custom-stock.h
 
 AM_CFLAGS = @GTK_CFLAGS@ \

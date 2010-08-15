@@ -1,19 +1,18 @@
 #include <stdio.h>
 #include "tbo-object-base.h"
 #include "tbo-object-svg.h"
+#include "tbo-object-text.h"
 
 void
 print_tbo_object (TboObjectBase *obj)
 {
-    printf ("obj:\n x, y: (%d, %d)\n w, h: (%d, %d)\n",
-            obj->x, obj->y, obj->width, obj->height);
+    printf ("obj:\n x, y: (%d, %d)\n w, h: (%d, %d)\nangle: %f\n",
+            obj->x, obj->y, obj->width, obj->height, obj->angle);
 }
 
-int
-main (int argc, char **argv)
+void
+test_object_svg ()
 {
-    g_type_init ();
-
     /* simple svg object */
     TboObjectSvg *svg = TBO_OBJECT_SVG (tbo_object_svg_new ());
 
@@ -30,6 +29,35 @@ main (int argc, char **argv)
     printf ("path: '%s'\n", svg->path->str);
 
     g_object_unref (svg);
+}
+
+void
+test_object_text ()
+{
+    /* text object with params */
+    TboObjectText *text;
+    GdkColor color = { 0, 0xffff, 0xffff, 0xffff };
+    text = TBO_OBJECT_TEXT (tbo_object_text_new_with_params (100, 200,
+                                    150, 300, "text", "", &color));
+
+    print_tbo_object (TBO_OBJECT_BASE (text));
+    printf ("text: '%s'\n", text->text->str);
+    printf ("color: '%d, %d, %d'\n", text->font_color->red,
+                                     text->font_color->green,
+                                     text->font_color->blue);
+
+    g_object_unref (text);
+}
+
+int
+main (int argc, char **argv)
+{
+    g_type_init ();
+
+    printf ("\nobject svg\n---------------\n");
+    test_object_svg ();
+    printf ("\nobject text\n--------------\n");
+    test_object_text ();
 
     return 0;
 }
