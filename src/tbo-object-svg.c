@@ -137,7 +137,8 @@ tbo_object_svg_init (TboObjectSvg *self)
 static void
 tbo_object_svg_finalize (GObject *self)
 {
-    g_string_free (TBO_OBJECT_SVG (self)->path, TRUE);
+    if (TBO_OBJECT_SVG (self)->path)
+        g_string_free (TBO_OBJECT_SVG (self)->path, TRUE);
     /* Chain up to the parent class */
     G_OBJECT_CLASS (tbo_object_svg_parent_class)->finalize (self);
 }
