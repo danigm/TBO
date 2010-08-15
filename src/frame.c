@@ -25,7 +25,7 @@
 #include <string.h>
 #include "frame.h"
 #include "tbo-types.h"
-#include "tbo-object.h"
+#include "tbo-object-base.h"
 
 static int BASE_X = 0;
 static int BASE_Y = 0;
@@ -90,8 +90,8 @@ static void
 free_objects (gpointer data,
               gpointer user_data)
 {
-    tbo_object *obj = (tbo_object *)data;
-    obj->free (obj);
+    TboObjectBase *obj = TBO_OBJECT_BASE (data);
+    g_object_unref (obj);
 }
 
 void
@@ -108,7 +108,7 @@ draw_objects (gpointer data,
               gpointer user_data)
 {
     void **pdata = user_data;
-    tbo_object *obj = (tbo_object *)data;
+    TboObjectBase *obj = TBO_OBJECT_BASE (data);
     cairo_t *cr = (cairo_t *)pdata[0];
     Frame *frame = (Frame *)pdata[1];
     obj->draw (obj, frame, cr);
@@ -167,7 +167,7 @@ tbo_frame_point_inside (Frame *frame, int x, int y)
 }
 
 int
-tbo_frame_point_inside_obj (tbo_object *obj, int x, int y)
+tbo_frame_point_inside_obj (TboObjectBase *obj, int x, int y)
 {
     int ox, oy, ow, oh;
 
@@ -221,7 +221,7 @@ tbo_frame_point_inside_obj (tbo_object *obj, int x, int y)
 }
 
 void
-tbo_frame_get_obj_relative (tbo_object *obj, int *x, int *y, int *w, int *h)
+tbo_frame_get_obj_relative (TboObjectBase *obj, int *x, int *y, int *w, int *h)
 {
     *x = (BASE_X + obj->x) * SCALE_FACTOR;
     *w = obj->width * SCALE_FACTOR;
@@ -260,7 +260,7 @@ void tbo_frame_draw_scaled (Frame *frame, cairo_t *cr, int width, int height)
 }
 
 void
-tbo_frame_add_obj (Frame *frame, tbo_object *obj)
+tbo_frame_add_obj (Frame *frame, TboObjectBase *obj)
 {
     frame->objects = g_list_append (frame->objects, obj);
 }
@@ -272,10 +272,10 @@ tbo_frame_get_scale_factor ()
 }
 
 void
-tbo_frame_del_obj (Frame *frame, tbo_object *obj)
+tbo_frame_del_obj (Frame *frame, TboObjectBase *obj)
 {
     frame->objects = g_list_remove (g_list_first (frame->objects), obj);
-    obj->free (obj);
+    g_object_unref (obj);
 }
 
 void
@@ -294,6 +294,7 @@ tbo_frame_save (Frame *frame, FILE *file)
 {
     char buffer[255];
     GList *o;
+    TboObjectBase *obj;
 
     snprintf (buffer, 255, "  <frame x=\"%d\" y=\"%d\" width=\"%d\" "
                            "height=\"%d\" border=\"%d\" "
@@ -305,7 +306,8 @@ tbo_frame_save (Frame *frame, FILE *file)
 
     for (o=g_list_first (frame->objects); o; o = g_list_next(o))
     {
-        tbo_object_save ((tbo_object *) o->data, file);
+        obj = TBO_OBJECT_BASE (o->data);
+        obj->save (obj, file);
     }
 
     snprintf (buffer, 255, "  </frame>\n");
@@ -316,13 +318,13 @@ Frame *
 tbo_frame_clone (Frame *frame)
 {
     GList *o;
-    tbo_object *cur_object;
+    TboObjectBase *cur_object;
     Frame *newframe = tbo_frame_new (frame->x, frame->y,
                                      frame->width, frame->height);
 
     for (o=g_list_first (frame->objects); o; o = g_list_next(o))
     {
-        cur_object = (tbo_object *) o->data;
+        cur_object = TBO_OBJECT_BASE (o->data);
         tbo_frame_add_obj (newframe, cur_object->clone (cur_object));
     }
     newframe->border = frame->border;

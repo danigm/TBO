@@ -28,10 +28,9 @@
 #include "comic.h"
 #include "page.h"
 #include "frame.h"
-#include "tbo-object.h"
-#include "svgimage.h"
-#include "textobj.h"
-#include "piximage.h"
+#include "tbo-object-svg.h"
+#include "tbo-object-text.h"
+#include "tbo-object-pixmap.h"
 #include "tbo-utils.h"
 
 char *TITLE;
@@ -39,7 +38,7 @@ char *TITLE;
 Comic *COMIC = NULL;
 Page *CURRENT_PAGE;
 Frame *CURRENT_FRAME;
-TextObj *CURRENT_TEXT = NULL;
+TboObjectText *CURRENT_TEXT = NULL;
 
 struct attr {
     char *name;
@@ -123,7 +122,8 @@ create_tbo_frame (const gchar **attribute_names, const gchar **attribute_values)
 void
 create_tbo_piximage (const gchar **attribute_names, const gchar **attribute_values)
 {
-    PIXImage *pix;
+    TboObjectPixmap *pix;
+    TboObjectBase *obj;
     int x=0, y=0;
     int width=0, height=0;
     float angle=0.0;
@@ -143,17 +143,19 @@ create_tbo_piximage (const gchar **attribute_names, const gchar **attribute_valu
 
     parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
 
-    pix = tbo_piximage_new_with_params (x, y, width, height, path);
-    pix->angle = angle;
-    pix->flipv = flipv;
-    pix->fliph = fliph;
-    tbo_frame_add_obj (CURRENT_FRAME, pix);
+    pix = TBO_OBJECT_PIXMAP (tbo_object_pixmap_new_with_params (x, y, width, height, path));
+    obj = TBO_OBJECT_BASE (pix);
+    obj->angle = angle;
+    obj->flipv = flipv;
+    obj->fliph = fliph;
+    tbo_frame_add_obj (CURRENT_FRAME, obj);
 }
 
 void
 create_tbo_svgimage (const gchar **attribute_names, const gchar **attribute_values)
 {
-    SVGImage *svg;
+    TboObjectSvg *svg;
+    TboObjectBase *obj;
     int x=0, y=0;
     int width=0, height=0;
     float angle=0.0;
@@ -173,17 +175,20 @@ create_tbo_svgimage (const gchar **attribute_names, const gchar **attribute_valu
 
     parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
 
-    svg = tbo_svgimage_new_with_params (x, y, width, height, path);
-    svg->angle = angle;
-    svg->flipv = flipv;
-    svg->fliph = fliph;
-    tbo_frame_add_obj (CURRENT_FRAME, svg);
+    svg = TBO_OBJECT_SVG (tbo_object_svg_new_with_params (x, y, width, height, path));
+    obj = TBO_OBJECT_BASE (svg);
+    obj->angle = angle;
+    obj->flipv = flipv;
+    obj->fliph = fliph;
+    tbo_frame_add_obj (CURRENT_FRAME, obj);
 }
 
 void
 create_tbo_text (const gchar **attribute_names, const gchar **attribute_values)
 {
-    TextObj *textobj;
+    TboObjectText *textobj;
+    TboObjectBase *obj;
+    GdkColor color;
     int x=0, y=0;
     int width=0, height=0;
     float angle=0.0;
@@ -205,25 +210,30 @@ create_tbo_text (const gchar **attribute_names, const gchar **attribute_values)
         {"b", "%f", &b},
     };
 
-    parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
-    textobj = tbo_text_new_with_params (x, y, width, height, "text", font, r, g, b);
-    textobj->angle = angle;
-    textobj->flipv = flipv;
-    textobj->fliph = fliph;
-    CURRENT_TEXT = textobj;
-    tbo_frame_add_obj (CURRENT_FRAME, textobj);
+    color.red = (int)(r * COLORMAX);
+    color.green = (int)(g * COLORMAX);
+    color.blue = (int)(b * COLORMAX);
 
+    parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
+    textobj = TBO_OBJECT_TEXT (tbo_object_text_new_with_params (x, y, width, height, "text", font, &color));
+    obj = TBO_OBJECT_BASE (textobj);
+    obj->angle = angle;
+    obj->flipv = flipv;
+    obj->fliph = fliph;
+    CURRENT_TEXT = textobj;
+    tbo_frame_add_obj (CURRENT_FRAME, obj);
 }
 
 /* The handler functions. */
 
 void
 start_element (GMarkupParseContext *context,
-        const gchar         *element_name,
-        const gchar        **attribute_names,
-        const gchar        **attribute_values,
-        gpointer             user_data,
-        GError             **error) {
+               const gchar         *element_name,
+               const gchar        **attribute_names,
+               const gchar        **attribute_values,
+               gpointer             user_data,
+               GError             **error)
+{
 
     if (strcmp (element_name, "tbo") == 0)
     {
@@ -262,16 +272,16 @@ text (GMarkupParseContext *context,
     if (CURRENT_TEXT)
     {
         char *text2 = g_strndup (text, text_len);
-        tbo_text_set_text (CURRENT_TEXT, g_strstrip (text2));
+        tbo_object_text_set_text (CURRENT_TEXT, g_strstrip (text2));
         g_free (text2);
     }
 }
 
 void
 end_element (GMarkupParseContext *context,
-        const gchar              *element_name,
-        gpointer                 user_data,
-        GError                   **error)
+             const gchar         *element_name,
+             gpointer             user_data,
+             GError             **error)
 {
     if (strcmp (element_name, "tbo") == 0)
     {

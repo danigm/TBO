@@ -36,7 +36,7 @@
 #include "selector-tool.h"
 #include "doodle-tool.h"
 #include "text-tool.h"
-#include "piximage.h"
+#include "tbo-object-pixmap.h"
 
 static int SELECTED_TOOL = NONE;
 static GtkActionGroup *ACTION_GROUP = NULL;
@@ -317,8 +317,8 @@ add_pix (GtkAction *action, TboWindow *tbo)
     {
         char *filename;
         filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-        PIXImage *piximage = tbo_piximage_new_with_params (0, 0, 0, 0, filename);
-        tbo_frame_add_obj (get_frame_view(), piximage);
+        TboObjectPixmap *piximage = TBO_OBJECT_PIXMAP (tbo_object_pixmap_new_with_params (0, 0, 0, 0, filename));
+        tbo_frame_add_obj (get_frame_view(), TBO_OBJECT_BASE (piximage));
         update_drawing (tbo);
         g_free (filename);
     }

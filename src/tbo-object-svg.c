@@ -132,6 +132,10 @@ static void
 tbo_object_svg_init (TboObjectSvg *self)
 {
     self->path = NULL;
+
+    self->parent_instance.draw = draw;
+    self->parent_instance.save = save;
+    self->parent_instance.clone = clone;
 }
 
 static void
@@ -147,11 +151,6 @@ static void
 tbo_object_svg_class_init (TboObjectSvgClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-    TboObjectBaseClass *object_class = TBO_OBJECT_BASE_CLASS (klass);
-    object_class->draw = draw;
-    object_class->save = save;
-    object_class->clone = clone;
-
     gobject_class->finalize = tbo_object_svg_finalize;
 }
 

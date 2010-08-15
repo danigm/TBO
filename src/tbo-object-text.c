@@ -24,8 +24,6 @@
 #include "tbo-types.h"
 #include "tbo-object-text.h"
 
-#define COLORMAX 65535
-
 G_DEFINE_TYPE (TboObjectText, tbo_object_text, TBO_TYPE_OBJECT_BASE);
 
 static void draw (TboObjectBase *, Frame *, cairo_t *);
@@ -143,6 +141,10 @@ tbo_object_text_init (TboObjectText *self)
     self->text = NULL;
     self->description = NULL;
     self->font_color = NULL;
+
+    self->parent_instance.draw = draw;
+    self->parent_instance.save = save;
+    self->parent_instance.clone = clone;
 }
 
 static void
@@ -163,11 +165,6 @@ static void
 tbo_object_text_class_init (TboObjectTextClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-    TboObjectBaseClass *object_class = TBO_OBJECT_BASE_CLASS (klass);
-    object_class->draw = draw;
-    object_class->save = save;
-    object_class->clone = clone;
-
     gobject_class->finalize = tbo_object_text_finalize;
 }
 
@@ -242,12 +239,6 @@ tbo_object_text_change_color (TboObjectText *self, GdkColor *color)
     if (self->font_color)
         gdk_color_free (self->font_color);
     self->font_color = gdk_color_copy (color);
-}
-
-void
-tbo_object_text_get_color (TboObjectText *self, GdkColor *color)
-{
-    color = self->font_color;
 }
 
 gchar *

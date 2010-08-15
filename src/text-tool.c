@@ -21,14 +21,14 @@
 #include <glib/gi18n.h>
 #include <cairo.h>
 #include "tbo-window.h"
-#include "textobj.h"
+#include "tbo-object-text.h"
 #include "text-tool.h"
 #include "frame.h"
 #include "ui-drawing.h"
 
 static GtkWidget *FONT = NULL;
 static GtkWidget *FONT_COLOR = NULL;
-static TextObj *TEXT_SELECTED = NULL;
+static TboObjectText *TEXT_SELECTED = NULL;
 static GtkTextBuffer *TEXT_BUFFER = NULL;
 
 gboolean
@@ -55,7 +55,7 @@ on_text_change (GtkTextBuffer *buf, TboWindow *tbo)
 
     if (TEXT_SELECTED)
     {
-        tbo_text_set_text (TEXT_SELECTED, gtk_text_buffer_get_text (buf, &start, &end, FALSE));
+        tbo_object_text_set_text (TEXT_SELECTED, gtk_text_buffer_get_text (buf, &start, &end, FALSE));
         update_drawing (tbo);
     }
     return FALSE;
@@ -66,7 +66,7 @@ on_font_change (GtkFontButton *fbutton, TboWindow *tbo)
 {
     if (TEXT_SELECTED)
     {
-        tbo_text_change_font (TEXT_SELECTED, text_tool_get_pango_font ());
+        tbo_object_text_change_font (TEXT_SELECTED, text_tool_get_pango_font ());
         update_drawing (tbo);
     }
     return FALSE;
@@ -77,9 +77,9 @@ on_color_change (GtkColorButton *cbutton, TboWindow *tbo)
 {
     if (TEXT_SELECTED)
     {
-        double r, g, b;
-        text_tool_get_color (&r, &g, &b);
-        tbo_text_change_color (TEXT_SELECTED, r, g, b);
+        GdkColor color;
+        gtk_color_button_get_color (GTK_COLOR_BUTTON (FONT_COLOR), &color);
+        tbo_object_text_change_color (TEXT_SELECTED, &color);
         update_drawing (tbo);
     }
     return FALSE;
@@ -163,15 +163,16 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
     int y = (int)event->y;
     gboolean found = FALSE;
     GList *obj_list;
-    tbo_object * obj;
-    TextObj *text;
+    TboObjectBase *obj;
+    TboObjectText *text;
+    GdkColor color;
 
     for (obj_list = g_list_first (frame->objects); obj_list; obj_list = obj_list->next)
     {
-        obj = (tbo_object *)obj_list->data;
-        if (obj->type == TEXTOBJ && tbo_frame_point_inside_obj (obj, x, y))
+        obj = TBO_OBJECT_BASE (obj_list->data);
+        if (TBO_IS_OBJECT_TEXT (obj) && tbo_frame_point_inside_obj (obj, x, y))
         {
-            text = (TextObj *)obj;
+            text = TBO_OBJECT_TEXT (obj);
             found = TRUE;
         }
     }
@@ -179,12 +180,12 @@ void text_tool_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tb
     {
         x = tbo_frame_get_base_x (x);
         y = tbo_frame_get_base_y (y);
-        text_tool_get_color (&r, &g, &b);
-        text = tbo_text_new_with_params (x, y, 100, 0,
-                                          _("Texto"),
-                                          (char *)text_tool_get_pango_font (),
-                                          r, g, b);
-        tbo_frame_add_obj (frame, text);
+        gtk_color_button_get_color (GTK_COLOR_BUTTON (FONT_COLOR), &color);
+        text = TBO_OBJECT_TEXT (tbo_object_text_new_with_params (x, y, 100, 0,
+                                                _("Text"),
+                                                (gchar *)text_tool_get_pango_font (),
+                                                &color));
+        tbo_frame_add_obj (frame, TBO_OBJECT_BASE (text));
     }
     text_tool_set_selected (text);
     update_drawing (tbo);
@@ -203,7 +204,7 @@ void text_tool_drawing (cairo_t *cr)
 
     if (TEXT_SELECTED)
     {
-        tbo_object *OBJ = TEXT_SELECTED;
+        TboObjectBase *OBJ = TBO_OBJECT_BASE (TEXT_SELECTED);
         cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
         cairo_set_line_width (cr, 1);
         cairo_set_dash (cr, dashes, G_N_ELEMENTS (dashes), 0);
@@ -247,24 +248,12 @@ text_tool_get_pango_font ()
 }
 
 void
-text_tool_get_color (double *r, double *g, double *b)
+text_tool_set_selected (TboObjectText *text)
 {
-    GdkColor color;
-    gtk_color_button_get_color (GTK_COLOR_BUTTON (FONT_COLOR), &color);
-    *r = color.red / 65535.0;
-    *g = color.green / 65535.0;
-    *b = color.blue / 65535.0;
-}
-
-void
-text_tool_set_selected (TextObj *text)
-{
-    GdkColor color;
-    char *str = tbo_text_get_text (text);
+    char *str = tbo_object_text_get_text (text);
     TEXT_SELECTED = NULL;
-    gtk_font_button_set_font_name (GTK_FONT_BUTTON (FONT), tbo_text_get_string (text));
-    tbo_text_get_color (text, &color);
-    gtk_color_button_set_color (GTK_COLOR_BUTTON (FONT_COLOR), &color);
+    gtk_font_button_set_font_name (GTK_FONT_BUTTON (FONT), tbo_object_text_get_string (text));
+    gtk_color_button_set_color (GTK_COLOR_BUTTON (FONT_COLOR), text->font_color);
     gtk_text_buffer_set_text (TEXT_BUFFER, str, -1);
     TEXT_SELECTED = text;
 }

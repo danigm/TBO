@@ -25,12 +25,8 @@ SOURCES = \
 	doodle-treeview.c \
 	tbo-tooltip.c \
 	text-tool.c \
-	textobj.c \
 	export.c \
-	svgimage.c \
-	piximage.c \
 	dnd.c \
-	tbo-object.c \
 	comic-load.c \
 	tbo-utils.c \
 	tbo-files.c \
@@ -52,12 +48,8 @@ SOURCES = \
 	doodle-tool.h \
 	doodle-treeview.h \
 	text-tool.h \
-	svgimage.h \
-	piximage.h \
-	textobj.h \
 	tbo-tooltip.h \
 	dnd.h \
-	tbo-object.h \
 	comic-load.h \
 	tbo-utils.h \
 	export.h \

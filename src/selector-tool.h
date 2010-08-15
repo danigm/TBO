@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
 #include "tbo-window.h"
+#include "tbo-object-base.h"
 
 void selector_tool_on_select (TboWindow *tbo);
 void selector_tool_on_unselect (TboWindow *tbo);
@@ -33,7 +34,7 @@ void selector_tool_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo
 void selector_tool_drawing (cairo_t *cr);
 
 Frame *selector_tool_get_selected_frame ();
-tbo_object *selector_tool_get_selected_obj ();
+TboObjectBase *selector_tool_get_selected_obj ();
 void frame_view_on_move (GtkWidget *widget, GdkEventMotion *event, TboWindow *tbo);
 void page_view_on_move (GtkWidget *widget, GdkEventMotion *event, TboWindow *tbo);
 void frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo);

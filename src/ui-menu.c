@@ -33,6 +33,7 @@
 #include "comic.h"
 #include "frame.h"
 #include "page.h"
+#include "tbo-object-base.h"
 
 static GtkActionGroup *MENU_ACTION_GROUP = NULL;
 
@@ -46,7 +47,7 @@ update_menubar (TboWindow *tbo)
     int obj_n_elements = 4;
     gboolean activated = FALSE;
 
-    tbo_object *obj = selector_tool_get_selected_obj ();
+    TboObjectBase *obj = selector_tool_get_selected_obj ();
     Frame *frame = selector_tool_get_selected_frame ();
 
     if (!MENU_ACTION_GROUP)
@@ -86,7 +87,7 @@ gboolean menu_handler (GtkWidget *widget, gpointer data){
 gboolean
 clone_obj_cb (GtkWidget *widget, gpointer data)
 {
-    tbo_object *obj = selector_tool_get_selected_obj ();
+    TboObjectBase *obj = selector_tool_get_selected_obj ();
     Frame *frame = selector_tool_get_selected_frame ();
     Page *page = tbo_comic_get_current_page (((TboWindow*)data)->comic);
 
@@ -100,7 +101,7 @@ clone_obj_cb (GtkWidget *widget, gpointer data)
     }
     else if (obj && get_frame_view ())
     {
-        tbo_object *cloned_obj = obj->clone (obj);
+        TboObjectBase *cloned_obj = obj->clone (obj);
         cloned_obj->x += 10;
         cloned_obj->y -= 10;
         tbo_frame_add_obj (frame, cloned_obj);
@@ -115,7 +116,7 @@ delete_obj_cb (GtkWidget *widget, gpointer data)
 {
     TboWindow *tbo = (TboWindow *)data;
 
-    tbo_object *obj = selector_tool_get_selected_obj ();
+    TboObjectBase *obj = selector_tool_get_selected_obj ();
     Frame *frame = selector_tool_get_selected_frame ();
     Page *page = tbo_comic_get_current_page (((TboWindow*)data)->comic);
 
@@ -136,9 +137,9 @@ delete_obj_cb (GtkWidget *widget, gpointer data)
 gboolean
 flip_v_cb (GtkWidget *widget, gpointer data)
 {
-    tbo_object *obj = selector_tool_get_selected_obj ();
+    TboObjectBase *obj = selector_tool_get_selected_obj ();
     if (obj)
-        tbo_object_flipv (obj);
+        tbo_object_base_flipv (obj);
     update_drawing ((TboWindow *)data);
     return FALSE;
 }
@@ -146,9 +147,9 @@ flip_v_cb (GtkWidget *widget, gpointer data)
 gboolean
 flip_h_cb (GtkWidget *widget, gpointer data)
 {
-    tbo_object *obj = selector_tool_get_selected_obj ();
+    TboObjectBase *obj = selector_tool_get_selected_obj ();
     if (obj)
-        tbo_object_fliph (obj);
+        tbo_object_base_fliph (obj);
     update_drawing ((TboWindow *)data);
     return FALSE;
 }
@@ -156,9 +157,9 @@ flip_h_cb (GtkWidget *widget, gpointer data)
 gboolean
 order_up_cb (GtkWidget *widget, gpointer data)
 {
-    tbo_object *obj = selector_tool_get_selected_obj ();
+    TboObjectBase *obj = selector_tool_get_selected_obj ();
     if (obj)
-        tbo_object_order_up (obj);
+        tbo_object_base_order_up (obj);
     update_drawing ((TboWindow *)data);
     return FALSE;
 }
@@ -166,9 +167,9 @@ order_up_cb (GtkWidget *widget, gpointer data)
 gboolean
 order_down_cb (GtkWidget *widget, gpointer data)
 {
-    tbo_object *obj = selector_tool_get_selected_obj ();
+    TboObjectBase *obj = selector_tool_get_selected_obj ();
     if (obj)
-        tbo_object_order_down (obj);
+        tbo_object_base_order_down (obj);
     update_drawing ((TboWindow *)data);
     return FALSE;
 }

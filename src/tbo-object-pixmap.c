@@ -48,7 +48,7 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
     float factorh = (float)self->height / (float)h;
 
     cairo_matrix_t mx = {1, 0, 0, 1, 0, 0};
-    tbo_object_get_flip_matrix (self, &mx);
+    tbo_object_base_get_flip_matrix (self, &mx);
 
     cairo_rectangle(cr, frame->x+2, frame->y+2, frame->width-4, frame->height-4);
     cairo_clip (cr);
@@ -111,6 +111,10 @@ static void
 tbo_object_pixmap_init (TboObjectPixmap *self)
 {
     self->path = NULL;
+
+    self->parent_instance.draw = draw;
+    self->parent_instance.save = save;
+    self->parent_instance.clone = clone;
 }
 
 static void
@@ -126,11 +130,6 @@ static void
 tbo_object_pixmap_class_init (TboObjectPixmapClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-    TboObjectBaseClass *object_class = TBO_OBJECT_BASE_CLASS (klass);
-    object_class->draw = draw;
-    object_class->save = save;
-    object_class->clone = clone;
-
     gobject_class->finalize = tbo_object_pixmap_finalize;
 }
 

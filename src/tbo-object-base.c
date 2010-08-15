@@ -58,14 +58,15 @@ tbo_object_base_init (TboObjectBase *self)
     self->angle = 0.0;
     self->flipv = FALSE;
     self->fliph = FALSE;
+
+    self->draw = draw;
+    self->save = save;
+    self->clone = clone;
 }
 
 static void
 tbo_object_base_class_init (TboObjectBaseClass *klass)
 {
-    klass->draw = draw;
-    klass->save = save;
-    klass->clone = clone;
 }
 
 /* object functions */

@@ -25,7 +25,7 @@
 #include "selector-tool.h"
 #include "tbo-window.h"
 #include "tbo-types.h"
-#include "tbo-object.h"
+#include "tbo-object-base.h"
 #include "page.h"
 #include "frame.h"
 #include "comic.h"
@@ -36,7 +36,7 @@
 #define R_SIZE 10
 
 static Frame *SELECTED = NULL;
-static tbo_object *OBJ = NULL;
+static TboObjectBase *OBJ = NULL;
 static int START_X=0, START_Y=0;
 static int START_M_X=0, START_M_Y=0;
 static int START_M_W=0, START_M_H=0;
@@ -163,7 +163,7 @@ set_selected (Frame *frame, TboWindow *tbo)
 }
 
 void
-set_selected_obj (tbo_object *obj, TboWindow *tbo)
+set_selected_obj (TboObjectBase *obj, TboWindow *tbo)
 {
     OBJ = obj;
     update_menubar (tbo);
@@ -193,7 +193,7 @@ over_resizer (Frame *frame, int x, int y)
 }
 
 gboolean
-over_resizer_obj (tbo_object *obj, int x, int y)
+over_resizer_obj (TboObjectBase *obj, int x, int y)
 {
     int rx, ry;
     int ox, oy, ow, oh;
@@ -218,7 +218,7 @@ over_resizer_obj (tbo_object *obj, int x, int y)
 }
 
 gboolean
-over_rotater_obj (tbo_object *obj, int x, int y)
+over_rotater_obj (TboObjectBase *obj, int x, int y)
 {
     int rx, ry;
     int ox, oy, ow, oh;
@@ -328,7 +328,7 @@ frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
     int x, y;
     GList *obj_list;
     Frame *frame;
-    tbo_object *obj;
+    TboObjectBase *obj;
     gboolean found = FALSE;
 
     x = (int)event->x;
@@ -348,7 +348,7 @@ frame_view_on_click (GtkWidget *widget, GdkEventButton *event, TboWindow *tbo)
         frame = get_frame_view ();
         for (obj_list = g_list_first (frame->objects); obj_list; obj_list = obj_list->next)
         {
-            obj = (tbo_object *)obj_list->data;
+            obj = (TboObjectBase *)obj_list->data;
             if (tbo_frame_point_inside_obj (obj, x, y))
             {
                 // Selecting last occurrence.
@@ -483,39 +483,39 @@ frame_view_on_key (GtkWidget *widget, GdkEventKey *event, TboWindow *tbo)
                 set_selected_obj (NULL, tbo);
                 break;
             case GDK_v:
-                tbo_object_flipv (OBJ);
+                tbo_object_base_flipv (OBJ);
                 break;
             case GDK_h:
-                tbo_object_fliph (OBJ);
+                tbo_object_base_fliph (OBJ);
                 break;
             case GDK_Page_Up:
-                tbo_object_order_up (OBJ);
+                tbo_object_base_order_up (OBJ);
                 break;
             case GDK_Page_Down:
-                tbo_object_order_down (OBJ);
+                tbo_object_base_order_down (OBJ);
                 break;
             case GDK_Up:
-                tbo_object_move (OBJ, MOVE_UP);
+                tbo_object_base_move (OBJ, MOVE_UP);
                 break;
             case GDK_less:
-                tbo_object_resize (OBJ, RESIZE_LESS);
+                tbo_object_base_resize (OBJ, RESIZE_LESS);
                 break;
             case GDK_greater:
-                tbo_object_resize (OBJ, RESIZE_GREATER);
+                tbo_object_base_resize (OBJ, RESIZE_GREATER);
                 break;
             case GDK_Down:
-                tbo_object_move (OBJ, MOVE_DOWN);
+                tbo_object_base_move (OBJ, MOVE_DOWN);
                 break;
             case GDK_Left:
-                tbo_object_move (OBJ, MOVE_LEFT);
+                tbo_object_base_move (OBJ, MOVE_LEFT);
                 break;
             case GDK_Right:
-                tbo_object_move (OBJ, MOVE_RIGHT);
+                tbo_object_base_move (OBJ, MOVE_RIGHT);
                 break;
             case GDK_d:
                 if (event->state & GDK_CONTROL_MASK)
                 {
-                    tbo_object *cloned_obj = OBJ->clone (OBJ);
+                    TboObjectBase *cloned_obj = OBJ->clone (OBJ);
                     cloned_obj->x += 10;
                     cloned_obj->y -= 10;
                     tbo_frame_add_obj (SELECTED, cloned_obj);
@@ -789,7 +789,7 @@ selector_tool_get_selected_frame ()
 }
 
 
-tbo_object *
+TboObjectBase *
 selector_tool_get_selected_obj ()
 {
     return OBJ;

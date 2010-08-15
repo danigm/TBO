@@ -22,7 +22,7 @@
 #include "dnd.h"
 #include "ui-drawing.h"
 #include "frame.h"
-#include "svgimage.h"
+#include "tbo-object-svg.h"
 #include "tbo-window.h"
 
 static GtkWidget *DND_IMAGE = NULL;
@@ -69,9 +69,9 @@ drag_data_received_handl (GtkWidget *widget,
                 adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
                 int ry = tbo_frame_get_base_y ((y + gtk_adjustment_get_value(adj)) / zoom);
 
-                SVGImage *svgimage = tbo_svgimage_new_with_params (rx, ry, 0, 0, _sdata);
+                TboObjectSvg *svgimage = TBO_OBJECT_SVG (tbo_object_svg_new_with_params (rx, ry, 0, 0, _sdata));
                 update_drawing (tbo);
-                tbo_frame_add_obj (frame, svgimage);
+                tbo_frame_add_obj (frame, TBO_OBJECT_BASE (svgimage));
 
                 dnd_success = TRUE;
                 break;

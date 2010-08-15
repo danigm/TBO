@@ -41,6 +41,7 @@ int main (int argc, char**argv){
     tbo = tbo_new_tbo (800, 450);
     if (argc == 2)
         tbo_comic_open (tbo, argv[1]);
+
     gtk_main ();
 
     return 0;

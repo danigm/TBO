@@ -49,6 +49,10 @@ struct _TboObjectBase
     gdouble angle;
     gboolean flipv;
     gboolean fliph;
+
+    void (*draw) (TboObjectBase *, Frame *, cairo_t *);
+    void (*save) (TboObjectBase *, FILE *);
+    TboObjectBase * (*clone) (TboObjectBase *);
 };
 
 struct _TboObjectBaseClass
@@ -56,9 +60,6 @@ struct _TboObjectBaseClass
     GObjectClass parent_class;
 
     /* class members */
-    void (*draw) (TboObjectBase *, Frame *, cairo_t *);
-    void (*save) (TboObjectBase *, FILE *);
-    TboObjectBase * (*clone) (TboObjectBase *);
 };
 
 /* used by TBO_TYPE_OBJECT_BASE */

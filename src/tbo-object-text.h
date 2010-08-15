@@ -31,6 +31,8 @@
 #define TBO_IS_OBJECT_TEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TBO_TYPE_OBJECT_TEXT))
 #define TBO_OBJECT_TEXT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), TBO_TYPE_OBJECT_TEXT, TboObjectTextClass))
 
+#define COLORMAX 65535
+
 typedef struct _TboObjectText      TboObjectText;
 typedef struct _TboObjectTextClass TboObjectTextClass;
 
@@ -70,7 +72,6 @@ gchar * tbo_object_text_get_text (TboObjectText *self);
 void tbo_object_text_set_text (TboObjectText *self, const gchar *text);
 void tbo_object_text_change_font (TboObjectText *self, gchar *font);
 void tbo_object_text_change_color (TboObjectText *self, GdkColor *color);
-void tbo_object_text_get_color (TboObjectText *self, GdkColor *color);
 gchar * tbo_object_text_get_string (TboObjectText *self);
 
 #endif /* __TBO_OBJECT_TEXT_H__ */
