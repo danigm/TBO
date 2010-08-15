@@ -2,6 +2,7 @@
 #include "tbo-object-base.h"
 #include "tbo-object-svg.h"
 #include "tbo-object-text.h"
+#include "tbo-object-pixmap.h"
 
 void
 print_tbo_object (TboObjectBase *obj)
@@ -49,6 +50,21 @@ test_object_text ()
     g_object_unref (text);
 }
 
+void
+test_object_pixmap ()
+{
+    TboObjectPixmap *pixmap = TBO_OBJECT_PIXMAP (tbo_object_pixmap_new ());
+
+    /* pixmap object with params */
+    pixmap = TBO_OBJECT_PIXMAP (tbo_object_pixmap_new_with_params (100, 200,
+                                150, 300, "/path/to/pngfile.png"));
+
+    print_tbo_object (TBO_OBJECT_BASE (pixmap));
+    printf ("path: '%s'\n", pixmap->path->str);
+
+    g_object_unref (pixmap);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -58,6 +74,8 @@ main (int argc, char **argv)
     test_object_svg ();
     printf ("\nobject text\n--------------\n");
     test_object_text ();
+    printf ("\nobject pixmap\n--------------\n");
+    test_object_pixmap ();
 
     return 0;
 }

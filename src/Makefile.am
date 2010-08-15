@@ -68,6 +68,8 @@ SOURCES = \
 	tbo-object-svg.c \
 	tbo-object-text.h \
 	tbo-object-text.c \
+	tbo-object-pixmap.h \
+	tbo-object-pixmap.c \
 	custom-stock.h
 
 AM_CFLAGS = @GTK_CFLAGS@ \
