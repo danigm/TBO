@@ -22,7 +22,7 @@
 #include <gtk/gtk.h>
 #include <glib.h>
 #include <cairo.h>
-#include "ui-drawing.h"
+#include "tbo-drawing.h"
 #include "tbo-tooltip.h"
 #include "tbo-window.h"
 
@@ -108,7 +108,7 @@ tbo_tooltip_set (const char *tooltip, int x, int y, TboWindow *tbo)
         }
     }
 
-    update_drawing (tbo);
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
 }
 
 GString *

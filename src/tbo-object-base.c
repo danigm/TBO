@@ -20,7 +20,6 @@
 #include <glib.h>
 #include <cairo.h>
 #include <stdio.h>
-#include <ui-drawing.h>
 #include "tbo-types.h"
 #include "tbo-object-base.h"
 
@@ -116,9 +115,8 @@ tbo_object_base_get_flip_matrix (TboObjectBase *self, cairo_matrix_t *mx)
 }
 
 void
-tbo_object_base_order_down (TboObjectBase *self)
+tbo_object_base_order_down (TboObjectBase *self, Frame *frame)
 {
-    Frame *frame = get_frame_view ();
     GList *list = g_list_find (frame->objects, self);
     GList *prev = g_list_previous (list);
     TboObjectBase *tmp;
@@ -131,9 +129,8 @@ tbo_object_base_order_down (TboObjectBase *self)
 }
 
 void
-tbo_object_base_order_up (TboObjectBase *self)
+tbo_object_base_order_up (TboObjectBase *self, Frame *frame)
 {
-    Frame *frame = get_frame_view ();
     GList *list = g_list_find (frame->objects, self);
     GList *next = g_list_next (list);
     TboObjectBase *tmp;

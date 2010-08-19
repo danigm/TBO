@@ -27,9 +27,9 @@
 #include "comic-saveas-dialog.h"
 #include "comic-open-dialog.h"
 #include "tbo-window.h"
-#include "ui-drawing.h"
+#include "tbo-drawing.h"
 #include "export.h"
-#include "selector-tool.h"
+#include "tbo-tool-selector.h"
 #include "comic.h"
 #include "frame.h"
 #include "page.h"
@@ -47,13 +47,18 @@ update_menubar (TboWindow *tbo)
     int obj_n_elements = 4;
     gboolean activated = FALSE;
 
-    TboObjectBase *obj = selector_tool_get_selected_obj ();
-    Frame *frame = selector_tool_get_selected_frame ();
+    if (!tbo->toolbar)
+        return;
+
+    TboDrawing *drawing = TBO_DRAWING (tbo->drawing);
+    TboToolSelector *selector = TBO_TOOL_SELECTOR (tbo->toolbar->tools[TBO_TOOLBAR_SELECTOR]);
+    TboObjectBase *obj = selector->selected_object;
+    Frame *frame = selector->selected_frame;
 
     if (!MENU_ACTION_GROUP)
         return;
 
-    if (get_frame_view () && obj)
+    if (tbo_drawing_get_current_frame (drawing) && obj)
     {
         for (i=0; i<elements; i++)
         {
@@ -61,7 +66,7 @@ update_menubar (TboWindow *tbo)
             gtk_action_set_sensitive (action, TRUE);
         }
     }
-    else if (!get_frame_view () && frame)
+    else if (!tbo_drawing_get_current_frame (drawing) && frame)
     {
         for (i=obj_n_elements; i<elements; i++)
         {
@@ -79,104 +84,107 @@ update_menubar (TboWindow *tbo)
     }
 }
 
-gboolean menu_handler (GtkWidget *widget, gpointer data){
-    printf ("Menu :%s\n", ((TboWindow *) data)->comic->title);
-    return FALSE;
-}
-
 gboolean
-clone_obj_cb (GtkWidget *widget, gpointer data)
+clone_obj_cb (GtkWidget *widget, TboWindow *tbo)
 {
-    TboObjectBase *obj = selector_tool_get_selected_obj ();
-    Frame *frame = selector_tool_get_selected_frame ();
-    Page *page = tbo_comic_get_current_page (((TboWindow*)data)->comic);
+    TboToolSelector *selector = TBO_TOOL_SELECTOR (tbo->toolbar->tools[TBO_TOOLBAR_SELECTOR]);
+    TboObjectBase *obj = selector->selected_object;
+    Frame *frame = selector->selected_frame;
+    Page *page = tbo_comic_get_current_page (tbo->comic);
+    TboDrawing *drawing = TBO_DRAWING (tbo->drawing);
 
-    if (!get_frame_view () && frame)
+    if (!tbo_drawing_get_current_frame (drawing) && frame)
     {
         Frame *cloned_frame = tbo_frame_clone (frame);
         cloned_frame->x += 10;
         cloned_frame->y -= 10;
         tbo_page_add_frame (page, cloned_frame);
-        set_selected (cloned_frame, (TboWindow*)data);
+        tbo_tool_selector_set_selected (selector, cloned_frame);
     }
-    else if (obj && get_frame_view ())
+    else if (obj && tbo_drawing_get_current_frame (drawing))
     {
         TboObjectBase *cloned_obj = obj->clone (obj);
         cloned_obj->x += 10;
         cloned_obj->y -= 10;
         tbo_frame_add_obj (frame, cloned_obj);
-        set_selected_obj (cloned_obj, (TboWindow*)data);
+        tbo_tool_selector_set_selected_obj (selector, cloned_obj);
     }
-    update_drawing ((TboWindow *)data);
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 gboolean
-delete_obj_cb (GtkWidget *widget, gpointer data)
+delete_obj_cb (GtkWidget *widget, TboWindow *tbo)
 {
-    TboWindow *tbo = (TboWindow *)data;
+    TboToolSelector *selector = TBO_TOOL_SELECTOR (tbo->toolbar->tools[TBO_TOOLBAR_SELECTOR]);
+    TboObjectBase *obj = selector->selected_object;
+    Frame *frame = selector->selected_frame;
+    Page *page = tbo_comic_get_current_page (tbo->comic);
+    TboDrawing *drawing = TBO_DRAWING (tbo->drawing);
 
-    TboObjectBase *obj = selector_tool_get_selected_obj ();
-    Frame *frame = selector_tool_get_selected_frame ();
-    Page *page = tbo_comic_get_current_page (((TboWindow*)data)->comic);
-
-    if (obj && get_frame_view ())
+    if (obj && tbo_drawing_get_current_frame (drawing))
     {
         tbo_frame_del_obj (frame, obj);
-        set_selected_obj (NULL, tbo);
+        tbo_tool_selector_set_selected_obj (selector, NULL);
     }
-    else if (!get_frame_view () && frame)
+    else if (!tbo_drawing_get_current_frame (drawing) && frame)
     {
         tbo_page_del_frame (page, frame);
-        set_selected (NULL, tbo);
+        tbo_tool_selector_set_selected (selector, NULL);
     }
-    update_drawing ((TboWindow *)data);
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 gboolean
-flip_v_cb (GtkWidget *widget, gpointer data)
+flip_v_cb (GtkWidget *widget, TboWindow *tbo)
 {
-    TboObjectBase *obj = selector_tool_get_selected_obj ();
+    TboToolSelector *selector = TBO_TOOL_SELECTOR (tbo->toolbar->tools[TBO_TOOLBAR_SELECTOR]);
+    TboObjectBase *obj = selector->selected_object;
     if (obj)
         tbo_object_base_flipv (obj);
-    update_drawing ((TboWindow *)data);
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 gboolean
-flip_h_cb (GtkWidget *widget, gpointer data)
+flip_h_cb (GtkWidget *widget, TboWindow *tbo)
 {
-    TboObjectBase *obj = selector_tool_get_selected_obj ();
+    TboToolSelector *selector = TBO_TOOL_SELECTOR (tbo->toolbar->tools[TBO_TOOLBAR_SELECTOR]);
+    TboObjectBase *obj = selector->selected_object;
     if (obj)
         tbo_object_base_fliph (obj);
-    update_drawing ((TboWindow *)data);
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 gboolean
-order_up_cb (GtkWidget *widget, gpointer data)
+order_up_cb (GtkWidget *widget, TboWindow *tbo)
 {
-    TboObjectBase *obj = selector_tool_get_selected_obj ();
+    TboToolSelector *selector = TBO_TOOL_SELECTOR (tbo->toolbar->tools[TBO_TOOLBAR_SELECTOR]);
+    TboObjectBase *obj = selector->selected_object;
+    Frame *current_frame = selector->selected_frame;
     if (obj)
-        tbo_object_base_order_up (obj);
-    update_drawing ((TboWindow *)data);
+        tbo_object_base_order_up (obj, current_frame);
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 gboolean
-order_down_cb (GtkWidget *widget, gpointer data)
+order_down_cb (GtkWidget *widget, TboWindow *tbo)
 {
-    TboObjectBase *obj = selector_tool_get_selected_obj ();
+    TboToolSelector *selector = TBO_TOOL_SELECTOR (tbo->toolbar->tools[TBO_TOOLBAR_SELECTOR]);
+    TboObjectBase *obj = selector->selected_object;
+    Frame *current_frame = selector->selected_frame;
     if (obj)
-        tbo_object_base_order_down (obj);
-    update_drawing ((TboWindow *)data);
+        tbo_object_base_order_down (obj, current_frame);
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
-gboolean close_cb (GtkWidget *widget, gpointer data){
-    printf ("Ventana cerrada\n");
-    tbo_window_free_cb (widget, NULL, ((TboWindow *) data));
+gboolean close_cb (GtkWidget *widget, TboWindow *tbo)
+{
+    tbo_window_free_cb (widget, NULL, tbo);
     return FALSE;
 }
 
@@ -185,7 +193,7 @@ tutorial_cb (GtkWidget *widget, TboWindow *tbo){
     char *filename = DATA_DIR "/tut.tbo";
     tbo_comic_open (tbo, filename);
     tbo_window_set_path (tbo, filename);
-    update_drawing (tbo);
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
     tbo_window_update_status (tbo, 0, 0);
     return FALSE;
 }

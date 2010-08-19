@@ -25,7 +25,7 @@
 #include <string.h>
 
 #include "export.h"
-#include "ui-drawing.h"
+#include "tbo-drawing.h"
 #include "tbo-ui-utils.h"
 #include "tbo-types.h"
 
@@ -244,7 +244,7 @@ tbo_export (TboWindow *tbo)
             cairo_scale (cr, scale, scale);
 
             // drawing the stuff
-            tbo_drawing_draw_page (cr, (Page *)page_list->data, width/scale, height/scale);
+            tbo_drawing_draw_page (TBO_DRAWING (tbo->drawing), cr, (Page *)page_list->data, width/scale, height/scale);
 
             if (strcmp (export_to, "pdf") == 0)
                 cairo_show_page (cr);

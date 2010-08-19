@@ -59,5 +59,8 @@ typedef struct
 
 } Frame;
 
+struct _TboWindow;
+typedef struct _TboWindow TboWindow;
+
 #endif
 

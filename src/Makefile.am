@@ -15,16 +15,10 @@ SOURCES = \
 	comic-open-dialog.c \
 	frame.c \
 	page.c \
-	ui-drawing.c \
 	ui-menu.c \
-	ui-toolbar.c \
-	frame-tool.c \
-	selector-tool.c \
-	doodle-tool.c \
 	custom-stock.c \
 	doodle-treeview.c \
 	tbo-tooltip.c \
-	text-tool.c \
 	export.c \
 	dnd.c \
 	comic-load.c \
@@ -40,14 +34,8 @@ SOURCES = \
 	frame.h \
 	page.h \
 	tbo-types.h \
-	ui-drawing.h \
 	ui-menu.h \
-	ui-toolbar.h \
-	frame-tool.h \
-	selector-tool.h \
-	doodle-tool.h \
 	doodle-treeview.h \
-	text-tool.h \
 	tbo-tooltip.h \
 	dnd.h \
 	comic-load.h \
@@ -62,6 +50,22 @@ SOURCES = \
 	tbo-object-text.c \
 	tbo-object-pixmap.h \
 	tbo-object-pixmap.c \
+	tbo-tool-base.h \
+	tbo-tool-base.c \
+	tbo-tool-selector.h \
+	tbo-tool-selector.c \
+	tbo-tool-frame.h \
+	tbo-tool-frame.c \
+	tbo-tool-doodle.h \
+	tbo-tool-doodle.c \
+	tbo-tool-bubble.h \
+	tbo-tool-bubble.c \
+	tbo-tool-text.h \
+	tbo-tool-text.c \
+	tbo-toolbar.h \
+	tbo-toolbar.c \
+	tbo-drawing.h \
+	tbo-drawing.c \
 	custom-stock.h
 
 AM_CFLAGS = @GTK_CFLAGS@ \

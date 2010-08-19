@@ -21,9 +21,10 @@
 #define __TBO_WINDOW__
 
 #include <gtk/gtk.h>
+#include "tbo-toolbar.h"
 #include "tbo-types.h"
 
-typedef struct
+struct _TboWindow
 {
     GtkWidget *window;
     GtkWidget *dw_scroll;
@@ -33,9 +34,10 @@ typedef struct
     GtkWidget *drawing;
     GtkWidget *status;
     GtkWidget *vbox;
+    TboToolbar *toolbar;
     Comic *comic;
     char *path;
-} TboWindow;
+};
 
 TboWindow *tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll, GtkWidget *scroll2, GtkWidget *notebook, GtkWidget *toolarea, GtkWidget *status, GtkWidget *vbox, Comic *comic);
 void tbo_window_free (TboWindow *tbo);
@@ -45,6 +47,7 @@ TboWindow * tbo_new_tbo (int width, int height);
 void tbo_window_update_status (TboWindow *tbo, int x, int y);
 void tbo_empty_tool_area (TboWindow *tbo);
 void tbo_window_set_path (TboWindow *tbo, const char *path);
+void tbo_window_set_current_tab_page (TboWindow *tbo, gboolean setit);
 GtkWidget *create_darea (TboWindow *tbo);
 
 #endif

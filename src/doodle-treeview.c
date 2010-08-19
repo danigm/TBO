@@ -22,7 +22,7 @@
 #include <sys/stat.h>
 #include <gtk/gtk.h>
 #include "tbo-object-svg.h"
-#include "ui-drawing.h"
+#include "tbo-drawing.h"
 #include "frame.h"
 #include "doodle-treeview.h"
 #include "dnd.h"
@@ -60,10 +60,10 @@ on_doodle_click_cb (GtkWidget      *widget,
                     GdkEventButton *event,
                     gpointer       *data)
 {
-    Frame *frame = get_frame_view ();
-    TboObjectSvg *svgimage = tbo_object_svg_new_with_params (0, 0, 0, 0, (char*)data);
+    Frame *frame = tbo_drawing_get_current_frame (TBO_DRAWING (TBO->drawing));
+    TboObjectSvg *svgimage = TBO_OBJECT_SVG (tbo_object_svg_new_with_params (0, 0, 0, 0, (gchar*)data));
     tbo_frame_add_obj (frame, TBO_OBJECT_BASE (svgimage));
-    update_drawing (TBO);
+    tbo_drawing_update (TBO_DRAWING (TBO->drawing));
 }
 
 void

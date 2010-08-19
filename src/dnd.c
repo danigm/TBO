@@ -20,7 +20,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include "dnd.h"
-#include "ui-drawing.h"
+#include "tbo-drawing.h"
 #include "frame.h"
 #include "tbo-object-svg.h"
 #include "tbo-window.h"
@@ -37,7 +37,7 @@ drag_data_received_handl (GtkWidget *widget,
                           TboWindow *tbo)
 {
     GtkAdjustment *adj;
-    float zoom = tbo_drawing_get_zoom ();
+    float zoom = tbo_drawing_get_zoom (TBO_DRAWING (tbo->drawing));
     glong   *_idata;
     gchar   *_sdata;
 
@@ -63,14 +63,14 @@ drag_data_received_handl (GtkWidget *widget,
             case TARGET_STRING:
                 _sdata = (gchar*)selection_data->data;
 
-                Frame *frame = get_frame_view ();
+                Frame *frame = tbo_drawing_get_current_frame (TBO_DRAWING (tbo->drawing));
                 adj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
                 int rx = tbo_frame_get_base_x ((x + gtk_adjustment_get_value(adj)) / zoom);
                 adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
                 int ry = tbo_frame_get_base_y ((y + gtk_adjustment_get_value(adj)) / zoom);
 
                 TboObjectSvg *svgimage = TBO_OBJECT_SVG (tbo_object_svg_new_with_params (rx, ry, 0, 0, _sdata));
-                update_drawing (tbo);
+                tbo_drawing_update (TBO_DRAWING (tbo->drawing));
                 tbo_frame_add_obj (frame, TBO_OBJECT_BASE (svgimage));
 
                 dnd_success = TRUE;

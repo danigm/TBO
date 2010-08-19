@@ -87,8 +87,8 @@ GObject * tbo_object_base_new ();
 void tbo_object_base_flipv (TboObjectBase *self);
 void tbo_object_base_fliph (TboObjectBase *self);
 void tbo_object_base_get_flip_matrix (TboObjectBase *self, cairo_matrix_t *mx);
-void tbo_object_base_order_down (TboObjectBase *self);
-void tbo_object_base_order_up (TboObjectBase *self);
+void tbo_object_base_order_down (TboObjectBase *self, Frame *frame);
+void tbo_object_base_order_up (TboObjectBase *self, Frame *frame);
 void tbo_object_base_move (TboObjectBase *self, enum MOVE_OPT type);
 void tbo_object_base_resize (TboObjectBase *self, enum RESIZE_OPT type);
 

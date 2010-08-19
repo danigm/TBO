@@ -210,11 +210,10 @@ create_tbo_text (const gchar **attribute_names, const gchar **attribute_values)
         {"b", "%f", &b},
     };
 
+    parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
     color.red = (int)(r * COLORMAX);
     color.green = (int)(g * COLORMAX);
     color.blue = (int)(b * COLORMAX);
-
-    parse_attrs (attrs, G_N_ELEMENTS (attrs), attribute_names, attribute_values);
     textobj = TBO_OBJECT_TEXT (tbo_object_text_new_with_params (x, y, width, height, "text", font, &color));
     obj = TBO_OBJECT_BASE (textobj);
     obj->angle = angle;
@@ -241,8 +240,7 @@ start_element (GMarkupParseContext *context,
     }
     else if (strcmp (element_name, "page") == 0)
     {
-        CURRENT_PAGE = tbo_page_new (COMIC);
-        COMIC->pages = g_list_append (COMIC->pages, CURRENT_PAGE);
+        CURRENT_PAGE = tbo_comic_new_page (COMIC);
     }
     else if (strcmp (element_name, "frame") == 0)
     {
@@ -336,5 +334,6 @@ tbo_comic_load (char *filename)
 
     g_free(text);
     g_markup_parse_context_free (context);
+
     return COMIC;
 }
