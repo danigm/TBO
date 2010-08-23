@@ -43,7 +43,6 @@ static void page_view_on_click (TboToolBase *tool, GtkWidget *widget, GdkEventBu
 static void frame_view_drawing (TboToolBase *tool, cairo_t *cr);
 static void page_view_drawing (TboToolBase *tool, cairo_t *cr);
 static void frame_view_on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event);
-static void page_view_on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event);
 
 /* Definitions */
 
@@ -270,8 +269,6 @@ on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event)
     Frame *frame = tbo_drawing_get_current_frame (drawing);
     if (frame)
         frame_view_on_key (tool, widget, event);
-    else
-        page_view_on_key (tool, widget, event);
 }
 
 static void
@@ -513,30 +510,14 @@ frame_view_on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event)
     {
         switch (event->keyval)
         {
-            case GDK_Delete:
-                tbo_frame_del_obj (self->selected_frame, current_obj);
-                tbo_tool_selector_set_selected_obj (self, NULL);
-                break;
-            case GDK_v:
-                tbo_object_base_flipv (current_obj);
-                break;
-            case GDK_h:
-                tbo_object_base_fliph (current_obj);
-                break;
-            case GDK_Page_Up:
-                tbo_object_base_order_up (current_obj, current_frame);
-                break;
-            case GDK_Page_Down:
-                tbo_object_base_order_down (current_obj, current_frame);
-                break;
-            case GDK_Up:
-                tbo_object_base_move (current_obj, MOVE_UP);
-                break;
             case GDK_less:
                 tbo_object_base_resize (current_obj, RESIZE_LESS);
                 break;
             case GDK_greater:
                 tbo_object_base_resize (current_obj, RESIZE_GREATER);
+                break;
+            case GDK_Up:
+                tbo_object_base_move (current_obj, MOVE_UP);
                 break;
             case GDK_Down:
                 tbo_object_base_move (current_obj, MOVE_DOWN);
@@ -547,55 +528,11 @@ frame_view_on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event)
             case GDK_Right:
                 tbo_object_base_move (current_obj, MOVE_RIGHT);
                 break;
-            case GDK_d:
-                if (event->state & GDK_CONTROL_MASK)
-                {
-                    TboObjectBase *cloned_obj = current_obj->clone (current_obj);
-                    cloned_obj->x += 10;
-                    cloned_obj->y -= 10;
-                    tbo_frame_add_obj (self->selected_frame, cloned_obj);
-                    tbo_tool_selector_set_selected_obj (self, cloned_obj);
-                }
-                break;
             default:
                 break;
         }
     }
     tbo_drawing_update (drawing);
-}
-
-/* page view */
-static void
-page_view_on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event)
-{
-    Page *page;
-
-    TboWindow *tbo = tool->tbo;
-    TboToolSelector *self = TBO_TOOL_SELECTOR (tool);
-    page = tbo_comic_get_current_page (tbo->comic);
-    Frame *selected = self->selected_frame;
-
-    if (selected != NULL && event->keyval == GDK_Delete)
-    {
-        tbo_page_del_frame (page, selected);
-        tbo_tool_selector_set_selected (self, NULL);
-    }
-
-    switch (event->keyval)
-    {
-        case GDK_d:
-            if ((event->state & GDK_CONTROL_MASK) && selected)
-            {
-                Frame *cloned_frame = tbo_frame_clone (selected);
-                cloned_frame->x += 10;
-                cloned_frame->y -= 10;
-                tbo_page_add_frame (page, cloned_frame);
-                tbo_tool_selector_set_selected (self, cloned_frame);
-            }
-            break;
-        default:
-            break;
-    }
 }
 
 static void

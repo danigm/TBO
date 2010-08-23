@@ -99,6 +99,7 @@ clone_obj_cb (GtkWidget *widget, TboWindow *tbo)
         cloned_frame->x += 10;
         cloned_frame->y -= 10;
         tbo_page_add_frame (page, cloned_frame);
+        tbo_toolbar_set_selected_tool (tbo->toolbar, TBO_TOOLBAR_SELECTOR);
         tbo_tool_selector_set_selected (selector, cloned_frame);
     }
     else if (obj && tbo_drawing_get_current_frame (drawing))
@@ -107,6 +108,7 @@ clone_obj_cb (GtkWidget *widget, TboWindow *tbo)
         cloned_obj->x += 10;
         cloned_obj->y -= 10;
         tbo_frame_add_obj (frame, cloned_obj);
+        tbo_toolbar_set_selected_tool (tbo->toolbar, TBO_TOOLBAR_SELECTOR);
         tbo_tool_selector_set_selected_obj (selector, cloned_obj);
     }
     tbo_drawing_update (TBO_DRAWING (tbo->drawing));
@@ -301,6 +303,7 @@ static const GtkActionEntry tbo_menu_entries [] = {
 GtkWidget *generate_menu (TboWindow *window){
     GtkWidget *menu;
     GtkUIManager *manager;
+    GtkAccelGroup *accel;
     GError *error = NULL;
 
     manager = gtk_ui_manager_new ();
@@ -319,6 +322,9 @@ GtkWidget *generate_menu (TboWindow *window){
     gtk_ui_manager_insert_action_group (manager, MENU_ACTION_GROUP, 0);
 
     menu = gtk_ui_manager_get_widget (manager, "/menubar");
+
+    accel = gtk_ui_manager_get_accel_group (manager);
+    gtk_window_add_accel_group (GTK_WINDOW (window->window), accel);
 
     return menu;
 }
