@@ -25,6 +25,11 @@
 #include "tbo-window.h"
 #include "comic.h"
 
+
+static GtkFileFilter * AddFilters (GtkWidget *filechooser);
+static GtkWidget * FileChooserWidget (TboWindow *window);
+
+
 gboolean
 tbo_comic_open_dialog (GtkWidget *widget, TboWindow *window)
 {
@@ -34,23 +39,8 @@ tbo_comic_open_dialog (GtkWidget *widget, TboWindow *window)
     char *filename;
     char buffer[255];
 
-    filechooser = gtk_file_chooser_dialog_new (_("Open"),
-                                               GTK_WINDOW (window->window),
-                                               GTK_FILE_CHOOSER_ACTION_OPEN,
-                                               GTK_STOCK_CANCEL,
-                                               GTK_RESPONSE_CANCEL,
-                                               GTK_STOCK_OPEN,
-                                               GTK_RESPONSE_ACCEPT,
-                                               NULL);
-
-    filter = gtk_file_filter_new ();
-    gtk_file_filter_set_name (filter, _("TBO files"));
-    gtk_file_filter_add_pattern (filter, "*.tbo");
-    gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (filechooser), filter);
-    filter = gtk_file_filter_new ();
-    gtk_file_filter_set_name (filter, _("All files"));
-    gtk_file_filter_add_pattern (filter, "*");
-    gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (filechooser), filter);
+    filechooser = FileChooserWidget (window);
+    filter = AddFilters (filechooser);
 
     response = gtk_dialog_run (GTK_DIALOG (filechooser));
 
@@ -66,4 +56,36 @@ tbo_comic_open_dialog (GtkWidget *widget, TboWindow *window)
     gtk_widget_destroy ((GtkWidget *) filechooser);
 
     return FALSE;
+}
+
+//Return the widget to choose file
+static GtkWidget *
+FileChooserWidget (TboWindow *window)
+{
+    GtkWidget *filechooser;
+    filechooser = gtk_file_chooser_dialog_new (_("Open"),
+                                               GTK_WINDOW (window->window),
+                                               GTK_FILE_CHOOSER_ACTION_OPEN,
+                                               GTK_STOCK_CANCEL,
+                                               GTK_RESPONSE_CANCEL,
+                                               GTK_STOCK_OPEN,
+                                               GTK_RESPONSE_ACCEPT,
+                                               NULL);
+    return filechooser;
+}
+
+//Return the files' filters
+static GtkFileFilter *
+AddFilters (GtkWidget *filechooser)
+{
+    GtkFileFilter *filter;
+    filter = gtk_file_filter_new ();
+    gtk_file_filter_set_name (filter, _("TBO files"));
+    gtk_file_filter_add_pattern (filter, "*.tbo");
+    gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (filechooser), filter);
+    filter = gtk_file_filter_new ();
+    gtk_file_filter_set_name (filter, _("All files"));
+    gtk_file_filter_add_pattern (filter, "*");
+    gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (filechooser), filter);
+    return filter;
 }
