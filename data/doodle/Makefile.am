@@ -98,6 +98,13 @@ spmouth_DATA = southpark/mouth/*.svg
 speyedir = $(datadir)/tbo/doodle/southpark/eye
 speye_DATA = southpark/eye/*.svg
 
+#############
+# FACILWARE #
+#############
+
+facilwarebodydir = $(datadir)/tbo/doodle/facilware/body
+facilwarebody_DATA = facilware/body/*.svg
+
 EXTRA_DIST = \
 	doodle1/body/*.svg \
 	doodle1/mouth/*.svg \
@@ -117,6 +124,7 @@ EXTRA_DIST = \
 	bubble/misc/*.svg \
 	guadalinex/andatuz/*.svg \
 	dgm/body/*.svg \
+	facilware/body/*.svg \
 	arcadia/one/*.svg \
 	political/psoe/*.svg \
 	political/pp/*.svg \

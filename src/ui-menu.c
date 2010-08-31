@@ -215,6 +215,9 @@ about_cb (GtkWidget *widget, TboWindow *tbo){
                               "",
                               "South park style:",
                               "Rafael García <bladecoder@gmail.com>",
+                              "",
+                              "Facilware:",
+                              "VIcente Pons <simpons@gmail.com>",
                               NULL};
 
     gtk_show_about_dialog (GTK_WINDOW (tbo->window),
