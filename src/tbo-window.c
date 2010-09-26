@@ -307,6 +307,10 @@ void
 tbo_window_set_key_binder (TboWindow *tbo, gboolean keyb)
 {
     KEY_BINDER = keyb;
+    if (keyb)
+        tbo_menu_enable_accel_keys (tbo);
+    else
+        tbo_menu_disable_accel_keys (tbo);
 }
 
 void

@@ -36,6 +36,8 @@
 #include "tbo-object-base.h"
 
 static GtkActionGroup *MENU_ACTION_GROUP = NULL;
+static GtkAccelGroup *ACCEL = NULL;
+static gboolean ACCEL_SET = FALSE;
 
 void
 update_menubar (TboWindow *tbo)
@@ -306,7 +308,6 @@ static const GtkActionEntry tbo_menu_entries [] = {
 GtkWidget *generate_menu (TboWindow *window){
     GtkWidget *menu;
     GtkUIManager *manager;
-    GtkAccelGroup *accel;
     GError *error = NULL;
 
     manager = gtk_ui_manager_new ();
@@ -326,9 +327,30 @@ GtkWidget *generate_menu (TboWindow *window){
 
     menu = gtk_ui_manager_get_widget (manager, "/menubar");
 
-    accel = gtk_ui_manager_get_accel_group (manager);
-    gtk_window_add_accel_group (GTK_WINDOW (window->window), accel);
+    ACCEL = gtk_ui_manager_get_accel_group (manager);
+    gtk_window_add_accel_group (GTK_WINDOW (window->window), ACCEL);
+    ACCEL_SET = TRUE;
 
     return menu;
 }
 
+
+void
+tbo_menu_enable_accel_keys (TboWindow *tbo)
+{
+    if (ACCEL && !ACCEL_SET)
+    {
+        gtk_window_add_accel_group (GTK_WINDOW (tbo->window), ACCEL);
+        ACCEL_SET = TRUE;
+    }
+}
+
+void
+tbo_menu_disable_accel_keys (TboWindow *tbo)
+{
+    if (ACCEL && ACCEL_SET)
+    {
+        gtk_window_remove_accel_group (GTK_WINDOW (tbo->window), ACCEL);
+        ACCEL_SET = FALSE;
+    }
+}

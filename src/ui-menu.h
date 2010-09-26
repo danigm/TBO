@@ -25,5 +25,7 @@
 
 GtkWidget *generate_menu (TboWindow *window);
 void update_menubar (TboWindow *tbo);
+void tbo_menu_disable_accel_keys (TboWindow *tbo);
+void tbo_menu_enable_accel_keys (TboWindow *tbo);
 
 #endif
