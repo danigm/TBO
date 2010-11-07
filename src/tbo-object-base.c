@@ -39,6 +39,49 @@ save (TboObjectBase *self, FILE *file)
 {
 }
 
+static void
+move (TboObjectBase *self, enum MOVE_OPT type)
+{
+    switch (type)
+    {
+        case MOVE_UP:
+            self->y -= MOVING_OFFSET;
+            break;
+        case MOVE_DOWN:
+            self->y += MOVING_OFFSET;
+            break;
+        case MOVE_LEFT:
+            self->x -= MOVING_OFFSET;
+            break;
+        case MOVE_RIGHT:
+            self->x += MOVING_OFFSET;
+            break;
+        default:
+            break;
+    }
+}
+
+static void
+resize (TboObjectBase *self, enum RESIZE_OPT type)
+{
+    switch (type)
+    {
+        case RESIZE_LESS:
+            if (self->width > 10 && self->height > 10)
+            {
+                self->width *= 0.95;
+                self->height *= 0.95;
+            }
+            break;
+        case RESIZE_GREATER:
+            self->width *= 1.05;
+            self->height *= 1.05;
+            break;
+        default:
+            break;
+    }
+}
+
 static TboObjectBase *
 clone (TboObjectBase *self)
 {
@@ -61,6 +104,9 @@ tbo_object_base_init (TboObjectBase *self)
     self->draw = draw;
     self->save = save;
     self->clone = clone;
+
+    self->move = move;
+    self->resize = resize;
 }
 
 static void
@@ -145,42 +191,11 @@ tbo_object_base_order_up (TboObjectBase *self, Frame *frame)
 void
 tbo_object_base_move (TboObjectBase *self, enum MOVE_OPT type)
 {
-    switch (type)
-    {
-        case MOVE_UP:
-            self->y -= MOVING_OFFSET;
-            break;
-        case MOVE_DOWN:
-            self->y += MOVING_OFFSET;
-            break;
-        case MOVE_LEFT:
-            self->x -= MOVING_OFFSET;
-            break;
-        case MOVE_RIGHT:
-            self->x += MOVING_OFFSET;
-            break;
-        default:
-            break;
-    }
+    self->move (self, type);
 }
 
 void
 tbo_object_base_resize (TboObjectBase *self, enum RESIZE_OPT type)
 {
-    switch (type)
-    {
-        case RESIZE_LESS:
-            if (self->width > 10 && self->height > 10)
-            {
-                self->width *= 0.95;
-                self->height *= 0.95;
-            }
-            break;
-        case RESIZE_GREATER:
-            self->width *= 1.05;
-            self->height *= 1.05;
-            break;
-        default:
-            break;
-    }
+    self->resize (self, type);
 }

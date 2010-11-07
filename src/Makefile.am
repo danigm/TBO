@@ -50,6 +50,8 @@ SOURCES = \
 	tbo-object-text.c \
 	tbo-object-pixmap.h \
 	tbo-object-pixmap.c \
+	tbo-object-group.h \
+	tbo-object-group.c \
 	tbo-tool-base.h \
 	tbo-tool-base.c \
 	tbo-tool-selector.h \

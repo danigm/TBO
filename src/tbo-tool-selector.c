@@ -26,6 +26,7 @@
 #include "tbo-ui-utils.h"
 #include "tbo-tool-selector.h"
 #include "tbo-drawing.h"
+#include "tbo-object-group.h"
 
 G_DEFINE_TYPE (TboToolSelector, tbo_tool_selector, TBO_TYPE_TOOL_BASE);
 
@@ -305,8 +306,8 @@ frame_view_on_move (TboToolBase *tool, GtkWidget *widget, GdkEventMotion *event)
             // resizing object
             if (self->resizing)
             {
-                self->selected_object->width = abs (self->start_m_w - offset_x);
-                self->selected_object->height = abs (self->start_m_h - offset_y);
+                self->selected_object->width = self->start_m_w - offset_x;
+                self->selected_object->height = self->start_m_h - offset_y;
             }
             else if (self->rotating)
             {
@@ -320,6 +321,20 @@ frame_view_on_move (TboToolBase *tool, GtkWidget *widget, GdkEventMotion *event)
             }
         }
 
+        // updating group object
+        if (TBO_IS_OBJECT_GROUP (self->selected_object))
+        {
+            tbo_object_group_update_status (TBO_OBJECT_GROUP (self->selected_object));
+
+            self->start_x = x;
+            self->start_y = y;
+            self->start_m_x = self->selected_object->x;
+            self->start_m_y = self->selected_object->y;
+            self->start_m_w = self->selected_object->width;
+            self->start_m_h = self->selected_object->height;
+        }
+
+        tbo_object_group_set_vars (self->selected_object);
         // over resizer
         if (over_resizer_obj (self, self->selected_object, x, y))
         {
@@ -338,6 +353,8 @@ frame_view_on_move (TboToolBase *tool, GtkWidget *widget, GdkEventMotion *event)
         {
             self->over_rotater = FALSE;
         }
+        tbo_object_group_unset_vars (self->selected_object);
+
     }
 }
 
@@ -348,7 +365,8 @@ frame_view_on_click (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event
     int x, y;
     GList *obj_list;
     Frame *frame;
-    TboObjectBase *obj;
+    TboObjectBase *obj, *obj2;
+    TboObjectGroup *group;
     TboDrawing *drawing = TBO_DRAWING (tool->tbo->drawing);
     gboolean found = FALSE;
 
@@ -356,6 +374,7 @@ frame_view_on_click (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event
     y = (int)event->y;
 
     // resizing
+    tbo_object_group_set_vars (self->selected_object);
     if (self->selected_object && over_resizer_obj (self, self->selected_object, x, y))
     {
         self->resizing = TRUE;
@@ -367,19 +386,41 @@ frame_view_on_click (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event
     else
     {
         frame = tbo_drawing_get_current_frame (drawing);
+
         for (obj_list = g_list_first (frame->objects); obj_list; obj_list = obj_list->next)
         {
             obj = TBO_OBJECT_BASE (obj_list->data);
+            tbo_object_group_set_vars (obj);
             if (tbo_frame_point_inside_obj (obj, x, y))
             {
                 // Selecting last occurrence.
-                tbo_tool_selector_set_selected_obj (self, obj);
+                obj2 = obj;
                 found = TRUE;
             }
+            tbo_object_group_unset_vars (obj);
         }
+
         if (!found)
             tbo_tool_selector_set_selected_obj (self, NULL);
+        else
+        {
+            if ((event->state & GDK_SHIFT_MASK) && self->selected_object) {
+                if (!TBO_IS_OBJECT_GROUP (self->selected_object))
+                {
+                    group = TBO_OBJECT_GROUP (tbo_object_group_new ());
+                    tbo_frame_add_obj (frame, TBO_OBJECT_BASE (group));
+                    tbo_object_group_add (group, self->selected_object);
+                }
+                else
+                    group = TBO_OBJECT_GROUP (self->selected_object);
+
+                tbo_object_group_add (group, obj2);
+                obj2 = TBO_OBJECT_BASE (group);
+            }
+            tbo_tool_selector_set_selected_obj (self, obj2);
+        }
     }
+    tbo_object_group_unset_vars (self->selected_object);
 
     self->start_x = x;
     self->start_y = y;
@@ -407,12 +448,16 @@ frame_view_drawing (TboToolBase *tool, cairo_t *cr)
     Color *rotater_fill;
     int x, y;
     float r_size;
+    gboolean group = FALSE;
     TboToolSelector *self = TBO_TOOL_SELECTOR (tool);
     TboObjectBase *current_obj = self->selected_object;
     TboDrawing *drawing = TBO_DRAWING (tool->tbo->drawing);
 
     if (current_obj != NULL)
     {
+        if (TBO_IS_OBJECT_GROUP (current_obj))
+            tbo_object_group_set_vars (current_obj);
+
         cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
         cairo_set_line_width (cr, 1);
         cairo_set_dash (cr, dashes, G_N_ELEMENTS (dashes), 0);
@@ -487,6 +532,9 @@ frame_view_drawing (TboToolBase *tool, cairo_t *cr)
             cairo_line_to (cr, self->x, self->y);
             cairo_stroke (cr);
         }
+
+        if (TBO_IS_OBJECT_GROUP (current_obj))
+            tbo_object_group_unset_vars (current_obj);
     }
 }
 
@@ -810,6 +858,12 @@ tbo_tool_selector_set_selected (TboToolSelector *self, Frame *frame)
 void
 tbo_tool_selector_set_selected_obj (TboToolSelector *self, TboObjectBase *obj)
 {
+    if (!obj && TBO_IS_OBJECT_GROUP (self->selected_object))
+    {
+        TboDrawing *drawing = TBO_DRAWING (TBO_TOOL_BASE (self)->tbo->drawing);
+        Frame *frame = tbo_drawing_get_current_frame (drawing);
+        tbo_frame_del_obj (frame, self->selected_object);
+    }
     self->selected_object = obj;
     update_menubar (TBO_TOOL_BASE (self)->tbo);
 }

@@ -37,6 +37,20 @@
 typedef struct _TboObjectBase      TboObjectBase;
 typedef struct _TboObjectBaseClass TboObjectBaseClass;
 
+enum MOVE_OPT
+{
+    MOVE_UP,
+    MOVE_DOWN,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+};
+
+enum RESIZE_OPT
+{
+    RESIZE_LESS,
+    RESIZE_GREATER,
+};
+
 struct _TboObjectBase
 {
     GObject parent_instance;
@@ -53,6 +67,8 @@ struct _TboObjectBase
     void (*draw) (TboObjectBase *, Frame *, cairo_t *);
     void (*save) (TboObjectBase *, FILE *);
     TboObjectBase * (*clone) (TboObjectBase *);
+    void (*move) (TboObjectBase *, enum MOVE_OPT type);
+    void (*resize) (TboObjectBase *, enum RESIZE_OPT type);
 };
 
 struct _TboObjectBaseClass
@@ -68,20 +84,6 @@ GType tbo_object_base_get_type (void);
 /*
  * Method definitions.
  */
-
-enum MOVE_OPT
-{
-    MOVE_UP,
-    MOVE_DOWN,
-    MOVE_LEFT,
-    MOVE_RIGHT,
-};
-
-enum RESIZE_OPT
-{
-    RESIZE_LESS,
-    RESIZE_GREATER,
-};
 
 GObject * tbo_object_base_new ();
 void tbo_object_base_flipv (TboObjectBase *self);
