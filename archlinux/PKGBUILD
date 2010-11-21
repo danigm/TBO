@@ -1,8 +1,8 @@
 # Maintainer: Daniel Garcia <dani@danigm.net>
 
 pkgname=tbo-git
-pkgver=20100725
-pkgrel=2
+pkgver=20101121
+pkgrel=3
 pkgdesc="Gnome easy and fun comic editor"
 arch=('i686' 'x86_64')
 url="http://trac.danigm.net/tbo"
@@ -18,12 +18,12 @@ _gitname="tbo"
 build() {
     if [ -d ${srcdir}/${_gitname} ]
     then
-	msg "Updateing local repository..."
-	cd ${_gitname}
-	git pull origin master || return 1
-	msg "The local files are updated."
+        msg "Updateing local repository..."
+        cd ${_gitname}
+        git pull origin master || return 1
+        msg "The local files are updated."
     else
-	git clone ${_gitroot} ${_gitname}
+        git clone ${_gitroot} ${_gitname}
     fi
     msg "git checkout done or server timeout"
     msg "Starting make..."
