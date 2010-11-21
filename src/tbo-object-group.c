@@ -20,6 +20,7 @@
 #include <glib.h>
 #include <cairo.h>
 #include <stdio.h>
+#include <math.h>
 #include "tbo-types.h"
 #include "tbo-object-group.h"
 
@@ -59,13 +60,13 @@ resize (TboObjectBase *self, enum RESIZE_OPT type)
     {
         obj = TBO_OBJECT_BASE (o->data);
 
-        if ((obj->width < 10 || obj->height < 10) && scale < 1)
+        if ((obj->width <= 2 || obj->height <= 2) && scale < 1)
             break;
 
-        obj->width *= scale;
-        obj->x = minx + (obj->x - minx) * scale;
-        obj->height *= scale;
-        obj->y = miny + (obj->y - miny) * scale;
+        obj->width = round (obj->width * scale);
+        obj->x = round (minx + (obj->x - minx) * scale);
+        obj->height = round (obj->height * scale);
+        obj->y = round (miny + (obj->y - miny) * scale);
     }
 }
 
@@ -187,7 +188,7 @@ void
 tbo_object_group_update_status (TboObjectGroup *self)
 {
     GList *o;
-    gdouble scale = 1.0;
+    gdouble scalex = 1.0, scaley = 1.0;
     TboObjectBase *obj, *tbo_object;
     gint minx=-1, miny=-1, maxx=0, maxy=0;
 
@@ -199,13 +200,21 @@ tbo_object_group_update_status (TboObjectGroup *self)
         obj = TBO_OBJECT_BASE (o->data);
         obj->x += tbo_object->x;
         obj->y += tbo_object->y;
-        // resizing
-        scale = (obj->width + tbo_object->width) / (double) obj->width;
-        obj->width += tbo_object->width;
-        obj->x = minx + (obj->x - minx) * scale;
-        scale =  (obj->height + tbo_object->height) / (double) obj->height;
-        obj->height += tbo_object->height;
-        obj->y = miny + (obj->y - miny) * scale;
+
+
+        if (tbo_object->width)
+        {
+            scalex = (obj->width + tbo_object->width) / (double) obj->width;
+            obj->width += tbo_object->width;
+            obj->x = round (minx + (obj->x - minx) * scalex);
+        }
+
+        if (tbo_object->height)
+        {
+            scaley =  (obj->height + tbo_object->height) / (double) obj->height;
+            obj->height += tbo_object->height;
+            obj->y = round (miny + (obj->y - miny) * scaley);
+        }
     }
 
     tbo_object_group_unset_vars (tbo_object);
