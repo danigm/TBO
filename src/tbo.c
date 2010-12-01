@@ -24,14 +24,15 @@
 
 #include "custom-stock.h"
 #include "tbo-window.h"
+#include "comic.h"
 
 int main (int argc, char**argv){
 
 #ifdef ENABLE_NLS
-	/* Initialize the i18n stuff */
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	textdomain (GETTEXT_PACKAGE);
+    /* Initialize the i18n stuff */
+    bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+    textdomain (GETTEXT_PACKAGE);
 #endif
 
     TboWindow *tbo;

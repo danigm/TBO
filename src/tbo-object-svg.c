@@ -26,6 +26,7 @@
 #include <librsvg/rsvg.h>
 #include <librsvg/rsvg-cairo.h>
 #include "tbo-types.h"
+#include "tbo-files.h"
 #include "tbo-object-svg.h"
 
 G_DEFINE_TYPE (TboObjectSvg, tbo_object_svg, TBO_TYPE_OBJECT_BASE);
@@ -43,7 +44,7 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
     TboObjectSvg *svg = TBO_OBJECT_SVG (self);
     char path[255];
 
-    tbo_files_expand_path (svg->path->str, &path);
+    tbo_files_expand_path (svg->path->str, path);
     rsvg_handle = rsvg_handle_new_from_file (path, &error);
     if (!rsvg_handle)
     {

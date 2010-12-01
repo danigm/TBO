@@ -23,5 +23,6 @@
 char **tbo_files_get_dirs ();
 int tbo_files_prefix_len (char *str);
 void tbo_files_free (char **files);
+void tbo_files_expand_path (char *source, char *dest);
 
 #endif

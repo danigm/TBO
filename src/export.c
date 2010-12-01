@@ -29,7 +29,7 @@
 #include "tbo-ui-utils.h"
 #include "tbo-types.h"
 
-static LOCK = 0;
+static int LOCK = 0;
 
 struct export_spin_args {
     gint current_size;

@@ -38,13 +38,10 @@ drag_data_received_handl (GtkWidget *widget,
 {
     GtkAdjustment *adj;
     float zoom = tbo_drawing_get_zoom (TBO_DRAWING (tbo->drawing));
-    glong   *_idata;
     gchar   *_sdata;
 
     gboolean dnd_success = FALSE;
     gboolean delete_selection_data = FALSE;
-
-    const gchar *name = gtk_widget_get_name (widget);
 
     /* Deal with what we are given from source */
     if ((selection_data != NULL) && (selection_data->length >= 0))

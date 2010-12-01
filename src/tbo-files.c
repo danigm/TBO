@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tbo-files.h"
+#include <glib.h>
 
 char **tbo_files_get_dirs ()
 {

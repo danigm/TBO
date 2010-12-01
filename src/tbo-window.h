@@ -49,5 +49,6 @@ void tbo_empty_tool_area (TboWindow *tbo);
 void tbo_window_set_path (TboWindow *tbo, const char *path);
 void tbo_window_set_current_tab_page (TboWindow *tbo, gboolean setit);
 GtkWidget *create_darea (TboWindow *tbo);
+void tbo_window_set_key_binder (TboWindow *tbo, gboolean keyb);
 
 #endif

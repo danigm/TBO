@@ -320,6 +320,7 @@ tbo_comic_load (char *filename)
                 GTK_MESSAGE_ERROR,
                 GTK_BUTTONS_CLOSE,
                 _("Couldn't load file"));
+        gtk_dialog_run (GTK_DIALOG (dialog));
         return NULL;
     }
 
@@ -329,6 +330,7 @@ tbo_comic_load (char *filename)
                 GTK_MESSAGE_ERROR,
                 GTK_BUTTONS_CLOSE,
                 _("Couldn't parse file"));
+        gtk_dialog_run (GTK_DIALOG (dialog));
         return NULL;
     }
 

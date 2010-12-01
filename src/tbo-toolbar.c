@@ -27,6 +27,13 @@
 #include "comic-saveas-dialog.h"
 #include "custom-stock.h"
 #include "tbo-drawing.h"
+#include "frame.h"
+#include "tbo-tool-selector.h"
+#include "tbo-tool-frame.h"
+#include "tbo-tool-doodle.h"
+#include "tbo-tool-bubble.h"
+#include "tbo-tool-text.h"
+#include "ui-menu.h"
 
 G_DEFINE_TYPE (TboToolbar, tbo_toolbar, G_TYPE_OBJECT);
 
@@ -230,7 +237,6 @@ static const GtkToggleActionEntry tbo_tools_toggle_entries [] = {
 static void
 unselect_tool (TboToolbar *self)
 {
-    int i;
     GtkToggleAction *action;
 
     if (!self->selected_tool)

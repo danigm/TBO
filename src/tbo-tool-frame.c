@@ -19,6 +19,8 @@
 
 #include <math.h>
 #include "frame.h"
+#include "page.h"
+#include "comic.h"
 #include "tbo-tool-frame.h"
 #include "tbo-drawing.h"
 

@@ -29,6 +29,7 @@
 #include "page.h"
 #include "tbo-tool-bubble.h"
 #include "tbo-tool-doodle.h"
+#include "tbo-tooltip.h"
 
 G_DEFINE_TYPE (TboDrawing, tbo_drawing, GTK_TYPE_LAYOUT);
 
@@ -37,7 +38,6 @@ static gboolean
 expose_event (GtkWidget *widget, GdkEventExpose *event)
 {
     cairo_t *cr;
-    GdkWindow *window;
     gint w, h;
     TboDrawing *self = TBO_DRAWING (widget);
 

@@ -17,6 +17,8 @@
  */
 
 #include <glib/gi18n.h>
+#include "frame.h"
+#include "tbo-window.h"
 #include "tbo-drawing.h"
 #include "tbo-object-base.h"
 #include "tbo-tool-text.h"
@@ -161,7 +163,6 @@ on_unselect (TboToolBase *tool)
 static void
 on_click (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event)
 {
-    double r, g, b;
     int x = (int)event->x;
     int y = (int)event->y;
     gboolean found = FALSE;
@@ -200,7 +201,6 @@ static void
 drawing (TboToolBase *tool, cairo_t *cr)
 {
     const double dashes[] = {5, 5};
-    int x, y;
     TboToolText *self = TBO_TOOL_TEXT (tool);
 
     if (self->text_selected)

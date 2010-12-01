@@ -31,6 +31,7 @@ static TboObjectBase * clone (TboObjectBase *);
 static TboObjectBase *
 clone (TboObjectBase *self)
 {
+    return NULL;
 }
 
 static void tbo_object_group_get_base (TboObjectGroup *self, gint *minx, gint *miny, gint *maxx, gint *maxy);

@@ -25,6 +25,7 @@
 #include "tbo-types.h"
 #include "tbo-window.h"
 #include "comic.h"
+#include "page.h"
 #include "ui-menu.h"
 #include "tbo-toolbar.h"
 #include "tbo-drawing.h"
@@ -181,7 +182,6 @@ create_darea (TboWindow *tbo)
 {
     GtkWidget *scrolled;
     GtkWidget *darea;
-    int width=tbo->comic->width, height=tbo->comic->height;
 
     scrolled = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -211,8 +211,6 @@ tbo_new_tbo (int width, int height)
     GtkWidget *status;
     GtkWidget *hpaned;
     GtkWidget *notebook;
-
-    GtkUIManager *manager;
 
     NWINDOWS++;
 

@@ -64,6 +64,8 @@ on_doodle_click_cb (GtkWidget      *widget,
     TboObjectSvg *svgimage = TBO_OBJECT_SVG (tbo_object_svg_new_with_params (0, 0, 0, 0, (gchar*)data));
     tbo_frame_add_obj (frame, TBO_OBJECT_BASE (svgimage));
     tbo_drawing_update (TBO_DRAWING (TBO->drawing));
+
+    return FALSE;
 }
 
 void
@@ -96,7 +98,7 @@ get_files (gchar *base_dir, gboolean isdir, gboolean bubble_mode)
 
     GDir *dir = g_dir_open (base_dir, 0, &error);
 
-    while (filename = g_dir_read_name (dir))
+    while ((filename = g_dir_read_name (dir)))
     {
         size_t strsize = sizeof (char) * (strlen (base_dir) + strlen (filename) + 2);
         snprintf (complete_dir, strsize, "%s/%s", base_dir, filename);
@@ -233,7 +235,7 @@ doodle_setup_tree (TboWindow *tbo, gboolean bubble_mode)
 
     dirname = malloc (255*sizeof(char));
     char label_format[255];
-    int i, j, k;
+    int i, k;
 
     vbox = gtk_vbox_new (FALSE, 5);
 

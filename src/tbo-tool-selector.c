@@ -20,6 +20,7 @@
 #include <math.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
+#include <stdlib.h>
 #include "comic.h"
 #include "frame.h"
 #include "page.h"
@@ -27,6 +28,8 @@
 #include "tbo-tool-selector.h"
 #include "tbo-drawing.h"
 #include "tbo-object-group.h"
+#include "ui-menu.h"
+#include "tbo-tooltip.h"
 
 G_DEFINE_TYPE (TboToolSelector, tbo_tool_selector, TBO_TYPE_TOOL_BASE);
 
@@ -448,7 +451,6 @@ frame_view_drawing (TboToolBase *tool, cairo_t *cr)
     Color *rotater_fill;
     int x, y;
     float r_size;
-    gboolean group = FALSE;
     TboToolSelector *self = TBO_TOOL_SELECTOR (tool);
     TboObjectBase *current_obj = self->selected_object;
     TboDrawing *drawing = TBO_DRAWING (tool->tbo->drawing);
@@ -543,7 +545,6 @@ frame_view_on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event)
 {
     TboToolSelector *self = TBO_TOOL_SELECTOR (tool);
     TboObjectBase *current_obj = self->selected_object;
-    Frame *current_frame = self->selected_frame;
     TboDrawing *drawing = TBO_DRAWING (tool->tbo->drawing);
 
     if (self->selected_frame != NULL && event->keyval == GDK_Escape)
@@ -595,7 +596,6 @@ page_view_drawing (TboToolBase *tool, cairo_t *cr)
     int x, y;
     float r_size;
 
-    TboWindow *tbo = tool->tbo;
     TboToolSelector *self = TBO_TOOL_SELECTOR (tool);
     Frame *selected = self->selected_frame;
     TboDrawing *drawing = TBO_DRAWING (tool->tbo->drawing);
@@ -715,7 +715,6 @@ page_view_on_move (TboToolBase *tool, GtkWidget *widget, GdkEventMotion *event)
     TboWindow *tbo = tool->tbo;
     TboToolSelector *self = TBO_TOOL_SELECTOR (tool);
     Frame *selected = self->selected_frame;
-    TboDrawing *drawing = TBO_DRAWING (tool->tbo->drawing);
 
     x = (int)event->x;
     y = (int)event->y;

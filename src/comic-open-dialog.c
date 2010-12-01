@@ -37,7 +37,6 @@ tbo_comic_open_dialog (GtkWidget *widget, TboWindow *window)
     GtkWidget *filechooser;
     GtkFileFilter *filter;
     char *filename;
-    char buffer[255];
 
     filechooser = FileChooserWidget (window);
     filter = AddFilters (filechooser);

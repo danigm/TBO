@@ -47,7 +47,6 @@ update_menubar (TboWindow *tbo)
     char *actions[20] = {"FlipHObj", "FlipVObj", "OrderUpObj", "OrderDownObj", "DeleteObj", "CloneObj"};
     int elements = 6;
     int obj_n_elements = 4;
-    gboolean activated = FALSE;
 
     if (!tbo->toolbar)
         return;
