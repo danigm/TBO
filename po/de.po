@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tbo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-21 10:17+0000\n"
-"PO-Revision-Date: 2010-11-21 17:00+0100\n"
+"POT-Creation-Date: 2010-11-22 19:09+0000\n"
+"PO-Revision-Date: 2010-12-20 14:33+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -188,18 +188,17 @@ msgstr "Auswahl"
 #. Frame view tools
 #: ../src/tbo-toolbar.c:217 ../src/tbo-toolbar.c:218
 msgid "Doodle"
-msgstr ""
+msgstr "Gekritzel"
 
 #: ../src/tbo-toolbar.c:220
 msgid "Booble"
-msgstr ""
+msgstr "Booble"
 
 #: ../src/tbo-toolbar.c:221
 msgid "Bubble"
-msgstr ""
+msgstr "Blase"
 
-#: ../src/tbo-toolbar.c:223 ../src/tbo-toolbar.c:224
-#: ../src/tbo-tool-text.c:190
+#: ../src/tbo-toolbar.c:223 ../src/tbo-toolbar.c:224 ../src/tbo-tool-text.c:190
 msgid "Text"
 msgstr "Text"
 
