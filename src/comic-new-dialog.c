@@ -32,7 +32,7 @@ tbo_comic_new_dialog (GtkWidget *widget, TboWindow *window)
     GtkWidget *label;
     GtkWidget *spin_w;
     GtkWidget *spin_h;
-    GtkObject *adjustment;
+    GtkAdjustment *adjustment;
     gint response;
 
     int width;
@@ -46,9 +46,9 @@ tbo_comic_new_dialog (GtkWidget *widget, TboWindow *window)
                         GTK_STOCK_CANCEL,
                         GTK_RESPONSE_REJECT,
                         NULL);
-    
-    vbox = (GTK_DIALOG (dialog))->vbox;
-    
+
+    vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+
     hbox = gtk_hbox_new (FALSE, FALSE);
     label = gtk_label_new (_("width: "));
     gtk_widget_set_size_request (label, 60, -1);

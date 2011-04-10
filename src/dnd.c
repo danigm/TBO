@@ -38,27 +38,27 @@ drag_data_received_handl (GtkWidget *widget,
 {
     GtkAdjustment *adj;
     float zoom = tbo_drawing_get_zoom (TBO_DRAWING (tbo->drawing));
-    gchar   *_sdata;
+    const gchar   *_sdata;
 
     gboolean dnd_success = FALSE;
     gboolean delete_selection_data = FALSE;
 
     /* Deal with what we are given from source */
-    if ((selection_data != NULL) && (selection_data->length >= 0))
+    if ((selection_data != NULL) && (gtk_selection_data_get_length (selection_data) >= 0))
     {
-        if (context-> action == GDK_ACTION_ASK)
+        if (gdk_drag_context_get_selected_action (context) == GDK_ACTION_ASK)
         {
             /* Ask the user to move or copy, then set the context action. */
         }
 
-        if (context-> action == GDK_ACTION_MOVE)
+        if (gdk_drag_context_get_selected_action (context) == GDK_ACTION_MOVE)
             delete_selection_data = TRUE;
 
         /* Check that we got the format we can use */
         switch (target_type)
         {
             case TARGET_STRING:
-                _sdata = (gchar*)selection_data->data;
+                _sdata = gtk_selection_data_get_data (selection_data);
 
                 Frame *frame = tbo_drawing_get_current_frame (TBO_DRAWING (tbo->drawing));
                 adj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
@@ -66,7 +66,7 @@ drag_data_received_handl (GtkWidget *widget,
                 adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
                 int ry = tbo_frame_get_base_y ((y + gtk_adjustment_get_value(adj)) / zoom);
 
-                TboObjectSvg *svgimage = TBO_OBJECT_SVG (tbo_object_svg_new_with_params (rx, ry, 0, 0, _sdata));
+                TboObjectSvg *svgimage = TBO_OBJECT_SVG (tbo_object_svg_new_with_params (rx, ry, 0, 0, (gchar*)_sdata));
                 tbo_drawing_update (TBO_DRAWING (tbo->drawing));
                 tbo_frame_add_obj (frame, TBO_OBJECT_BASE (svgimage));
 
@@ -99,7 +99,7 @@ drag_data_get_handl (GtkWidget *widget,
     {
         case TARGET_STRING:
             gtk_selection_data_set (selection_data,
-                                    selection_data->target,
+                                    gtk_selection_data_get_target (selection_data),
                                     8*sizeof(char),
                                     (guchar*) svg,
                                     strlen (svg));

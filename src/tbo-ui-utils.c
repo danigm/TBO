@@ -25,7 +25,7 @@ add_spin_with_label (GtkWidget *container, const gchar *string, gint value)
 {
         GtkWidget *label;
         GtkWidget *spin;
-        GtkObject *adjustment;
+        GtkAdjustment *adjustment;
         GtkWidget *hpanel;
 
         hpanel = gtk_hbox_new (FALSE, 0);

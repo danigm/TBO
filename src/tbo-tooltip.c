@@ -153,8 +153,10 @@ void
 tbo_tooltip_set_center_timeout (const char *tooltip, int timeout, TboWindow *tbo)
 {
     int x, y;
-    x = tbo->drawing->allocation.width / 2;
-    y = tbo->drawing->allocation.height / 2;
+    GtkAllocation alloc;
+    gtk_widget_get_allocation (tbo->drawing, &alloc);
+    x = alloc.width / 2;
+    y = alloc.height / 2;
 
     tbo_tooltip_set (tooltip, x, y, tbo);
     g_timeout_add (timeout, quit_tooltip_cb, tbo);

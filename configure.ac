@@ -11,8 +11,8 @@ AM_PROG_CC_C_O
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 
-AM_PATH_GTK_2_0([2.10.0],,AC_MSG_ERROR([Gtk+ 2.10.0 or higher required.]))
-PKG_CHECK_MODULES(PACKAGE, "gtk+-2.0 cairo librsvg-2.0")
+AM_PATH_GTK_3_0([3.0.0],,AC_MSG_ERROR([Gtk+ 3.0.0 or higher required.]))
+PKG_CHECK_MODULES(PACKAGE, "gtk+-3.0 cairo librsvg-2.0")
 
 # *******************************
 # Internationalization

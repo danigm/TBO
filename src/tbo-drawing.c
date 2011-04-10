@@ -35,14 +35,15 @@ G_DEFINE_TYPE (TboDrawing, tbo_drawing, GTK_TYPE_LAYOUT);
 
 /* private methods */
 static gboolean
-expose_event (GtkWidget *widget, GdkEventExpose *event)
+expose_event (GtkWidget *widget, cairo_t *cr1, gpointer dara)
 {
     cairo_t *cr;
     gint w, h;
     TboDrawing *self = TBO_DRAWING (widget);
 
-    cr = gdk_cairo_create(GTK_LAYOUT (widget)->bin_window);
-    gdk_drawable_get_size (GDK_DRAWABLE (GTK_LAYOUT (widget)->bin_window), &w, &h);
+    cr = gdk_cairo_create(gtk_layout_get_bin_window (GTK_LAYOUT (widget)));
+    w = gdk_window_get_width (gtk_layout_get_bin_window (GTK_LAYOUT (widget)));
+    h = gdk_window_get_height (gtk_layout_get_bin_window (GTK_LAYOUT (widget)));
 
     cairo_set_source_rgb (cr, 0, 0, 0);
     cairo_rectangle (cr, 0, 0, w, h);
@@ -145,7 +146,7 @@ tbo_drawing_class_init (TboDrawingClass *klass)
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
     GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-    widget_class->expose_event = expose_event;
+    widget_class->draw = expose_event;
     widget_class->motion_notify_event = motion_notify_event;
     widget_class->button_press_event = button_press_event;
     widget_class->button_release_event = button_release_event;
@@ -176,10 +177,12 @@ tbo_drawing_new_with_params (Comic *comic)
 void
 tbo_drawing_update (TboDrawing *self)
 {
+    GtkAllocation alloc;
+    gtk_widget_get_allocation (GTK_WIDGET (self), &alloc);
     gtk_widget_queue_draw_area (GTK_WIDGET (self),
             0, 0,
-            GTK_WIDGET (self)->allocation.width,
-            GTK_WIDGET (self)->allocation.height);
+            alloc.width,
+            alloc.height);
 }
 
 void
@@ -278,8 +281,10 @@ tbo_drawing_zoom_fit (TboDrawing *self)
 {
     float z1, z2;
     int w, h;
-    w = GTK_WIDGET (self)->allocation.width;
-    h = GTK_WIDGET (self)->allocation.height;
+    GtkAllocation alloc;
+    gtk_widget_get_allocation (GTK_WIDGET (self), &alloc);
+    w = alloc.width;
+    h = alloc.height;
 
     z1 = fabs ((float)w / (float)self->comic->width);
     z2 = fabs ((float)h / (float)self->comic->height);

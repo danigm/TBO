@@ -76,7 +76,7 @@ on_unselect (TboToolBase *tool)
     TboToolDoodle *self = TBO_TOOL_DOODLE (tool);
     TboWindow *tbo = tool->tbo;
 
-    if (GTK_IS_WIDGET (self->tree) && self->tree->parent == GTK_WIDGET (tbo->toolarea))
+    if (GTK_IS_WIDGET (self->tree) && gtk_widget_get_parent (self->tree) == GTK_WIDGET (tbo->toolarea))
     {
         adjust = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (tbo->scroll2));
         self->hadjust = gtk_adjustment_get_value (adjust);

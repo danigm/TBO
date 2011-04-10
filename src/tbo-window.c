@@ -36,7 +36,7 @@ static gboolean KEY_BINDER = TRUE;
 
 static gboolean
 notebook_switch_page_cb (GtkNotebook     *notebook,
-                         GtkNotebookPage *page,
+                         gpointer        *page,
                          guint            page_num,
                          TboWindow        *tbo)
 {
@@ -66,31 +66,31 @@ on_key_cb (GtkWidget    *widget,
     {
         switch (event->keyval)
         {
-            case GDK_plus:
+            case GDK_KEY_plus:
                 tbo_drawing_zoom_in (drawing);
                 break;
-            case GDK_minus:
+            case GDK_KEY_minus:
                 tbo_drawing_zoom_out (drawing);
                 break;
-            case GDK_1:
+            case GDK_KEY_1:
                 tbo_drawing_zoom_100 (drawing);
                 break;
-            case GDK_2:
+            case GDK_KEY_2:
                 tbo_drawing_zoom_fit (drawing);
                 break;
-            case GDK_s:
+            case GDK_KEY_s:
                 tbo_toolbar_set_selected_tool (tbo->toolbar, TBO_TOOLBAR_SELECTOR);
                 break;
-            case GDK_t:
+            case GDK_KEY_t:
                 tbo_toolbar_set_selected_tool (tbo->toolbar, TBO_TOOLBAR_TEXT);
                 break;
-            case GDK_d:
+            case GDK_KEY_d:
                 tbo_toolbar_set_selected_tool (tbo->toolbar, TBO_TOOLBAR_DOODLE);
                 break;
-            case GDK_b:
+            case GDK_KEY_b:
                 tbo_toolbar_set_selected_tool (tbo->toolbar, TBO_TOOLBAR_BUBBLE);
                 break;
-            case GDK_f:
+            case GDK_KEY_f:
                 tbo_toolbar_set_selected_tool (tbo->toolbar, TBO_TOOLBAR_FRAME);
                 break;
             default:

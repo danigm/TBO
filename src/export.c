@@ -157,11 +157,11 @@ tbo_export (TboWindow *tbo)
     spin_args2.scale = &scale;
     g_signal_connect (spinh, "value-changed", G_CALLBACK (export_size_cb), &spin_args2);
 
-    combobox = gtk_combo_box_new_text ();
-    gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), _("guess by extension"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), ".png");
-    gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), ".pdf");
-    gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), ".svg");
+    combobox = gtk_combo_box_text_new ();
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combobox), _("guess by extension"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combobox), ".png");
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combobox), ".pdf");
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combobox), ".svg");
     gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), 0);
     gtk_container_add (GTK_CONTAINER (vbox), combobox);
 

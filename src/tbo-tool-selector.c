@@ -547,7 +547,7 @@ frame_view_on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event)
     TboObjectBase *current_obj = self->selected_object;
     TboDrawing *drawing = TBO_DRAWING (tool->tbo->drawing);
 
-    if (self->selected_frame != NULL && event->keyval == GDK_Escape)
+    if (self->selected_frame != NULL && event->keyval == GDK_KEY_Escape)
     {
         tbo_tool_selector_set_selected (self, NULL);
         tbo_drawing_set_current_frame (drawing, NULL);
@@ -559,22 +559,22 @@ frame_view_on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event)
     {
         switch (event->keyval)
         {
-            case GDK_less:
+            case GDK_KEY_less:
                 tbo_object_base_resize (current_obj, RESIZE_LESS);
                 break;
-            case GDK_greater:
+            case GDK_KEY_greater:
                 tbo_object_base_resize (current_obj, RESIZE_GREATER);
                 break;
-            case GDK_Up:
+            case GDK_KEY_Up:
                 tbo_object_base_move (current_obj, MOVE_UP);
                 break;
-            case GDK_Down:
+            case GDK_KEY_Down:
                 tbo_object_base_move (current_obj, MOVE_DOWN);
                 break;
-            case GDK_Left:
+            case GDK_KEY_Left:
                 tbo_object_base_move (current_obj, MOVE_LEFT);
                 break;
-            case GDK_Right:
+            case GDK_KEY_Right:
                 tbo_object_base_move (current_obj, MOVE_RIGHT);
                 break;
             default:
