@@ -27,13 +27,15 @@
 char **tbo_files_get_dirs ()
 {
     // Possible doodle dirs
-    char **possible_dirs = malloc (3*sizeof(char*));
+    char **possible_dirs = malloc (4*sizeof(char*));
     possible_dirs[0] = malloc (255*sizeof(char*));
     possible_dirs[1] = malloc (255*sizeof(char*));
-    possible_dirs[2] = NULL;
+    possible_dirs[2] = malloc (255*sizeof(char*));
+    possible_dirs[3] = NULL;
 
     strcat (strcpy (possible_dirs[0], getenv("HOME")), "/.tbo/doodle");
-    strcpy (possible_dirs[1], DATA_DIR "/doodle");
+    strcat (strcpy (possible_dirs[1], g_get_user_data_dir ()), "/tbo/doodle");
+    strcpy (possible_dirs[2], DATA_DIR "/doodle");
 
     return possible_dirs;
 }
