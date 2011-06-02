@@ -5,7 +5,7 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(includedir) $(GNOME_INCLUDEDIR) \
          -DG_LOG_DOMAIN=\"tbo\"
 
 bin_PROGRAMS = tbo
-noinst_PROGRAMS = typestest
+noinst_PROGRAMS = typestest undotest
 
 SOURCES = \
 	tbo-window.c \
@@ -68,7 +68,9 @@ SOURCES = \
 	tbo-toolbar.c \
 	tbo-drawing.h \
 	tbo-drawing.c \
-	custom-stock.h
+	custom-stock.h \
+	tbo-undo.h \
+	tbo-undo.c
 
 AM_CFLAGS = @GTK_CFLAGS@ \
 			 $(PACKAGE_CFLAGS) \
@@ -78,8 +80,11 @@ tbo_LDADD = @GTK_LIBS@ \
 			$(PACKAGE_LIBS)
 typestest_LDADD = @GTK_LIBS@ \
 				$(PACKAGE_LIBS)
+undotest_LDADD = @GTK_LIBS@ \
+				$(PACKAGE_LIBS)
 
 typestest_SOURCES = $(SOURCES) typestest.c
+undotest_SOURCES = $(SOURCES) undotest.c
 tbo_SOURCES = $(SOURCES) tbo.c
 
 CLEANFILES = *~
