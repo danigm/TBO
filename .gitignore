@@ -29,6 +29,7 @@ po/quot.sed
 po/remove-potcdate.sin
 po/stamp-it
 po/tbo.pot
+po/*.gmo
 src/.deps/
 src/tbo
 st
