@@ -1,14 +1,34 @@
 #include <stdio.h>
 #include "tbo-undo.h"
 
+// Defining a custom TboAction with custom data
+typedef struct _TboActionString TboActionString;
+
+struct _TboActionString {
+    void (*action_do) (TboAction *action);
+    void (*action_undo) (TboAction *action);
+    char *data;
+};
+
 void
-testdo (TboAction *action) {
+testdo (TboAction *act) {
+    TboActionString *action = (TboActionString*)act;
     printf (" + doing %s\n", action->data);
 }
 
 void
-testundo (TboAction *action) {
+testundo (TboAction *act) {
+    TboActionString *action = (TboActionString*)act;
     printf (" - UNdoing %s\n", action->data);
+}
+
+TboAction *
+tbo_action_string_new (char *str) {
+    TboAction *act = tbo_action_new (TboActionString);
+    TboActionString *action = (TboActionString*)act;
+    action->data = str;
+    tbo_action_set (act, testdo, testundo);
+    return act;
 }
 
 int
@@ -21,11 +41,11 @@ main (int argc, char **argv)
 
     stack = tbo_undo_stack_new ();
 
-    action = tbo_action_new ("Test action1", testdo, testundo);
+    action = tbo_action_string_new ("Test action1");
     tbo_undo_stack_insert (stack, action);
-    action = tbo_action_new ("Test action2", testdo, testundo);
+    action = tbo_action_string_new ("Test action2");
     tbo_undo_stack_insert (stack, action);
-    action = tbo_action_new ("Test action3", testdo, testundo);
+    action = tbo_action_string_new ("Test action3");
     tbo_undo_stack_insert (stack, action);
 
     tbo_undo_stack_undo (stack);
@@ -52,7 +72,7 @@ main (int argc, char **argv)
 
     printf ("\nNow undo and redo\n");
     tbo_undo_stack_undo (stack);
-    action = tbo_action_new ("Test action4", testdo, testundo);
+    action = tbo_action_string_new ("Test action4");
     tbo_undo_stack_insert (stack, action);
     tbo_undo_stack_redo (stack);
     tbo_undo_stack_undo (stack);

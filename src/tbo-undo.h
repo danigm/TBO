@@ -23,16 +23,20 @@
 
 #include <glib.h>
 
+#define tbo_action_new(action_type) (TboAction*) malloc (sizeof (action_type))
+#define tbo_action_do(action) ((TboAction*) action)->action_do ((TboAction*)action)
+#define tbo_action_undo(action) ((TboAction*) action)->action_undo ((TboAction*)action)
+
+
 typedef struct _TboAction TboAction;
 typedef struct _TboUndoStack TboUndoStack;
 
 struct _TboAction {
-    gpointer data;
     void (*action_do) (TboAction *action);
     void (*action_undo) (TboAction *action);
 };
 
-TboAction * tbo_action_new (gpointer data, gpointer action_do, gpointer action_undo);
+void tbo_action_set (TboAction *action, gpointer action_do, gpointer action_undo);
 void tbo_action_del (TboAction *action);
 
 struct _TboUndoStack {

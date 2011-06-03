@@ -21,16 +21,13 @@
 #include <stdlib.h>
 #include "tbo-undo.h"
 
-TboAction *
-tbo_action_new (gpointer data,
+void
+tbo_action_set (TboAction *action,
                 gpointer action_do,
                 gpointer action_undo)
 {
-    TboAction *action = malloc (sizeof (TboAction));
-    action->data = data;
     action->action_do = action_do;
     action->action_undo = action_undo;
-    return action;
 }
 
 void
@@ -84,7 +81,7 @@ tbo_undo_stack_undo (TboUndoStack *stack)
     // undo
     TboAction *action = NULL;
     action = (stack->list)->data;
-    action->action_undo (action);
+    tbo_action_undo (action);
 
     if (stack->list->next)
         stack->list = (stack->list)->next;
@@ -109,7 +106,7 @@ tbo_undo_stack_redo (TboUndoStack *stack)
     // redo
     TboAction *action = NULL;
     action = (stack->list)->data;
-    action->action_do (action);
+    tbo_action_do (action);
 }
 
 void
