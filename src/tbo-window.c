@@ -129,6 +129,8 @@ tbo_window_new (GtkWidget *window, GtkWidget *dw_scroll,
     tbo->comic = comic;
     tbo->toolarea = toolarea;
     tbo->notebook = notebook;
+
+    tbo->undo_stack = tbo_undo_stack_new ();
     tbo->path = NULL;
 
     return tbo;
@@ -141,6 +143,7 @@ tbo_window_free (TboWindow *tbo)
     gtk_widget_destroy (tbo->window);
     if (tbo->path)
         free (tbo->path);
+    tbo_undo_stack_del (tbo->undo_stack);
     free (tbo);
 }
 
@@ -325,4 +328,22 @@ tbo_window_set_current_tab_page (TboWindow *tbo, gboolean setit)
     tbo_toolbar_set_selected_tool (tbo->toolbar, TBO_TOOLBAR_SELECTOR);
     tbo_tool_selector_set_selected (TBO_TOOL_SELECTOR (tbo->toolbar->selected_tool), NULL);
     tbo_tool_selector_set_selected_obj (TBO_TOOL_SELECTOR (tbo->toolbar->selected_tool), NULL);
+}
+
+gboolean
+tbo_window_undo_cb (GtkAction *action, TboWindow *tbo) {
+    tbo_undo_stack_undo (tbo->undo_stack);
+
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
+    tbo_toolbar_update (tbo->toolbar);
+    return FALSE;
+}
+
+gboolean
+tbo_window_redo_cb (GtkAction *action, TboWindow *tbo) {
+    tbo_undo_stack_redo (tbo->undo_stack);
+
+    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
+    tbo_toolbar_update (tbo->toolbar);
+    return FALSE;
 }

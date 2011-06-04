@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 #include "tbo-toolbar.h"
 #include "tbo-types.h"
+#include "tbo-undo.h"
 
 struct _TboWindow
 {
@@ -35,6 +36,7 @@ struct _TboWindow
     GtkWidget *status;
     GtkWidget *vbox;
     TboToolbar *toolbar;
+    TboUndoStack *undo_stack;
     Comic *comic;
     char *path;
 };
@@ -50,5 +52,8 @@ void tbo_window_set_path (TboWindow *tbo, const char *path);
 void tbo_window_set_current_tab_page (TboWindow *tbo, gboolean setit);
 GtkWidget *create_darea (TboWindow *tbo);
 void tbo_window_set_key_binder (TboWindow *tbo, gboolean keyb);
+gboolean tbo_window_undo_cb (GtkAction *action, TboWindow *tbo);
+gboolean tbo_window_redo_cb (GtkAction *action, TboWindow *tbo);
+
 
 #endif

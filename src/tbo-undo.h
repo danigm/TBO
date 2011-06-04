@@ -22,6 +22,7 @@
 #define __TBO_UNDO__
 
 #include <glib.h>
+#include <stdlib.h>
 
 #define tbo_action_new(action_type) (TboAction*) malloc (sizeof (action_type))
 #define tbo_action_do(action) ((TboAction*) action)->action_do ((TboAction*)action)
@@ -43,7 +44,6 @@ struct _TboUndoStack {
     GList *first;
     GList *list;
     gboolean last_flag;
-    gboolean first_flag;
 };
 
 TboUndoStack * tbo_undo_stack_new ();
@@ -51,5 +51,8 @@ void tbo_undo_stack_del ();
 void tbo_undo_stack_insert (TboUndoStack *stack, TboAction *action);
 void tbo_undo_stack_undo (TboUndoStack *stack);
 void tbo_undo_stack_redo (TboUndoStack *stack);
+
+gboolean tbo_undo_active_undo (TboUndoStack *stack);
+gboolean tbo_undo_active_redo (TboUndoStack *stack);
 
 #endif

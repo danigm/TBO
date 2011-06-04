@@ -34,6 +34,7 @@
 #include "frame.h"
 #include "page.h"
 #include "tbo-object-base.h"
+#include "tbo-undo.h"
 
 static GtkActionGroup *MENU_ACTION_GROUP = NULL;
 static GtkAccelGroup *ACCEL = NULL;
@@ -83,6 +84,12 @@ update_menubar (TboWindow *tbo)
             gtk_action_set_sensitive (action, FALSE);
         }
     }
+
+    // undo and redo
+    action = gtk_action_group_get_action (MENU_ACTION_GROUP, "Undo");
+    gtk_action_set_sensitive (action, tbo_undo_active_undo (tbo->undo_stack));
+    action = gtk_action_group_get_action (MENU_ACTION_GROUP, "Redo");
+    gtk_action_set_sensitive (action, tbo_undo_active_redo (tbo->undo_stack));
 }
 
 gboolean
@@ -274,6 +281,12 @@ static const GtkActionEntry tbo_menu_entries [] = {
       G_CALLBACK (close_cb) },
 
     /* edit menu */
+    { "Undo", GTK_STOCK_UNDO, N_("_Undo"), "<control>Z",
+      N_("Undo the last action"),
+      G_CALLBACK (tbo_window_undo_cb) },
+    { "Redo", GTK_STOCK_REDO, N_("_Redo"), "<control>Y",
+      N_("Undo the last action"),
+      G_CALLBACK (tbo_window_redo_cb) },
 
     { "CloneObj", GTK_STOCK_COPY, N_("Clone"), "<control>d",
       N_("Clone"),

@@ -48,8 +48,7 @@ tbo_undo_stack_new ()
     TboUndoStack *stack = malloc (sizeof (TboUndoStack));
     stack->first = NULL;
     stack->list = NULL;
-    stack->last_flag = FALSE;
-    stack->first_flag = FALSE;
+    stack->last_flag = TRUE;
     return stack;
 }
 
@@ -114,4 +113,17 @@ tbo_undo_stack_del (TboUndoStack *stack)
 {
     g_list_foreach (stack->first, (GFunc)tbo_action_del_data, NULL);
     free (stack);
+}
+
+
+gboolean
+tbo_undo_active_undo (TboUndoStack *stack)
+{
+    return !stack->last_flag;
+}
+
+gboolean
+tbo_undo_active_redo (TboUndoStack *stack)
+{
+    return stack->first != stack->list;
 }

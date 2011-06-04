@@ -6,6 +6,9 @@
        <toolitem name="OpenTool" action="OpenFileTool"/>
        <toolitem name="SaveTool" action="SaveFileTool"/>
        <separator/>
+       <toolitem name="undo" action="Undo" />
+       <toolitem name="redo" action="Redo" />
+       <separator/>
        <toolitem name="newpage" action="NewPage"/>
        <toolitem name="delpage" action="DelPage"/>
        <toolitem name="ppage" action="PrevPage"/>

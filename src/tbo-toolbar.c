@@ -34,6 +34,7 @@
 #include "tbo-tool-bubble.h"
 #include "tbo-tool-text.h"
 #include "ui-menu.h"
+#include "tbo-undo.h"
 
 G_DEFINE_TYPE (TboToolbar, tbo_toolbar, G_TYPE_OBJECT);
 
@@ -41,7 +42,6 @@ G_DEFINE_TYPE (TboToolbar, tbo_toolbar, G_TYPE_OBJECT);
 static gboolean select_tool (GtkAction *action, TboToolbar *toolbar);
 
 /* callbacks */
-
 static gboolean
 add_new_page (GtkAction *action, TboWindow *tbo)
 {
@@ -171,6 +171,14 @@ static const GtkActionEntry tbo_tools_entries [] = {
     { "SaveFileTool", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
       N_("Save current document"),
       G_CALLBACK (tbo_comic_save_dialog) },
+
+    // Undo and Redo
+    { "Undo", GTK_STOCK_UNDO, N_("_Undo"), "<control>Z",
+      N_("Undo the last action"),
+      G_CALLBACK (tbo_window_undo_cb) },
+    { "Redo", GTK_STOCK_REDO, N_("_Redo"), "<control>Y",
+      N_("Undo the last action"),
+      G_CALLBACK (tbo_window_redo_cb) },
 
     // Page tools
     { "NewPage", GTK_STOCK_ADD, N_("New Page"), "<control>P",
@@ -448,6 +456,10 @@ tbo_toolbar_update (TboToolbar *self)
     GtkAction *text;
     GtkAction *new_frame;
     GtkAction *pix;
+
+    GtkAction *undo;
+    GtkAction *redo;
+
     if (!self)
         return;
 
@@ -455,6 +467,12 @@ tbo_toolbar_update (TboToolbar *self)
 
     if (!self->action_group)
         return;
+
+    undo = gtk_action_group_get_action (self->action_group, "Undo");
+    redo = gtk_action_group_get_action (self->action_group, "Redo");
+
+    gtk_action_set_sensitive (undo, tbo_undo_active_undo (tbo->undo_stack));
+    gtk_action_set_sensitive (redo, tbo_undo_active_redo (tbo->undo_stack));
 
     // Page next, prev and delete button sensitive
     prev = gtk_action_group_get_action (self->action_group, "PrevPage");

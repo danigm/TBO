@@ -11,6 +11,8 @@
        <menuitem name="Quit" action="Quit" />
      </menu>
      <menu name="EditMenu" action="Edit">
+       <menuitem name="undo" action="Undo" />
+       <menuitem name="redo" action="Redo" />
        <menuitem name="clone" action="CloneObj" />
        <menuitem name="delete" action="DeleteObj" />
        <menuitem name="fliph" action="FlipHObj" />

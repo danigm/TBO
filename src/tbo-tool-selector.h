@@ -26,6 +26,7 @@
 #include "tbo-object-base.h"
 #include "tbo-tool-base.h"
 #include "tbo-types.h"
+#include "tbo-undo.h"
 
 #define TBO_TYPE_TOOL_SELECTOR            (tbo_tool_selector_get_type ())
 #define TBO_TOOL_SELECTOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TBO_TYPE_TOOL_SELECTOR, TboToolSelector))
@@ -84,6 +85,35 @@ void tbo_tool_selector_set_selected (TboToolSelector *self, Frame *frame);
 void tbo_tool_selector_set_selected_obj (TboToolSelector *self, TboObjectBase *obj);
 GObject * tbo_tool_selector_new ();
 GObject * tbo_tool_selector_new_with_params (TboWindow *tbo);
+
+/*
+ * TboActionFrameMove for undo and redo frame movements
+ */
+typedef struct _TboActionFrameMove TboActionFrameMove;
+typedef struct _TboActionObjMove TboActionObjMove;
+
+struct _TboActionFrameMove {
+    void (*action_do) (TboAction *action);
+    void (*action_undo) (TboAction *action);
+    Frame *frame;
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+};
+TboAction * tbo_action_frame_move_new (Frame *frame, int x1, int y1, int x2, int y2);
+
+struct _TboActionObjMove {
+    void (*action_do) (TboAction *action);
+    void (*action_undo) (TboAction *action);
+    TboObjectBase *obj;
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+};
+TboAction * tbo_action_object_move_new (TboObjectBase *object, int x1, int y1, int x2, int y2);
+
 
 #endif /* __TBO_TOOL_SELECTOR_H__ */
 

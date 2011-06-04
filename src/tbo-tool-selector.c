@@ -30,6 +30,7 @@
 #include "tbo-object-group.h"
 #include "ui-menu.h"
 #include "tbo-tooltip.h"
+#include "tbo-undo.h"
 
 G_DEFINE_TYPE (TboToolSelector, tbo_tool_selector, TBO_TYPE_TOOL_BASE);
 
@@ -228,6 +229,20 @@ over_rotater_obj (TboToolSelector *self, TboObjectBase *obj, int x, int y)
     }
 }
 
+static gboolean
+moved_frame (TboToolSelector *tool)
+{
+    Frame *obj = tool->selected_frame;
+    return (tool->start_m_x != obj->x || tool->start_m_y != obj->y);
+}
+
+static gboolean
+moved_object (TboToolSelector *tool)
+{
+    TboObjectBase *obj = tool->selected_object;
+    return (tool->start_m_x != obj->x || tool->start_m_y != obj->y);
+}
+
 /* tool signal */
 static void
 on_move (TboToolBase *tool, GtkWidget *widget, GdkEventMotion *event)
@@ -259,6 +274,24 @@ static void
 on_release (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event)
 {
     TboToolSelector *self = TBO_TOOL_SELECTOR (tool);
+    TboWindow *tbo = tool->tbo;
+    // TODO create undo actions for movements / resizing and rotating
+    if (self->selected_object && moved_object (self)) {
+        tbo_undo_stack_insert (tbo->undo_stack,
+                               tbo_action_object_move_new (self->selected_object,
+                                                           self->start_m_x,
+                                                           self->start_m_y,
+                                                           self->selected_object->x,
+                                                           self->selected_object->y));
+    }
+    else if (self->selected_frame && moved_frame (self)) {
+        tbo_undo_stack_insert (tbo->undo_stack,
+                               tbo_action_frame_move_new (self->selected_frame,
+                                                          self->start_m_x,
+                                                          self->start_m_y,
+                                                          self->selected_frame->x,
+                                                          self->selected_frame->y));
+    }
     self->start_x = 0;
     self->start_y = 0;
     self->clicked = FALSE;
@@ -867,3 +900,63 @@ tbo_tool_selector_set_selected_obj (TboToolSelector *self, TboObjectBase *obj)
     update_menubar (TBO_TOOL_BASE (self)->tbo);
 }
 
+
+static void
+frame_move_do (TboAction *act)
+{
+    TboActionFrameMove *action = (TboActionFrameMove*)act;
+    action->frame->x = action->x2;
+    action->frame->y = action->y2;
+}
+
+static void
+frame_move_undo (TboAction *act)
+{
+    TboActionFrameMove *action = (TboActionFrameMove*)act;
+    action->frame->x = action->x1;
+    action->frame->y = action->y1;
+}
+
+TboAction *
+tbo_action_frame_move_new (Frame *frame, int x1, int y1, int x2, int y2)
+{
+    TboActionFrameMove *action = (TboActionFrameMove*)tbo_action_new (TboActionFrameMove);
+    action->frame = frame;
+    action->x1 = x1;
+    action->x2 = x2;
+    action->y1 = y1;
+    action->y2 = y2;
+    action->action_do = frame_move_do;
+    action->action_undo = frame_move_undo;
+    return (TboAction*)action;
+}
+
+static void
+obj_move_do (TboAction *act)
+{
+    TboActionObjMove *action = (TboActionObjMove*)act;
+    action->obj->x = action->x2;
+    action->obj->y = action->y2;
+}
+
+static void
+obj_move_undo (TboAction *act)
+{
+    TboActionObjMove *action = (TboActionObjMove*)act;
+    action->obj->x = action->x1;
+    action->obj->y = action->y1;
+}
+
+TboAction *
+tbo_action_object_move_new (TboObjectBase *object, int x1, int y1, int x2, int y2)
+{
+    TboActionObjMove *action = (TboActionObjMove*)tbo_action_new (TboActionObjMove);
+    action->obj = object;
+    action->x1 = x1;
+    action->x2 = x2;
+    action->y1 = y1;
+    action->y2 = y2;
+    action->action_do = obj_move_do;
+    action->action_undo = obj_move_undo;
+    return (TboAction*)action;
+}
