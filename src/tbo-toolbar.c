@@ -134,9 +134,8 @@ add_pix (GtkAction *action, TboWindow *tbo)
                      NULL);
 
     filter = gtk_file_filter_new ();
-    gtk_file_filter_set_name (filter, _("png"));
-    gtk_file_filter_add_pattern (filter, "*.png");
-    gtk_file_filter_add_pattern (filter, "*.PNG");
+    gtk_file_filter_set_name (filter, _("Image files"));
+    gtk_file_filter_add_pixbuf_formats (filter);
     gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
     filter = gtk_file_filter_new ();
     gtk_file_filter_set_name (filter, _("All files"));

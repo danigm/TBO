@@ -82,9 +82,37 @@ tbo_files_expand_path (char *source, char *dest)
         st = stat (dest, &filestat);
         if (!st)
             break;
+        else
+            snprintf (dest, 255, "%s", source);
 
         i++;
     }
 
     tbo_files_free (possible_dirs);
+}
+
+gboolean
+tbo_files_is_svg_file (char *source)
+{
+    gchar **paths;
+    gchar **ext;
+    gchar *lower_ext;
+    gboolean is_svg = FALSE;
+
+    paths = g_strsplit (source, ".", 0);
+
+    ext = paths;
+    while (*ext) ext++;
+    ext--;
+
+    lower_ext = g_ascii_strdown (*ext, -1);
+
+    if (strcmp (lower_ext, "svg") == 0) {
+        is_svg = TRUE;
+    }
+
+    g_strfreev (paths);
+    g_free (lower_ext);
+
+    return is_svg;
 }

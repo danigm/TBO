@@ -23,6 +23,7 @@
 #include "tbo-drawing.h"
 #include "frame.h"
 #include "tbo-object-svg.h"
+#include "tbo-object-pixmap.h"
 #include "tbo-window.h"
 
 static GtkWidget *DND_IMAGE = NULL;
@@ -60,15 +61,21 @@ drag_data_received_handl (GtkWidget *widget,
             case TARGET_STRING:
                 _sdata = gtk_selection_data_get_data (selection_data);
 
+                TboObjectBase *image;
                 Frame *frame = tbo_drawing_get_current_frame (TBO_DRAWING (tbo->drawing));
                 adj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
                 int rx = tbo_frame_get_base_x ((x + gtk_adjustment_get_value(adj)) / zoom);
                 adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (tbo->dw_scroll));
                 int ry = tbo_frame_get_base_y ((y + gtk_adjustment_get_value(adj)) / zoom);
 
-                TboObjectSvg *svgimage = TBO_OBJECT_SVG (tbo_object_svg_new_with_params (rx, ry, 0, 0, (gchar*)_sdata));
+                if (tbo_files_is_svg_file ((gchar *)_sdata)) {
+                    image = TBO_OBJECT_BASE (tbo_object_svg_new_with_params (rx, ry, 0, 0, (gchar*)_sdata));
+                } else {
+                    image = TBO_OBJECT_BASE (tbo_object_pixmap_new_with_params (rx, ry, 0, 0, (gchar*)_sdata));
+                }
+
                 tbo_drawing_update (TBO_DRAWING (tbo->drawing));
-                tbo_frame_add_obj (frame, TBO_OBJECT_BASE (svgimage));
+                tbo_frame_add_obj (frame, TBO_OBJECT_BASE (image));
 
                 dnd_success = TRUE;
                 break;

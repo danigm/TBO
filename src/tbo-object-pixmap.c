@@ -20,6 +20,7 @@
 #include <glib.h>
 #include <string.h>
 #include <cairo.h>
+#include <gdk/gdk.h>
 #include <stdio.h>
 #include "tbo-types.h"
 #include "tbo-object-pixmap.h"
@@ -36,10 +37,20 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
     TboObjectPixmap *pixmap = TBO_OBJECT_PIXMAP (self);
     int w, h;
     cairo_surface_t *image;
+    GdkPixbuf *pixbuf;
+    GError *error = NULL;
+    char path[255];
 
-    image = cairo_image_surface_create_from_png (pixmap->path->str);
-    w = cairo_image_surface_get_width (image);
-    h = cairo_image_surface_get_height (image);
+    tbo_files_expand_path (pixmap->path->str, path);
+    pixbuf = gdk_pixbuf_new_from_file (path, &error);
+
+    if (!pixbuf) {
+        g_warning ("There's a problem here: %s", error->message);
+        return;
+    }
+
+    w = gdk_pixbuf_get_width (pixbuf);
+    h = gdk_pixbuf_get_height (pixbuf);
 
     if (!self->width) self->width = w;
     if (!self->height) self->height = h;
@@ -57,7 +68,7 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
     cairo_transform (cr, &mx);
     cairo_scale (cr, factorw, factorh);
 
-    cairo_set_source_surface (cr, image, 0, 0);
+    gdk_cairo_set_source_pixbuf (cr, pixbuf, 0, 0);
     cairo_paint (cr);
 
     cairo_scale (cr, 1/factorw, 1/factorh);
