@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-04 09:25+0000\n"
-"PO-Revision-Date: 2011-06-06 12:06+0200\n"
+"POT-Creation-Date: 2011-06-23 11:54+0000\n"
+"PO-Revision-Date: 2011-06-23 18:55+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "No se pudo cargar el archivo"
 msgid "Couldn't parse file"
 msgstr "No se pudo analizar el archivo"
 
-#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:164
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
 msgid "New Comic"
 msgstr "Cómic nuevo"
 
@@ -56,7 +56,7 @@ msgstr "Abrir"
 msgid "TBO files"
 msgstr "Archivos TBO"
 
-#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:142
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
 msgid "All files"
 msgstr "Todos los archivos"
 
@@ -95,127 +95,128 @@ msgid "Add an Image"
 msgstr "Añadir una imagen"
 
 #: ../src/tbo-toolbar.c:137
-msgid "png"
-msgstr "png"
+#| msgid "Image"
+msgid "Image files"
+msgstr "Archivos de imagen"
 
 #. File menu
-#: ../src/tbo-toolbar.c:163 ../src/ui-menu.c:259
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
 msgid "_New"
 msgstr "_Nuevo"
 
-#: ../src/tbo-toolbar.c:167 ../src/ui-menu.c:263
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../src/tbo-toolbar.c:168
+#: ../src/tbo-toolbar.c:167
 msgid "Open comic"
 msgstr "Abrir cómic"
 
-#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:267
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../src/tbo-toolbar.c:172 ../src/ui-menu.c:268
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
 msgid "Save current document"
 msgstr "Guardar el documento actual"
 
 #. Undo and Redo
 #. edit menu
-#: ../src/tbo-toolbar.c:176 ../src/ui-menu.c:284
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
 msgid "_Undo"
 msgstr "_Deshacer"
 
-#: ../src/tbo-toolbar.c:177 ../src/tbo-toolbar.c:180 ../src/ui-menu.c:285
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
 #: ../src/ui-menu.c:288
 msgid "Undo the last action"
 msgstr "Deshacer la última acción"
 
-#: ../src/tbo-toolbar.c:179 ../src/ui-menu.c:287
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
 msgid "_Redo"
 msgstr "_Rehacer"
 
 #. Page tools
-#: ../src/tbo-toolbar.c:184
+#: ../src/tbo-toolbar.c:183
 msgid "New Page"
 msgstr "Página nueva"
 
-#: ../src/tbo-toolbar.c:185
+#: ../src/tbo-toolbar.c:184
 msgid "New page"
 msgstr "Página nueva"
 
-#: ../src/tbo-toolbar.c:188
+#: ../src/tbo-toolbar.c:187
 msgid "Delete Page"
 msgstr "Eliminar página"
 
-#: ../src/tbo-toolbar.c:189
+#: ../src/tbo-toolbar.c:188
 msgid "Delete current page"
 msgstr "Borrar la página actual"
 
-#: ../src/tbo-toolbar.c:192
+#: ../src/tbo-toolbar.c:191
 msgid "Prev Page"
 msgstr "Página anterior"
 
-#: ../src/tbo-toolbar.c:193
+#: ../src/tbo-toolbar.c:192
 msgid "Prev page"
 msgstr "Página anterior"
 
-#: ../src/tbo-toolbar.c:196
+#: ../src/tbo-toolbar.c:195
 msgid "Next Page"
 msgstr "Siguiente página"
 
-#: ../src/tbo-toolbar.c:197
+#: ../src/tbo-toolbar.c:196
 msgid "Next page"
 msgstr "Siguiente página"
 
 #. Zoom tools
-#: ../src/tbo-toolbar.c:201 ../src/tbo-toolbar.c:202
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
 msgid "Zoom in"
 msgstr "Ampliar"
 
-#: ../src/tbo-toolbar.c:204 ../src/tbo-toolbar.c:205
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
 msgid "Zoom 1:1"
 msgstr "Escala 1:1"
 
-#: ../src/tbo-toolbar.c:207 ../src/tbo-toolbar.c:208
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
 msgid "Zoom fit"
 msgstr "Ajustar"
 
-#: ../src/tbo-toolbar.c:210 ../src/tbo-toolbar.c:211
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
 msgid "Zoom out"
 msgstr "Reducir"
 
 #. Png image tool
-#: ../src/tbo-toolbar.c:215 ../src/tbo-toolbar.c:216
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
 msgid "Image"
 msgstr "Imagen"
 
 #. Page view tools
-#: ../src/tbo-toolbar.c:223
+#: ../src/tbo-toolbar.c:222
 msgid "New _Frame"
 msgstr "_Marco nuevo"
 
-#: ../src/tbo-toolbar.c:224
+#: ../src/tbo-toolbar.c:223
 msgid "New Frame"
 msgstr "Marco nuevo"
 
-#: ../src/tbo-toolbar.c:227 ../src/tbo-toolbar.c:228
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
 msgid "Selector"
 msgstr "Selector"
 
 #. Frame view tools
-#: ../src/tbo-toolbar.c:232 ../src/tbo-toolbar.c:233
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
 msgid "Doodle"
 msgstr "Monigote"
 
-#: ../src/tbo-toolbar.c:235
+#: ../src/tbo-toolbar.c:234
 msgid "Booble"
 msgstr "Bocadillo"
 
-#: ../src/tbo-toolbar.c:236
+#: ../src/tbo-toolbar.c:235
 msgid "Bubble"
 msgstr "Bocadillo"
 
-#: ../src/tbo-toolbar.c:238 ../src/tbo-toolbar.c:239
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238
 #: ../src/tbo-tool-text.c:191
 msgid "Text"
 msgstr "Texto"
@@ -346,6 +347,9 @@ msgstr "Acerca de"
 #, c-format
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "No se pudo mezclar tbo-menu-ui.xml: %s"
+
+#~ msgid "png"
+#~ msgstr "png"
 
 #~ msgid "Export as png"
 #~ msgstr "Exportar a png"
