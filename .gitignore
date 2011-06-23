@@ -1,9 +1,9 @@
+*.swp
 *.o
 *.log
 Makefile
 Makefile.in
 *~
-2010-01-16-screenshot.png
 ABOUT-NLS
 aclocal.m4
 autom4te.cache/
