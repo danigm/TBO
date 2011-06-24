@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tbo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-07 16:05+0000\n"
-"PO-Revision-Date: 2011-06-11 09:31+0100\n"
+"POT-Creation-Date: 2011-06-23 16:56+0000\n"
+"PO-Revision-Date: 2011-06-24 14:58+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgid "Couldn't parse file"
 msgstr "Ni mogoče razčleniti datoteke"
 
 #: ../src/comic-new-dialog.c:41
-#: ../src/tbo-toolbar.c:164
+#: ../src/tbo-toolbar.c:163
 msgid "New Comic"
 msgstr "Nov strip"
 
@@ -61,7 +61,7 @@ msgid "TBO files"
 msgstr "TBO datoteke"
 
 #: ../src/comic-open-dialog.c:86
-#: ../src/tbo-toolbar.c:142
+#: ../src/tbo-toolbar.c:141
 msgid "All files"
 msgstr "Vse datoteke"
 
@@ -101,143 +101,143 @@ msgid "Add an Image"
 msgstr "Dodaj sliko"
 
 #: ../src/tbo-toolbar.c:137
-msgid "png"
-msgstr "png"
+msgid "Image files"
+msgstr "Slikovne datoteke"
 
 #. File menu
-#: ../src/tbo-toolbar.c:163
+#: ../src/tbo-toolbar.c:162
 #: ../src/ui-menu.c:259
 msgid "_New"
 msgstr "_Novo"
 
-#: ../src/tbo-toolbar.c:167
+#: ../src/tbo-toolbar.c:166
 #: ../src/ui-menu.c:263
 msgid "_Open"
 msgstr "_Odpri"
 
-#: ../src/tbo-toolbar.c:168
+#: ../src/tbo-toolbar.c:167
 msgid "Open comic"
 msgstr "Odpri strip"
 
-#: ../src/tbo-toolbar.c:171
+#: ../src/tbo-toolbar.c:170
 #: ../src/ui-menu.c:267
 msgid "_Save"
 msgstr "_Shrani"
 
-#: ../src/tbo-toolbar.c:172
+#: ../src/tbo-toolbar.c:171
 #: ../src/ui-menu.c:268
 msgid "Save current document"
 msgstr "Shrani trenutni dokument"
 
 #. Undo and Redo
 #. edit menu
-#: ../src/tbo-toolbar.c:176
+#: ../src/tbo-toolbar.c:175
 #: ../src/ui-menu.c:284
 msgid "_Undo"
 msgstr "_Razveljavi"
 
-#: ../src/tbo-toolbar.c:177
-#: ../src/tbo-toolbar.c:180
+#: ../src/tbo-toolbar.c:176
+#: ../src/tbo-toolbar.c:179
 #: ../src/ui-menu.c:285
 #: ../src/ui-menu.c:288
 msgid "Undo the last action"
 msgstr "Razveljavi zadnje dejanje"
 
-#: ../src/tbo-toolbar.c:179
+#: ../src/tbo-toolbar.c:178
 #: ../src/ui-menu.c:287
 msgid "_Redo"
 msgstr "_Ponovno uveljavi"
 
 #. Page tools
-#: ../src/tbo-toolbar.c:184
+#: ../src/tbo-toolbar.c:183
 msgid "New Page"
 msgstr "Nova stran"
 
-#: ../src/tbo-toolbar.c:185
+#: ../src/tbo-toolbar.c:184
 msgid "New page"
 msgstr "Nova stran"
 
-#: ../src/tbo-toolbar.c:188
+#: ../src/tbo-toolbar.c:187
 msgid "Delete Page"
 msgstr "Izbriši stran"
 
-#: ../src/tbo-toolbar.c:189
+#: ../src/tbo-toolbar.c:188
 msgid "Delete current page"
 msgstr "Izbriši trenutno stran"
 
-#: ../src/tbo-toolbar.c:192
+#: ../src/tbo-toolbar.c:191
 msgid "Prev Page"
 msgstr "Predhodna stran"
 
-#: ../src/tbo-toolbar.c:193
+#: ../src/tbo-toolbar.c:192
 msgid "Prev page"
 msgstr "Predhodna stran"
 
-#: ../src/tbo-toolbar.c:196
+#: ../src/tbo-toolbar.c:195
 msgid "Next Page"
 msgstr "Naslednja stran"
 
-#: ../src/tbo-toolbar.c:197
+#: ../src/tbo-toolbar.c:196
 msgid "Next page"
 msgstr "Naslednja stran"
 
 #. Zoom tools
+#: ../src/tbo-toolbar.c:200
 #: ../src/tbo-toolbar.c:201
-#: ../src/tbo-toolbar.c:202
 msgid "Zoom in"
 msgstr "Približaj"
 
+#: ../src/tbo-toolbar.c:203
 #: ../src/tbo-toolbar.c:204
-#: ../src/tbo-toolbar.c:205
 msgid "Zoom 1:1"
 msgstr "Približaj na 1:1"
 
+#: ../src/tbo-toolbar.c:206
 #: ../src/tbo-toolbar.c:207
-#: ../src/tbo-toolbar.c:208
 msgid "Zoom fit"
 msgstr "Prilagodi oknu"
 
+#: ../src/tbo-toolbar.c:209
 #: ../src/tbo-toolbar.c:210
-#: ../src/tbo-toolbar.c:211
 msgid "Zoom out"
 msgstr "Oddalji"
 
 #. Png image tool
+#: ../src/tbo-toolbar.c:214
 #: ../src/tbo-toolbar.c:215
-#: ../src/tbo-toolbar.c:216
 msgid "Image"
 msgstr "Slika"
 
 #. Page view tools
-#: ../src/tbo-toolbar.c:223
+#: ../src/tbo-toolbar.c:222
 msgid "New _Frame"
 msgstr "Nov o_kvir"
 
-#: ../src/tbo-toolbar.c:224
+#: ../src/tbo-toolbar.c:223
 msgid "New Frame"
 msgstr "Nov okvir"
 
+#: ../src/tbo-toolbar.c:226
 #: ../src/tbo-toolbar.c:227
-#: ../src/tbo-toolbar.c:228
 msgid "Selector"
 msgstr "Izbirnik"
 
 #. Frame view tools
+#: ../src/tbo-toolbar.c:231
 #: ../src/tbo-toolbar.c:232
-#: ../src/tbo-toolbar.c:233
 msgid "Doodle"
 msgstr "Doodle"
 
-#: ../src/tbo-toolbar.c:235
+#: ../src/tbo-toolbar.c:234
 msgid "Booble"
 msgstr "Booble"
 
-#: ../src/tbo-toolbar.c:236
+#: ../src/tbo-toolbar.c:235
 msgid "Bubble"
 msgstr "Oblački"
 
+#: ../src/tbo-toolbar.c:237
 #: ../src/tbo-toolbar.c:238
-#: ../src/tbo-toolbar.c:239
 #: ../src/tbo-tool-text.c:191
 msgid "Text"
 msgstr "Besedilo"
@@ -375,3 +375,5 @@ msgstr "O programu"
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "Ni mogoče združiti datoteke tbo-menu-ui.xml: %s"
 
+#~ msgid "png"
+#~ msgstr "png"
