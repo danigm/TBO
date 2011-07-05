@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tbo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-04 09:25+0000\n"
-"PO-Revision-Date: 2011-06-07 18:01+0200\n"
+"POT-Creation-Date: 2011-06-23 11:54+0000\n"
+"PO-Revision-Date: 2011-07-05 11:47+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr "Nelze načíst soubor"
 msgid "Couldn't parse file"
 msgstr "Nelze analyzovat soubor"
 
-#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:164
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
 msgid "New Comic"
 msgstr "Nový komiks"
 
@@ -55,7 +55,7 @@ msgstr "Otevřít"
 msgid "TBO files"
 msgstr "Soubory TBO"
 
-#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:142
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
 msgid "All files"
 msgstr "Všechny soubory"
 
@@ -94,127 +94,128 @@ msgid "Add an Image"
 msgstr "Přidat obrázek"
 
 #: ../src/tbo-toolbar.c:137
-msgid "png"
-msgstr "png"
+#| msgid "Image"
+msgid "Image files"
+msgstr "Soubory s obrázky"
 
 #. File menu
-#: ../src/tbo-toolbar.c:163 ../src/ui-menu.c:259
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
 msgid "_New"
 msgstr "_Nový"
 
-#: ../src/tbo-toolbar.c:167 ../src/ui-menu.c:263
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
 msgid "_Open"
 msgstr "_Otevřít"
 
-#: ../src/tbo-toolbar.c:168
+#: ../src/tbo-toolbar.c:167
 msgid "Open comic"
 msgstr "Otevřít komiks"
 
-#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:267
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
 msgid "_Save"
 msgstr "_Uložit"
 
-#: ../src/tbo-toolbar.c:172 ../src/ui-menu.c:268
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
 msgid "Save current document"
 msgstr "Uložit současný dokument"
 
 #. Undo and Redo
 #. edit menu
-#: ../src/tbo-toolbar.c:176 ../src/ui-menu.c:284
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
 msgid "_Undo"
 msgstr "_Zpět"
 
-#: ../src/tbo-toolbar.c:177 ../src/tbo-toolbar.c:180 ../src/ui-menu.c:285
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
 #: ../src/ui-menu.c:288
 msgid "Undo the last action"
 msgstr "Vrátit zpět poslední akci"
 
-#: ../src/tbo-toolbar.c:179 ../src/ui-menu.c:287
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
 msgid "_Redo"
 msgstr "Zn_ovu"
 
 #. Page tools
-#: ../src/tbo-toolbar.c:184
+#: ../src/tbo-toolbar.c:183
 msgid "New Page"
 msgstr "Nová stránka"
 
-#: ../src/tbo-toolbar.c:185
+#: ../src/tbo-toolbar.c:184
 msgid "New page"
 msgstr "Nová stránka"
 
-#: ../src/tbo-toolbar.c:188
+#: ../src/tbo-toolbar.c:187
 msgid "Delete Page"
 msgstr "Odstranit stránku"
 
-#: ../src/tbo-toolbar.c:189
+#: ../src/tbo-toolbar.c:188
 msgid "Delete current page"
 msgstr "Odstranit současnou stránku"
 
-#: ../src/tbo-toolbar.c:192
+#: ../src/tbo-toolbar.c:191
 msgid "Prev Page"
 msgstr "Předchozí stránka"
 
-#: ../src/tbo-toolbar.c:193
+#: ../src/tbo-toolbar.c:192
 msgid "Prev page"
 msgstr "Předchozí stránka"
 
-#: ../src/tbo-toolbar.c:196
+#: ../src/tbo-toolbar.c:195
 msgid "Next Page"
 msgstr "Následující stránka"
 
-#: ../src/tbo-toolbar.c:197
+#: ../src/tbo-toolbar.c:196
 msgid "Next page"
 msgstr "Následující stránka"
 
 #. Zoom tools
-#: ../src/tbo-toolbar.c:201 ../src/tbo-toolbar.c:202
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
 msgid "Zoom in"
 msgstr "Přiblížit"
 
-#: ../src/tbo-toolbar.c:204 ../src/tbo-toolbar.c:205
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
 msgid "Zoom 1:1"
 msgstr "Přiblížení 1:1"
 
-#: ../src/tbo-toolbar.c:207 ../src/tbo-toolbar.c:208
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
 msgid "Zoom fit"
 msgstr "Přizpůsobit přiblížení"
 
-#: ../src/tbo-toolbar.c:210 ../src/tbo-toolbar.c:211
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
 msgid "Zoom out"
 msgstr "Oddálit"
 
 #. Png image tool
-#: ../src/tbo-toolbar.c:215 ../src/tbo-toolbar.c:216
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
 msgid "Image"
 msgstr "Obrázek"
 
 #. Page view tools
-#: ../src/tbo-toolbar.c:223
+#: ../src/tbo-toolbar.c:222
 msgid "New _Frame"
 msgstr "Nový _panel"
 
-#: ../src/tbo-toolbar.c:224
+#: ../src/tbo-toolbar.c:223
 msgid "New Frame"
 msgstr "Nový panel"
 
-#: ../src/tbo-toolbar.c:227 ../src/tbo-toolbar.c:228
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
 msgid "Selector"
 msgstr "Výběr"
 
 #. Frame view tools
-#: ../src/tbo-toolbar.c:232 ../src/tbo-toolbar.c:233
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
 msgid "Doodle"
 msgstr "Kreslit"
 
-#: ../src/tbo-toolbar.c:235
+#: ../src/tbo-toolbar.c:234
 msgid "Booble"
 msgstr "Bublina"
 
-#: ../src/tbo-toolbar.c:236
+#: ../src/tbo-toolbar.c:235
 msgid "Bubble"
 msgstr "Bublina"
 
-#: ../src/tbo-toolbar.c:238 ../src/tbo-toolbar.c:239
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238
 #: ../src/tbo-tool-text.c:191
 msgid "Text"
 msgstr "Text"
@@ -343,3 +344,4 @@ msgstr "O aplikaci"
 #, c-format
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "Nelze sloučit tbo-menu-ui.xml: %s"
+
