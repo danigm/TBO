@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tbo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-04 09:25+0000\n"
-"PO-Revision-Date: 2011-06-05 14:22+0100\n"
+"POT-Creation-Date: 2011-06-23 11:54+0000\n"
+"PO-Revision-Date: 2011-07-07 20:23+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Datei konnte nicht geladen werden"
 msgid "Couldn't parse file"
 msgstr "Datei konnte nicht verarbeitet werden"
 
-#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:164
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
 msgid "New Comic"
 msgstr "Neuer Comic"
 
@@ -54,7 +54,7 @@ msgstr "Öffnen"
 msgid "TBO files"
 msgstr "TBO-Dateien"
 
-#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:142
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
 msgid "All files"
 msgstr "Alle Dateien"
 
@@ -82,7 +82,7 @@ msgstr "nach Endung automatisch bestimmen"
 #: ../src/tbo-object-svg.c:51
 #, c-format
 msgid "Couldn't load %s\n"
-msgstr "Konnte %s nicht laden\n"
+msgstr "%s konnte nicht geladen werden\n"
 
 #: ../src/tbo-object-text.c:181
 msgid "text"
@@ -93,133 +93,133 @@ msgid "Add an Image"
 msgstr "Ein Bild hinzufügen"
 
 #: ../src/tbo-toolbar.c:137
-msgid "png"
-msgstr "png"
+msgid "Image files"
+msgstr "Bilddateien"
 
 #. File menu
-#: ../src/tbo-toolbar.c:163 ../src/ui-menu.c:259
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
 msgid "_New"
 msgstr "_Neu"
 
-#: ../src/tbo-toolbar.c:167 ../src/ui-menu.c:263
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
 msgid "_Open"
 msgstr "Ö_ffnen"
 
-#: ../src/tbo-toolbar.c:168
+#: ../src/tbo-toolbar.c:167
 msgid "Open comic"
 msgstr "Comic öffnen"
 
-#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:267
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
 msgid "_Save"
 msgstr "_Speichern"
 
-#: ../src/tbo-toolbar.c:172 ../src/ui-menu.c:268
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
 msgid "Save current document"
 msgstr "Aktuelles Dokument speichern"
 
 #. Undo and Redo
 #. edit menu
-#: ../src/tbo-toolbar.c:176 ../src/ui-menu.c:284
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
 msgid "_Undo"
 msgstr "_Rückgängig"
 
-#: ../src/tbo-toolbar.c:177 ../src/tbo-toolbar.c:180 ../src/ui-menu.c:285
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
 #: ../src/ui-menu.c:288
 msgid "Undo the last action"
 msgstr "Letzte Aktion rückgängig machen"
 
-#: ../src/tbo-toolbar.c:179 ../src/ui-menu.c:287
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
 msgid "_Redo"
 msgstr "_Wiederholen"
 
 #. Page tools
-#: ../src/tbo-toolbar.c:184
+#: ../src/tbo-toolbar.c:183
 msgid "New Page"
 msgstr "Neue Seite"
 
-#: ../src/tbo-toolbar.c:185
+#: ../src/tbo-toolbar.c:184
 msgid "New page"
 msgstr "Neue Seite"
 
-#: ../src/tbo-toolbar.c:188
+#: ../src/tbo-toolbar.c:187
 msgid "Delete Page"
 msgstr "Seite löschen"
 
-#: ../src/tbo-toolbar.c:189
+#: ../src/tbo-toolbar.c:188
 msgid "Delete current page"
 msgstr "Aktuelle Seite löschen"
 
-#: ../src/tbo-toolbar.c:192
+#: ../src/tbo-toolbar.c:191
 msgid "Prev Page"
 msgstr "Vorige Seite"
 
-#: ../src/tbo-toolbar.c:193
+#: ../src/tbo-toolbar.c:192
 msgid "Prev page"
 msgstr "Vorige Seite"
 
-#: ../src/tbo-toolbar.c:196
+#: ../src/tbo-toolbar.c:195
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: ../src/tbo-toolbar.c:197
+#: ../src/tbo-toolbar.c:196
 msgid "Next page"
 msgstr "Nächste Seite"
 
 #. Zoom tools
-#: ../src/tbo-toolbar.c:201 ../src/tbo-toolbar.c:202
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
 msgid "Zoom in"
 msgstr "Vergrößern"
 
-#: ../src/tbo-toolbar.c:204 ../src/tbo-toolbar.c:205
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
 msgid "Zoom 1:1"
 msgstr "Originalgröße"
 
-#: ../src/tbo-toolbar.c:207 ../src/tbo-toolbar.c:208
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
 msgid "Zoom fit"
 msgstr "Optimale Größe"
 
-#: ../src/tbo-toolbar.c:210 ../src/tbo-toolbar.c:211
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
 msgid "Zoom out"
 msgstr "Verkleinern"
 
 #. Png image tool
-#: ../src/tbo-toolbar.c:215 ../src/tbo-toolbar.c:216
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
 msgid "Image"
 msgstr "Bild"
 
 #. Page view tools
-#: ../src/tbo-toolbar.c:223
+#: ../src/tbo-toolbar.c:222
 msgid "New _Frame"
 msgstr "Neues B_ild"
 
-#: ../src/tbo-toolbar.c:224
+#: ../src/tbo-toolbar.c:223
 msgid "New Frame"
 msgstr "Neues Bild"
 
-#: ../src/tbo-toolbar.c:227 ../src/tbo-toolbar.c:228
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
 msgid "Selector"
 msgstr "Auswahl"
 
 #. Frame view tools
-#: ../src/tbo-toolbar.c:232 ../src/tbo-toolbar.c:233
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
 msgid "Doodle"
 msgstr "Gekritzel"
 
-#: ../src/tbo-toolbar.c:235
+#: ../src/tbo-toolbar.c:234
 msgid "Booble"
 msgstr "Booble"
 
-#: ../src/tbo-toolbar.c:236
+#: ../src/tbo-toolbar.c:235
 msgid "Bubble"
 msgstr "Blase"
 
-#: ../src/tbo-toolbar.c:238 ../src/tbo-toolbar.c:239 ../src/tbo-tool-text.c:191
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238 ../src/tbo-tool-text.c:191
 msgid "Text"
 msgstr "Text"
 
 #: ../src/tbo-tool-selector.c:132
 msgid "Background color: "
-msgstr "Hintergrundfarbe:"
+msgstr "Hintergrundfarbe: "
 
 #: ../src/tbo-tool-selector.c:145
 msgid "border"
@@ -257,7 +257,9 @@ msgstr "TBO Comic-Editor"
 
 #: ../src/ui-menu.c:237
 msgid "translator-credits"
-msgstr "Paul Seyfert <pseyfert@mathphys.fsk.uni-heidelberg.de>"
+msgstr ""
+"Paul Seyfert <pseyfert@mathphys.fsk.uni-heidelberg.de>\n"
+"Mario Blättermann <mariobl@freenet.de>"
 
 #. Toplevel
 #: ../src/ui-menu.c:253
@@ -286,15 +288,15 @@ msgstr "Speichern _unter"
 
 #: ../src/ui-menu.c:272
 msgid "Save current document as ..."
-msgstr "Aktuelles Dokument speichern unter…"
+msgstr "Aktuelles Dokument speichern unter …"
 
 #: ../src/ui-menu.c:275
 msgid "Export as..."
-msgstr "Exportieren als…"
+msgstr "Exportieren als …"
 
 #: ../src/ui-menu.c:276
 msgid "Save current document as..."
-msgstr "Aktuelles Dokument speichern unter…"
+msgstr "Aktuelles Dokument speichern unter …"
 
 #: ../src/ui-menu.c:279
 msgid "_Quit"
@@ -335,7 +337,7 @@ msgstr "Einführung"
 
 #: ../src/ui-menu.c:315 ../src/ui-menu.c:316
 msgid "About"
-msgstr "Über"
+msgstr "Info"
 
 #: ../src/ui-menu.c:329
 #, c-format
