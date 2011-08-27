@@ -1,7 +1,5 @@
-SUBDIRS = doodle
-
 tbodir = $(datadir)/tbo
-tbo_DATA = tutorial.pdf tut.tbo *.png
+tbo_DATA = *.png
 
 tbouidir = $(datadir)/tbo/ui
 tboui_DATA = ui/*.xml
@@ -20,6 +18,4 @@ EXTRA_DIST = \
 	ui/*.xml \
 	icons/*.svg \
 	tbo.desktop \
-	tut.tbo \
-	tutorial.pdf \
 	tbo.svg

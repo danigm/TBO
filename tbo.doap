@@ -5,14 +5,14 @@
          xmlns="http://usefulinc.com/ns/doap#">
 
   <name xml:lang="en">TBO</name>
-  <shortdesc xml:lang="en">TBO is an easy and fun program to draw comic and make your presentations funnier.</shortdesc>
+  <shortdesc xml:lang="en">TBO is an easy and fun program to draw comics, make wireframes and simple diagrams.</shortdesc>
   <homepage rdf:resource="http://live.gnome.org/TBO" />
   <mailing-list rdf:resource="http://groups.google.com/group/tbo-dev" />
 
   <maintainer>
     <foaf:Person>
       <foaf:name>Daniel Garcia Moreno</foaf:name>
-      <foaf:mbox rdf:resource="mailto:dani@danigm.net" />
+      <foaf:mbox rdf:resource="mailto:danigm@wadobo.com" />
       <gnome:userid>danigm</gnome:userid>
     </foaf:Person>
   </maintainer>

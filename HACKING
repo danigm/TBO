@@ -4,20 +4,13 @@ Collaborating
 If you like that project and you want to collaborate there is some
 parts where you can do something that you know.
 
-    * Create a 'doodle library'.
+    * Create a 'library'.
     * 'translate' to your mother language.
     * 'package' for your favourite distribution.
     * If you are a coder take a look to the TODO file.
 
-Doodle library
---------------
-
-A doodle library is a set of .svg files with doodles, shapes, or
-something that you want to can add in a TBO frame easy. Is easy to
-create your own doodle library, it's only a folder with one or more
-folder inside, and each folder with one or more .svg files.
-
-Look for an example the 'foo' or 'bubble' libraries in data/doodle.
+library
+-------
 
 Translations
 ------------
@@ -31,7 +24,3 @@ $ intltool-update es
 
 ---
 You can send any collaboration to 'AUTHORS' and I will be happy.
-
-Follow the project development in github:
-http://github.com/danigm/tbo fork the project and ask me to merge and
-I will be happier.

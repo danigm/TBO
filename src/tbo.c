@@ -1,6 +1,6 @@
 /*
  * This file is part of TBO, a gnome comic editor
- * Copyright (C) 2010  Daniel Garcia Moreno <dani@danigm.net>
+ * Copyright (C) 2011  Daniel Garcia Moreno <danigm@wadobo.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,15 @@
  */
 
 
+#include <glib.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
 #include "config.h"
 
-#include "custom-stock.h"
-#include "tbo-window.h"
-#include "comic.h"
+#include "tbo-startup.h"
 
-int main (int argc, char**argv){
+int main (int argc, char**argv) {
 
 #ifdef ENABLE_NLS
     /* Initialize the i18n stuff */
@@ -34,14 +33,26 @@ int main (int argc, char**argv){
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     textdomain (GETTEXT_PACKAGE);
 #endif
+    GtkWidget *main_window;
+    GtkWidget *icon;
 
-    TboWindow *tbo;
+    GtkWidget *tbo_startup;
 
     gtk_init (&argc, &argv);
-    load_custom_stock ();
-    tbo = tbo_new_tbo (800, 450);
-    if (argc == 2)
-        tbo_comic_open (tbo, argv[1]);
+
+    main_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    g_signal_connect (main_window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
+    gtk_widget_set_size_request (main_window, 800, 500);
+
+    icon = gtk_image_new_from_file (DATA_DIR "/icon.png");
+    gtk_window_set_icon (GTK_WINDOW (main_window), gtk_image_get_pixbuf (GTK_IMAGE (icon)));
+    gtk_widget_destroy (icon);
+
+    tbo_startup = tbo_startup_new ();
+
+    gtk_container_add (GTK_CONTAINER (main_window), tbo_startup);
+
+    gtk_widget_show_all (main_window);
 
     gtk_main ();
 

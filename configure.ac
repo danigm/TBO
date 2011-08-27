@@ -1,5 +1,5 @@
 AC_PREREQ(2.60)
-AC_INIT([tbo], [0.98], [dani@danigm.net])
+AC_INIT([tbo], [2.0], [danigm@wadobo.com])
 AC_CONFIG_AUX_DIR([build])
 AM_INIT_AUTOMAKE([1.9.6 -Wall -Werror dist-bzip2])
 
@@ -12,7 +12,7 @@ AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 
 AM_PATH_GTK_3_0([3.0.0],,AC_MSG_ERROR([Gtk+ 3.0.0 or higher required.]))
-PKG_CHECK_MODULES(PACKAGE, "gtk+-3.0 cairo librsvg-2.0")
+PKG_CHECK_MODULES(PACKAGE, "gtk+-3.0 goocanvas-2.0")
 
 # *******************************
 # Internationalization
@@ -29,7 +29,6 @@ AC_CONFIG_FILES([
     Makefile
     src/Makefile
     data/Makefile
-    data/doodle/Makefile
     po/Makefile.in
 ])
 
