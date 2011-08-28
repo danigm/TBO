@@ -19,8 +19,8 @@
 #ifndef _TBO_STARTUP_H
 #define _TBO_STARTUP_H
 
-#include "gtk/gtk.h"
-#include "glib-object.h"
+#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #define TBO_TYPE_STARTUP            (tbo_startup_get_type ())
 #define TBO_STARTUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TBO_TYPE_STARTUP, TboStartup))
@@ -36,6 +36,8 @@ struct _TboStartup {
     GtkGrid parent;
 
     /* instance members */
+    GtkWidget *project_type_icon_view;
+    GtkWidget *recent_projects;
 };
 
 struct _TboStartupClass {
