@@ -20,6 +20,9 @@
 
 #include <glib/gi18n.h>
 
+#include <string.h>
+#include <sys/stat.h>
+
 G_DEFINE_TYPE (TboStartup, tbo_startup, GTK_TYPE_GRID);
 
 static GtkWidget *init_project_icon_view ();
@@ -110,29 +113,54 @@ init_project_icon_view ()
 
     GtkTreeIter iter, *iter2;
     GtkListStore *list_store;
-    GtkWidget *image = NULL;
     GdkPixbuf *icon = NULL;
     int i;
 
+    GDir *dir;
+    const gchar *filename;
+    gchar *libname;
+    GError *error = NULL;
+    gchar complete_dir[255] = {0}, thumb_path[255] = {0}, conf_path[255] = {0};
+    struct stat filestat;
+    int st;
+    GKeyFile *conffile;
 
     icon_view = gtk_icon_view_new ();
 
-    image = gtk_image_new_from_file (DATA_DIR "/icon.png");
-    icon = gtk_image_get_pixbuf (GTK_IMAGE (image));
-
     list_store = gtk_list_store_new (2, G_TYPE_STRING, GDK_TYPE_PIXBUF);
 
-    for (i=0; i < 20; i++) {
+    // loading projects
+    dir = g_dir_open (DATA_DIR "/libs", 0, &error);
+    while (filename = g_dir_read_name (dir))
+    {
+        size_t strsize = sizeof (char) * (strlen (DATA_DIR "/libs") + strlen (filename) + 2);
+        snprintf (complete_dir, strsize, "%s/%s", DATA_DIR "/libs", filename);
+        st = stat (complete_dir, &filestat);
+
+        if (!S_ISDIR (filestat.st_mode)) {
+            continue;
+        }
+
+        strsize = sizeof (char) * (strlen (complete_dir) + strlen ("thumb.png") + 2);
+        snprintf (thumb_path, strsize, "%s/%s", complete_dir, "thumb.png");
+        icon = gdk_pixbuf_new_from_file (thumb_path, &error);
+
+        strsize = sizeof (char) * (strlen (complete_dir) + strlen ("tbolib.conf") + 2);
+        snprintf (conf_path, strsize, "%s/%s", complete_dir, "tbolib.conf");
+        conffile = g_key_file_new ();
+        g_key_file_load_from_file (conffile, conf_path, G_KEY_FILE_NONE, &error);
+        libname = g_key_file_get_value (conffile, "description", "name", &error);
+
         iter2 = gtk_tree_iter_copy (&iter);
         gtk_list_store_append (list_store, iter2);
         gtk_list_store_set (list_store, iter2,
-                            0, "Value",
+                            0, libname,
                             1, icon,
                             -1);
         gtk_tree_iter_free (iter2);
+        gdk_pixbuf_unref(icon);
     }
-
-    gtk_widget_destroy (image);
+    g_dir_close (dir);
 
     gtk_icon_view_set_model (GTK_ICON_VIEW (icon_view), GTK_TREE_MODEL (list_store));
     gtk_icon_view_set_markup_column (GTK_ICON_VIEW (icon_view), 0);

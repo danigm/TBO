@@ -1,3 +1,5 @@
+SUBDIRS = libs
+
 tbodir = $(datadir)/tbo
 tbo_DATA = *.png
 

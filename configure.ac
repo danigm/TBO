@@ -29,6 +29,7 @@ AC_CONFIG_FILES([
     Makefile
     src/Makefile
     data/Makefile
+    data/libs/Makefile
     po/Makefile.in
 ])
 
