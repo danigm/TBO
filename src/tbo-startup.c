@@ -17,6 +17,7 @@
  */
 
 #include "tbo-startup.h"
+#include "tbo-clip-lib.h"
 
 #include <glib/gi18n.h>
 
@@ -113,21 +114,18 @@ init_project_icon_view ()
 
     GtkTreeIter iter, *iter2;
     GtkListStore *list_store;
-    GdkPixbuf *icon = NULL;
-    int i;
+    TboClipLib *clip_lib;
 
     GDir *dir;
     const gchar *filename;
-    gchar *libname;
     GError *error = NULL;
-    gchar complete_dir[255] = {0}, thumb_path[255] = {0}, conf_path[255] = {0};
+    gchar complete_dir[255] = {0};
     struct stat filestat;
     int st;
-    GKeyFile *conffile;
 
     icon_view = gtk_icon_view_new ();
 
-    list_store = gtk_list_store_new (2, G_TYPE_STRING, GDK_TYPE_PIXBUF);
+    list_store = gtk_list_store_new (3, G_TYPE_STRING, GDK_TYPE_PIXBUF, TBO_TYPE_CLIP_LIB);
 
     // loading projects
     dir = g_dir_open (DATA_DIR "/libs", 0, &error);
@@ -141,24 +139,18 @@ init_project_icon_view ()
             continue;
         }
 
-        strsize = sizeof (char) * (strlen (complete_dir) + strlen ("thumb.png") + 2);
-        snprintf (thumb_path, strsize, "%s/%s", complete_dir, "thumb.png");
-        icon = gdk_pixbuf_new_from_file (thumb_path, &error);
-
-        strsize = sizeof (char) * (strlen (complete_dir) + strlen ("tbolib.conf") + 2);
-        snprintf (conf_path, strsize, "%s/%s", complete_dir, "tbolib.conf");
-        conffile = g_key_file_new ();
-        g_key_file_load_from_file (conffile, conf_path, G_KEY_FILE_NONE, &error);
-        libname = g_key_file_get_value (conffile, "description", "name", &error);
+        clip_lib = TBO_CLIP_LIB (tbo_clip_lib_new (complete_dir));
 
         iter2 = gtk_tree_iter_copy (&iter);
         gtk_list_store_append (list_store, iter2);
         gtk_list_store_set (list_store, iter2,
-                            0, libname,
-                            1, icon,
+                            0, clip_lib->name,
+                            1, clip_lib->icon,
+                            2, clip_lib,
                             -1);
         gtk_tree_iter_free (iter2);
-        gdk_pixbuf_unref(icon);
+
+        g_object_unref (clip_lib);
     }
     g_dir_close (dir);
 

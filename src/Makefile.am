@@ -7,6 +7,8 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(includedir) $(GNOME_INCLUDEDIR) \
 bin_PROGRAMS = tbo
 
 SOURCES = tbo.c\
+	  tbo-clip-lib.h \
+	  tbo-clip-lib.c \
 	  tbo-startup.h\
 	  tbo-startup.c
 
