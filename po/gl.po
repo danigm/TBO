@@ -4,370 +4,371 @@
 # Daniel Garcia <dani@danigm.net>, 2010.
 # Darío Villar Veres <dario.villar.v@gmail.com>, 2010.
 # Miguel Anxo Bouzada <mbouzada@gmail.com>, 2010.
+# Fran Dieguez <frandieguez@gnome.org>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: TBO\n"
 "Report-Msgid-Bugs-To: dani@danigm.net\n"
-"POT-Creation-Date: 2010-08-13 00:19+0200\n"
-"PO-Revision-Date: 2010-11-29 09:12+0100\n"
-"Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
-"Language-Team: Galician <proxecto@trasno.net>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2011-09-25 13:06+0200\n"
+"PO-Revision-Date: 2011-09-25 13:06+0200\n"
+"Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
+"Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Poedit-Language: Galician\n"
 
-#: ../src/comic.c:170
+#: ../src/comic.c:189
 #, c-format
 msgid "Failed saving: %s"
 msgstr "Produciuse un fallo ao gardar: %s"
 
-#: ../src/comic.c:172
+#: ../src/comic.c:191
 msgid "failed saving"
 msgstr "produciuse un fallo ao gardar"
 
-#: ../src/comic-load.c:295
+#: ../src/comic-load.c:322
 msgid "Couldn't load file"
 msgstr "Non se puido cargar o ficheiro"
 
-#: ../src/comic-load.c:304
+#: ../src/comic-load.c:332
 msgid "Couldn't parse file"
 msgstr "Non se puido analizar o ficheiro"
 
-#: ../src/comic-new-dialog.c:22
-#: ../src/ui-toolbar.c:313
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
 msgid "New Comic"
 msgstr "Novo cómic"
 
-#: ../src/comic-new-dialog.c:34
-#: ../src/export.c:126
+#: ../src/comic-new-dialog.c:53 ../src/export.c:145
 msgid "width: "
 msgstr "largo: "
 
-#: ../src/comic-new-dialog.c:44
-#: ../src/export.c:127
+#: ../src/comic-new-dialog.c:63 ../src/export.c:146
 msgid "height: "
 msgstr "alto: "
 
-#: ../src/comic-open-dialog.c:18
+#: ../src/comic-open-dialog.c:65
 msgid "Open"
 msgstr "Abrir"
 
-#: ../src/comic-open-dialog.c:28
+#: ../src/comic-open-dialog.c:82
 msgid "TBO files"
 msgstr "Ficheiros TBO"
 
-#: ../src/comic-open-dialog.c:32
-#: ../src/ui-toolbar.c:293
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
 msgid "All files"
 msgstr "Todos os ficheiros"
 
-#: ../src/comic-saveas-dialog.c:26
+#: ../src/comic-saveas-dialog.c:45
 msgid "Save as"
 msgstr "Gardar como"
 
-#: ../src/custom-stock.c:38
+#: ../src/custom-stock.c:57
 #, c-format
 msgid "error loading image %s\n"
 msgstr "produciuse un erro cargando a imaxe %s\n"
 
-#: ../src/export.c:51
-#: ../src/export.c:102
+#: ../src/export.c:70 ../src/export.c:121
 msgid "Export as"
 msgstr "Exportar como"
 
-#: ../src/export.c:118
+#: ../src/export.c:137
 msgid "Filename: "
 msgstr "Nome do ficheiro: "
 
-#: ../src/export.c:142
+#: ../src/export.c:161
 msgid "guess by extension"
 msgstr "Adiviñar por extensión"
 
-#: ../src/selector-tool.c:109
-msgid "Background color: "
-msgstr "Cor de fondo: "
-
-#: ../src/selector-tool.c:122
-msgid "border"
-msgstr "bordo"
-
-#: ../src/selector-tool.c:572
-msgid "double click here"
-msgstr "prema dobre clic aquí"
-
-#. TODO add tooltip_notify
-#: ../src/selector-tool.c:620
-msgid "press esc to go back"
-msgstr "prema ESC para volver atrás"
-
-#: ../src/svgimage.c:69
+#: ../src/tbo-object-svg.c:51
 #, c-format
 msgid "Couldn't load %s\n"
 msgstr "Non se pode cargar %s\n"
 
-#: ../src/tbo-window.c:128
+#: ../src/tbo-object-text.c:181
+msgid "text"
+msgstr "texto"
+
+#: ../src/tbo-toolbar.c:129
+msgid "Add an Image"
+msgstr "Engadir unha imaxe"
+
+#: ../src/tbo-toolbar.c:137
+msgid "Image files"
+msgstr "Ficheiros de imaxe"
+
+#. File menu
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
+msgid "_New"
+msgstr "_Novo"
+
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
+msgid "_Open"
+msgstr "_Abrir"
+
+#: ../src/tbo-toolbar.c:167
+msgid "Open comic"
+msgstr "Abrir cómic"
+
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
+msgid "_Save"
+msgstr "_Gardar"
+
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
+msgid "Save current document"
+msgstr "Gardar o documento actual"
+
+#. Undo and Redo
+#. edit menu
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
+msgid "_Undo"
+msgstr "_Desfacer"
+
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
+#: ../src/ui-menu.c:288
+msgid "Undo the last action"
+msgstr "Desfacer a última acción"
+
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
+msgid "_Redo"
+msgstr "_Refacer"
+
+#. Page tools
+#: ../src/tbo-toolbar.c:183
+msgid "New Page"
+msgstr "Nova páxina"
+
+#: ../src/tbo-toolbar.c:184
+msgid "New page"
+msgstr "Nova páxina"
+
+#: ../src/tbo-toolbar.c:187
+msgid "Delete Page"
+msgstr "Eliminar páxina"
+
+#: ../src/tbo-toolbar.c:188
+msgid "Delete current page"
+msgstr "Eliminar a páxina actual"
+
+#: ../src/tbo-toolbar.c:191
+msgid "Prev Page"
+msgstr "Páxina anterior"
+
+#: ../src/tbo-toolbar.c:192
+msgid "Prev page"
+msgstr "Páxina anterior"
+
+#: ../src/tbo-toolbar.c:195
+msgid "Next Page"
+msgstr "Páxina seguinte"
+
+#: ../src/tbo-toolbar.c:196
+msgid "Next page"
+msgstr "Páxina seguinte"
+
+#. Zoom tools
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
+msgid "Zoom in"
+msgstr "Acercar"
+
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
+msgid "Zoom 1:1"
+msgstr "Escala 1:1"
+
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
+msgid "Zoom fit"
+msgstr "Axustar"
+
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
+msgid "Zoom out"
+msgstr "Alonxar"
+
+#. Png image tool
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
+msgid "Image"
+msgstr "Imaxe"
+
+#. Page view tools
+#: ../src/tbo-toolbar.c:222
+msgid "New _Frame"
+msgstr "Novo _cadro"
+
+#: ../src/tbo-toolbar.c:223
+msgid "New Frame"
+msgstr "Novo cadro"
+
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
+msgid "Selector"
+msgstr "Selector"
+
+#. Frame view tools
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
+msgid "Doodle"
+msgstr "Boneco"
+
+#: ../src/tbo-toolbar.c:234
+msgid "Booble"
+msgstr "Burbulla"
+
+#: ../src/tbo-toolbar.c:235
+msgid "Bubble"
+msgstr "Burbulla"
+
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238
+#: ../src/tbo-tool-text.c:191
+msgid "Text"
+msgstr "Texto"
+
+#: ../src/tbo-tool-selector.c:132
+msgid "Background color: "
+msgstr "Cor de fondo: "
+
+#: ../src/tbo-tool-selector.c:145
+msgid "border"
+msgstr "bordo"
+
+#. TODO add tooltip_notify
+#: ../src/tbo-tool-selector.c:725
+msgid "press esc to go back"
+msgstr "prema ESC para volver atrás"
+
+#: ../src/tbo-tool-selector.c:804
+msgid "double click here"
+msgstr "prema dobre clic aquí"
+
+#: ../src/tbo-tool-text.c:103
+msgid "Text color:"
+msgstr "Cor do texto:"
+
+#: ../src/tbo-tool-text.c:104
+msgid "Font:"
+msgstr "Tipo de letra:"
+
+#: ../src/tbo-window.c:228
 msgid "Untitled"
 msgstr "Sen título"
 
-#: ../src/tbo-window.c:184
+#: ../src/tbo-window.c:285
 #, c-format
 msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
 msgstr "páxina: %d de %d [ %5d,%5d ] | cadros: %d"
 
-#: ../src/text-tool.c:74
-msgid "Text color:"
-msgstr "Cor do texto:"
-
-#: ../src/text-tool.c:75
-msgid "Font:"
-msgstr "Tipo de letra:"
-
-#: ../src/text-tool.c:165
-msgid "Texto"
-msgstr "Texto"
-
-#: ../src/ui-menu.c:191
+#: ../src/ui-menu.c:232
 msgid "TBO comic editor"
 msgstr "Editor de cómics TBO"
 
-#: ../src/ui-menu.c:196
+#: ../src/ui-menu.c:237
 msgid "translator-credits"
 msgstr ""
 "Darío Villar Veres <dario.villar.v@gmail.com>\n"
 "Miguel Anxo Bouzada <mbouzada@gmail.com>"
 
 #. Toplevel
-#: ../src/ui-menu.c:212
+#: ../src/ui-menu.c:253
 msgid "_File"
 msgstr "_Ficheiro"
 
-#: ../src/ui-menu.c:213
+#: ../src/ui-menu.c:254
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../src/ui-menu.c:214
+#: ../src/ui-menu.c:255
 msgid "Help"
 msgstr "Axuda"
 
-#. File menu
-#: ../src/ui-menu.c:218
-#: ../src/ui-toolbar.c:312
-msgid "_New"
-msgstr "_Novo"
-
-#: ../src/ui-menu.c:219
+#: ../src/ui-menu.c:260
 msgid "Create a new file"
 msgstr "Crear un novo ficheiro"
 
-#: ../src/ui-menu.c:222
-#: ../src/ui-toolbar.c:316
-msgid "_Open"
-msgstr "_Abrir"
-
-#: ../src/ui-menu.c:223
+#: ../src/ui-menu.c:264
 msgid "Open a new file"
 msgstr "Abrir un novo ficheiro"
 
-#: ../src/ui-menu.c:226
-#: ../src/ui-toolbar.c:320
-msgid "_Save"
-msgstr "_Gardar"
-
-#: ../src/ui-menu.c:227
-#: ../src/ui-toolbar.c:321
-msgid "Save current document"
-msgstr "Gardar o documento actual"
-
-#: ../src/ui-menu.c:230
+#: ../src/ui-menu.c:271
 msgid "_Save as"
 msgstr "_Gardar como"
 
-#: ../src/ui-menu.c:231
+#: ../src/ui-menu.c:272
 msgid "Save current document as ..."
 msgstr "Gardar o documento actual como..."
 
-#: ../src/ui-menu.c:234
+#: ../src/ui-menu.c:275
 msgid "Export as..."
 msgstr "Exportar como..."
 
-#: ../src/ui-menu.c:235
+#: ../src/ui-menu.c:276
 msgid "Save current document as..."
 msgstr "Gardar o documento actual como..."
 
-#: ../src/ui-menu.c:238
+#: ../src/ui-menu.c:279
 msgid "_Quit"
 msgstr "_Saír"
 
-#: ../src/ui-menu.c:239
+#: ../src/ui-menu.c:280
 msgid "Quit"
 msgstr "Saír"
 
-#. edit menu
-#: ../src/ui-menu.c:244
-#: ../src/ui-menu.c:245
+#: ../src/ui-menu.c:291 ../src/ui-menu.c:292
 msgid "Clone"
 msgstr "Clonar"
 
-#: ../src/ui-menu.c:247
-#: ../src/ui-menu.c:248
+#: ../src/ui-menu.c:294 ../src/ui-menu.c:295
 msgid "Delete"
 msgstr "Eliminar"
 
-#: ../src/ui-menu.c:250
-#: ../src/ui-menu.c:251
+#: ../src/ui-menu.c:297 ../src/ui-menu.c:298
 msgid "Horizontal flip"
 msgstr "Voltear en  horizontal"
 
-#: ../src/ui-menu.c:253
-#: ../src/ui-menu.c:254
+#: ../src/ui-menu.c:300 ../src/ui-menu.c:301
 msgid "Vertical flip"
 msgstr "Voltear en vertical"
 
-#: ../src/ui-menu.c:256
-#: ../src/ui-menu.c:257
+#: ../src/ui-menu.c:303 ../src/ui-menu.c:304
 msgid "Move to front"
 msgstr "Mover cara adiante"
 
-#: ../src/ui-menu.c:259
-#: ../src/ui-menu.c:260
+#: ../src/ui-menu.c:306 ../src/ui-menu.c:307
 msgid "Move to back"
 msgstr "Mover cara atrás"
 
 #. Help menu
-#: ../src/ui-menu.c:264
-#: ../src/ui-menu.c:265
+#: ../src/ui-menu.c:311 ../src/ui-menu.c:312
 msgid "Tutorial"
 msgstr "Titorial"
 
-#: ../src/ui-menu.c:268
-#: ../src/ui-menu.c:269
+#: ../src/ui-menu.c:315 ../src/ui-menu.c:316
 msgid "About"
 msgstr "Sobre"
 
-#: ../src/ui-menu.c:282
+#: ../src/ui-menu.c:329
 #, c-format
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "Non se puido combinar tbo-menu-ui.xml: %s"
 
-#: ../src/ui-toolbar.c:280
-msgid "Add an Image"
-msgstr "Engadir unha imaxe"
+#~ msgid "Texto"
+#~ msgstr "Texto"
 
-#: ../src/ui-toolbar.c:288
-msgid "png"
-msgstr "png"
-
-#: ../src/ui-toolbar.c:317
-msgid "Open comic"
-msgstr "Abrir cómic"
-
-#. Page tools
-#: ../src/ui-toolbar.c:325
-msgid "New Page"
-msgstr "Nova páxina"
-
-#: ../src/ui-toolbar.c:326
-msgid "New page"
-msgstr "Nova páxina"
-
-#: ../src/ui-toolbar.c:329
-msgid "Delete Page"
-msgstr "Eliminar páxina"
-
-#: ../src/ui-toolbar.c:330
-msgid "Delete current page"
-msgstr "Eliminar a páxina actual"
-
-#: ../src/ui-toolbar.c:333
-msgid "Prev Page"
-msgstr "Páxina anterior"
-
-#: ../src/ui-toolbar.c:334
-msgid "Prev page"
-msgstr "Páxina anterior"
-
-#: ../src/ui-toolbar.c:337
-msgid "Next Page"
-msgstr "Páxina seguinte"
-
-#: ../src/ui-toolbar.c:338
-msgid "Next page"
-msgstr "Páxina seguinte"
-
-#. Zoom tools
-#: ../src/ui-toolbar.c:342
-#: ../src/ui-toolbar.c:343
-msgid "Zoom in"
-msgstr "Acercar"
-
-#: ../src/ui-toolbar.c:345
-#: ../src/ui-toolbar.c:346
-msgid "Zoom 1:1"
-msgstr "Escala 1:1"
-
-#: ../src/ui-toolbar.c:348
-#: ../src/ui-toolbar.c:349
-msgid "Zoom fit"
-msgstr "Axustar"
-
-#: ../src/ui-toolbar.c:351
-#: ../src/ui-toolbar.c:352
-msgid "Zoom out"
-msgstr "Alonxar"
-
-#. Png image tool
-#: ../src/ui-toolbar.c:356
-#: ../src/ui-toolbar.c:357
-msgid "Image"
-msgstr "Imaxe"
-
-#. Page view tools
-#: ../src/ui-toolbar.c:363
-msgid "New _Frame"
-msgstr "Novo _cadro"
-
-#: ../src/ui-toolbar.c:364
-msgid "New Frame"
-msgstr "Novo cadro"
-
-#: ../src/ui-toolbar.c:367
-#: ../src/ui-toolbar.c:368
-msgid "Selector"
-msgstr "Selector"
-
-#. Frame view tools
-#: ../src/ui-toolbar.c:372
-#: ../src/ui-toolbar.c:373
-msgid "Doodle"
-msgstr "Boneco"
-
-#: ../src/ui-toolbar.c:375
-msgid "Booble"
-msgstr "Burbulla"
-
-#: ../src/ui-toolbar.c:376
-msgid "Bubble"
-msgstr "Burbulla"
-
-#: ../src/ui-toolbar.c:378
-#: ../src/ui-toolbar.c:379
-msgid "Text"
-msgstr "Texto"
+#~ msgid "png"
+#~ msgstr "png"
 
 #~ msgid "Export as png"
 #~ msgstr "Exportar a png"
+
 #~ msgid "Save current document as png"
 #~ msgstr "Guardar el documento actual como png"
+
 #~ msgid "Export as pdf"
 #~ msgstr "Exportar a pdf"
+
 #~ msgid "Save current document as pdf"
 #~ msgstr "Guardar el documento actual como pdf"
+
 #~ msgid "Export as svg"
 #~ msgstr "Exportar a svg"
+
 #~ msgid "Save current document as svg"
 #~ msgstr "Guardar el documento actual como svg"
-
