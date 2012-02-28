@@ -1,14 +1,14 @@
 # Swedish translation for tbo.
-# Copyright (C) 2010 Free Software Foundation, Inc.
+# Copyright (C) 2010, 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the tbo package.
-# Daniel Nylander <po@danielnylander.se>, 2010.
+# Daniel Nylander <po@danielnylander.se>, 2010, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: tbo\n"
 "Report-Msgid-Bugs-To: dani@danigm.net\n"
-"POT-Creation-Date: 2010-12-29 12:31+0100\n"
-"PO-Revision-Date: 2010-12-29 12:43+0100\n"
+"POT-Creation-Date: 2012-02-28 22:02+0100\n"
+"PO-Revision-Date: 2012-02-28 22:03+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: \n"
@@ -34,7 +34,7 @@ msgid "Couldn't parse file"
 msgstr "Kunde inte tolka filen"
 
 #: ../src/comic-new-dialog.c:41
-#: ../src/tbo-toolbar.c:164
+#: ../src/tbo-toolbar.c:163
 msgid "New Comic"
 msgstr "Ny serietidning"
 
@@ -57,7 +57,7 @@ msgid "TBO files"
 msgstr "TBO-filer"
 
 #: ../src/comic-open-dialog.c:86
-#: ../src/tbo-toolbar.c:142
+#: ../src/tbo-toolbar.c:141
 msgid "All files"
 msgstr "Alla filer"
 
@@ -97,142 +97,161 @@ msgid "Add an Image"
 msgstr "Lägg till en bild"
 
 #: ../src/tbo-toolbar.c:137
-msgid "png"
-msgstr "png"
+msgid "Image files"
+msgstr "Bildfiler"
 
 #. File menu
-#: ../src/tbo-toolbar.c:163
-#: ../src/ui-menu.c:252
+#: ../src/tbo-toolbar.c:162
+#: ../src/ui-menu.c:259
 msgid "_New"
 msgstr "_Ny"
 
-#: ../src/tbo-toolbar.c:167
-#: ../src/ui-menu.c:256
+#: ../src/tbo-toolbar.c:166
+#: ../src/ui-menu.c:263
 msgid "_Open"
 msgstr "_Öppna"
 
-#: ../src/tbo-toolbar.c:168
+#: ../src/tbo-toolbar.c:167
 msgid "Open comic"
 msgstr "Öppna serietidning"
 
-#: ../src/tbo-toolbar.c:171
-#: ../src/ui-menu.c:260
+#: ../src/tbo-toolbar.c:170
+#: ../src/ui-menu.c:267
 msgid "_Save"
 msgstr "_Spara"
 
-#: ../src/tbo-toolbar.c:172
-#: ../src/ui-menu.c:261
+#: ../src/tbo-toolbar.c:171
+#: ../src/ui-menu.c:268
 msgid "Save current document"
 msgstr "Spara aktuellt dokument"
 
-#. Page tools
+#. Undo and Redo
+#. edit menu
+#: ../src/tbo-toolbar.c:175
+#: ../src/ui-menu.c:284
+msgid "_Undo"
+msgstr "_Ångra"
+
 #: ../src/tbo-toolbar.c:176
+#: ../src/tbo-toolbar.c:179
+#: ../src/ui-menu.c:285
+#: ../src/ui-menu.c:288
+msgid "Undo the last action"
+msgstr "Ångra senaste åtgärden"
+
+#: ../src/tbo-toolbar.c:178
+#: ../src/ui-menu.c:287
+msgid "_Redo"
+msgstr "_Gör om"
+
+#. Page tools
+#: ../src/tbo-toolbar.c:183
 msgid "New Page"
 msgstr "Ny sida"
 
-#: ../src/tbo-toolbar.c:177
+#: ../src/tbo-toolbar.c:184
 msgid "New page"
 msgstr "Ny sida"
 
-#: ../src/tbo-toolbar.c:180
+#: ../src/tbo-toolbar.c:187
 msgid "Delete Page"
 msgstr "Ta bort sida"
 
-#: ../src/tbo-toolbar.c:181
+#: ../src/tbo-toolbar.c:188
 msgid "Delete current page"
 msgstr "Ta bort aktuell sida"
 
-#: ../src/tbo-toolbar.c:184
+#: ../src/tbo-toolbar.c:191
 msgid "Prev Page"
 msgstr "Föreg sida"
 
-#: ../src/tbo-toolbar.c:185
+#: ../src/tbo-toolbar.c:192
 msgid "Prev page"
 msgstr "Föreg sida"
 
-#: ../src/tbo-toolbar.c:188
+#: ../src/tbo-toolbar.c:195
 msgid "Next Page"
 msgstr "Nästa sida"
 
-#: ../src/tbo-toolbar.c:189
+#: ../src/tbo-toolbar.c:196
 msgid "Next page"
 msgstr "Nästa sida"
 
 #. Zoom tools
-#: ../src/tbo-toolbar.c:193
-#: ../src/tbo-toolbar.c:194
+#: ../src/tbo-toolbar.c:200
+#: ../src/tbo-toolbar.c:201
 msgid "Zoom in"
 msgstr "Zooma in"
 
-#: ../src/tbo-toolbar.c:196
-#: ../src/tbo-toolbar.c:197
+#: ../src/tbo-toolbar.c:203
+#: ../src/tbo-toolbar.c:204
 msgid "Zoom 1:1"
 msgstr "Zooma 1:1"
 
-#: ../src/tbo-toolbar.c:199
-#: ../src/tbo-toolbar.c:200
+#: ../src/tbo-toolbar.c:206
+#: ../src/tbo-toolbar.c:207
 msgid "Zoom fit"
 msgstr "Anpassad zoom"
 
-#: ../src/tbo-toolbar.c:202
-#: ../src/tbo-toolbar.c:203
+#: ../src/tbo-toolbar.c:209
+#: ../src/tbo-toolbar.c:210
 msgid "Zoom out"
 msgstr "Zooma ut"
 
 #. Png image tool
-#: ../src/tbo-toolbar.c:207
-#: ../src/tbo-toolbar.c:208
+#: ../src/tbo-toolbar.c:214
+#: ../src/tbo-toolbar.c:215
 msgid "Image"
 msgstr "Bild"
 
 #. Page view tools
-#: ../src/tbo-toolbar.c:215
+#: ../src/tbo-toolbar.c:222
 msgid "New _Frame"
 msgstr "Ny b_ildruta"
 
-#: ../src/tbo-toolbar.c:216
+#: ../src/tbo-toolbar.c:223
 msgid "New Frame"
 msgstr "Ny bildruta"
 
-#: ../src/tbo-toolbar.c:219
-#: ../src/tbo-toolbar.c:220
+#: ../src/tbo-toolbar.c:226
+#: ../src/tbo-toolbar.c:227
 msgid "Selector"
 msgstr "Väljare"
 
 #. Frame view tools
-#: ../src/tbo-toolbar.c:224
-#: ../src/tbo-toolbar.c:225
+#: ../src/tbo-toolbar.c:231
+#: ../src/tbo-toolbar.c:232
 msgid "Doodle"
 msgstr "Doodle"
 
-#: ../src/tbo-toolbar.c:227
+#: ../src/tbo-toolbar.c:234
 msgid "Booble"
 msgstr "Booble"
 
-#: ../src/tbo-toolbar.c:228
+#: ../src/tbo-toolbar.c:235
 msgid "Bubble"
 msgstr "Bubbla"
 
-#: ../src/tbo-toolbar.c:230
-#: ../src/tbo-toolbar.c:231
+#: ../src/tbo-toolbar.c:237
+#: ../src/tbo-toolbar.c:238
 #: ../src/tbo-tool-text.c:191
 msgid "Text"
 msgstr "Text"
 
-#: ../src/tbo-tool-selector.c:131
+#: ../src/tbo-tool-selector.c:132
 msgid "Background color: "
 msgstr "Bakgrundsfärg: "
 
-#: ../src/tbo-tool-selector.c:144
+#: ../src/tbo-tool-selector.c:145
 msgid "border"
 msgstr "ram"
 
 #. TODO add tooltip_notify
-#: ../src/tbo-tool-selector.c:692
+#: ../src/tbo-tool-selector.c:725
 msgid "press esc to go back"
 msgstr "tryck Esc för att gå tillbaka"
 
-#: ../src/tbo-tool-selector.c:771
+#: ../src/tbo-tool-selector.c:804
 msgid "double click here"
 msgstr "dubbelklicka här"
 
@@ -244,20 +263,20 @@ msgstr "Textfärg:"
 msgid "Font:"
 msgstr "Typsnitt:"
 
-#: ../src/tbo-window.c:225
+#: ../src/tbo-window.c:228
 msgid "Untitled"
 msgstr "Namnlös"
 
-#: ../src/tbo-window.c:282
+#: ../src/tbo-window.c:285
 #, c-format
 msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
 msgstr "sida: %d av %d [ %5d,%5d ] | bildrutor: %d"
 
-#: ../src/ui-menu.c:225
+#: ../src/ui-menu.c:232
 msgid "TBO comic editor"
 msgstr "Serietidningsredigeraren TBO"
 
-#: ../src/ui-menu.c:230
+#: ../src/ui-menu.c:237
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander <po@danielnylander.se>\n"
@@ -266,94 +285,95 @@ msgstr ""
 "till <tp-sv@listor.tp-sv.se>."
 
 #. Toplevel
-#: ../src/ui-menu.c:246
+#: ../src/ui-menu.c:253
 msgid "_File"
 msgstr "_Arkiv"
 
-#: ../src/ui-menu.c:247
+#: ../src/ui-menu.c:254
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: ../src/ui-menu.c:248
+#: ../src/ui-menu.c:255
 msgid "Help"
 msgstr "Hjälp"
 
-#: ../src/ui-menu.c:253
+#: ../src/ui-menu.c:260
 msgid "Create a new file"
 msgstr "Skapa en ny fil"
 
-#: ../src/ui-menu.c:257
+#: ../src/ui-menu.c:264
 msgid "Open a new file"
 msgstr "Öppna en ny fil"
 
-#: ../src/ui-menu.c:264
+#: ../src/ui-menu.c:271
 msgid "_Save as"
 msgstr "_Spara som"
 
-#: ../src/ui-menu.c:265
+#: ../src/ui-menu.c:272
 msgid "Save current document as ..."
 msgstr "Spara aktuellt dokument som ..."
 
-#: ../src/ui-menu.c:268
+#: ../src/ui-menu.c:275
 msgid "Export as..."
 msgstr "Exportera som..."
 
-#: ../src/ui-menu.c:269
+#: ../src/ui-menu.c:276
 msgid "Save current document as..."
 msgstr "Spara aktuellt dokument som..."
 
-#: ../src/ui-menu.c:272
+#: ../src/ui-menu.c:279
 msgid "_Quit"
 msgstr "A_vsluta"
 
-#: ../src/ui-menu.c:273
+#: ../src/ui-menu.c:280
 msgid "Quit"
 msgstr "Avsluta"
 
-#. edit menu
-#: ../src/ui-menu.c:278
-#: ../src/ui-menu.c:279
+#: ../src/ui-menu.c:291
+#: ../src/ui-menu.c:292
 msgid "Clone"
 msgstr "Klona"
 
-#: ../src/ui-menu.c:281
-#: ../src/ui-menu.c:282
+#: ../src/ui-menu.c:294
+#: ../src/ui-menu.c:295
 msgid "Delete"
 msgstr "Ta bort"
 
-#: ../src/ui-menu.c:284
-#: ../src/ui-menu.c:285
+#: ../src/ui-menu.c:297
+#: ../src/ui-menu.c:298
 msgid "Horizontal flip"
 msgstr "Vänd horisontellt"
 
-#: ../src/ui-menu.c:287
-#: ../src/ui-menu.c:288
+#: ../src/ui-menu.c:300
+#: ../src/ui-menu.c:301
 msgid "Vertical flip"
 msgstr "Vänd vertikalt"
 
-#: ../src/ui-menu.c:290
-#: ../src/ui-menu.c:291
+#: ../src/ui-menu.c:303
+#: ../src/ui-menu.c:304
 msgid "Move to front"
 msgstr "Flytta längst fram"
 
-#: ../src/ui-menu.c:293
-#: ../src/ui-menu.c:294
+#: ../src/ui-menu.c:306
+#: ../src/ui-menu.c:307
 msgid "Move to back"
 msgstr "Flytta längst bak"
 
 #. Help menu
-#: ../src/ui-menu.c:298
-#: ../src/ui-menu.c:299
+#: ../src/ui-menu.c:311
+#: ../src/ui-menu.c:312
 msgid "Tutorial"
 msgstr "Handledning"
 
-#: ../src/ui-menu.c:302
-#: ../src/ui-menu.c:303
+#: ../src/ui-menu.c:315
+#: ../src/ui-menu.c:316
 msgid "About"
 msgstr "Om"
 
-#: ../src/ui-menu.c:316
+#: ../src/ui-menu.c:329
 #, c-format
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "Kunde inte sammanfoga tbo-menu-ui.xml: %s"
 
+#~ msgid "png"
+#~ msgstr "png"
