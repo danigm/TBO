@@ -1,0 +1,350 @@
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Aviary.pl
+# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
+# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
+# gnomepl@aviary.pl
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+msgid ""
+msgstr ""
+"Project-Id-Version: tbo\n"
+"Report-Msgid-Bugs-To: dani@danigm.net\n"
+"POT-Creation-Date: 2012-03-13 16:16+0100\n"
+"PO-Revision-Date: 2012-03-12 20:56+0100\n"
+"Last-Translator: Mateusz Kacprzak <mateusz.kacprzak@yandex.ru>\n"
+"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: Poland\n"
+
+#: ../src/comic.c:189
+#, c-format
+msgid "Failed saving: %s"
+msgstr "Zapisanie się nie powiodło: %s"
+
+#: ../src/comic.c:191
+msgid "failed saving"
+msgstr "zapisanie się nie powiodło"
+
+#: ../src/comic-load.c:322
+msgid "Couldn't load file"
+msgstr "Nie można wczytać pliku"
+
+#: ../src/comic-load.c:332
+msgid "Couldn't parse file"
+msgstr "Nie można przetworzyć pliku"
+
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
+msgid "New Comic"
+msgstr "Nowy komiks"
+
+#: ../src/comic-new-dialog.c:53 ../src/export.c:145
+msgid "width: "
+msgstr "szerokość:"
+
+#: ../src/comic-new-dialog.c:63 ../src/export.c:146
+msgid "height: "
+msgstr "wysokość:"
+
+#: ../src/comic-open-dialog.c:65
+msgid "Open"
+msgstr "Otwórz"
+
+#: ../src/comic-open-dialog.c:82
+msgid "TBO files"
+msgstr "Pliki TBO"
+
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
+msgid "All files"
+msgstr "Wszystkie pliki"
+
+#: ../src/comic-saveas-dialog.c:45
+msgid "Save as"
+msgstr "Zapisz jako"
+
+#: ../src/custom-stock.c:57
+#, c-format
+msgid "error loading image %s\n"
+msgstr "błąd podczas wczytywania obrazu %s\n"
+
+#: ../src/export.c:70 ../src/export.c:121
+msgid "Export as"
+msgstr "Eksportuj jako"
+
+#: ../src/export.c:137
+msgid "Filename: "
+msgstr "Nazwa pliku:"
+
+#: ../src/export.c:161
+msgid "guess by extension"
+msgstr "rozpoznanie po rozszerzeniu"
+
+#: ../src/tbo-object-svg.c:51
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr "Nie można wczytać %s\n"
+
+#: ../src/tbo-object-text.c:181
+msgid "text"
+msgstr "tekst"
+
+#: ../src/tbo-toolbar.c:129
+msgid "Add an Image"
+msgstr "Dodaj obraz"
+
+#: ../src/tbo-toolbar.c:137
+msgid "Image files"
+msgstr "Plik obrazów"
+
+#. File menu
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
+msgid "_New"
+msgstr "_Nowy"
+
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
+msgid "_Open"
+msgstr "_Otwórz"
+
+#: ../src/tbo-toolbar.c:167
+msgid "Open comic"
+msgstr "Otwiera komiks"
+
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
+msgid "_Save"
+msgstr "_Zapisz"
+
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
+msgid "Save current document"
+msgstr "Zapisuje bieżący dokument"
+
+#. Undo and Redo
+#. edit menu
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
+msgid "_Undo"
+msgstr "_Cofnij"
+
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
+#: ../src/ui-menu.c:288
+msgid "Undo the last action"
+msgstr "Cofa ostatnie działanie"
+
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
+msgid "_Redo"
+msgstr "_Powtórz"
+
+#. Page tools
+#: ../src/tbo-toolbar.c:183
+msgid "New Page"
+msgstr "Nowa strona"
+
+#: ../src/tbo-toolbar.c:184
+msgid "New page"
+msgstr "Nowa strona"
+
+#: ../src/tbo-toolbar.c:187
+msgid "Delete Page"
+msgstr "Usuń stronę"
+
+#: ../src/tbo-toolbar.c:188
+msgid "Delete current page"
+msgstr "Usuwa bieżącą stronę"
+
+#: ../src/tbo-toolbar.c:191
+msgid "Prev Page"
+msgstr "Poprzednia strona"
+
+#: ../src/tbo-toolbar.c:192
+msgid "Prev page"
+msgstr "Poprzednia strona"
+
+#: ../src/tbo-toolbar.c:195
+msgid "Next Page"
+msgstr "Następna strona"
+
+#: ../src/tbo-toolbar.c:196
+msgid "Next page"
+msgstr "Następna strona"
+
+#. Zoom tools
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
+msgid "Zoom in"
+msgstr "Przybliż"
+
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
+msgid "Zoom 1:1"
+msgstr "Widok 1:1"
+
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
+msgid "Zoom fit"
+msgstr "Dopasuj"
+
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
+msgid "Zoom out"
+msgstr "Oddal"
+
+#. Png image tool
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
+msgid "Image"
+msgstr "Obraz"
+
+#. Page view tools
+#: ../src/tbo-toolbar.c:222
+msgid "New _Frame"
+msgstr "Nowa _ramka"
+
+#: ../src/tbo-toolbar.c:223
+msgid "New Frame"
+msgstr "Nowa ramka"
+
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
+msgid "Selector"
+msgstr "Selektor"
+
+#. Frame view tools
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
+msgid "Doodle"
+msgstr "Doodle"
+
+#: ../src/tbo-toolbar.c:234
+msgid "Booble"
+msgstr "Booble"
+
+#: ../src/tbo-toolbar.c:235
+msgid "Bubble"
+msgstr "Bubble"
+
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238
+#: ../src/tbo-tool-text.c:191
+msgid "Text"
+msgstr "Tekst"
+
+#: ../src/tbo-tool-selector.c:132
+msgid "Background color: "
+msgstr "Kolor tła: "
+
+#: ../src/tbo-tool-selector.c:145
+msgid "border"
+msgstr "obramowanie"
+
+#. TODO add tooltip_notify
+#: ../src/tbo-tool-selector.c:725
+msgid "press esc to go back"
+msgstr "naciśnięcie klawisza \"Esc\" powróci"
+
+#: ../src/tbo-tool-selector.c:804
+msgid "double click here"
+msgstr "podwójne kliknięcie w tym miejscu"
+
+#: ../src/tbo-tool-text.c:103
+msgid "Text color:"
+msgstr "Kolor tekstu:"
+
+#: ../src/tbo-tool-text.c:104
+msgid "Font:"
+msgstr "Czcionka:"
+
+#: ../src/tbo-window.c:228
+msgid "Untitled"
+msgstr "Bez tytułu"
+
+#: ../src/tbo-window.c:285
+#, c-format
+msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
+msgstr "strona: %d z %d [%5d,%5d] | ramek: %d"
+
+#: ../src/ui-menu.c:232
+msgid "TBO comic editor"
+msgstr "Edytor komiksów TBO"
+
+#: ../src/ui-menu.c:237
+msgid "translator-credits"
+msgstr ""
+"Aviary.pl <gnomepl@aviary.pl>, 2012\n"
+"Mateusz Kacprzak <mateusz.kacprzak@yandex.ru>, 2012"
+
+#. Toplevel
+#: ../src/ui-menu.c:253
+msgid "_File"
+msgstr "_Plik"
+
+#: ../src/ui-menu.c:254
+msgid "_Edit"
+msgstr "_Edycja"
+
+#: ../src/ui-menu.c:255
+msgid "Help"
+msgstr "Pomoc"
+
+#: ../src/ui-menu.c:260
+msgid "Create a new file"
+msgstr "Tworzy nowy plik"
+
+#: ../src/ui-menu.c:264
+msgid "Open a new file"
+msgstr "Otwiera nowy plik"
+
+#: ../src/ui-menu.c:271
+msgid "_Save as"
+msgstr "Z_apisz jako"
+
+#: ../src/ui-menu.c:272
+msgid "Save current document as ..."
+msgstr "Zapisuje bieżący dokument jako..."
+
+#: ../src/ui-menu.c:275
+msgid "Export as..."
+msgstr "Eksportuj jako..."
+
+#: ../src/ui-menu.c:276
+msgid "Save current document as..."
+msgstr "Zapisuje bieżący dokument jako..."
+
+#: ../src/ui-menu.c:279
+msgid "_Quit"
+msgstr "Za_kończ"
+
+#: ../src/ui-menu.c:280
+msgid "Quit"
+msgstr "Kończy działanie programu"
+
+#: ../src/ui-menu.c:291 ../src/ui-menu.c:292
+msgid "Clone"
+msgstr "Sklonuj"
+
+#: ../src/ui-menu.c:294 ../src/ui-menu.c:295
+msgid "Delete"
+msgstr "Usuń"
+
+#: ../src/ui-menu.c:297 ../src/ui-menu.c:298
+msgid "Horizontal flip"
+msgstr "Odbicie poziome"
+
+#: ../src/ui-menu.c:300 ../src/ui-menu.c:301
+msgid "Vertical flip"
+msgstr "Odbicie pionowe"
+
+#: ../src/ui-menu.c:303 ../src/ui-menu.c:304
+msgid "Move to front"
+msgstr "Przesuń na wierzch"
+
+#: ../src/ui-menu.c:306 ../src/ui-menu.c:307
+msgid "Move to back"
+msgstr "Przesuń pod spód"
+
+#. Help menu
+#: ../src/ui-menu.c:311 ../src/ui-menu.c:312
+msgid "Tutorial"
+msgstr "Poradnik"
+
+#: ../src/ui-menu.c:315 ../src/ui-menu.c:316
+msgid "About"
+msgstr "O programie"
+
+#: ../src/ui-menu.c:329
+#, c-format
+msgid "Could not merge tbo-menu-ui.xml: %s"
+msgstr "Nie można połączyć tbo-menu-ui.xml: %s"

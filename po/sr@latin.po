@@ -1,0 +1,347 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: tbo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-28 21:03+0000\n"
+"PO-Revision-Date: 2012-03-18 15:52+0200\n"
+"Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: ../src/comic.c:189
+#, c-format
+msgid "Failed saving: %s"
+msgstr "Neuspelo čuvanje: %s"
+
+#: ../src/comic.c:191
+msgid "failed saving"
+msgstr "neuspelo čuvanje"
+
+#: ../src/comic-load.c:322
+msgid "Couldn't load file"
+msgstr "Ne mogu da čitam datoteku"
+
+#: ../src/comic-load.c:332
+msgid "Couldn't parse file"
+msgstr "Ne mogu da obradim datoteku"
+
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
+msgid "New Comic"
+msgstr "Novi strip"
+
+#: ../src/comic-new-dialog.c:53 ../src/export.c:145
+msgid "width: "
+msgstr "širina: "
+
+#: ../src/comic-new-dialog.c:63 ../src/export.c:146
+msgid "height: "
+msgstr "visina: "
+
+#: ../src/comic-open-dialog.c:65
+msgid "Open"
+msgstr "Otvori"
+
+#: ../src/comic-open-dialog.c:82
+msgid "TBO files"
+msgstr "TBO datoteke"
+
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
+msgid "All files"
+msgstr "Sve datoteke"
+
+#: ../src/comic-saveas-dialog.c:45
+msgid "Save as"
+msgstr "Sačuvaj kao"
+
+#: ../src/custom-stock.c:57
+#, c-format
+msgid "error loading image %s\n"
+msgstr "greška učitavanja slike: %s\n"
+
+#: ../src/export.c:70 ../src/export.c:121
+msgid "Export as"
+msgstr "Izvezi kao"
+
+#: ../src/export.c:137
+msgid "Filename: "
+msgstr "Naziv datoteke: "
+
+#: ../src/export.c:161
+msgid "guess by extension"
+msgstr "prepoznaj prema proširenju"
+
+#: ../src/tbo-object-svg.c:51
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr "Ne mogu da učitam „%s“\n"
+
+#: ../src/tbo-object-text.c:181
+msgid "text"
+msgstr "tekst"
+
+#: ../src/tbo-toolbar.c:129
+msgid "Add an Image"
+msgstr "Dodajte sliku"
+
+#: ../src/tbo-toolbar.c:137
+msgid "Image files"
+msgstr "Datoteke slika"
+
+#. File menu
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
+msgid "_New"
+msgstr "_Novo"
+
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
+msgid "_Open"
+msgstr "_Otvori"
+
+#: ../src/tbo-toolbar.c:167
+msgid "Open comic"
+msgstr "Otvorite strip"
+
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
+msgid "_Save"
+msgstr "_Sačuvaj"
+
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
+msgid "Save current document"
+msgstr "Sačuvajte tekući dokument"
+
+#. Undo and Redo
+#. edit menu
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
+msgid "_Undo"
+msgstr "_Opozovi"
+
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
+#: ../src/ui-menu.c:288
+msgid "Undo the last action"
+msgstr "Opozovite poslednju radnju"
+
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
+msgid "_Redo"
+msgstr "_Ponovi"
+
+#. Page tools
+#: ../src/tbo-toolbar.c:183
+msgid "New Page"
+msgstr "Nova stranica"
+
+#: ../src/tbo-toolbar.c:184
+msgid "New page"
+msgstr "Nova stranica"
+
+#: ../src/tbo-toolbar.c:187
+msgid "Delete Page"
+msgstr "Obriši stranicu"
+
+#: ../src/tbo-toolbar.c:188
+msgid "Delete current page"
+msgstr "Obrišite trenutnu stranicu"
+
+#: ../src/tbo-toolbar.c:191
+msgid "Prev Page"
+msgstr "Prethodna stranica"
+
+#: ../src/tbo-toolbar.c:192
+msgid "Prev page"
+msgstr "Prethodna stranica"
+
+#: ../src/tbo-toolbar.c:195
+msgid "Next Page"
+msgstr "Sledeća stranica"
+
+#: ../src/tbo-toolbar.c:196
+msgid "Next page"
+msgstr "Sledeća stranica"
+
+#. Zoom tools
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
+msgid "Zoom in"
+msgstr "Uvećaj"
+
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
+msgid "Zoom 1:1"
+msgstr "Uvećaj 1:1"
+
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
+msgid "Zoom fit"
+msgstr "Ispunite uvećanje"
+
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
+msgid "Zoom out"
+msgstr "Umanji"
+
+#. Png image tool
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
+msgid "Image"
+msgstr "Slika"
+
+#. Page view tools
+#: ../src/tbo-toolbar.c:222
+msgid "New _Frame"
+msgstr "Novi _kadar"
+
+#: ../src/tbo-toolbar.c:223
+msgid "New Frame"
+msgstr "Novi kadar"
+
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
+msgid "Selector"
+msgstr "Izbirač"
+
+#. Frame view tools
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
+msgid "Doodle"
+msgstr "Žvrljotina"
+
+#: ../src/tbo-toolbar.c:234
+msgid "Booble"
+msgstr "Balončići"
+
+#: ../src/tbo-toolbar.c:235
+msgid "Bubble"
+msgstr "Mehurići"
+
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238
+#: ../src/tbo-tool-text.c:191
+msgid "Text"
+msgstr "Tekst"
+
+#: ../src/tbo-tool-selector.c:132
+msgid "Background color: "
+msgstr "Boja pozadine: "
+
+#: ../src/tbo-tool-selector.c:145
+msgid "border"
+msgstr "ivica"
+
+#. TODO add tooltip_notify
+#: ../src/tbo-tool-selector.c:725
+msgid "press esc to go back"
+msgstr "pritisnite esc da se vratite nazad"
+
+#: ../src/tbo-tool-selector.c:804
+msgid "double click here"
+msgstr "kliknite dva puta ovde"
+
+#: ../src/tbo-tool-text.c:103
+msgid "Text color:"
+msgstr "Boja teksta:"
+
+#: ../src/tbo-tool-text.c:104
+msgid "Font:"
+msgstr "Pismo:"
+
+#: ../src/tbo-window.c:228
+msgid "Untitled"
+msgstr "Neimenovano"
+
+#: ../src/tbo-window.c:285
+#, c-format
+msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
+msgstr "stranica: %d od %d [ %5d,%5d ] | kadrova: %d"
+
+#: ../src/ui-menu.c:232
+msgid "TBO comic editor"
+msgstr "Uređivač TBO stripova"
+
+#: ../src/ui-menu.c:237
+msgid "translator-credits"
+msgstr ""
+"  Miroslav Nikolić <miroslavnikolic@rocketmail.com>  \n"
+"\n"
+"http://prevod.org — prevod na srpski jezik"
+
+#. Toplevel
+#: ../src/ui-menu.c:253
+msgid "_File"
+msgstr "_Datoteka"
+
+#: ../src/ui-menu.c:254
+msgid "_Edit"
+msgstr "_Uređivanje"
+
+#: ../src/ui-menu.c:255
+msgid "Help"
+msgstr "Pomoć"
+
+#: ../src/ui-menu.c:260
+msgid "Create a new file"
+msgstr "Napravite novu datoteku"
+
+#: ../src/ui-menu.c:264
+msgid "Open a new file"
+msgstr "Otvorite novu datoteku"
+
+#: ../src/ui-menu.c:271
+msgid "_Save as"
+msgstr "Sačuvaj _kao"
+
+#: ../src/ui-menu.c:272
+msgid "Save current document as ..."
+msgstr "Sačuvaj tekući dokument kao ..."
+
+#: ../src/ui-menu.c:275
+msgid "Export as..."
+msgstr "Izvezi kao..."
+
+#: ../src/ui-menu.c:276
+msgid "Save current document as..."
+msgstr "Sačuvaj tekući dokument kao..."
+
+#: ../src/ui-menu.c:279
+msgid "_Quit"
+msgstr "_Izađi"
+
+#: ../src/ui-menu.c:280
+msgid "Quit"
+msgstr "Izađi"
+
+#: ../src/ui-menu.c:291 ../src/ui-menu.c:292
+msgid "Clone"
+msgstr "Umnoži"
+
+#: ../src/ui-menu.c:294 ../src/ui-menu.c:295
+msgid "Delete"
+msgstr "Obriši"
+
+#: ../src/ui-menu.c:297 ../src/ui-menu.c:298
+msgid "Horizontal flip"
+msgstr "Vodoravno prevrtanje"
+
+#: ../src/ui-menu.c:300 ../src/ui-menu.c:301
+msgid "Vertical flip"
+msgstr "Uspravno prevrtanje"
+
+#: ../src/ui-menu.c:303 ../src/ui-menu.c:304
+msgid "Move to front"
+msgstr "Premesti napred"
+
+#: ../src/ui-menu.c:306 ../src/ui-menu.c:307
+msgid "Move to back"
+msgstr "Premesti pozadi"
+
+#. Help menu
+#: ../src/ui-menu.c:311 ../src/ui-menu.c:312
+msgid "Tutorial"
+msgstr "Uvežbavanje"
+
+#: ../src/ui-menu.c:315 ../src/ui-menu.c:316
+msgid "About"
+msgstr "O programu"
+
+#: ../src/ui-menu.c:329
+#, c-format
+msgid "Could not merge tbo-menu-ui.xml: %s"
+msgstr "Ne mogu da stopim „tbo-menu-ui.xml“: %s"
