@@ -1,0 +1,345 @@
+# British English translation for tbo.
+# Copyright (C) 2012 tbo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the tbo package.
+# Chris Leonard <cjl@laptop.org>, 2012.
+# Bruce Cowan <bruce@bcowan.me.uk>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: tbo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-07 18:08+0000\n"
+"PO-Revision-Date: 2012-09-11 12:01+0100\n"
+"Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
+"Language-Team: British English <en@li.org>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
+
+#: ../src/comic.c:189
+#, c-format
+msgid "Failed saving: %s"
+msgstr "Failed saving: %s"
+
+#: ../src/comic.c:191
+msgid "failed saving"
+msgstr "failed saving"
+
+#: ../src/comic-load.c:322
+msgid "Couldn't load file"
+msgstr "Couldn't load file"
+
+#: ../src/comic-load.c:332
+msgid "Couldn't parse file"
+msgstr "Couldn't parse file"
+
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
+msgid "New Comic"
+msgstr "New Comic"
+
+#: ../src/comic-new-dialog.c:53 ../src/export.c:145
+msgid "width: "
+msgstr "width: "
+
+#: ../src/comic-new-dialog.c:63 ../src/export.c:146
+msgid "height: "
+msgstr "height: "
+
+#: ../src/comic-open-dialog.c:65
+msgid "Open"
+msgstr "Open"
+
+#: ../src/comic-open-dialog.c:82
+msgid "TBO files"
+msgstr "TBO files"
+
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
+msgid "All files"
+msgstr "All files"
+
+#: ../src/comic-saveas-dialog.c:45
+msgid "Save as"
+msgstr "Save as"
+
+#: ../src/custom-stock.c:57
+#, c-format
+msgid "error loading image %s\n"
+msgstr "error loading image %s\n"
+
+#: ../src/export.c:70 ../src/export.c:121
+msgid "Export as"
+msgstr "Export as"
+
+#: ../src/export.c:137
+msgid "Filename: "
+msgstr "Filename: "
+
+#: ../src/export.c:161
+msgid "guess by extension"
+msgstr "guess by extension"
+
+#: ../src/tbo-object-svg.c:51
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr "Couldn't load %s\n"
+
+#: ../src/tbo-object-text.c:181
+msgid "text"
+msgstr "text"
+
+#: ../src/tbo-toolbar.c:129
+msgid "Add an Image"
+msgstr "Add an Image"
+
+#: ../src/tbo-toolbar.c:137
+msgid "Image files"
+msgstr "Image files"
+
+#. File menu
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
+msgid "_New"
+msgstr "_New"
+
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
+msgid "_Open"
+msgstr "_Open"
+
+#: ../src/tbo-toolbar.c:167
+msgid "Open comic"
+msgstr "Open comic"
+
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
+msgid "_Save"
+msgstr "_Save"
+
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
+msgid "Save current document"
+msgstr "Save current document"
+
+#. Undo and Redo
+#. edit menu
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
+msgid "_Undo"
+msgstr "_Undo"
+
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
+#: ../src/ui-menu.c:288
+msgid "Undo the last action"
+msgstr "Undo the last action"
+
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
+msgid "_Redo"
+msgstr "_Redo"
+
+#. Page tools
+#: ../src/tbo-toolbar.c:183
+msgid "New Page"
+msgstr "New Page"
+
+#: ../src/tbo-toolbar.c:184
+msgid "New page"
+msgstr "New page"
+
+#: ../src/tbo-toolbar.c:187
+msgid "Delete Page"
+msgstr "Delete Page"
+
+#: ../src/tbo-toolbar.c:188
+msgid "Delete current page"
+msgstr "Delete current page"
+
+#: ../src/tbo-toolbar.c:191
+msgid "Prev Page"
+msgstr "Prev Page"
+
+#: ../src/tbo-toolbar.c:192
+msgid "Prev page"
+msgstr "Prev page"
+
+#: ../src/tbo-toolbar.c:195
+msgid "Next Page"
+msgstr "Next Page"
+
+#: ../src/tbo-toolbar.c:196
+msgid "Next page"
+msgstr "Next page"
+
+#. Zoom tools
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
+msgid "Zoom in"
+msgstr "Zoom in"
+
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
+msgid "Zoom 1:1"
+msgstr "Zoom 1:1"
+
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
+msgid "Zoom fit"
+msgstr "Zoom fit"
+
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
+msgid "Zoom out"
+msgstr "Zoom out"
+
+#. Png image tool
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
+msgid "Image"
+msgstr "Image"
+
+#. Page view tools
+#: ../src/tbo-toolbar.c:222
+msgid "New _Frame"
+msgstr "New _Frame"
+
+#: ../src/tbo-toolbar.c:223
+msgid "New Frame"
+msgstr "New Frame"
+
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
+msgid "Selector"
+msgstr "Selector"
+
+#. Frame view tools
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
+msgid "Doodle"
+msgstr "Doodle"
+
+#: ../src/tbo-toolbar.c:234
+msgid "Booble"
+msgstr "Booble"
+
+#: ../src/tbo-toolbar.c:235
+msgid "Bubble"
+msgstr "Bubble"
+
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238
+#: ../src/tbo-tool-text.c:191
+msgid "Text"
+msgstr "Text"
+
+#: ../src/tbo-tool-selector.c:132
+msgid "Background color: "
+msgstr "Background colour: "
+
+#: ../src/tbo-tool-selector.c:145
+msgid "border"
+msgstr "border"
+
+#. TODO add tooltip_notify
+#: ../src/tbo-tool-selector.c:725
+msgid "press esc to go back"
+msgstr "press esc to go back"
+
+#: ../src/tbo-tool-selector.c:804
+msgid "double click here"
+msgstr "double click here"
+
+#: ../src/tbo-tool-text.c:103
+msgid "Text color:"
+msgstr "Text colour:"
+
+#: ../src/tbo-tool-text.c:104
+msgid "Font:"
+msgstr "Font:"
+
+#: ../src/tbo-window.c:228
+msgid "Untitled"
+msgstr "Untitled"
+
+#: ../src/tbo-window.c:285
+#, c-format
+msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
+msgstr "page: %d of %d [ %5d,%5d ] | frames: %d"
+
+#: ../src/ui-menu.c:232
+msgid "TBO comic editor"
+msgstr "TBO comic editor"
+
+#: ../src/ui-menu.c:237
+msgid "translator-credits"
+msgstr "Chris Leonard <cjl@laptop.org>"
+
+#. Toplevel
+#: ../src/ui-menu.c:253
+msgid "_File"
+msgstr "_File"
+
+#: ../src/ui-menu.c:254
+msgid "_Edit"
+msgstr "_Edit"
+
+#: ../src/ui-menu.c:255
+msgid "Help"
+msgstr "Help"
+
+#: ../src/ui-menu.c:260
+msgid "Create a new file"
+msgstr "Create a new file"
+
+#: ../src/ui-menu.c:264
+msgid "Open a new file"
+msgstr "Open a new file"
+
+#: ../src/ui-menu.c:271
+msgid "_Save as"
+msgstr "_Save as"
+
+#: ../src/ui-menu.c:272
+msgid "Save current document as ..."
+msgstr "Save current document as…"
+
+#: ../src/ui-menu.c:275
+msgid "Export as..."
+msgstr "Export as…"
+
+#: ../src/ui-menu.c:276
+msgid "Save current document as..."
+msgstr "Save current document as…"
+
+#: ../src/ui-menu.c:279
+msgid "_Quit"
+msgstr "_Quit"
+
+#: ../src/ui-menu.c:280
+msgid "Quit"
+msgstr "Quit"
+
+#: ../src/ui-menu.c:291 ../src/ui-menu.c:292
+msgid "Clone"
+msgstr "Clone"
+
+#: ../src/ui-menu.c:294 ../src/ui-menu.c:295
+msgid "Delete"
+msgstr "Delete"
+
+#: ../src/ui-menu.c:297 ../src/ui-menu.c:298
+msgid "Horizontal flip"
+msgstr "Horizontal flip"
+
+#: ../src/ui-menu.c:300 ../src/ui-menu.c:301
+msgid "Vertical flip"
+msgstr "Vertical flip"
+
+#: ../src/ui-menu.c:303 ../src/ui-menu.c:304
+msgid "Move to front"
+msgstr "Move to front"
+
+#: ../src/ui-menu.c:306 ../src/ui-menu.c:307
+msgid "Move to back"
+msgstr "Move to back"
+
+#. Help menu
+#: ../src/ui-menu.c:311 ../src/ui-menu.c:312
+msgid "Tutorial"
+msgstr "Tutorial"
+
+#: ../src/ui-menu.c:315 ../src/ui-menu.c:316
+msgid "About"
+msgstr "About"
+
+#: ../src/ui-menu.c:329
+#, c-format
+msgid "Could not merge tbo-menu-ui.xml: %s"
+msgstr "Could not merge tbo-menu-ui.xml: %s"
