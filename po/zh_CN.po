@@ -1,16 +1,17 @@
-# Chinese (China) translation for tbo.
-# Copyright (C) 2010 tbo's COPYRIGHT HOLDER
+# Chinese (simplified) translation for tbo.
+# Copyright (C) 2010 tbo's authors and contributors.
 # This file is distributed under the same license as the tbo package.
-# Yinghua_Wang <wantinghard@gmail.com>, 2010.
+# Wylmer Wang <wantinghard@gmail.com>, 2010, 2011, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: tbo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-01 19:11+0000\n"
-"PO-Revision-Date: 2011-01-13 22:00+0800\n"
-"Last-Translator: Yinghua Wang <wantinghard@gmail.com>\n"
-"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"POT-Creation-Date: 2012-09-11 11:02+0000\n"
+"PO-Revision-Date: 2013-01-14 17:15+0800\n"
+"Last-Translator: Wylmer Wang <wantinghard@gmail.com>\n"
+"Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -32,7 +33,7 @@ msgstr "无法加载文件"
 msgid "Couldn't parse file"
 msgstr "无法解析文件"
 
-#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:164
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
 msgid "New Comic"
 msgstr "新建漫画"
 
@@ -52,7 +53,7 @@ msgstr "打开"
 msgid "TBO files"
 msgstr "TBO 文件"
 
-#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:142
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
 msgid "All files"
 msgstr "所有文件"
 
@@ -91,130 +92,145 @@ msgid "Add an Image"
 msgstr "添加一幅图像"
 
 #: ../src/tbo-toolbar.c:137
-msgid "png"
-msgstr "png"
+msgid "Image files"
+msgstr "图像文件"
 
 #. File menu
-#: ../src/tbo-toolbar.c:163 ../src/ui-menu.c:252
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
 msgid "_New"
 msgstr "新建(_N)"
 
-#: ../src/tbo-toolbar.c:167 ../src/ui-menu.c:256
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: ../src/tbo-toolbar.c:168
+#: ../src/tbo-toolbar.c:167
 msgid "Open comic"
 msgstr "打开漫画"
 
-#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:260
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: ../src/tbo-toolbar.c:172 ../src/ui-menu.c:261
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
 msgid "Save current document"
 msgstr "保存当前文档"
 
+#. Undo and Redo
+#. edit menu
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
+msgid "_Undo"
+msgstr "撤消(_U)"
+
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
+#: ../src/ui-menu.c:288
+msgid "Undo the last action"
+msgstr "撤消上个操作"
+
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
+msgid "_Redo"
+msgstr "重做(_R)"
+
 #. Page tools
-#: ../src/tbo-toolbar.c:176
+#: ../src/tbo-toolbar.c:183
 msgid "New Page"
 msgstr "新页面"
 
-#: ../src/tbo-toolbar.c:177
+#: ../src/tbo-toolbar.c:184
 msgid "New page"
 msgstr "新页面"
 
-#: ../src/tbo-toolbar.c:180
+#: ../src/tbo-toolbar.c:187
 msgid "Delete Page"
 msgstr "删除页面"
 
-#: ../src/tbo-toolbar.c:181
+#: ../src/tbo-toolbar.c:188
 msgid "Delete current page"
 msgstr "删除当前页面"
 
-#: ../src/tbo-toolbar.c:184
+#: ../src/tbo-toolbar.c:191
 msgid "Prev Page"
 msgstr "上一页"
 
-#: ../src/tbo-toolbar.c:185
+#: ../src/tbo-toolbar.c:192
 msgid "Prev page"
 msgstr "上一页"
 
-#: ../src/tbo-toolbar.c:188
+#: ../src/tbo-toolbar.c:195
 msgid "Next Page"
 msgstr "下一页"
 
-#: ../src/tbo-toolbar.c:189
+#: ../src/tbo-toolbar.c:196
 msgid "Next page"
 msgstr "下一页"
 
 #. Zoom tools
-#: ../src/tbo-toolbar.c:193 ../src/tbo-toolbar.c:194
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
 msgid "Zoom in"
 msgstr "放大"
 
-#: ../src/tbo-toolbar.c:196 ../src/tbo-toolbar.c:197
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
 msgid "Zoom 1:1"
 msgstr "缩放为 1:1"
 
-#: ../src/tbo-toolbar.c:199 ../src/tbo-toolbar.c:200
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
 msgid "Zoom fit"
 msgstr "缩放为适合"
 
-#: ../src/tbo-toolbar.c:202 ../src/tbo-toolbar.c:203
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
 msgid "Zoom out"
 msgstr "缩小"
 
 #. Png image tool
-#: ../src/tbo-toolbar.c:207 ../src/tbo-toolbar.c:208
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
 msgid "Image"
 msgstr "图像"
 
 #. Page view tools
-#: ../src/tbo-toolbar.c:215
+#: ../src/tbo-toolbar.c:222
 msgid "New _Frame"
 msgstr "新建帧(_F)"
 
-#: ../src/tbo-toolbar.c:216
+#: ../src/tbo-toolbar.c:223
 msgid "New Frame"
 msgstr "新建帧"
 
-#: ../src/tbo-toolbar.c:219 ../src/tbo-toolbar.c:220
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
 msgid "Selector"
 msgstr "选择器"
 
 #. Frame view tools
-#: ../src/tbo-toolbar.c:224 ../src/tbo-toolbar.c:225
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
 msgid "Doodle"
-msgstr ""
+msgstr "Doodle"
 
-#: ../src/tbo-toolbar.c:227
+#: ../src/tbo-toolbar.c:234
 msgid "Booble"
-msgstr ""
+msgstr "Booble"
 
-#: ../src/tbo-toolbar.c:228
+#: ../src/tbo-toolbar.c:235
 msgid "Bubble"
 msgstr "气泡"
 
-#: ../src/tbo-toolbar.c:230 ../src/tbo-toolbar.c:231
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238
 #: ../src/tbo-tool-text.c:191
 msgid "Text"
 msgstr "文本"
 
-#: ../src/tbo-tool-selector.c:131
+#: ../src/tbo-tool-selector.c:132
 msgid "Background color: "
 msgstr "背景色："
 
-#: ../src/tbo-tool-selector.c:144
+#: ../src/tbo-tool-selector.c:145
 msgid "border"
 msgstr "边框"
 
 #. TODO add tooltip_notify
-#: ../src/tbo-tool-selector.c:692
+#: ../src/tbo-tool-selector.c:725
 msgid "press esc to go back"
 msgstr "按 Esc 返回"
 
-#: ../src/tbo-tool-selector.c:771
+#: ../src/tbo-tool-selector.c:804
 msgid "double click here"
 msgstr "双击此处"
 
@@ -226,103 +242,105 @@ msgstr "文本颜色："
 msgid "Font:"
 msgstr "字体："
 
-#: ../src/tbo-window.c:225
+#: ../src/tbo-window.c:228
 msgid "Untitled"
 msgstr "无标题"
 
-#: ../src/tbo-window.c:282
+#: ../src/tbo-window.c:285
 #, c-format
 msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
 msgstr "页面：%d / %d [ %5d,%5d ] | 帧：%d"
 
-#: ../src/ui-menu.c:225
+#: ../src/ui-menu.c:232
 msgid "TBO comic editor"
 msgstr "TBO 漫画编辑器"
 
-#: ../src/ui-menu.c:230
+#: ../src/ui-menu.c:237
 msgid "translator-credits"
-msgstr "Yinghua Wang <wantinghard@gmail.com>, 2011"
+msgstr "Wylmer Wang <wantinghard@gmail.com>, 2011, 2013"
 
 #. Toplevel
-#: ../src/ui-menu.c:246
+#: ../src/ui-menu.c:253
 msgid "_File"
 msgstr "文件(_F)"
 
-#: ../src/ui-menu.c:247
+#: ../src/ui-menu.c:254
 msgid "_Edit"
 msgstr "编辑(_E)"
 
-#: ../src/ui-menu.c:248
+#: ../src/ui-menu.c:255
 msgid "Help"
 msgstr "帮助"
 
-#: ../src/ui-menu.c:253
+#: ../src/ui-menu.c:260
 msgid "Create a new file"
 msgstr "创建一个新文件"
 
-#: ../src/ui-menu.c:257
+#: ../src/ui-menu.c:264
 msgid "Open a new file"
 msgstr "打开一个新文件"
 
-#: ../src/ui-menu.c:264
+#: ../src/ui-menu.c:271
 msgid "_Save as"
 msgstr "保存为(_S)"
 
-#: ../src/ui-menu.c:265
+#: ../src/ui-menu.c:272
 msgid "Save current document as ..."
 msgstr "将当前文档保存为..."
 
-#: ../src/ui-menu.c:268
+#: ../src/ui-menu.c:275
 msgid "Export as..."
 msgstr "导出为..."
 
-#: ../src/ui-menu.c:269
+#: ../src/ui-menu.c:276
 msgid "Save current document as..."
 msgstr "将当前文档保存为..."
 
-#: ../src/ui-menu.c:272
+#: ../src/ui-menu.c:279
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: ../src/ui-menu.c:273
+#: ../src/ui-menu.c:280
 msgid "Quit"
 msgstr "退出"
 
-#. edit menu
-#: ../src/ui-menu.c:278 ../src/ui-menu.c:279
+#: ../src/ui-menu.c:291 ../src/ui-menu.c:292
 msgid "Clone"
 msgstr "复制"
 
-#: ../src/ui-menu.c:281 ../src/ui-menu.c:282
+#: ../src/ui-menu.c:294 ../src/ui-menu.c:295
 msgid "Delete"
 msgstr "删除"
 
-#: ../src/ui-menu.c:284 ../src/ui-menu.c:285
+#: ../src/ui-menu.c:297 ../src/ui-menu.c:298
 msgid "Horizontal flip"
 msgstr "水平翻转"
 
-#: ../src/ui-menu.c:287 ../src/ui-menu.c:288
+#: ../src/ui-menu.c:300 ../src/ui-menu.c:301
 msgid "Vertical flip"
 msgstr "竖直翻转"
 
-#: ../src/ui-menu.c:290 ../src/ui-menu.c:291
+#: ../src/ui-menu.c:303 ../src/ui-menu.c:304
 msgid "Move to front"
 msgstr "前移"
 
-#: ../src/ui-menu.c:293 ../src/ui-menu.c:294
+#: ../src/ui-menu.c:306 ../src/ui-menu.c:307
 msgid "Move to back"
 msgstr "后移"
 
 #. Help menu
-#: ../src/ui-menu.c:298 ../src/ui-menu.c:299
+#: ../src/ui-menu.c:311 ../src/ui-menu.c:312
 msgid "Tutorial"
 msgstr "教程"
 
-#: ../src/ui-menu.c:302 ../src/ui-menu.c:303
+#: ../src/ui-menu.c:315 ../src/ui-menu.c:316
 msgid "About"
 msgstr "关于"
 
-#: ../src/ui-menu.c:316
+#: ../src/ui-menu.c:329
 #, c-format
 msgid "Could not merge tbo-menu-ui.xml: %s"
 msgstr "无法合并 tbo-menu-ui.xml：%s"
+
+#~ msgid "png"
+#~ msgstr "png"
