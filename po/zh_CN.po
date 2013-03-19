@@ -1,0 +1,346 @@
+# Chinese (simplified) translation for tbo.
+# Copyright (C) 2010 tbo's authors and contributors.
+# This file is distributed under the same license as the tbo package.
+# Wylmer Wang <wantinghard@gmail.com>, 2010, 2011, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: tbo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-11 11:02+0000\n"
+"PO-Revision-Date: 2013-01-14 17:15+0800\n"
+"Last-Translator: Wylmer Wang <wantinghard@gmail.com>\n"
+"Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/comic.c:189
+#, c-format
+msgid "Failed saving: %s"
+msgstr "保存失败：%s"
+
+#: ../src/comic.c:191
+msgid "failed saving"
+msgstr "保存失败"
+
+#: ../src/comic-load.c:322
+msgid "Couldn't load file"
+msgstr "无法加载文件"
+
+#: ../src/comic-load.c:332
+msgid "Couldn't parse file"
+msgstr "无法解析文件"
+
+#: ../src/comic-new-dialog.c:41 ../src/tbo-toolbar.c:163
+msgid "New Comic"
+msgstr "新建漫画"
+
+#: ../src/comic-new-dialog.c:53 ../src/export.c:145
+msgid "width: "
+msgstr "宽度："
+
+#: ../src/comic-new-dialog.c:63 ../src/export.c:146
+msgid "height: "
+msgstr "高度："
+
+#: ../src/comic-open-dialog.c:65
+msgid "Open"
+msgstr "打开"
+
+#: ../src/comic-open-dialog.c:82
+msgid "TBO files"
+msgstr "TBO 文件"
+
+#: ../src/comic-open-dialog.c:86 ../src/tbo-toolbar.c:141
+msgid "All files"
+msgstr "所有文件"
+
+#: ../src/comic-saveas-dialog.c:45
+msgid "Save as"
+msgstr "保存为"
+
+#: ../src/custom-stock.c:57
+#, c-format
+msgid "error loading image %s\n"
+msgstr "加载图像 %s 出错\n"
+
+#: ../src/export.c:70 ../src/export.c:121
+msgid "Export as"
+msgstr "导出为："
+
+#: ../src/export.c:137
+msgid "Filename: "
+msgstr "文件名："
+
+#: ../src/export.c:161
+msgid "guess by extension"
+msgstr "根据扩展名推测"
+
+#: ../src/tbo-object-svg.c:51
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr "无法加载 %s\n"
+
+#: ../src/tbo-object-text.c:181
+msgid "text"
+msgstr "文本"
+
+#: ../src/tbo-toolbar.c:129
+msgid "Add an Image"
+msgstr "添加一幅图像"
+
+#: ../src/tbo-toolbar.c:137
+msgid "Image files"
+msgstr "图像文件"
+
+#. File menu
+#: ../src/tbo-toolbar.c:162 ../src/ui-menu.c:259
+msgid "_New"
+msgstr "新建(_N)"
+
+#: ../src/tbo-toolbar.c:166 ../src/ui-menu.c:263
+msgid "_Open"
+msgstr "打开(_O)"
+
+#: ../src/tbo-toolbar.c:167
+msgid "Open comic"
+msgstr "打开漫画"
+
+#: ../src/tbo-toolbar.c:170 ../src/ui-menu.c:267
+msgid "_Save"
+msgstr "保存(_S)"
+
+#: ../src/tbo-toolbar.c:171 ../src/ui-menu.c:268
+msgid "Save current document"
+msgstr "保存当前文档"
+
+#. Undo and Redo
+#. edit menu
+#: ../src/tbo-toolbar.c:175 ../src/ui-menu.c:284
+msgid "_Undo"
+msgstr "撤消(_U)"
+
+#: ../src/tbo-toolbar.c:176 ../src/tbo-toolbar.c:179 ../src/ui-menu.c:285
+#: ../src/ui-menu.c:288
+msgid "Undo the last action"
+msgstr "撤消上个操作"
+
+#: ../src/tbo-toolbar.c:178 ../src/ui-menu.c:287
+msgid "_Redo"
+msgstr "重做(_R)"
+
+#. Page tools
+#: ../src/tbo-toolbar.c:183
+msgid "New Page"
+msgstr "新页面"
+
+#: ../src/tbo-toolbar.c:184
+msgid "New page"
+msgstr "新页面"
+
+#: ../src/tbo-toolbar.c:187
+msgid "Delete Page"
+msgstr "删除页面"
+
+#: ../src/tbo-toolbar.c:188
+msgid "Delete current page"
+msgstr "删除当前页面"
+
+#: ../src/tbo-toolbar.c:191
+msgid "Prev Page"
+msgstr "上一页"
+
+#: ../src/tbo-toolbar.c:192
+msgid "Prev page"
+msgstr "上一页"
+
+#: ../src/tbo-toolbar.c:195
+msgid "Next Page"
+msgstr "下一页"
+
+#: ../src/tbo-toolbar.c:196
+msgid "Next page"
+msgstr "下一页"
+
+#. Zoom tools
+#: ../src/tbo-toolbar.c:200 ../src/tbo-toolbar.c:201
+msgid "Zoom in"
+msgstr "放大"
+
+#: ../src/tbo-toolbar.c:203 ../src/tbo-toolbar.c:204
+msgid "Zoom 1:1"
+msgstr "缩放为 1:1"
+
+#: ../src/tbo-toolbar.c:206 ../src/tbo-toolbar.c:207
+msgid "Zoom fit"
+msgstr "缩放为适合"
+
+#: ../src/tbo-toolbar.c:209 ../src/tbo-toolbar.c:210
+msgid "Zoom out"
+msgstr "缩小"
+
+#. Png image tool
+#: ../src/tbo-toolbar.c:214 ../src/tbo-toolbar.c:215
+msgid "Image"
+msgstr "图像"
+
+#. Page view tools
+#: ../src/tbo-toolbar.c:222
+msgid "New _Frame"
+msgstr "新建帧(_F)"
+
+#: ../src/tbo-toolbar.c:223
+msgid "New Frame"
+msgstr "新建帧"
+
+#: ../src/tbo-toolbar.c:226 ../src/tbo-toolbar.c:227
+msgid "Selector"
+msgstr "选择器"
+
+#. Frame view tools
+#: ../src/tbo-toolbar.c:231 ../src/tbo-toolbar.c:232
+msgid "Doodle"
+msgstr "Doodle"
+
+#: ../src/tbo-toolbar.c:234
+msgid "Booble"
+msgstr "Booble"
+
+#: ../src/tbo-toolbar.c:235
+msgid "Bubble"
+msgstr "气泡"
+
+#: ../src/tbo-toolbar.c:237 ../src/tbo-toolbar.c:238
+#: ../src/tbo-tool-text.c:191
+msgid "Text"
+msgstr "文本"
+
+#: ../src/tbo-tool-selector.c:132
+msgid "Background color: "
+msgstr "背景色："
+
+#: ../src/tbo-tool-selector.c:145
+msgid "border"
+msgstr "边框"
+
+#. TODO add tooltip_notify
+#: ../src/tbo-tool-selector.c:725
+msgid "press esc to go back"
+msgstr "按 Esc 返回"
+
+#: ../src/tbo-tool-selector.c:804
+msgid "double click here"
+msgstr "双击此处"
+
+#: ../src/tbo-tool-text.c:103
+msgid "Text color:"
+msgstr "文本颜色："
+
+#: ../src/tbo-tool-text.c:104
+msgid "Font:"
+msgstr "字体："
+
+#: ../src/tbo-window.c:228
+msgid "Untitled"
+msgstr "无标题"
+
+#: ../src/tbo-window.c:285
+#, c-format
+msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
+msgstr "页面：%d / %d [ %5d,%5d ] | 帧：%d"
+
+#: ../src/ui-menu.c:232
+msgid "TBO comic editor"
+msgstr "TBO 漫画编辑器"
+
+#: ../src/ui-menu.c:237
+msgid "translator-credits"
+msgstr "Wylmer Wang <wantinghard@gmail.com>, 2011, 2013"
+
+#. Toplevel
+#: ../src/ui-menu.c:253
+msgid "_File"
+msgstr "文件(_F)"
+
+#: ../src/ui-menu.c:254
+msgid "_Edit"
+msgstr "编辑(_E)"
+
+#: ../src/ui-menu.c:255
+msgid "Help"
+msgstr "帮助"
+
+#: ../src/ui-menu.c:260
+msgid "Create a new file"
+msgstr "创建一个新文件"
+
+#: ../src/ui-menu.c:264
+msgid "Open a new file"
+msgstr "打开一个新文件"
+
+#: ../src/ui-menu.c:271
+msgid "_Save as"
+msgstr "保存为(_S)"
+
+#: ../src/ui-menu.c:272
+msgid "Save current document as ..."
+msgstr "将当前文档保存为..."
+
+#: ../src/ui-menu.c:275
+msgid "Export as..."
+msgstr "导出为..."
+
+#: ../src/ui-menu.c:276
+msgid "Save current document as..."
+msgstr "将当前文档保存为..."
+
+#: ../src/ui-menu.c:279
+msgid "_Quit"
+msgstr "退出(_Q)"
+
+#: ../src/ui-menu.c:280
+msgid "Quit"
+msgstr "退出"
+
+#: ../src/ui-menu.c:291 ../src/ui-menu.c:292
+msgid "Clone"
+msgstr "复制"
+
+#: ../src/ui-menu.c:294 ../src/ui-menu.c:295
+msgid "Delete"
+msgstr "删除"
+
+#: ../src/ui-menu.c:297 ../src/ui-menu.c:298
+msgid "Horizontal flip"
+msgstr "水平翻转"
+
+#: ../src/ui-menu.c:300 ../src/ui-menu.c:301
+msgid "Vertical flip"
+msgstr "竖直翻转"
+
+#: ../src/ui-menu.c:303 ../src/ui-menu.c:304
+msgid "Move to front"
+msgstr "前移"
+
+#: ../src/ui-menu.c:306 ../src/ui-menu.c:307
+msgid "Move to back"
+msgstr "后移"
+
+#. Help menu
+#: ../src/ui-menu.c:311 ../src/ui-menu.c:312
+msgid "Tutorial"
+msgstr "教程"
+
+#: ../src/ui-menu.c:315 ../src/ui-menu.c:316
+msgid "About"
+msgstr "关于"
+
+#: ../src/ui-menu.c:329
+#, c-format
+msgid "Could not merge tbo-menu-ui.xml: %s"
+msgstr "无法合并 tbo-menu-ui.xml：%s"
+
+#~ msgid "png"
+#~ msgstr "png"

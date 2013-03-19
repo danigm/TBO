@@ -1,0 +1,374 @@
+# Latvian translation for tbo.
+# Copyright (C) 2012 tbo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the tbo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: tbo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-29 11:24+0000\n"
+"PO-Revision-Date: 2012-08-07 18:32+0300\n"
+"Last-Translator: Liga Stepe <ligux16x@gmail.com>\n"
+"Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lv\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+#: ../src/comic.c:189
+#, c-format
+msgid "Failed saving: %s"
+msgstr "Neizdevās saglabāt — %s"
+
+#: ../src/comic.c:191
+msgid "failed saving"
+msgstr "neizdevās saglabāt"
+
+#: ../src/comic-load.c:322
+msgid "Couldn't load file"
+msgstr "Neizdevās ielādēt datni"
+
+#: ../src/comic-load.c:332
+msgid "Couldn't parse file"
+msgstr "Neizdevās parsēt datni"
+
+#: ../src/comic-new-dialog.c:41
+#: ../src/tbo-toolbar.c:163
+msgid "New Comic"
+msgstr "Jauns komikss"
+
+#: ../src/comic-new-dialog.c:53
+#: ../src/export.c:145
+msgid "width: "
+msgstr "platums:"
+
+#: ../src/comic-new-dialog.c:63
+#: ../src/export.c:146
+msgid "height: "
+msgstr "augstums:"
+
+#: ../src/comic-open-dialog.c:65
+msgid "Open"
+msgstr "Atvērt"
+
+#: ../src/comic-open-dialog.c:82
+msgid "TBO files"
+msgstr "TBO datnes"
+
+#: ../src/comic-open-dialog.c:86
+#: ../src/tbo-toolbar.c:141
+msgid "All files"
+msgstr "Visas datnes"
+
+#: ../src/comic-saveas-dialog.c:45
+msgid "Save as"
+msgstr "Saglabāt kā"
+
+#: ../src/custom-stock.c:57
+#, c-format
+msgid "error loading image %s\n"
+msgstr "kļūda, ielādējot attēlu %s\n"
+
+#: ../src/export.c:70
+#: ../src/export.c:121
+msgid "Export as"
+msgstr "Eksportēt kā"
+
+#: ../src/export.c:137
+msgid "Filename: "
+msgstr "Datnes nosaukums:"
+
+#: ../src/export.c:161
+msgid "guess by extension"
+msgstr "noteikt pēc paplašinājuma"
+
+#: ../src/tbo-object-svg.c:51
+#, c-format
+msgid "Couldn't load %s\n"
+msgstr "Neizdevās ielādēt %s\n"
+
+#: ../src/tbo-object-text.c:181
+msgid "text"
+msgstr "teksts"
+
+#: ../src/tbo-toolbar.c:129
+msgid "Add an Image"
+msgstr "Pievienot attēlu"
+
+#: ../src/tbo-toolbar.c:137
+msgid "Image files"
+msgstr "Attēlu datnes"
+
+#. File menu
+#: ../src/tbo-toolbar.c:162
+#: ../src/ui-menu.c:259
+msgid "_New"
+msgstr "Jau_ns"
+
+#: ../src/tbo-toolbar.c:166
+#: ../src/ui-menu.c:263
+msgid "_Open"
+msgstr "_Atvērt"
+
+#: ../src/tbo-toolbar.c:167
+msgid "Open comic"
+msgstr "Atvērt komiksu"
+
+#: ../src/tbo-toolbar.c:170
+#: ../src/ui-menu.c:267
+msgid "_Save"
+msgstr "_Saglabāt"
+
+#: ../src/tbo-toolbar.c:171
+#: ../src/ui-menu.c:268
+msgid "Save current document"
+msgstr "Saglabāt pašreizējo dokumentu"
+
+#. Undo and Redo
+#. edit menu
+#: ../src/tbo-toolbar.c:175
+#: ../src/ui-menu.c:284
+msgid "_Undo"
+msgstr "Atsa_ukt"
+
+#: ../src/tbo-toolbar.c:176
+#: ../src/tbo-toolbar.c:179
+#: ../src/ui-menu.c:285
+#: ../src/ui-menu.c:288
+msgid "Undo the last action"
+msgstr "Atsaukt pēdējo darbību"
+
+#: ../src/tbo-toolbar.c:178
+#: ../src/ui-menu.c:287
+msgid "_Redo"
+msgstr "A_tatsaukt"
+
+#. Page tools
+#: ../src/tbo-toolbar.c:183
+msgid "New Page"
+msgstr "Jauna lapa"
+
+#: ../src/tbo-toolbar.c:184
+msgid "New page"
+msgstr "Jauna lapa"
+
+#: ../src/tbo-toolbar.c:187
+msgid "Delete Page"
+msgstr "Izdzēst lapu"
+
+#: ../src/tbo-toolbar.c:188
+msgid "Delete current page"
+msgstr "Izdzēst pašreizējo lapu"
+
+#: ../src/tbo-toolbar.c:191
+msgid "Prev Page"
+msgstr "Iepriekšējā lapa"
+
+#: ../src/tbo-toolbar.c:192
+msgid "Prev page"
+msgstr "Iepriekšējā lapa"
+
+#: ../src/tbo-toolbar.c:195
+msgid "Next Page"
+msgstr "Nākamā lapa"
+
+#: ../src/tbo-toolbar.c:196
+msgid "Next page"
+msgstr "Nākamā lapa"
+
+#. Zoom tools
+#: ../src/tbo-toolbar.c:200
+#: ../src/tbo-toolbar.c:201
+msgid "Zoom in"
+msgstr "Tuvināt"
+
+#: ../src/tbo-toolbar.c:203
+#: ../src/tbo-toolbar.c:204
+msgid "Zoom 1:1"
+msgstr "Tuvināt 1:1"
+
+#: ../src/tbo-toolbar.c:206
+#: ../src/tbo-toolbar.c:207
+msgid "Zoom fit"
+msgstr "Iekļaujas"
+
+#: ../src/tbo-toolbar.c:209
+#: ../src/tbo-toolbar.c:210
+msgid "Zoom out"
+msgstr "Tālināt"
+
+#. Png image tool
+#: ../src/tbo-toolbar.c:214
+#: ../src/tbo-toolbar.c:215
+msgid "Image"
+msgstr "Attēls"
+
+#. Page view tools
+#: ../src/tbo-toolbar.c:222
+msgid "New _Frame"
+msgstr "Jauns _rāmis"
+
+#: ../src/tbo-toolbar.c:223
+msgid "New Frame"
+msgstr "Jauns rāmis"
+
+#: ../src/tbo-toolbar.c:226
+#: ../src/tbo-toolbar.c:227
+msgid "Selector"
+msgstr "Atlasītājs"
+
+#. Frame view tools
+#: ../src/tbo-toolbar.c:231
+#: ../src/tbo-toolbar.c:232
+msgid "Doodle"
+msgstr "Ķiņķēziņš"
+
+#: ../src/tbo-toolbar.c:234
+msgid "Booble"
+msgstr "Būble"
+
+#: ../src/tbo-toolbar.c:235
+msgid "Bubble"
+msgstr "Burbulis"
+
+#: ../src/tbo-toolbar.c:237
+#: ../src/tbo-toolbar.c:238
+#: ../src/tbo-tool-text.c:191
+msgid "Text"
+msgstr "Teksts"
+
+#: ../src/tbo-tool-selector.c:132
+msgid "Background color: "
+msgstr "Fona krāsa:"
+
+#: ../src/tbo-tool-selector.c:145
+msgid "border"
+msgstr "apmale"
+
+#. TODO add tooltip_notify
+#: ../src/tbo-tool-selector.c:725
+msgid "press esc to go back"
+msgstr "nospiediet esc, lai dotos atpakaļ"
+
+#: ../src/tbo-tool-selector.c:804
+msgid "double click here"
+msgstr "dubultklikšķiniet šeit"
+
+#: ../src/tbo-tool-text.c:103
+msgid "Text color:"
+msgstr "Teksta krāsa:"
+
+#: ../src/tbo-tool-text.c:104
+msgid "Font:"
+msgstr "Fonts:"
+
+#: ../src/tbo-window.c:228
+msgid "Untitled"
+msgstr "Nenosaukts"
+
+#: ../src/tbo-window.c:285
+#, c-format
+msgid "page: %d of %d [ %5d,%5d ] | frames: %d"
+msgstr "lapa: %d no %d [%5d,%5d] | rāmji: %d"
+
+#: ../src/ui-menu.c:232
+msgid "TBO comic editor"
+msgstr "TBO komiksu redaktors"
+
+#: ../src/ui-menu.c:237
+msgid "translator-credits"
+msgstr "Līga Stepe"
+
+#. Toplevel
+#: ../src/ui-menu.c:253
+msgid "_File"
+msgstr "_Datne"
+
+#: ../src/ui-menu.c:254
+msgid "_Edit"
+msgstr "R_ediģēt"
+
+#: ../src/ui-menu.c:255
+msgid "Help"
+msgstr "Palīdzība"
+
+#: ../src/ui-menu.c:260
+msgid "Create a new file"
+msgstr "Izveidot jaunu datni"
+
+#: ../src/ui-menu.c:264
+msgid "Open a new file"
+msgstr "Atvērt jaunu datni"
+
+#: ../src/ui-menu.c:271
+msgid "_Save as"
+msgstr "_Saglabāt kā"
+
+#: ../src/ui-menu.c:272
+msgid "Save current document as ..."
+msgstr "Saglabāt pašreizējo dokumetntu kā..."
+
+#: ../src/ui-menu.c:275
+msgid "Export as..."
+msgstr "Eksportēt kā..."
+
+#: ../src/ui-menu.c:276
+msgid "Save current document as..."
+msgstr "Saglabāt pašreizējo dokumetntu kā..."
+
+#: ../src/ui-menu.c:279
+msgid "_Quit"
+msgstr "_Iziet"
+
+#: ../src/ui-menu.c:280
+msgid "Quit"
+msgstr "Iziet"
+
+#: ../src/ui-menu.c:291
+#: ../src/ui-menu.c:292
+msgid "Clone"
+msgstr "Klonēt"
+
+#: ../src/ui-menu.c:294
+#: ../src/ui-menu.c:295
+msgid "Delete"
+msgstr "Izdzēst"
+
+#: ../src/ui-menu.c:297
+#: ../src/ui-menu.c:298
+msgid "Horizontal flip"
+msgstr "Apgriezt horizontāli"
+
+#: ../src/ui-menu.c:300
+#: ../src/ui-menu.c:301
+msgid "Vertical flip"
+msgstr "Apgriezt vertikāli"
+
+#: ../src/ui-menu.c:303
+#: ../src/ui-menu.c:304
+msgid "Move to front"
+msgstr "Parvietot uz priekšu"
+
+#: ../src/ui-menu.c:306
+#: ../src/ui-menu.c:307
+msgid "Move to back"
+msgstr "Pārvietot atpakaļ"
+
+#. Help menu
+#: ../src/ui-menu.c:311
+#: ../src/ui-menu.c:312
+msgid "Tutorial"
+msgstr "Pamācība"
+
+#: ../src/ui-menu.c:315
+#: ../src/ui-menu.c:316
+msgid "About"
+msgstr "Par"
+
+#: ../src/ui-menu.c:329
+#, c-format
+msgid "Could not merge tbo-menu-ui.xml: %s"
+msgstr "Neizdevās sapludināt tbo-menu-ui.xml: %s"
+
