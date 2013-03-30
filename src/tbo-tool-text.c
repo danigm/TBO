@@ -292,11 +292,21 @@ tbo_tool_text_get_font_name (TboToolText *self)
 void
 tbo_tool_text_set_selected (TboToolText *self, TboObjectText *text)
 {
-    char *str = tbo_object_text_get_text (text);
-    self->text_selected = NULL;
+    char *str;
+
+    if (self->text_selected) {
+        g_object_unref (self->text_selected);
+        self->text_selected = NULL;
+    }
+
+    if (!text) {
+        return;
+    }
+
+    str = tbo_object_text_get_text (text);
+
     gtk_font_button_set_font_name (GTK_FONT_BUTTON (self->font), tbo_object_text_get_string (text));
     gtk_color_button_set_color (GTK_COLOR_BUTTON (self->font_color), text->font_color);
     gtk_text_buffer_set_text (self->text_buffer, str, -1);
-    self->text_selected = text;
+    self->text_selected = g_object_ref (text);
 }
-
