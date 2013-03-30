@@ -332,7 +332,7 @@ msgstr "Mover al frente"
 
 #: ../src/ui-menu.c:306 ../src/ui-menu.c:307
 msgid "Move to back"
-msgstr "Mober atrás"
+msgstr "Mover atrás"
 
 #. Help menu
 #: ../src/ui-menu.c:311 ../src/ui-menu.c:312
