@@ -270,7 +270,14 @@ text (GMarkupParseContext *context,
     if (CURRENT_TEXT)
     {
         char *text2 = g_strndup (text, text_len);
-        tbo_object_text_set_text (CURRENT_TEXT, g_strstrip (text2));
+
+        gchar *text3 =  g_strstrip (text2);
+        if (strlen(text3)) {
+            tbo_object_text_set_text (CURRENT_TEXT, text3);
+        } else {
+            tbo_frame_del_obj (CURRENT_FRAME, CURRENT_TEXT);
+            CURRENT_TEXT = NULL;
+        }
         g_free (text2);
     }
 }

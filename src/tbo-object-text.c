@@ -42,6 +42,10 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
     int w;
     int h;
 
+    if (!strlen(text)) {
+        return;
+    }
+
     gdk_cairo_set_source_color (cr, textobj->font_color);
 
     layout = pango_cairo_create_layout (cr);
