@@ -26,10 +26,10 @@
 
 G_DEFINE_TYPE (TboObjectGroup, tbo_object_group, TBO_TYPE_OBJECT_BASE);
 
-static TboObjectBase * clone (TboObjectBase *);
+static TboObjectBase * tclone (TboObjectBase *);
 
 static TboObjectBase *
-clone (TboObjectBase *self)
+tclone (TboObjectBase *self)
 {
     return NULL;
 }
@@ -86,7 +86,7 @@ tbo_object_group_init (TboObjectGroup *self)
     self->objs = NULL;
     self->parent_move = self->parent_instance.move;
 
-    self->parent_instance.clone = clone;
+    self->parent_instance.clone = tclone;
     self->parent_instance.resize = resize;
     self->parent_instance.move = move;
 }

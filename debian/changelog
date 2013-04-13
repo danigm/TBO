@@ -1,3 +1,9 @@
+tbo (1.0.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Daniel Garcia <danigm@wadobo.com>  Sat, 13 Apr 2013 06:40:04 -0400
+
 tbo (0.98~git20100623+2295523-0ubuntu1) lucid; urgency=low
 
   * New upstream release

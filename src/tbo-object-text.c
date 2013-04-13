@@ -28,7 +28,7 @@ G_DEFINE_TYPE (TboObjectText, tbo_object_text, TBO_TYPE_OBJECT_BASE);
 
 static void draw (TboObjectBase *, Frame *, cairo_t *);
 static void save (TboObjectBase *, FILE *);
-static TboObjectBase * clone (TboObjectBase *);
+static TboObjectBase * tclone (TboObjectBase *);
 
 static void
 draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
@@ -117,7 +117,7 @@ save (TboObjectBase *self, FILE *file)
 }
 
 static TboObjectBase *
-clone (TboObjectBase *self)
+tclone (TboObjectBase *self)
 {
     TboObjectText *text;
     TboObjectBase *newtext;
@@ -148,7 +148,7 @@ tbo_object_text_init (TboObjectText *self)
 
     self->parent_instance.draw = draw;
     self->parent_instance.save = save;
-    self->parent_instance.clone = clone;
+    self->parent_instance.clone = tclone;
 }
 
 static void

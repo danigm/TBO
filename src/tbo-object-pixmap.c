@@ -29,7 +29,7 @@ G_DEFINE_TYPE (TboObjectPixmap, tbo_object_pixmap, TBO_TYPE_OBJECT_BASE);
 
 static void draw (TboObjectBase *, Frame *, cairo_t *);
 static void save (TboObjectBase *, FILE *);
-static TboObjectBase * clone (TboObjectBase *);
+static TboObjectBase * tclone (TboObjectBase *);
 
 static void
 draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
@@ -98,7 +98,7 @@ save (TboObjectBase *self, FILE *file)
 }
 
 static TboObjectBase *
-clone (TboObjectBase *self)
+tclone (TboObjectBase *self)
 {
     TboObjectPixmap *pixmap;
     TboObjectBase *newpixmap;
@@ -125,7 +125,7 @@ tbo_object_pixmap_init (TboObjectPixmap *self)
 
     self->parent_instance.draw = draw;
     self->parent_instance.save = save;
-    self->parent_instance.clone = clone;
+    self->parent_instance.clone = tclone;
 }
 
 static void

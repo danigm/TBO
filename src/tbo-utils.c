@@ -30,6 +30,6 @@ get_base_name (gchar *str, gchar *ret, int size)
     dirname = paths;
     while (*dirname) dirname++;
     dirname--;
-    snprintf (ret, size, *dirname);
+    snprintf (ret, size, "%s", *dirname);
     g_strfreev (paths);
 }

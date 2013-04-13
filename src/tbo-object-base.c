@@ -27,7 +27,7 @@ G_DEFINE_TYPE (TboObjectBase, tbo_object_base, G_TYPE_OBJECT);
 
 static void draw (TboObjectBase *, Frame *, cairo_t *);
 static void save (TboObjectBase *, FILE *);
-static TboObjectBase * clone (TboObjectBase *);
+static TboObjectBase * tclone (TboObjectBase *);
 
 static void
 draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
@@ -83,7 +83,7 @@ resize (TboObjectBase *self, enum RESIZE_OPT type)
 }
 
 static TboObjectBase *
-clone (TboObjectBase *self)
+tclone (TboObjectBase *self)
 {
     return NULL;
 }
@@ -103,7 +103,7 @@ tbo_object_base_init (TboObjectBase *self)
 
     self->draw = draw;
     self->save = save;
-    self->clone = clone;
+    self->clone = tclone;
 
     self->move = move;
     self->resize = resize;

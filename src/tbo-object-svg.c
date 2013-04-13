@@ -33,7 +33,7 @@ G_DEFINE_TYPE (TboObjectSvg, tbo_object_svg, TBO_TYPE_OBJECT_BASE);
 
 static void draw (TboObjectBase *, Frame *, cairo_t *);
 static void save (TboObjectBase *, FILE *);
-static TboObjectBase * clone (TboObjectBase *);
+static TboObjectBase * tclone (TboObjectBase *);
 
 static void
 draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
@@ -109,7 +109,7 @@ save (TboObjectBase *self, FILE *file)
 }
 
 static TboObjectBase *
-clone (TboObjectBase *self)
+tclone (TboObjectBase *self)
 {
     TboObjectSvg *svg;
     TboObjectBase *newsvg;
@@ -136,7 +136,7 @@ tbo_object_svg_init (TboObjectSvg *self)
 
     self->parent_instance.draw = draw;
     self->parent_instance.save = save;
-    self->parent_instance.clone = clone;
+    self->parent_instance.clone = tclone;
 }
 
 static void
