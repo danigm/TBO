@@ -1,0 +1,34 @@
+option(
+  'nls',
+  type: 'boolean',
+  value: true,
+  description: 'Build translation catalogs'
+)
+
+option(
+  'tests',
+  type: 'boolean',
+  value: true,
+  description: 'Build and register the smoke-test suite'
+)
+
+option(
+  'appstream',
+  type: 'boolean',
+  value: true,
+  description: 'Install AppStream metadata'
+)
+
+option(
+  'legacy_pixmap_icon',
+  type: 'boolean',
+  value: true,
+  description: 'Install the legacy pixmaps icon copy'
+)
+
+option(
+  'tutorial_pdf',
+  type: 'boolean',
+  value: true,
+  description: 'Install the bundled tutorial PDF'
+)

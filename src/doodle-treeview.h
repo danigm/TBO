@@ -24,6 +24,6 @@
 #include "tbo-window.h"
 
 GtkWidget * doodle_setup_tree (TboWindow *tbo, gboolean bubble_mode);
-void doodle_free_all ();
+void doodle_free_all (void);
 
 #endif

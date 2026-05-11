@@ -19,6 +19,7 @@
 
 #include "doodle-treeview.h"
 #include "tbo-tool-doodle.h"
+#include "tbo-widget.h"
 
 G_DEFINE_TYPE (TboToolDoodle, tbo_tool_doodle, TBO_TYPE_TOOL_BASE);
 
@@ -26,6 +27,7 @@ G_DEFINE_TYPE (TboToolDoodle, tbo_tool_doodle, TBO_TYPE_TOOL_BASE);
 
 static void on_select (TboToolBase *tool);
 static void on_unselect (TboToolBase *tool);
+static void finalize (GObject *object);
 
 /* Definitions */
 
@@ -40,6 +42,7 @@ update_scroll_cb (gpointer data)
     gtk_adjustment_set_value (adjust, self->hadjust);
     adjust = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (tbo->scroll2));
     gtk_adjustment_set_value (adjust, self->vadjust);
+    self->scroll_source_id = 0;
     return FALSE;
 }
 
@@ -47,8 +50,8 @@ static void
 setup_tree (TboToolDoodle *self)
 {
     self->tree = doodle_setup_tree (TBO_TOOL_BASE (self)->tbo, FALSE);
-    gtk_widget_show_all (self->tree);
-    self->tree = g_object_ref (self->tree);
+    g_object_ref_sink (self->tree);
+    tbo_widget_show_all (self->tree);
 }
 
 /* tool signal */
@@ -57,16 +60,23 @@ on_select (TboToolBase *tool)
 {
     TboToolDoodle *self = TBO_TOOL_DOODLE (tool);
     TboWindow *tbo = tool->tbo;
-    if (!self->tree)
-    {
+
+    if (self->tree == NULL)
         self->setup_tree (self);
-    }
+
+    if (gtk_widget_get_parent (self->tree) == GTK_WIDGET (tbo->toolarea))
+        return;
 
     tbo_empty_tool_area (tbo);
-    gtk_container_add (GTK_CONTAINER (tbo->toolarea), self->tree);
+    tbo_widget_add_child (tbo->toolarea, self->tree);
 
+    if (self->scroll_source_id != 0)
+        g_source_remove (self->scroll_source_id);
 
-    g_timeout_add (5, update_scroll_cb, self);
+    self->scroll_source_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                              update_scroll_cb,
+                                              g_object_ref (self),
+                                              g_object_unref);
 }
 
 static void
@@ -76,6 +86,12 @@ on_unselect (TboToolBase *tool)
     TboToolDoodle *self = TBO_TOOL_DOODLE (tool);
     TboWindow *tbo = tool->tbo;
 
+    if (self->scroll_source_id != 0)
+    {
+        g_source_remove (self->scroll_source_id);
+        self->scroll_source_id = 0;
+    }
+
     if (GTK_IS_WIDGET (self->tree) && gtk_widget_get_parent (self->tree) == GTK_WIDGET (tbo->toolarea))
     {
         adjust = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (tbo->scroll2));
@@ -83,7 +99,7 @@ on_unselect (TboToolBase *tool)
         adjust = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (tbo->scroll2));
         self->vadjust = gtk_adjustment_get_value (adjust);
 
-        gtk_container_remove (GTK_CONTAINER (tbo->toolarea), self->tree);
+        tbo_widget_remove_child (tbo->toolarea, self->tree);
     }
 
     tbo_empty_tool_area (tbo);
@@ -97,6 +113,7 @@ tbo_tool_doodle_init (TboToolDoodle *self)
     self->tree = NULL;
     self->hadjust = 0.0;
     self->vadjust = 0.0;
+    self->scroll_source_id = 0;
     self->setup_tree = setup_tree;
 
     self->parent_instance.on_select = on_select;
@@ -106,12 +123,29 @@ tbo_tool_doodle_init (TboToolDoodle *self)
 static void
 tbo_tool_doodle_class_init (TboToolDoodleClass *klass)
 {
+    GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+    gobject_class->finalize = finalize;
+}
+
+static void
+finalize (GObject *object)
+{
+    TboToolDoodle *self = TBO_TOOL_DOODLE (object);
+
+    if (self->scroll_source_id != 0)
+        g_source_remove (self->scroll_source_id);
+
+    if (self->tree != NULL)
+        g_object_unref (self->tree);
+
+    G_OBJECT_CLASS (tbo_tool_doodle_parent_class)->finalize (object);
 }
 
 /* object functions */
 
 GObject *
-tbo_tool_doodle_new ()
+tbo_tool_doodle_new (void)
 {
     GObject *tbo_tool;
     tbo_tool = g_object_new (TBO_TYPE_TOOL_DOODLE, NULL);
@@ -128,4 +162,3 @@ tbo_tool_doodle_new_with_params (TboWindow *tbo)
     tbo_tool_base->tbo = tbo;
     return tbo_tool;
 }
-

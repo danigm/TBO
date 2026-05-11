@@ -19,6 +19,7 @@
 
 #include "doodle-treeview.h"
 #include "tbo-tool-bubble.h"
+#include "tbo-widget.h"
 
 G_DEFINE_TYPE (TboToolBubble, tbo_tool_bubble, TBO_TYPE_TOOL_DOODLE);
 
@@ -28,8 +29,8 @@ setup_tree (TboToolDoodle *self)
 {
     TboWindow *tbo = TBO_TOOL_BASE (self)->tbo;
     self->tree = doodle_setup_tree (tbo, TRUE);
-    gtk_widget_show_all (self->tree);
-    self->tree = g_object_ref (self->tree);
+    g_object_ref_sink (self->tree);
+    tbo_widget_show_all (self->tree);
 }
 
 /* init methods */
@@ -48,7 +49,7 @@ tbo_tool_bubble_class_init (TboToolBubbleClass *klass)
 /* object functions */
 
 GObject *
-tbo_tool_bubble_new ()
+tbo_tool_bubble_new (void)
 {
     GObject *tbo_tool;
     tbo_tool = g_object_new (TBO_TYPE_TOOL_BUBBLE, NULL);
@@ -65,4 +66,3 @@ tbo_tool_bubble_new_with_params (TboWindow *tbo)
     tbo_tool_base->tbo = tbo;
     return tbo_tool;
 }
-

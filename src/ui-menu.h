@@ -24,6 +24,7 @@
 #include "tbo-window.h"
 
 GtkWidget *generate_menu (TboWindow *window);
+void tbo_menu_refresh (TboWindow *tbo);
 void update_menubar (TboWindow *tbo);
 void tbo_menu_disable_accel_keys (TboWindow *tbo);
 void tbo_menu_enable_accel_keys (TboWindow *tbo);

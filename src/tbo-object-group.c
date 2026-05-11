@@ -113,7 +113,7 @@ tbo_object_group_class_init (TboObjectGroupClass *klass)
 /* object functions */
 
 GObject *
-tbo_object_group_new ()
+tbo_object_group_new (void)
 {
     GObject *tbo_object;
     tbo_object = g_object_new (TBO_TYPE_OBJECT_GROUP, NULL);
@@ -220,4 +220,3 @@ tbo_object_group_update_status (TboObjectGroup *self)
 
     tbo_object_group_unset_vars (tbo_object);
 }
-

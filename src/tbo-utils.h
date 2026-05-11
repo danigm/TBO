@@ -22,6 +22,19 @@
 
 #include <gtk/gtk.h>
 
-void get_base_name (gchar *str, gchar *ret, int size);
+typedef struct _TboObjectBase TboObjectBase;
+
+void get_base_name (const gchar *str, gchar *ret, int size);
+gchar *tbo_get_data_path (const gchar *relative_path);
+gchar *tbo_get_locale_path (void);
+void tbo_init_i18n (void);
+const gchar *tbo_ascii_formatd (gchar *buffer, gsize buffer_len, gdouble value);
+gboolean tbo_ascii_parse_int (const gchar *text, gint *value);
+gboolean tbo_ascii_parse_double (const gchar *text, gdouble *value);
+void tbo_xml_append_attr_int (GString *xml, const gchar *name, gint value);
+void tbo_xml_append_attr_double (GString *xml, const gchar *name, gdouble value);
+void tbo_xml_append_attr_string (GString *xml, const gchar *name, const gchar *value);
+void tbo_xml_append_object_attrs (GString *xml, TboObjectBase *self);
+void tbo_xml_write (FILE *file, GString *xml);
 
 #endif

@@ -1,23 +1,22 @@
 Source: tbo
-Section: gnome
+Section: graphics
 Priority: optional
-Maintainer: Daniel Garcia <danigm@wadobo.com>
-Uploaders: Roberto C. Morano <rcmorano@emergya.es>
-Build-Depends: cdbs,
-               debhelper (>= 8),
-               pkg-config,
-               libglib2.0-dev,
-               libgtk-3-dev,
-               librsvg2-dev,
-               gnome-common,
-               intltool
-Standards-Version: 3.9.2
-Homepage: http://github.com/danigm/TBO
+Maintainer: Jaime <j4imefoo@users.noreply.github.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ meson,
+ pkgconf,
+ libgtk-4-dev,
+ libcairo2-dev,
+ librsvg2-dev
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/j4imefoo/TBO
 
 Package: tbo
 Architecture: any
-Depends: ${shlibs:Depends},
-         libgtk-3-0,
-         ${misc:Depends}
-Description: Intuitive GNOME comic creator
- TBO is a simple and easy drag and drop comic creator.
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Comic editor built with GTK4
+ TBO is a comic and illustrated presentation editor.
+ It provides page-based editing, frame-based layout, doodles, bubbles,
+ text tools and export options in a GTK4 desktop application.

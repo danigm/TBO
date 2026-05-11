@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=TBO
+GenericName=Comic Editor
+Comment=Create comics and illustrated presentations
+Exec=tbo %f
+Icon=tbo
+Terminal=false
+StartupNotify=false
+StartupWMClass=tbo
+Categories=Graphics;2DGraphics;VectorGraphics;GTK;
+Keywords=comic;comics;storyboard;presentation;editor;gtk;

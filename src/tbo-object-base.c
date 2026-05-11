@@ -21,6 +21,7 @@
 #include <cairo.h>
 #include <stdio.h>
 #include "tbo-types.h"
+#include "frame.h"
 #include "tbo-object-base.h"
 
 G_DEFINE_TYPE (TboObjectBase, tbo_object_base, G_TYPE_OBJECT);
@@ -117,7 +118,7 @@ tbo_object_base_class_init (TboObjectBaseClass *klass)
 /* object functions */
 
 GObject *
-tbo_object_base_new ()
+tbo_object_base_new (void)
 {
     GObject *tbo_object;
     tbo_object = g_object_new (TBO_TYPE_OBJECT_BASE, NULL);
@@ -163,7 +164,7 @@ tbo_object_base_get_flip_matrix (TboObjectBase *self, cairo_matrix_t *mx)
 void
 tbo_object_base_order_down (TboObjectBase *self, Frame *frame)
 {
-    GList *list = g_list_find (frame->objects, self);
+    GList *list = g_list_find (tbo_frame_get_objects (frame), self);
     GList *prev = g_list_previous (list);
     TboObjectBase *tmp;
     if (prev)
@@ -177,7 +178,7 @@ tbo_object_base_order_down (TboObjectBase *self, Frame *frame)
 void
 tbo_object_base_order_up (TboObjectBase *self, Frame *frame)
 {
-    GList *list = g_list_find (frame->objects, self);
+    GList *list = g_list_find (tbo_frame_get_objects (frame), self);
     GList *next = g_list_next (list);
     TboObjectBase *tmp;
     if (next)

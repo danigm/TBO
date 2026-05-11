@@ -22,7 +22,6 @@
 
 #include <glib.h>
 #include "tbo-object-base.h"
-#include "tbo-object-group.h"
 
 #define TBO_TYPE_OBJECT_GROUP            (tbo_object_group_get_type ())
 #define TBO_OBJECT_GROUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TBO_TYPE_OBJECT_GROUP, TboObjectGroup))
@@ -57,7 +56,7 @@ GType tbo_object_group_get_type (void);
  * Method definitions.
  */
 
-GObject * tbo_object_group_new ();
+GObject * tbo_object_group_new (void);
 void tbo_object_group_add (TboObjectGroup *self, TboObjectBase *obj);
 void tbo_object_group_del (TboObjectGroup *self, TboObjectBase *obj);
 void tbo_object_group_set_vars (TboObjectBase *self);
@@ -65,4 +64,3 @@ void tbo_object_group_unset_vars (TboObjectBase *self);
 void tbo_object_group_update_status (TboObjectGroup *self);
 
 #endif /* __TBO_OBJECT_GROUP_H__ */
-

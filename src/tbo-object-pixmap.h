@@ -21,6 +21,7 @@
 #define __TBO_OBJECT_PIXMAP_H__
 
 #include <glib.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include "tbo-object-base.h"
 
 #define TBO_TYPE_OBJECT_PIXMAP            (tbo_object_pixmap_get_type ())
@@ -39,6 +40,11 @@ struct _TboObjectPixmap
 
     /* instance members */
     GString *path;
+    GdkPixbuf *pixbuf;
+    GdkPixbuf *scaled_pixbuf;
+    cairo_surface_t *surface;
+    gint cache_width;
+    gint cache_height;
 };
 
 struct _TboObjectPixmapClass
@@ -55,7 +61,7 @@ GType tbo_object_pixmap_get_type (void);
  * Method definitions.
  */
 
-GObject * tbo_object_pixmap_new ();
+GObject * tbo_object_pixmap_new (void);
 GObject * tbo_object_pixmap_new_with_params (gint   x,
                                              gint   y,
                                              gint   width,
@@ -63,4 +69,3 @@ GObject * tbo_object_pixmap_new_with_params (gint   x,
                                              gchar *path);
 
 #endif /* __TBO_OBJECT_PIXMAP_H__ */
-

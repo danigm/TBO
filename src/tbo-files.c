@@ -21,21 +21,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include "tbo-files.h"
 #include <glib.h>
+#include "tbo-utils.h"
 
-char **tbo_files_get_dirs ()
+char **tbo_files_get_dirs (void)
 {
-    // Possible doodle dirs
-    char **possible_dirs = malloc (4*sizeof(char*));
-    possible_dirs[0] = malloc (255*sizeof(char*));
-    possible_dirs[1] = malloc (255*sizeof(char*));
-    possible_dirs[2] = malloc (255*sizeof(char*));
-    possible_dirs[3] = NULL;
+    char **possible_dirs = g_new0 (char *, 4);
 
-    strcat (strcpy (possible_dirs[0], getenv("HOME")), "/.tbo/doodle");
-    strcat (strcpy (possible_dirs[1], g_get_user_data_dir ()), "/tbo/doodle");
-    strcpy (possible_dirs[2], DATA_DIR "/doodle");
+    possible_dirs[0] = g_build_filename (g_get_home_dir (), ".tbo", "doodle", NULL);
+    possible_dirs[1] = g_build_filename (g_get_user_data_dir (), "tbo", "doodle", NULL);
+    possible_dirs[2] = tbo_get_data_path ("doodle");
 
     return possible_dirs;
 }
@@ -43,7 +40,7 @@ char **tbo_files_get_dirs ()
 int
 tbo_files_prefix_len (char *str)
 {
-    int n, i = 0;
+    int n = 0, i = 0;
     char **possible_dirs = tbo_files_get_dirs ();
     while (possible_dirs[i])
     {
@@ -64,55 +61,75 @@ tbo_files_free (char **files)
     int i = 0;
     while(files[i])
     {
-        free (files[i]);
+        g_free (files[i]);
         i++;
     }
-    free (files);
+    g_free (files);
 }
 
-void
-tbo_files_expand_path (char *source, char *dest)
+gchar *
+tbo_files_expand_path (const gchar *source)
 {
     int st, i = 0;
     char **possible_dirs = tbo_files_get_dirs ();
     struct stat filestat;
+    gchar *dest = NULL;
+
     while (possible_dirs[i])
     {
-        snprintf (dest, 255, "%s/%s", possible_dirs[i], source);
+        g_free (dest);
+        dest = g_build_filename (possible_dirs[i], source, NULL);
         st = stat (dest, &filestat);
         if (!st)
             break;
-        else
-            snprintf (dest, 255, "%s", source);
 
         i++;
     }
 
+    if (dest == NULL || stat (dest, &filestat) != 0)
+    {
+        g_free (dest);
+        dest = g_strdup (source);
+    }
+
     tbo_files_free (possible_dirs);
+    return dest;
 }
 
 gboolean
-tbo_files_is_svg_file (char *source)
+tbo_files_is_svg_file (const gchar *source)
 {
-    gchar **paths;
-    gchar **ext;
-    gchar *lower_ext;
-    gboolean is_svg = FALSE;
+    const gchar *ext;
 
-    paths = g_strsplit (source, ".", 0);
+    if (source == NULL || *source == '\0')
+        return FALSE;
 
-    ext = paths;
-    while (*ext) ext++;
-    ext--;
+    ext = strrchr (source, '.');
+    if (ext == NULL)
+        return FALSE;
 
-    lower_ext = g_ascii_strdown (*ext, -1);
+    return g_ascii_strcasecmp (ext + 1, "svg") == 0;
+}
 
-    if (strcmp (lower_ext, "svg") == 0) {
-        is_svg = TRUE;
-    }
+gboolean
+tbo_files_is_supported_asset_file (const gchar *source)
+{
+    GdkPixbufFormat *format;
+    gchar *path;
+    gboolean is_supported = FALSE;
 
-    g_strfreev (paths);
-    g_free (lower_ext);
+    if (tbo_files_is_svg_file (source))
+        return TRUE;
 
-    return is_svg;
+    if (source == NULL || *source == '\0')
+        return FALSE;
+
+    path = tbo_files_expand_path (source);
+    format = gdk_pixbuf_get_file_info (path, NULL, NULL);
+    if (format != NULL)
+        is_supported = TRUE;
+
+    g_free (path);
+
+    return is_supported;
 }

@@ -28,9 +28,37 @@
 
 #define TOOLTIP_ALPHA 0.7
 
-static GString *TOOLTIP = NULL;
-static int X=0, Y=0;
-static double ALPHA = 0.0;
+static TboDrawing *
+get_tooltip_drawing (TboWindow *tbo)
+{
+    if (tbo == NULL || tbo->drawing == NULL || !TBO_IS_DRAWING (tbo->drawing))
+        return NULL;
+
+    return TBO_DRAWING (tbo->drawing);
+}
+
+static void
+clear_tooltip (TboDrawing *drawing, gboolean clear_timeout)
+{
+    if (drawing == NULL)
+        return;
+
+    if (clear_timeout && drawing->tooltip_timeout_id != 0)
+    {
+        g_source_remove (drawing->tooltip_timeout_id);
+        drawing->tooltip_timeout_id = 0;
+    }
+
+    if (drawing->tooltip != NULL)
+    {
+        g_string_free (drawing->tooltip, TRUE);
+        drawing->tooltip = NULL;
+    }
+
+    drawing->tooltip_x = 0;
+    drawing->tooltip_y = 0;
+    drawing->tooltip_alpha = 0.0;
+}
 
 void
 cairo_rounded_rectangle (cairo_t *cr, int xx, int yy, int w, int h)
@@ -56,16 +84,20 @@ cairo_rounded_rectangle (cairo_t *cr, int xx, int yy, int w, int h)
 gboolean
 quit_tooltip_cb (gpointer p)
 {
-    tbo_tooltip_set (NULL, 0, 0, (TboWindow*) p);
+    TboDrawing *drawing = TBO_DRAWING (p);
+
+    drawing->tooltip_timeout_id = 0;
+    clear_tooltip (drawing, FALSE);
+    tbo_drawing_update (drawing);
     return FALSE;
 }
 
 void
-tbo_tooltip_draw_background (cairo_t *cr, int w, int h)
+tbo_tooltip_draw_background (cairo_t *cr, int w, int h, TboDrawing *drawing)
 {
     int margin = 5;
 
-    cairo_set_source_rgba (cr, 0, 0, 0, ALPHA);
+    cairo_set_source_rgba (cr, 0, 0, 0, drawing->tooltip_alpha);
     cairo_rounded_rectangle (cr, -margin, -margin, w + margin * 2, h + margin * 2);
     cairo_fill (cr);
 }
@@ -73,59 +105,67 @@ tbo_tooltip_draw_background (cairo_t *cr, int w, int h)
 void
 tbo_tooltip_set (const char *tooltip, int x, int y, TboWindow *tbo)
 {
+    TboDrawing *drawing = get_tooltip_drawing (tbo);
 
-    if (!TOOLTIP)
+    if (drawing == NULL)
+        return;
+
+    if (drawing->tooltip_timeout_id != 0)
     {
-        if (tooltip)
+        g_source_remove (drawing->tooltip_timeout_id);
+        drawing->tooltip_timeout_id = 0;
+    }
+
+    if (drawing->tooltip == NULL)
+    {
+        if (tooltip != NULL)
         {
-            TOOLTIP = g_string_new (tooltip);
-            ALPHA = TOOLTIP_ALPHA;
-            X = x;
-            Y = y;
+            drawing->tooltip = g_string_new (tooltip);
+            drawing->tooltip_alpha = TOOLTIP_ALPHA;
+            drawing->tooltip_x = x;
+            drawing->tooltip_y = y;
         }
     }
     else
     {
-        // if it's the same passing
-        if (x == X && y == Y && !strcmp (tooltip, TOOLTIP->str))
+        if (tooltip != NULL &&
+            x == drawing->tooltip_x &&
+            y == drawing->tooltip_y &&
+            !strcmp (tooltip, drawing->tooltip->str))
             return;
 
-        // removing tooltip if tooltip == NULL
-        if (!tooltip && TOOLTIP)
+        if (tooltip == NULL)
         {
-            ALPHA = 0.0;
-            g_string_free (TOOLTIP, TRUE);
-            TOOLTIP = NULL;
+            clear_tooltip (drawing, FALSE);
         }
         else
         {
-            g_string_free (TOOLTIP, TRUE);
-
-            TOOLTIP = g_string_new (tooltip);
-            ALPHA = TOOLTIP_ALPHA;
-            X = x;
-            Y = y;
+            g_string_free (drawing->tooltip, TRUE);
+            drawing->tooltip = g_string_new (tooltip);
+            drawing->tooltip_alpha = TOOLTIP_ALPHA;
+            drawing->tooltip_x = x;
+            drawing->tooltip_y = y;
         }
     }
 
-    tbo_drawing_update (TBO_DRAWING (tbo->drawing));
-}
-
-GString *
-tbo_tooltip_get ()
-{
-    return TOOLTIP;
+    tbo_drawing_update (drawing);
 }
 
 void
-tbo_tooltip_draw (cairo_t *cr)
+tbo_tooltip_reset (TboWindow *tbo)
 {
-    if (!TOOLTIP)
+    clear_tooltip (get_tooltip_drawing (tbo), TRUE);
+}
+
+void
+tbo_tooltip_draw (cairo_t *cr, TboDrawing *drawing)
+{
+    if (drawing == NULL || drawing->tooltip == NULL)
         return;
 
     int w=0, h=0;
     int posx, posy;
-    gchar *text = TOOLTIP->str;
+    gchar *text = drawing->tooltip->str;
     PangoLayout *layout;
 
     layout = pango_cairo_create_layout (cr);
@@ -137,27 +177,31 @@ tbo_tooltip_draw (cairo_t *cr)
     //pango_layout_set_font_description (layout, desc);
     pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
 
-    posx = X - w / 2;
-    posy = Y - h / 2;
+    posx = drawing->tooltip_x - w / 2;
+    posy = drawing->tooltip_y - h / 2;
     cairo_translate (cr, posx, posy);
 
-    tbo_tooltip_draw_background (cr, w, h);
+    tbo_tooltip_draw_background (cr, w, h, drawing);
 
-    cairo_set_source_rgba (cr, 1, 1, 1, ALPHA);
+    cairo_set_source_rgba (cr, 1, 1, 1, drawing->tooltip_alpha);
     pango_cairo_show_layout (cr, layout);
 
     cairo_translate (cr, -posx, -posy);
+    g_object_unref (layout);
 }
 
 void
 tbo_tooltip_set_center_timeout (const char *tooltip, int timeout, TboWindow *tbo)
 {
+    TboDrawing *drawing = get_tooltip_drawing (tbo);
     int x, y;
-    GtkAllocation alloc;
-    gtk_widget_get_allocation (tbo->drawing, &alloc);
-    x = alloc.width / 2;
-    y = alloc.height / 2;
+
+    if (drawing == NULL)
+        return;
+
+    x = gtk_widget_get_width (tbo->drawing) / 2;
+    y = gtk_widget_get_height (tbo->drawing) / 2;
 
     tbo_tooltip_set (tooltip, x, y, tbo);
-    g_timeout_add (timeout, quit_tooltip_cb, tbo);
+    drawing->tooltip_timeout_id = g_timeout_add (timeout, quit_tooltip_cb, drawing);
 }

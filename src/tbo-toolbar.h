@@ -35,6 +35,17 @@
 typedef struct _TboToolbar      TboToolbar;
 typedef struct _TboToolbarClass TboToolbarClass;
 
+enum Tool
+{
+    TBO_TOOLBAR_NONE,
+    TBO_TOOLBAR_SELECTOR,
+    TBO_TOOLBAR_FRAME,
+    TBO_TOOLBAR_DOODLE,
+    TBO_TOOLBAR_BUBBLE,
+    TBO_TOOLBAR_TEXT,
+    TBO_TOOLBAR_N_TOOLS
+};
+
 struct _TboToolbar
 {
     GObject parent_instance;
@@ -43,8 +54,24 @@ struct _TboToolbar
     TboWindow *tbo;
 
     TboToolBase *selected_tool;
-    GtkActionGroup *action_group;
     GtkWidget *toolbar;
+    GtkWidget *button_new;
+    GtkWidget *button_open;
+    GtkWidget *button_save;
+    GtkWidget *button_undo;
+    GtkWidget *button_redo;
+    GtkWidget *button_new_page;
+    GtkWidget *button_duplicate_page;
+    GtkWidget *button_delete_page;
+    GtkWidget *button_prev_page;
+    GtkWidget *button_next_page;
+    GtkWidget *button_zoom_in;
+    GtkWidget *button_zoom_100;
+    GtkWidget *button_zoom_fit;
+    GtkWidget *button_zoom_out;
+    GtkWidget *button_pix;
+    GtkToggleButton *tool_buttons[TBO_TOOLBAR_N_TOOLS];
+    gboolean syncing_tool_buttons;
     TboToolBase **tools;
 };
 
@@ -62,18 +89,7 @@ GType tbo_toolbar_get_type (void);
  * Method definitions.
  */
 
-enum Tool
-{
-    TBO_TOOLBAR_NONE,
-    TBO_TOOLBAR_SELECTOR,
-    TBO_TOOLBAR_FRAME,
-    TBO_TOOLBAR_DOODLE,
-    TBO_TOOLBAR_BUBBLE,
-    TBO_TOOLBAR_TEXT,
-    TBO_TOOLBAR_N_TOOLS
-};
-
-GObject * tbo_toolbar_new ();
+GObject * tbo_toolbar_new (void);
 GObject * tbo_toolbar_new_with_params (TboWindow *tbo);
 
 TboToolBase * tbo_toolbar_get_selected_tool (TboToolbar *self);
@@ -82,4 +98,3 @@ GtkWidget * tbo_toolbar_get_toolbar (TboToolbar *self);
 void tbo_toolbar_update (TboToolbar *self);
 
 #endif /* __TBO_TOOLBAR_H__ */
-

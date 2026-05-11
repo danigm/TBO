@@ -54,8 +54,7 @@ GType tbo_tool_bubble_get_type (void);
 /*
  * Method definitions.
  */
-GObject * tbo_tool_bubble_new ();
+GObject * tbo_tool_bubble_new (void);
 GObject * tbo_tool_bubble_new_with_params (TboWindow *tbo);
 
 #endif /* __TBO_TOOL_BUBBLE_H__ */
-

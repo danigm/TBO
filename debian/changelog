@@ -1,18 +1,5 @@
-tbo (1.0.0) unstable; urgency=low
+tbo (2.0) unstable; urgency=medium
 
-  * New upstream release.
+  * Repackage project on top of Meson and GTK4.
 
- -- Daniel Garcia <danigm@wadobo.com>  Sat, 13 Apr 2013 06:40:04 -0400
-
-tbo (0.98~git20100623+2295523-0ubuntu1) lucid; urgency=low
-
-  * New upstream release
-  * debian/rules: simplified by using cdbs
-
- -- Roberto C. Morano <rcmorano@emergya.es>  Wed, 30 Jun 2010 13:46:12 +0200
-
-tbo (0.93.001.git.e250) unstable; urgency=low
-
-  * Initial Release.
-
- -- Daniel Garcia <dani@danigm.net>  Mon, 26 Apr 2010 09:51:33 +0200
+ -- Jaime <j4imefoo@users.noreply.github.com>  Fri, 17 Apr 2026 17:00:00 +0200

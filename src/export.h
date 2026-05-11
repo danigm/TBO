@@ -24,6 +24,32 @@
 #include <cairo.h>
 #include "tbo-window.h"
 
+typedef enum
+{
+    TBO_EXPORT_SCOPE_ALL_PAGES,
+    TBO_EXPORT_SCOPE_CURRENT_PAGE,
+    TBO_EXPORT_SCOPE_SELECTION,
+} TboExportScope;
+
 gboolean tbo_export (TboWindow *tbo);
+gboolean tbo_export_file (TboWindow *tbo,
+                          const gchar *filename,
+                          const gchar *format_hint,
+                          gint width,
+                          gint height);
+gboolean tbo_export_file_with_scope (TboWindow *tbo,
+                                     const gchar *filename,
+                                     const gchar *format_hint,
+                                     gint width,
+                                     gint height,
+                                     TboExportScope scope);
+gboolean tbo_export_file_with_scope_range (TboWindow *tbo,
+                                           const gchar *filename,
+                                           const gchar *format_hint,
+                                           gint width,
+                                           gint height,
+                                           TboExportScope scope,
+                                           gint from_page,
+                                           gint to_page);
 
 #endif

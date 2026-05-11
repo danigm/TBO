@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
 #include "tbo-types.h"
+#include "tbo-object-base.h"
 #include "tbo-tool-base.h"
 
 #define TBO_TYPE_DRAWING            (tbo_drawing_get_type ())
@@ -40,18 +41,25 @@ typedef struct _TboDrawingClass TboDrawingClass;
 
 struct _TboDrawing
 {
-    GtkLayout parent_instance;
+    GtkDrawingArea parent_instance;
 
     /* instance members */
     TboToolBase *tool;
     Frame *current_frame;
     gdouble zoom;
     Comic *comic;
+    TboWindow *tbo;
+    GString *tooltip;
+    gint tooltip_x;
+    gint tooltip_y;
+    gdouble tooltip_alpha;
+    guint tooltip_timeout_id;
+    guint redraw_source_id;
 };
 
 struct _TboDrawingClass
 {
-    GtkLayoutClass parent_class;
+    GtkDrawingAreaClass parent_class;
 
     /* class members */
 };
@@ -63,20 +71,25 @@ GType tbo_drawing_get_type (void);
  * Method definitions.
  */
 
-GtkWidget * tbo_drawing_new ();
+GtkWidget * tbo_drawing_new (void);
 GtkWidget * tbo_drawing_new_with_params (Comic *comic);
 void tbo_drawing_update (TboDrawing *self);
+void tbo_drawing_set_comic (TboDrawing *self, Comic *comic);
+Comic * tbo_drawing_get_comic (TboDrawing *self);
 void tbo_drawing_set_current_frame (TboDrawing *self, Frame *frame);
 Frame * tbo_drawing_get_current_frame (TboDrawing *self);
 void tbo_drawing_draw (TboDrawing *self, cairo_t *cr);
-void tbo_drawing_draw_page (TboDrawing *self, cairo_t *cr, Page *page, gint w, gint h);
+void tbo_drawing_draw_page (TboDrawing *self, cairo_t *cr, Page *page, gdouble w, gdouble h);
 void tbo_drawing_zoom_in (TboDrawing *self);
 void tbo_drawing_zoom_out (TboDrawing *self);
 void tbo_drawing_zoom_100 (TboDrawing *self);
 void tbo_drawing_zoom_fit (TboDrawing *self);
 gdouble tbo_drawing_get_zoom (TboDrawing *self);
+gdouble tbo_drawing_get_current_frame_scale (TboDrawing *self);
+gboolean tbo_drawing_view_to_frame (TboDrawing *self, gdouble view_x, gdouble view_y, gint *frame_x, gint *frame_y);
+void tbo_drawing_get_object_relative (TboDrawing *self, TboObjectBase *obj, gint *x, gint *y, gint *w, gint *h);
+gboolean tbo_drawing_point_inside_object (TboDrawing *self, TboObjectBase *obj, gint x, gint y);
 void tbo_drawing_adjust_scroll (TboDrawing *self);
 void tbo_drawing_init_dnd (TboDrawing *self, TboWindow *tbo);
 
 #endif /* __TBO_DRAWING_H__ */
-

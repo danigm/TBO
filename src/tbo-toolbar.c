@@ -17,7 +17,9 @@
  */
 
 
+#include <string.h>
 #include <glib/gi18n.h>
+
 #include "tbo-window.h"
 #include "tbo-toolbar.h"
 #include "comic.h"
@@ -25,302 +27,365 @@
 #include "comic-new-dialog.h"
 #include "comic-open-dialog.h"
 #include "comic-saveas-dialog.h"
-#include "custom-stock.h"
+#include "tbo-file-dialog.h"
 #include "tbo-drawing.h"
+#include "dnd.h"
 #include "frame.h"
 #include "tbo-tool-selector.h"
 #include "tbo-tool-frame.h"
 #include "tbo-tool-doodle.h"
 #include "tbo-tool-bubble.h"
 #include "tbo-tool-text.h"
+#include "tbo-ui-utils.h"
 #include "ui-menu.h"
 #include "tbo-undo.h"
+#include "tbo-widget.h"
+#include "tbo-utils.h"
 
 G_DEFINE_TYPE (TboToolbar, tbo_toolbar, G_TYPE_OBJECT);
 
+static void on_tool_button_toggled (GtkToggleButton *button, TboToolbar *toolbar);
 
-static gboolean select_tool (GtkAction *action, TboToolbar *toolbar);
+static GtkWidget *
+create_icon_wrapper (GtkWidget *child)
+{
+    GtkWidget *wrapper = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+
+    gtk_widget_set_size_request (wrapper, 20, 20);
+    gtk_widget_set_halign (wrapper, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign (wrapper, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class (wrapper, "tbo-toolbar-icon");
+    tbo_widget_add_child (wrapper, child);
+    return wrapper;
+}
+
+static GtkWidget *
+create_icon_from_name (const gchar *icon_name)
+{
+    GtkWidget *image = gtk_image_new_from_icon_name (icon_name);
+
+    gtk_image_set_pixel_size (GTK_IMAGE (image), 20);
+    return create_icon_wrapper (image);
+}
+
+static GtkWidget *
+create_icon_from_file (const gchar *path)
+{
+    GtkWidget *image;
+
+    image = gtk_picture_new_for_filename (path);
+    gtk_picture_set_can_shrink (GTK_PICTURE (image), TRUE);
+    tbo_picture_set_contain (GTK_PICTURE (image));
+    gtk_widget_set_halign (image, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
+
+    return create_icon_wrapper (image);
+}
+
+static GtkWidget *
+create_project_icon (const gchar *relative_path)
+{
+    gchar *path = tbo_get_data_path (relative_path);
+    GtkWidget *image = create_icon_from_file (path);
+    g_free (path);
+    return image;
+}
+
+static GtkWidget *
+create_button (GtkWidget *image, const gchar *tooltip)
+{
+    GtkWidget *button = gtk_button_new ();
+
+    gtk_button_set_child (GTK_BUTTON (button), image);
+    gtk_widget_set_tooltip_text (button, tooltip);
+
+    return button;
+}
+
+static GtkWidget *
+create_toggle_button (GtkWidget *image, const gchar *tooltip)
+{
+    GtkWidget *button = gtk_toggle_button_new ();
+
+    gtk_button_set_child (GTK_BUTTON (button), image);
+    gtk_widget_set_tooltip_text (button, tooltip);
+
+    return button;
+}
+
+static GtkWidget *
+create_section_box (void)
+{
+    GtkWidget *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+
+    gtk_widget_add_css_class (box, "linked");
+    gtk_widget_add_css_class (box, "tbo-toolbar-section");
+
+    return box;
+}
+
+static void
+register_tool_button (TboToolbar *self, enum Tool tool, GtkWidget *button)
+{
+    self->tool_buttons[tool] = GTK_TOGGLE_BUTTON (button);
+    g_object_set_data (G_OBJECT (button), "tool-id", GINT_TO_POINTER (tool));
+    g_signal_connect (button, "toggled", G_CALLBACK (on_tool_button_toggled), self);
+}
 
 /* callbacks */
 static gboolean
-add_new_page (GtkAction *action, TboWindow *tbo)
+add_new_page (GtkWidget *widget, TboWindow *tbo)
 {
     Page *page = tbo_comic_new_page (tbo->comic);
-    int nth = tbo_comic_page_nth (tbo->comic, page);
-    gtk_notebook_insert_page (GTK_NOTEBOOK (tbo->notebook),
-                              create_darea (tbo),
-                              NULL,
-                              nth);
-    tbo_window_update_status (tbo, 0, 0);
+    gint index = tbo_comic_page_nth (tbo->comic, page);
+
+    tbo_window_add_page_widget (tbo, create_darea (tbo), page);
+    tbo_comic_set_current_page (tbo->comic, page);
+    tbo_undo_stack_insert (tbo->undo_stack, tbo_action_page_add_new (tbo->comic, page, index));
+    tbo_window_set_current_tab_page (tbo, TRUE);
+    tbo_window_mark_dirty (tbo);
+    tbo_window_refresh_status (tbo);
     tbo_toolbar_update (tbo->toolbar);
     return FALSE;
 }
 
 static gboolean
-del_current_page (GtkAction *action, TboWindow *tbo)
+duplicate_current_page (GtkWidget *widget, TboWindow *tbo)
+{
+    (void) widget;
+    tbo_window_duplicate_current_page (tbo);
+    return FALSE;
+}
+
+static gboolean
+del_current_page (GtkWidget *widget, TboWindow *tbo)
 {
     int nth = tbo_comic_page_index (tbo->comic);
+    Page *page = tbo_comic_get_current_page (tbo->comic);
+
+    if (page == NULL)
+        return FALSE;
+
+    g_object_ref (page);
     tbo_comic_del_current_page (tbo->comic);
+    tbo_undo_stack_insert (tbo->undo_stack, tbo_action_page_remove_new (tbo->comic, page, nth));
+    tbo_window_remove_page_widget (tbo, nth);
     tbo_window_set_current_tab_page (tbo, TRUE);
-    gtk_notebook_remove_page (GTK_NOTEBOOK (tbo->notebook), nth);
-    tbo_window_update_status (tbo, 0, 0);
+    tbo_window_mark_dirty (tbo);
+    tbo_window_refresh_status (tbo);
     tbo_toolbar_update (tbo->toolbar);
+    g_object_unref (page);
     return FALSE;
 }
 
 static gboolean
-next_page (GtkAction *action, TboWindow *tbo)
+next_page (GtkWidget *widget, TboWindow *tbo)
 {
     tbo_comic_next_page (tbo->comic);
     tbo_window_set_current_tab_page (tbo, TRUE);
     tbo_toolbar_update (tbo->toolbar);
-    tbo_window_update_status (tbo, 0, 0);
+    tbo_window_refresh_status (tbo);
     tbo_drawing_adjust_scroll (TBO_DRAWING (tbo->drawing));
 
     return FALSE;
 }
 
 static gboolean
-prev_page (GtkAction *action, TboWindow *tbo)
+prev_page (GtkWidget *widget, TboWindow *tbo)
 {
     tbo_comic_prev_page (tbo->comic);
     tbo_window_set_current_tab_page (tbo, TRUE);
     tbo_toolbar_update (tbo->toolbar);
-    tbo_window_update_status (tbo, 0, 0);
+    tbo_window_refresh_status (tbo);
     tbo_drawing_adjust_scroll (TBO_DRAWING (tbo->drawing));
 
     return FALSE;
 }
 
 static gboolean
-zoom_100 (GtkAction *action, TboWindow *tbo)
+zoom_100 (GtkWidget *widget, TboWindow *tbo)
 {
     tbo_drawing_zoom_100 (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 static gboolean
-zoom_fit (GtkAction *action, TboWindow *tbo)
+zoom_fit (GtkWidget *widget, TboWindow *tbo)
 {
     tbo_drawing_zoom_fit (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 static gboolean
-zoom_in (GtkAction *action, TboWindow *tbo)
+zoom_in (GtkWidget *widget, TboWindow *tbo)
 {
     tbo_drawing_zoom_in (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 static gboolean
-zoom_out (GtkAction *action, TboWindow *tbo)
+zoom_out (GtkWidget *widget, TboWindow *tbo)
 {
     tbo_drawing_zoom_out (TBO_DRAWING (tbo->drawing));
     return FALSE;
 }
 
 static gboolean
-add_pix (GtkAction *action, TboWindow *tbo)
+add_pix (GtkWidget *widget, TboWindow *tbo)
 {
-    GtkWidget *dialog;
-    GtkFileFilter *filter;
+    gchar *filename = tbo_file_dialog_open_image (tbo);
 
-    dialog = gtk_file_chooser_dialog_new (_("Add an Image"),
-                     GTK_WINDOW (tbo->window),
-                     GTK_FILE_CHOOSER_ACTION_OPEN,
-                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                     GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-                     NULL);
-
-    filter = gtk_file_filter_new ();
-    gtk_file_filter_set_name (filter, _("Image files"));
-    gtk_file_filter_add_pixbuf_formats (filter);
-    gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-    filter = gtk_file_filter_new ();
-    gtk_file_filter_set_name (filter, _("All files"));
-    gtk_file_filter_add_pattern (filter, "*");
-    gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+    if (filename != NULL)
     {
-        gchar *filename;
-        filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-        TboObjectPixmap *piximage = TBO_OBJECT_PIXMAP (tbo_object_pixmap_new_with_params (0, 0, 0, 0, filename));
-        tbo_frame_add_obj (tbo_drawing_get_current_frame (TBO_DRAWING (tbo->drawing)), TBO_OBJECT_BASE (piximage));
-        tbo_drawing_update (TBO_DRAWING (tbo->drawing));
+        tbo_dnd_insert_asset (tbo, filename, 0, 0);
         g_free (filename);
     }
-
-    gtk_widget_destroy (dialog);
     return FALSE;
 }
-
-/* actions */
-
-static const GtkActionEntry tbo_tools_entries [] = {
-    { "NewFileTool", GTK_STOCK_NEW, N_("_New"), "<control>N",
-      N_("New Comic"),
-      G_CALLBACK (tbo_comic_new_dialog) },
-
-    { "OpenFileTool", GTK_STOCK_OPEN, N_("_Open"), "<control>O",
-      N_("Open comic"),
-      G_CALLBACK (tbo_comic_open_dialog) },
-
-    { "SaveFileTool", GTK_STOCK_SAVE, N_("_Save"), "<control>S",
-      N_("Save current document"),
-      G_CALLBACK (tbo_comic_save_dialog) },
-
-    // Undo and Redo
-    { "Undo", GTK_STOCK_UNDO, N_("_Undo"), "<control>Z",
-      N_("Undo the last action"),
-      G_CALLBACK (tbo_window_undo_cb) },
-    { "Redo", GTK_STOCK_REDO, N_("_Redo"), "<control>Y",
-      N_("Undo the last action"),
-      G_CALLBACK (tbo_window_redo_cb) },
-
-    // Page tools
-    { "NewPage", GTK_STOCK_ADD, N_("New Page"), "<control>P",
-      N_("New page"),
-      G_CALLBACK (add_new_page) },
-
-    { "DelPage", GTK_STOCK_DELETE, N_("Delete Page"), "",
-      N_("Delete current page"),
-      G_CALLBACK (del_current_page) },
-
-    { "PrevPage", GTK_STOCK_GO_BACK, N_("Prev Page"), "",
-      N_("Prev page"),
-      G_CALLBACK (prev_page) },
-
-    { "NextPage", GTK_STOCK_GO_FORWARD, N_("Next Page"), "",
-      N_("Next page"),
-      G_CALLBACK (next_page) },
-
-    // Zoom tools
-    { "Zoomin", GTK_STOCK_ZOOM_IN, N_("Zoom in"), "",
-      N_("Zoom in"),
-      G_CALLBACK (zoom_in) },
-    { "Zoom100", GTK_STOCK_ZOOM_100, N_("Zoom 1:1"), "",
-      N_("Zoom 1:1"),
-      G_CALLBACK (zoom_100) },
-    { "Zoomfit", GTK_STOCK_ZOOM_FIT, N_("Zoom fit"), "",
-      N_("Zoom fit"),
-      G_CALLBACK (zoom_fit) },
-    { "Zoomout", GTK_STOCK_ZOOM_OUT, N_("Zoom out"), "",
-      N_("Zoom out"),
-      G_CALLBACK (zoom_out) },
-
-    // Png image tool
-    { "Pix", TBO_STOCK_PIX, N_("Image"), "",
-      N_("Image"),
-      G_CALLBACK (add_pix) },
-};
-
-/* toggle actions */
-static const GtkToggleActionEntry tbo_tools_toggle_entries [] = {
-    // Page view tools
-    { "NewFrame", TBO_STOCK_FRAME, N_("New _Frame"), "f",
-      N_("New Frame"),
-      G_CALLBACK (select_tool), FALSE },
-
-    { "Selector", TBO_STOCK_SELECTOR, N_("Selector"), "s",
-      N_("Selector"),
-      G_CALLBACK (select_tool), FALSE },
-
-    // Frame view tools
-    { "Doodle", TBO_STOCK_DOODLE, N_("Doodle"), "d",
-      N_("Doodle"),
-      G_CALLBACK (select_tool), FALSE },
-    { "Bubble", TBO_STOCK_BUBBLE, N_("Booble"), "b",
-      N_("Bubble"),
-      G_CALLBACK (select_tool), FALSE },
-    { "Text", TBO_STOCK_TEXT, N_("Text"), "t",
-      N_("Text"),
-      G_CALLBACK (select_tool), FALSE },
-};
-
-/* aux */
 
 static void
-unselect_tool (TboToolbar *self)
+on_tool_button_toggled (GtkToggleButton *button, TboToolbar *toolbar)
 {
-    GtkToggleAction *action;
+    enum Tool tool;
 
-    if (!self->selected_tool)
+    if (toolbar->syncing_tool_buttons)
         return;
 
-    self->selected_tool->on_unselect (self->selected_tool);
-    action = (GtkToggleAction *) gtk_action_group_get_action (self->action_group,
-                                                    self->selected_tool->action);
-    gtk_toggle_action_set_active (action, FALSE);
-}
+    tool = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "tool-id"));
 
-static gboolean
-select_tool (GtkAction *action, TboToolbar *toolbar)
-{
-    GtkToggleAction *toggle_action;
-    int i;
-    const gchar *name;
-    TboWindow *tbo = toolbar->tbo;
-    TboToolBase *tool;
-
-    toggle_action = (GtkToggleAction *) action;
-    name = gtk_action_get_name (action);
-
-    /* starting at 1 because 0 is NULL, TBO_TOOLBAR_NONE */
-    for (i=1; i < TBO_TOOLBAR_N_TOOLS; i++)
-    {
-        tool = toolbar->tools[i];
-        if (strcmp (tool->action, name) == 0)
-            break;
-    }
-
-    if (gtk_toggle_action_get_active (toggle_action))
-        tbo_toolbar_set_selected_tool (toolbar, i);
-    else
+    if (gtk_toggle_button_get_active (button))
+        tbo_toolbar_set_selected_tool (toolbar, tool);
+    else if (toolbar->selected_tool == toolbar->tools[tool])
         tbo_toolbar_set_selected_tool (toolbar, TBO_TOOLBAR_NONE);
-    tbo_window_update_status (tbo, 0, 0);
-    return FALSE;
 }
 
 static GtkWidget *
 generate_toolbar (TboToolbar *self)
 {
     GtkWidget *toolbar;
-    GtkUIManager *manager;
-    GError *error = NULL;
+    GtkWidget *section;
 
-    manager = gtk_ui_manager_new ();
-    gtk_ui_manager_add_ui_from_file (manager, DATA_DIR "/ui/tbo-toolbar-ui.xml", &error);
-    if (error != NULL)
-    {
-        g_warning ("Could not merge tbo-toolbar-ui.xml: %s", error->message);
-        g_error_free (error);
-    }
+    toolbar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+    gtk_widget_set_name (toolbar, "tbo-toolbar");
+    gtk_widget_set_hexpand (toolbar, TRUE);
+    gtk_widget_set_halign (toolbar, GTK_ALIGN_FILL);
+    gtk_widget_set_margin_start (toolbar, 12);
+    gtk_widget_set_margin_end (toolbar, 12);
+    gtk_widget_set_margin_top (toolbar, 8);
+    gtk_widget_set_margin_bottom (toolbar, 8);
 
-    self->action_group = gtk_action_group_new ("ToolsActions");
-    gtk_action_group_set_translation_domain (self->action_group, NULL);
-    gtk_action_group_add_actions (self->action_group, tbo_tools_entries,
-                        G_N_ELEMENTS (tbo_tools_entries), self->tbo);
-    gtk_action_group_add_toggle_actions (self->action_group, tbo_tools_toggle_entries,
-                        G_N_ELEMENTS (tbo_tools_toggle_entries), self);
+    section = create_section_box ();
+    self->button_new = create_button (create_project_icon ("icons/new.svg"), _("New Comic (Ctrl+N)"));
+    self->button_open = create_button (create_icon_from_name ("document-open-symbolic"), _("Open Comic (Ctrl+O)"));
+    self->button_save = create_button (create_icon_from_name ("document-save-symbolic"), _("Save Comic (Ctrl+S)"));
+    gtk_widget_add_css_class (self->button_save, "suggested-action");
+    g_signal_connect (self->button_new, "clicked", G_CALLBACK (tbo_comic_new_dialog), self->tbo);
+    g_signal_connect (self->button_open, "clicked", G_CALLBACK (tbo_comic_open_dialog), self->tbo);
+    g_signal_connect (self->button_save, "clicked", G_CALLBACK (tbo_comic_save_dialog), self->tbo);
+    tbo_box_pack_start (section, self->button_new, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_open, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_save, FALSE, FALSE, 0);
+    tbo_box_pack_start (toolbar, section, FALSE, FALSE, 0);
 
-    gtk_ui_manager_insert_action_group (manager, self->action_group, 0);
+    section = create_section_box ();
+    self->button_undo = create_button (create_project_icon ("icons/undo.svg"), _("Undo (Ctrl+Z)"));
+    self->button_redo = create_button (create_project_icon ("icons/redo.svg"), _("Redo (Ctrl+Y)"));
+    g_signal_connect (self->button_undo, "clicked", G_CALLBACK (tbo_window_undo_cb), self->tbo);
+    g_signal_connect (self->button_redo, "clicked", G_CALLBACK (tbo_window_redo_cb), self->tbo);
+    tbo_box_pack_start (section, self->button_undo, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_redo, FALSE, FALSE, 0);
+    tbo_box_pack_start (toolbar, section, FALSE, FALSE, 0);
 
-    toolbar = gtk_ui_manager_get_widget (manager, "/toolbar");
+    section = create_section_box ();
+    self->button_new_page = create_button (create_icon_from_name ("list-add-symbolic"), _("New Page"));
+    self->button_duplicate_page = create_button (create_icon_from_name ("edit-copy-symbolic"), _("Duplicate Page"));
+    self->button_delete_page = create_button (create_icon_from_name ("edit-delete-symbolic"), _("Delete Page"));
+    self->button_prev_page = create_button (create_icon_from_name ("go-previous-symbolic"), _("Previous Page"));
+    self->button_next_page = create_button (create_icon_from_name ("go-next-symbolic"), _("Next Page"));
+    g_signal_connect (self->button_new_page, "clicked", G_CALLBACK (add_new_page), self->tbo);
+    g_signal_connect (self->button_duplicate_page, "clicked", G_CALLBACK (duplicate_current_page), self->tbo);
+    g_signal_connect (self->button_delete_page, "clicked", G_CALLBACK (del_current_page), self->tbo);
+    g_signal_connect (self->button_prev_page, "clicked", G_CALLBACK (prev_page), self->tbo);
+    g_signal_connect (self->button_next_page, "clicked", G_CALLBACK (next_page), self->tbo);
+    tbo_box_pack_start (section, self->button_new_page, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_duplicate_page, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_delete_page, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_prev_page, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_next_page, FALSE, FALSE, 0);
+    tbo_box_pack_start (toolbar, section, FALSE, FALSE, 0);
+
+    section = create_section_box ();
+    register_tool_button (self, TBO_TOOLBAR_SELECTOR,
+                          create_toggle_button (create_project_icon ("icons/selector.svg"), _("Selector (S)")));
+    register_tool_button (self, TBO_TOOLBAR_FRAME,
+                          create_toggle_button (create_project_icon ("icons/frame.svg"), _("New Frame (F)")));
+    register_tool_button (self, TBO_TOOLBAR_DOODLE,
+                          create_toggle_button (create_project_icon ("icons/doodle.svg"), _("Doodle (D)")));
+    register_tool_button (self, TBO_TOOLBAR_BUBBLE,
+                          create_toggle_button (create_project_icon ("icons/bubble.svg"), _("Bubble (B)")));
+    register_tool_button (self, TBO_TOOLBAR_TEXT,
+                          create_toggle_button (create_project_icon ("icons/text.svg"), _("Text (T)")));
+    tbo_box_pack_start (section, GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_SELECTOR]), FALSE, FALSE, 0);
+    tbo_box_pack_start (section, GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_FRAME]), FALSE, FALSE, 0);
+    tbo_box_pack_start (section, GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_DOODLE]), FALSE, FALSE, 0);
+    tbo_box_pack_start (section, GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_BUBBLE]), FALSE, FALSE, 0);
+    tbo_box_pack_start (section, GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_TEXT]), FALSE, FALSE, 0);
+    tbo_box_pack_start (toolbar, section, FALSE, FALSE, 0);
+
+    section = create_section_box ();
+    self->button_pix = create_button (create_project_icon ("icons/pix.svg"), _("Insert Image"));
+    g_signal_connect (self->button_pix, "clicked", G_CALLBACK (add_pix), self->tbo);
+    tbo_box_pack_start (section, self->button_pix, FALSE, FALSE, 0);
+    tbo_box_pack_start (toolbar, section, FALSE, FALSE, 0);
+
+    section = create_section_box ();
+    self->button_zoom_100 = create_button (create_icon_from_name ("zoom-original-symbolic"), _("Zoom 1:1 (1)"));
+    self->button_zoom_out = create_button (create_icon_from_name ("zoom-out-symbolic"), _("Zoom Out (-)"));
+    self->button_zoom_in = create_button (create_icon_from_name ("zoom-in-symbolic"), _("Zoom In (+)"));
+    self->button_zoom_fit = create_button (create_project_icon ("icons/zoom-fit.svg"), _("Zoom Fit (2)"));
+    g_signal_connect (self->button_zoom_100, "clicked", G_CALLBACK (zoom_100), self->tbo);
+    g_signal_connect (self->button_zoom_out, "clicked", G_CALLBACK (zoom_out), self->tbo);
+    g_signal_connect (self->button_zoom_in, "clicked", G_CALLBACK (zoom_in), self->tbo);
+    g_signal_connect (self->button_zoom_fit, "clicked", G_CALLBACK (zoom_fit), self->tbo);
+    tbo_box_pack_start (section, self->button_zoom_100, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_zoom_out, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_zoom_in, FALSE, FALSE, 0);
+    tbo_box_pack_start (section, self->button_zoom_fit, FALSE, FALSE, 0);
+    tbo_box_pack_start (toolbar, section, FALSE, FALSE, 0);
+
     return toolbar;
 }
-
 
 /* init methods */
 
 static void
 tbo_toolbar_init (TboToolbar *self)
 {
+    int i;
+
     self->tbo = NULL;
     self->selected_tool = NULL;
-    self->action_group = NULL;
+    self->toolbar = NULL;
+    self->button_new = NULL;
+    self->button_open = NULL;
+    self->button_save = NULL;
+    self->button_undo = NULL;
+    self->button_redo = NULL;
+    self->button_new_page = NULL;
+    self->button_duplicate_page = NULL;
+    self->button_delete_page = NULL;
+    self->button_prev_page = NULL;
+    self->button_next_page = NULL;
+    self->button_zoom_in = NULL;
+    self->button_zoom_100 = NULL;
+    self->button_zoom_fit = NULL;
+    self->button_zoom_out = NULL;
+    self->button_pix = NULL;
+    self->syncing_tool_buttons = FALSE;
     self->tools = NULL;
+
+    for (i = 0; i < TBO_TOOLBAR_N_TOOLS; i++)
+        self->tool_buttons[i] = NULL;
 }
 
 static void
@@ -336,9 +401,6 @@ tbo_toolbar_finalize (GObject *self)
         g_free (TBO_TOOLBAR (self)->tools);
     }
 
-    if (TBO_TOOLBAR (self)->toolbar)
-        g_object_unref (G_OBJECT (TBO_TOOLBAR (self)->toolbar));
-    /* Chain up to the parent class */
     G_OBJECT_CLASS (tbo_toolbar_parent_class)->finalize (self);
 }
 
@@ -352,7 +414,7 @@ tbo_toolbar_class_init (TboToolbarClass *klass)
 /* object functions */
 
 GObject *
-tbo_toolbar_new ()
+tbo_toolbar_new (void)
 {
     GObject *toolbar;
     toolbar = g_object_new (TBO_TYPE_TOOLBAR, NULL);
@@ -366,35 +428,29 @@ tbo_toolbar_new_with_params (TboWindow *tbo)
     TboToolbar *toolbar;
     TboToolBase *tool;
     obj = tbo_toolbar_new ();
-    
+
     toolbar = TBO_TOOLBAR (obj);
     toolbar->tbo = tbo;
-    /* Adding tools */
 
-    toolbar->tools = g_new (TboToolBase*, TBO_TOOLBAR_N_TOOLS);
+    toolbar->tools = g_new (TboToolBase *, TBO_TOOLBAR_N_TOOLS);
     toolbar->tools[TBO_TOOLBAR_NONE] = NULL;
 
-    /* selector */
     tool = TBO_TOOL_BASE (tbo_tool_selector_new_with_params (tbo));
     tbo_tool_base_set_action (tool, "Selector");
     toolbar->tools[TBO_TOOLBAR_SELECTOR] = tool;
 
-    /* frame */
     tool = TBO_TOOL_BASE (tbo_tool_frame_new_with_params (tbo));
     tbo_tool_base_set_action (tool, "NewFrame");
     toolbar->tools[TBO_TOOLBAR_FRAME] = tool;
 
-    /* doodle */
     tool = TBO_TOOL_BASE (tbo_tool_doodle_new_with_params (tbo));
     tbo_tool_base_set_action (tool, "Doodle");
     toolbar->tools[TBO_TOOLBAR_DOODLE] = tool;
 
-    /* bubble */
     tool = TBO_TOOL_BASE (tbo_tool_bubble_new_with_params (tbo));
     tbo_tool_base_set_action (tool, "Bubble");
     toolbar->tools[TBO_TOOLBAR_BUBBLE] = tool;
 
-    /* text */
     tool = TBO_TOOL_BASE (tbo_tool_text_new_with_params (tbo));
     tbo_tool_base_set_action (tool, "Text");
     toolbar->tools[TBO_TOOLBAR_TEXT] = tool;
@@ -413,26 +469,34 @@ tbo_toolbar_get_selected_tool (TboToolbar *self)
 void
 tbo_toolbar_set_selected_tool (TboToolbar *self, enum Tool tool)
 {
-    GtkToggleAction *action;
-    TboToolBase *t;
+    TboToolBase *t = NULL;
 
     if (self->selected_tool == self->tools[tool])
         return;
 
-    unselect_tool (self);
+    if (self->selected_tool != NULL)
+        self->selected_tool->on_unselect (self->selected_tool);
+
     self->selected_tool = NULL;
-    if (self->tools[tool])
+
+    if (tool != TBO_TOOLBAR_NONE && self->tools[tool] != NULL)
     {
         t = self->tools[tool];
-        action = GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->action_group, t->action));
-
-        if (gtk_action_is_sensitive (GTK_ACTION (action)))
+        if (gtk_widget_is_sensitive (GTK_WIDGET (self->tool_buttons[tool])))
         {
             self->selected_tool = t;
             self->selected_tool->on_select (self->selected_tool);
-            gtk_toggle_action_set_active (action, TRUE);
         }
     }
+
+    self->syncing_tool_buttons = TRUE;
+    for (int i = 1; i < TBO_TOOLBAR_N_TOOLS; i++)
+    {
+        gtk_toggle_button_set_active (self->tool_buttons[i],
+                                      self->selected_tool == self->tools[i]);
+    }
+    self->syncing_tool_buttons = FALSE;
+
     TBO_DRAWING (self->tbo->drawing)->tool = self->selected_tool;
     tbo_toolbar_update (self);
 }
@@ -446,74 +510,37 @@ tbo_toolbar_get_toolbar (TboToolbar *self)
 void
 tbo_toolbar_update (TboToolbar *self)
 {
-    GtkAction *prev;
-    GtkAction *next;
-    GtkAction *delete;
+    TboWindow *tbo;
+    gboolean in_frame_view;
 
-    GtkAction *doodle;
-    GtkAction *bubble;
-    GtkAction *text;
-    GtkAction *new_frame;
-    GtkAction *pix;
-
-    GtkAction *undo;
-    GtkAction *redo;
-
-    if (!self)
+    if (!self || self->tbo == NULL || self->tbo->destroying)
         return;
 
-    TboWindow *tbo = self->tbo;
+    tbo = self->tbo;
+    in_frame_view = tbo_drawing_get_current_frame (TBO_DRAWING (tbo->drawing)) != NULL;
 
-    if (!self->action_group)
+    gtk_widget_set_sensitive (self->button_undo, tbo_undo_active_undo (tbo->undo_stack));
+    gtk_widget_set_sensitive (self->button_redo, tbo_undo_active_redo (tbo->undo_stack));
+
+    gtk_widget_set_sensitive (self->button_prev_page, !tbo_comic_page_first (tbo->comic));
+    gtk_widget_set_sensitive (self->button_next_page, !tbo_comic_page_last (tbo->comic));
+    gtk_widget_set_sensitive (self->button_duplicate_page, tbo_comic_len (tbo->comic) > 0);
+    gtk_widget_set_sensitive (self->button_delete_page, tbo_comic_len (tbo->comic) > 1);
+
+    gtk_widget_set_sensitive (GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_DOODLE]), in_frame_view);
+    gtk_widget_set_sensitive (GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_BUBBLE]), in_frame_view);
+    gtk_widget_set_sensitive (GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_TEXT]), in_frame_view);
+    gtk_widget_set_sensitive (self->button_pix, in_frame_view);
+    gtk_widget_set_sensitive (GTK_WIDGET (self->tool_buttons[TBO_TOOLBAR_FRAME]), !in_frame_view);
+
+    if (!in_frame_view && self->selected_tool != NULL &&
+        (self->selected_tool == self->tools[TBO_TOOLBAR_DOODLE] ||
+         self->selected_tool == self->tools[TBO_TOOLBAR_BUBBLE] ||
+         self->selected_tool == self->tools[TBO_TOOLBAR_TEXT]))
+    {
+        tbo_toolbar_set_selected_tool (self, TBO_TOOLBAR_SELECTOR);
         return;
-
-    undo = gtk_action_group_get_action (self->action_group, "Undo");
-    redo = gtk_action_group_get_action (self->action_group, "Redo");
-
-    gtk_action_set_sensitive (undo, tbo_undo_active_undo (tbo->undo_stack));
-    gtk_action_set_sensitive (redo, tbo_undo_active_redo (tbo->undo_stack));
-
-    // Page next, prev and delete button sensitive
-    prev = gtk_action_group_get_action (self->action_group, "PrevPage");
-    next = gtk_action_group_get_action (self->action_group, "NextPage");
-    delete = gtk_action_group_get_action (self->action_group, "DelPage");
-
-    if (tbo_comic_page_first (tbo->comic))
-        gtk_action_set_sensitive (prev, FALSE);
-    else
-        gtk_action_set_sensitive (prev, TRUE);
-
-    if (tbo_comic_page_last (tbo->comic))
-        gtk_action_set_sensitive (next, FALSE);
-    else
-        gtk_action_set_sensitive (next, TRUE);
-    if (tbo_comic_len (tbo->comic) > 1)
-        gtk_action_set_sensitive (delete, TRUE);
-    else
-        gtk_action_set_sensitive (delete, FALSE);
-
-    // Frame view disabled in page view
-    doodle = gtk_action_group_get_action (self->action_group, "Doodle");
-    bubble = gtk_action_group_get_action (self->action_group, "Bubble");
-    text = gtk_action_group_get_action (self->action_group, "Text");
-    new_frame = gtk_action_group_get_action (self->action_group, "NewFrame");
-    pix = gtk_action_group_get_action (self->action_group, "Pix");
-
-    if (!tbo_drawing_get_current_frame (TBO_DRAWING (tbo->drawing)))
-    {
-        gtk_action_set_sensitive (doodle, FALSE);
-        gtk_action_set_sensitive (bubble, FALSE);
-        gtk_action_set_sensitive (text, FALSE);
-        gtk_action_set_sensitive (pix, FALSE);
-        gtk_action_set_sensitive (new_frame, TRUE);
     }
-    else
-    {
-        gtk_action_set_sensitive (doodle, TRUE);
-        gtk_action_set_sensitive (bubble, TRUE);
-        gtk_action_set_sensitive (text, TRUE);
-        gtk_action_set_sensitive (pix, TRUE);
-        gtk_action_set_sensitive (new_frame, FALSE);
-    }
+
     update_menubar (tbo);
 }

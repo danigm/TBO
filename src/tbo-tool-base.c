@@ -23,10 +23,10 @@ G_DEFINE_TYPE (TboToolBase, tbo_tool_base, G_TYPE_OBJECT);
 
 static void on_select (TboToolBase *tool) {}
 static void on_unselect (TboToolBase *tool) {}
-static void on_move (TboToolBase *tool, GtkWidget *widget, GdkEventMotion *event) {}
-static void on_click (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event) {}
-static void on_release (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event) {}
-static void on_key (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event) {}
+static void on_move (TboToolBase *tool, GtkWidget *widget, TboPointerEvent *event) {}
+static void on_click (TboToolBase *tool, GtkWidget *widget, TboPointerEvent *event) {}
+static void on_release (TboToolBase *tool, GtkWidget *widget, TboPointerEvent *event) {}
+static void on_key (TboToolBase *tool, GtkWidget *widget, TboKeyEvent event) {}
 static void drawing (TboToolBase *tool, cairo_t *cr) {}
 
 /* init methods */
@@ -64,7 +64,7 @@ tbo_tool_base_class_init (TboToolBaseClass *klass)
 /* object functions */
 
 GObject *
-tbo_tool_base_new ()
+tbo_tool_base_new (void)
 {
     GObject *tbo_tool;
     tbo_tool = g_object_new (TBO_TYPE_TOOL_BASE, NULL);
@@ -88,4 +88,3 @@ tbo_tool_base_set_action (TboToolBase *self, gchar *action)
     if (action)
         self->action = g_strdup (action);
 }
-

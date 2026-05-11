@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>net.danigm.tbo</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>TBO</name>
+  <summary>Create comics and illustrated presentations</summary>
+  <developer id="io.github.j4imefoo">
+    <name>TBO contributors</name>
+  </developer>
+  <launchable type="desktop-id">net.danigm.tbo.desktop</launchable>
+  <provides>
+    <binary>tbo</binary>
+  </provides>
+  <url type="homepage">https://github.com/j4imefoo/TBO</url>
+  <url type="bugtracker">https://github.com/j4imefoo/TBO/issues</url>
+  <url type="vcs-browser">https://github.com/j4imefoo/TBO</url>
+  <description>
+    <p>TBO is a desktop editor for making comics and illustrated presentations with a simple page-and-frame workflow.</p>
+    <p>It combines page layout, frame editing, text, bubbles, doodles and export tools in a lightweight GTK4 application.</p>
+    <ul>
+      <li>Create comics page by page with editable frames</li>
+      <li>Add text, bubbles, doodles and image assets inside frames</li>
+      <li>Export the whole document, the current page or a selection to PNG, PDF or SVG</li>
+    </ul>
+  </description>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="2.0" date="2026-04-21">
+      <description>
+        <p>This GTK4 release modernizes TBO and improves its day-to-day workflow.</p>
+        <ul>
+          <li>Improved export workflow with preview, page range and selection support</li>
+          <li>Added comic templates, autosave recovery and recent projects</li>
+          <li>Polished the interface, keyboard accessibility and overall consistency</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+</component>

@@ -45,10 +45,10 @@ struct _TboToolBase
 
     void (*on_select) (TboToolBase *tool);
     void (*on_unselect) (TboToolBase *tool);
-    void (*on_move) (TboToolBase *tool, GtkWidget *widget, GdkEventMotion *event);
-    void (*on_click) (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event);
-    void (*on_release) (TboToolBase *tool, GtkWidget *widget, GdkEventButton *event);
-    void (*on_key) (TboToolBase *tool, GtkWidget *widget, GdkEventKey *event);
+    void (*on_move) (TboToolBase *tool, GtkWidget *widget, TboPointerEvent *event);
+    void (*on_click) (TboToolBase *tool, GtkWidget *widget, TboPointerEvent *event);
+    void (*on_release) (TboToolBase *tool, GtkWidget *widget, TboPointerEvent *event);
+    void (*on_key) (TboToolBase *tool, GtkWidget *widget, TboKeyEvent event);
     void (*drawing) (TboToolBase *tool, cairo_t *cr);
 };
 
@@ -65,9 +65,8 @@ GType tbo_tool_base_get_type (void);
 /*
  * Method definitions.
  */
-GObject * tbo_tool_base_new ();
+GObject * tbo_tool_base_new (void);
 GObject * tbo_tool_base_new_with_params (TboWindow *tbo);
 void tbo_tool_base_set_action (TboToolBase *self, gchar *action);
 
 #endif /* __TBO_TOOL_BASE_H__ */
-

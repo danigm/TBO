@@ -3,6 +3,83 @@ This project is unmaintained, there's a fork with a WIP port to Gtk4 here: https
 TBO is an easy and fun program to draw comic and make your
 presentations funnier.
 
+Building
+--------
+
+TBO now uses Meson as its build system and GTK4 as its UI toolkit.
+
+Base requirements:
+
+ * meson
+ * ninja
+ * pkg-config
+ * gtk4 (4.8 or newer)
+ * cairo
+ * librsvg-2.0
+
+Optional build extras:
+
+ * gettext (translations)
+ * xvfb and xauth (headless test runs)
+
+Build it from a fresh checkout with the default feature set:
+
+    meson setup build
+    meson compile -C build
+
+For a lighter, more portable local build that skips translations and the test
+suite:
+
+    meson setup build -Dnls=false -Dtests=false
+    meson compile -C build
+
+For a minimal install that still keeps the bundled `tut.tbo` sample, but skips
+AppStream metadata, the legacy `pixmaps` icon, and the tutorial PDF:
+
+    meson setup build -Dnls=false -Dtests=false -Dappstream=false -Dlegacy_pixmap_icon=false -Dtutorial_pdf=false
+    meson compile -C build
+
+Run the application with:
+
+    ./build/tbo
+
+Open the bundled sample comic with:
+
+    ./build/tbo data/tut.tbo
+
+Install it locally with:
+
+    meson install -C build
+
+Run the smoke-test suite with:
+
+    meson test -C build --no-rebuild --print-errorlogs --num-processes 1
+
+Translations
+------------
+
+Translations are stored in `po/` and can be disabled with `-Dnls=false`.
+
+Tests
+-----
+
+The smoke-test suite can be disabled with `-Dtests=false` when packaging for a
+minimal environment or when no headless GTK runner is available.
+
+Packaging
+---------
+
+The repository includes packaging metadata for:
+
+ * Arch Linux: `archlinux/PKGBUILD`
+ * Debian-based systems: `debian/`
+
+These files are intended to install the desktop file and icons in their standard
+system locations.
+
+To keep packaging lighter, the bundled Arch and Debian recipes now configure
+Meson with `-Dnls=false -Dtests=false -Dappstream=false -Dlegacy_pixmap_icon=false -Dtutorial_pdf=false`.
+
 Using TBO
 ---------
 
@@ -21,8 +98,9 @@ When you run TBO you are in "page view", and here you can:
  * You can clone a frame pressing ctrl+d
  * Create new page frames
 
-When you have a frame you can go to "frame view" by double clicking in
-the frame with "selector" tool. In frame view you can draw:
+When you have a frame you can go to "frame view" by selecting it and
+double clicking it or pressing Enter.
+In frame view you can draw:
 
  * You can add some doodle with doodle-tool, selecting what you want
    from tool-area and drag&drop it into drawing area.
@@ -62,4 +140,4 @@ A .tbo file looks like that:
      </page>
     </tbo>
 
-Read HACKING for information about how you can collaborate.
+This repository is self-contained and intended to be cloned, built and run directly with Meson.

@@ -31,36 +31,26 @@ typedef struct
     double b;
 } Color;
 
-typedef struct
-{
-    char title[255];
-    int width;
-    int height;
-    GList *pages;
-
-} Comic;
+typedef struct _Comic Comic;
+typedef struct _Page Page;
+typedef struct _Frame Frame;
 
 typedef struct
 {
-    Comic *comic;
-    GList *frames;
-
-} Page;
+    double x;
+    double y;
+    guint button;
+    guint n_press;
+    GdkModifierType state;
+} TboPointerEvent;
 
 typedef struct
 {
-    int x;
-    int y;
-    int width;
-    int height;
-    gboolean border;
-    Color *color;
-    GList *objects;
-
-} Frame;
+    guint keyval;
+    GdkModifierType state;
+} TboKeyEvent;
 
 struct _TboWindow;
 typedef struct _TboWindow TboWindow;
 
 #endif
-

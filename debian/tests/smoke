@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+
+xvfb-run -a sh -c '/usr/bin/tbo >/dev/null 2>&1 & pid=$!; sleep 2; kill -TERM "$pid"; wait "$pid" || true'

@@ -1,36 +1,27 @@
-# Maintainer: Daniel Garcia <dani@danigm.net>
+# Maintainer: Jaime <j4imefoo@users.noreply.github.com>
 
 pkgname=tbo-git
-pkgver=20110623
+pkgver=2.0+r272.8ec0fc3
 pkgrel=1
-pkgdesc="Gnome easy and fun comic editor"
-arch=('i686' 'x86_64')
-url="http://trac.danigm.net/tbo"
+pkgdesc="Comic editor built with GTK4"
+arch=('x86_64')
+url="https://github.com/j4imefoo/TBO"
 license=('GPL3')
-depends=('gtk3' 'cairo' 'librsvg' 'git')
-makedepends=('gnome-common git intltool automake gcc')
-source=()
-md5sums=()
+depends=('gtk4' 'cairo' 'librsvg')
+makedepends=('git' 'meson' 'ninja' 'pkgconf')
+source=("git+https://github.com/j4imefoo/TBO.git")
+sha256sums=('SKIP')
 
-_gitroot="git://git.danigm.net/tbo.git"
-_gitname="tbo"
+pkgver() {
+  cd TBO
+  printf "2.0+r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
 
 build() {
-    if [ -d ${srcdir}/${_gitname} ]
-    then
-        msg "Updateing local repository..."
-        cd ${_gitname}
-        git pull origin master || return 1
-        msg "The local files are updated."
-    else
-        git clone ${_gitroot} ${_gitname}
-    fi
-    msg "git checkout done or server timeout"
-    msg "Starting make..."
+  arch-meson TBO build -Dnls=false -Dtests=false -Dappstream=false -Dlegacy_pixmap_icon=false -Dtutorial_pdf=false
+  meson compile -C build
+}
 
-    cp -r ${srcdir}/${_gitname} ${srcdir}/${_gitname}-build
-    cd ${srcdir}/${_gitname}-build
-
-    ./autogen.sh --prefix=/usr || return 1
-    make DESTDIR=${pkgdir} install || return 1
+package() {
+  meson install -C build --destdir "$pkgdir"
 }

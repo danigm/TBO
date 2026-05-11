@@ -21,26 +21,14 @@
 #define __TBO_DND__
 
 #include <gtk/gtk.h>
+#include "tbo-object-base.h"
+#include "tbo-drawing.h"
 #include "tbo-window.h"
 
-enum {
-    TARGET_STRING,
-};
-
-
-static GtkTargetEntry TARGET_LIST[] = {
-    { "STRING",     0, TARGET_STRING },
-    { "text/plain", 0, TARGET_STRING },
-};
-
-static guint N_TARGETS = G_N_ELEMENTS (TARGET_LIST);
-
-// destination signals
-void drag_data_received_handl (GtkWidget *widget, GdkDragContext *context, gint x, gint y, GtkSelectionData *selection_data, guint target_type, guint time, TboWindow *tbo);
-
-// source signals
-void drag_data_get_handl (GtkWidget *widget, GdkDragContext *context, GtkSelectionData *selection_data, guint target_type, guint time, char *svg);
-void drag_begin_handl (GtkWidget *widget, GdkDragContext *context, char *svg);
-void drag_end_handl (GtkWidget *widget, GdkDragContext *context, gpointer user_data);
+void tbo_dnd_setup_asset_source (GtkWidget *widget, const gchar *full_path, const gchar *relative_path);
+void tbo_dnd_setup_drawing_dest (TboDrawing *drawing, TboWindow *tbo);
+TboObjectBase *tbo_dnd_insert_asset_at_view_coords (TboWindow *tbo, const gchar *asset_path, gdouble x, gdouble y);
+TboObjectBase *tbo_dnd_insert_asset (TboWindow *tbo, const gchar *asset_path, gint x, gint y);
+TboObjectBase *tbo_dnd_insert_asset_centered (TboWindow *tbo, const gchar *asset_path);
 
 #endif

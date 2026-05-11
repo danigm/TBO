@@ -25,6 +25,6 @@
 
 gboolean tbo_comic_save_dialog (GtkWidget *widget, TboWindow *window);
 gboolean tbo_comic_saveas_dialog (GtkWidget *widget, TboWindow *window);
+gchar *tbo_comic_build_save_filename (const gchar *title);
 
 #endif
-

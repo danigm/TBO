@@ -43,6 +43,7 @@ struct _TboToolDoodle
     GtkWidget *tree;
     gdouble hadjust;
     gdouble vadjust;
+    guint scroll_source_id;
     void (*setup_tree) (TboToolDoodle *self);
 };
 
@@ -59,8 +60,7 @@ GType tbo_tool_doodle_get_type (void);
 /*
  * Method definitions.
  */
-GObject * tbo_tool_doodle_new ();
+GObject * tbo_tool_doodle_new (void);
 GObject * tbo_tool_doodle_new_with_params (TboWindow *tbo);
 
 #endif /* __TBO_TOOL_DOODLE_H__ */
-

@@ -21,7 +21,10 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <string.h>
 #include "tbo-types.h"
+#include "frame.h"
+#include "tbo-utils.h"
 #include "tbo-object-text.h"
 
 G_DEFINE_TYPE (TboObjectText, tbo_object_text, TBO_TYPE_OBJECT_BASE);
@@ -35,6 +38,10 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
 {
     TboObjectText *textobj = TBO_OBJECT_TEXT (self);
     gchar *text = textobj->text->str;
+    int frame_x = tbo_frame_get_x (frame);
+    int frame_y = tbo_frame_get_y (frame);
+    int frame_width = tbo_frame_get_width (frame);
+    int frame_height = tbo_frame_get_height (frame);
 
     PangoLayout *layout;
     PangoFontDescription *desc = textobj->description;
@@ -46,7 +53,7 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
         return;
     }
 
-    gdk_cairo_set_source_color (cr, textobj->font_color);
+    gdk_cairo_set_source_rgba (cr, textobj->font_color);
 
     layout = pango_cairo_create_layout (cr);
     pango_layout_set_text (layout, text, -1);
@@ -70,9 +77,9 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
     cairo_matrix_t mx = {1, 0, 0, 1, 0, 0};
     tbo_object_base_get_flip_matrix (self, &mx);
 
-    cairo_rectangle(cr, frame->x+2, frame->y+2, frame->width-4, frame->height-4);
+    cairo_rectangle (cr, frame_x + 2, frame_y + 2, frame_width - 4, frame_height - 4);
     cairo_clip (cr);
-    cairo_translate (cr, frame->x+self->x, frame->y+self->y);
+    cairo_translate (cr, frame_x + self->x, frame_y + self->y);
     cairo_rotate (cr, self->angle);
     cairo_transform (cr, &mx);
     cairo_scale (cr, factorw, factorh);
@@ -82,38 +89,35 @@ draw (TboObjectBase *self, Frame *frame, cairo_t *cr)
     cairo_scale (cr, 1/factorw, 1/factorh);
     cairo_transform (cr, &mx);
     cairo_rotate (cr, -self->angle);
-    cairo_translate (cr, -(frame->x+self->x), -(frame->y+self->y));
+    cairo_translate (cr, -(frame_x + self->x), -(frame_y + self->y));
     cairo_reset_clip (cr);
+    g_object_unref (layout);
 }
 
 static void
 save (TboObjectBase *self, FILE *file)
 {
-    char buffer[1024];
-    float r, g, b;
+    gchar *font;
+    gchar *text_escaped;
+    GString *xml;
 
     TboObjectText *text = TBO_OBJECT_TEXT (self);
 
-    r = (float)text->font_color->red / (float)COLORMAX;
-    g = (float)text->font_color->green / (float)COLORMAX;
-    b = (float)text->font_color->blue / (float)COLORMAX;
+    font = pango_font_description_to_string (text->description);
+    text_escaped = g_markup_escape_text (text->text->str, -1);
+    xml = g_string_new ("   <text");
+    tbo_xml_append_object_attrs (xml, self);
+    tbo_xml_append_attr_string (xml, "font", font);
+    tbo_xml_append_attr_double (xml, "r", text->font_color->red);
+    tbo_xml_append_attr_double (xml, "g", text->font_color->green);
+    tbo_xml_append_attr_double (xml, "b", text->font_color->blue);
+    g_string_append (xml, ">\n");
+    tbo_xml_write (file, xml);
+    fputs (text_escaped, file);
+    fputs ("\n   </text>\n", file);
 
-    snprintf (buffer, 1024, "   <text x=\"%d\" y=\"%d\" "
-                           "width=\"%d\" height=\"%d\" "
-                           "angle=\"%f\" flipv=\"%d\" fliph=\"%d\" "
-                           "font=\"%s\" "
-                           "r=\"%f\" g=\"%f\" b=\"%f\">\n",
-                           self->x, self->y, self->width, self->height,
-                           self->angle, self->flipv, self->fliph,
-                           pango_font_description_to_string (text->description),
-                           r, g, b);
-    fwrite (buffer, sizeof (char), strlen (buffer), file);
-
-    snprintf (buffer, 1024, "%s", g_markup_escape_text (text->text->str, strlen (text->text->str)));
-    fwrite (buffer, sizeof (char), strlen (buffer), file);
-
-    snprintf (buffer, 1024, "\n   </text>\n");
-    fwrite (buffer, sizeof (char), strlen (buffer), file);
+    g_free (text_escaped);
+    g_free (font);
 }
 
 static TboObjectBase *
@@ -121,15 +125,18 @@ tclone (TboObjectBase *self)
 {
     TboObjectText *text;
     TboObjectBase *newtext;
+    gchar *font;
     text = TBO_OBJECT_TEXT (self);
+    font = tbo_object_text_get_string (text);
 
     newtext = TBO_OBJECT_BASE (tbo_object_text_new_with_params (self->x,
                                                                 self->y,
                                                                 self->width,
                                                                 self->height,
                                                                 text->text->str,
-                                                                tbo_object_text_get_string (text),
+                                                                font,
                                                                 text->font_color));
+    g_free (font);
     newtext->angle = self->angle;
     newtext->flipv = self->flipv;
     newtext->fliph = self->fliph;
@@ -160,7 +167,7 @@ tbo_object_text_finalize (GObject *self)
     if (text->description)
         pango_font_description_free (text->description);
     if (text->font_color)
-        gdk_color_free (text->font_color);
+        gdk_rgba_free (text->font_color);
     /* Chain up to the parent class */
     G_OBJECT_CLASS (tbo_object_text_parent_class)->finalize (self);
 }
@@ -175,16 +182,16 @@ tbo_object_text_class_init (TboObjectTextClass *klass)
 /* object functions */
 
 GObject *
-tbo_object_text_new ()
+tbo_object_text_new (void)
 {
     GObject *tbo_object;
     TboObjectText *text;
-    GdkColor color = { 0, 0, 0, 0 };
+    GdkRGBA color = { 0, 0, 0, 1 };
     tbo_object = g_object_new (TBO_TYPE_OBJECT_TEXT, NULL);
     text = TBO_OBJECT_TEXT (tbo_object);
     text->text = g_string_new (_("text"));
     text->description = pango_font_description_from_string ("Sans Normal 27");
-    text->font_color = gdk_color_copy (&color);
+    text->font_color = gdk_rgba_copy (&color);
 
     return tbo_object;
 }
@@ -196,7 +203,7 @@ tbo_object_text_new_with_params (gint     x,
                                  gint     height,
                                  gchar    *text,
                                  gchar    *fontname,
-                                 GdkColor *color)
+                                 GdkRGBA  *color)
 {
     TboObjectBase *obj;
     TboObjectText *textobj;
@@ -209,8 +216,12 @@ tbo_object_text_new_with_params (gint     x,
     obj->height = height;
 
     g_string_assign (textobj->text, text);
+    if (textobj->description)
+        pango_font_description_free (textobj->description);
     textobj->description = pango_font_description_from_string (fontname);
-    textobj->font_color = gdk_color_copy (color);
+    if (textobj->font_color)
+        gdk_rgba_free (textobj->font_color);
+    textobj->font_color = gdk_rgba_copy (color);
 
     return G_OBJECT (obj);
 }
@@ -238,11 +249,11 @@ tbo_object_text_change_font (TboObjectText *self, gchar *font)
 }
 
 void
-tbo_object_text_change_color (TboObjectText *self, GdkColor *color)
+tbo_object_text_change_color (TboObjectText *self, GdkRGBA *color)
 {
     if (self->font_color)
-        gdk_color_free (self->font_color);
-    self->font_color = gdk_color_copy (color);
+        gdk_rgba_free (self->font_color);
+    self->font_color = gdk_rgba_copy (color);
 }
 
 gchar *

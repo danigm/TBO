@@ -21,6 +21,7 @@
 #define __TBO_OBJECT_SVG_H__
 
 #include <glib.h>
+#include <librsvg/rsvg.h>
 #include "tbo-object-base.h"
 
 #define TBO_TYPE_OBJECT_SVG            (tbo_object_svg_get_type ())
@@ -39,6 +40,10 @@ struct _TboObjectSvg
 
     /* instance members */
     GString *path;
+    RsvgHandle *handle;
+    cairo_surface_t *surface;
+    gint cache_width;
+    gint cache_height;
 };
 
 struct _TboObjectSvgClass
@@ -55,7 +60,7 @@ GType tbo_object_svg_get_type (void);
  * Method definitions.
  */
 
-GObject * tbo_object_svg_new ();
+GObject * tbo_object_svg_new (void);
 GObject * tbo_object_svg_new_with_params (gint   x,
                                           gint   y,
                                           gint   width,
@@ -63,4 +68,3 @@ GObject * tbo_object_svg_new_with_params (gint   x,
                                           gchar *path);
 
 #endif /* __TBO_OBJECT_SVG_H__ */
-
